@@ -1,0 +1,118 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"> </i>
+                </div>
+                <div>
+                    All User Accounts
+                    <div class="page-title-subheading">
+                        Here you can view all users in your system
+                    </div>
+                </div>
+            </div>
+
+            {% if context['forms']['UserCreateForm'].errors %}
+            <ul class=errors>
+            {% for error in context['forms']['UserCreateForm'].errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            <!--  INCLUDE HERE: ACTIONS -->
+            {% include 'auth/user_actions.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <table id="index_table" class="mb-0 table table-hover">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in context['users'] %}
+                            <tr id="{{ user.id }}" onclick="">
+                                <th scope="row">{{ user.id }}</th>
+                                <td>{{ user.fname }}</td>
+                                <td>{{ user.lname }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.active }}</td>
+                                <td></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block inner_footer %}
+<div class="app-footer-left">
+    <nav class="" aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if context['prev_url'] %}
+            <li class="page-item">
+                <a href="{{ context['prev_url'] }}" class="page-link" aria-label="Previous">
+                <span aria-hidden="true">Previous</span>
+                <span class="sr-only">Previous</span></a>
+            </li>
+            {% endif %}
+
+            {% if context['next_url'] %}
+            <li class="page-item">
+                <a href="{{ context['next_url'] }}" class="page-link" aria-label="Next">
+                <span aria-hidden="true">Next</span>
+                <span class="sr-only">Next</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            {% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function add_delete_column(){
+        var tr = document.getElementById('index_table').tHead.children[0];
+        th = document.createElement('th');
+        th.innerHTML = "Delete";
+        tr.appendChild(th);
+        var new_cell = '\<div class="custom-checkbox custom-control"><input type="checkbox" id="" class="custom-control-input"><label class="custom-control-label" for=""></label></div>';
+
+        var table = document.getElementById("index_table");
+
+        for (var r = 1; r < table.rows.length; r++) {
+            table.rows[r].cells[5].insertAdjacentHTML('beforeend', new_cell);
+        }
+    }
+</script>
+{% endblock %}
+
+{% block toast %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div id="toast-container" class="toast-top-center">
+            {% for message in messages %}
+            <div class="toast toast-success" aria-live="polite" style="">
+                <div class="toast-progress" style="width: 0%;"></div>
+                <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+                <div class="toast-title">Saved!</div>
+                <div class="toast-message">{{ message }}</div></div></div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+

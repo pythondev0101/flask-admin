@@ -1,0 +1,65 @@
+<!--THIS HTML FILE IS THE BASE TEMPLATE OF ADMIN TEMPLATES-->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{{ context['title'] }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!--
+    =========================================================
+    * ArchitectUI HTML Theme Dashboard - v1.0.0
+    =========================================================
+    * Product Page: https://dashboardpack.com
+    * Copyright 2019 DashboardPack (https://dashboardpack.com)
+    * Licensed under MIT (https://github.com/DashboardPack/architectui-html-theme-free/blob/master/LICENSE)
+    =========================================================
+    * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+    -->
+    <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/homebest.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container app-theme-my body-tabs-shadow fixed-sidebar fixed-header">
+        <!-- ADMIN HEADER -->
+        {% include 'admin/admin_header.html' %}
+        <!-- ADMIN OPTIONS -->
+        {% include 'admin/admin_options.html' %}
+        <div class="app-main">
+        <!-- ADMIN SIDEBAR -->
+        {% include 'admin/admin_sidebar.html' %}
+            <div class="app-main__outer">
+                <!-- CONTENT BLOCK -->
+                {% block content %}
+                {% endblock %}
+                <!-- INCLUDE FOOTER HERE -->
+                <div class="app-wrapper-footer">
+                    <div class="app-footer">
+                        <div class="app-footer__inner">
+                            {% block inner_footer %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/lib/main.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/homebest.js') }}"></script>
+    {% block scripts %}
+    {% endblock %}
+
+    {% block toast %}
+    {% endblock %}
+</body>
+</html>
+
+<!--INCLUDE HERE: MODALS-->
+{% if context['active'] == 'Users' %}
+    {% include 'auth/user_modals.html' %}
+{% endif %}

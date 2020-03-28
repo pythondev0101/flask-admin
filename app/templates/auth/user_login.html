@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="A HomeBest Project">
+    <meta name="author" content="HomeBest">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/homebest.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
+    {% if title %}
+    <title>HomeBest Water Billing System</title>
+    {% else %}
+    <title>Welcome to HomeBest Water Billing System</title>
+    {% endif %}
+</head>
+<body>
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('/static/img/bg-01.jpg');">
+        <div class="wrap-login100 p-t-30 p-b-50">
+				<span class="login100-form-title p-b-41">
+					Account Login
+				</span>
+            <form action="{{ url_for('bp_auth.login') }}" method="POST" class="login100-form p-b-33 p-t-5 needs-validation" novalidate="">
+                {{ form.csrf_token }}
+                <div class="form-row">
+                    <div class="col-md-11 mb-3">
+                        <label for="username">Username</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                            </div>
+                            <input id="username" name="username" type="text" class="form-control"  placeholder="Username"
+                                   aria-describedby="inputGroupPrepend" required="">
+                            <div class="invalid-feedback">
+                                Please enter your username.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-11 mb-3">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupPrepend01">#</span>
+                            </div>
+                            <input id="password" name="password" type="password" class="form-control" placeholder="Password"
+                                   aria-describedby="inputGroupPrepend01" required="">
+                            <div class="invalid-feedback">
+                                Please enter your password.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ form.remember_me.label }} {{ form.remember_me }}
+                <div class="container-login100-form-btn m-t-32">
+                    <button class="login100-form-btn" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+    if (form.checkValidity() === false) {
+    event.preventDefault();
+    event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+    }, false);
+    });
+    }, false);
+    })();
+    </script>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/lib/main.js') }}"></script>
+</body>
+</html>
