@@ -24,8 +24,7 @@ In your module folder(eg.homebest/module_ko)
 Create your __init__.py then type the ff:
 
 ```python
-from flask import Blueprint, request, redirect, url_for, render_template
-from flask_login import current_user
+from flask import Blueprint
 
 # URLS DICTIONARY
 module_ko_urls = {
