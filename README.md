@@ -1,59 +1,55 @@
-# HomeBest Framework
-An application framework written in Flask
+# HomeBest Framework - Version 1
 
 ## Features
 
-* Preconfigured setup for [Travis CI](https://travis-ci.org/), [Coveralls](https://coveralls.io/), and [Scrutinizer](https://scrutinizer-ci.com/)
-* `pyproject.toml` for managing dependencies and package metadata
-* `Makefile` for automating common [development tasks](https://github.com/jacebrowning/template-python/blob/master/%7B%7Bcookiecutter.project_name%7D%7D/CONTRIBUTING.md):
-    - Installing dependencies with `poetry`
-    - Automatic formatting with `isort` and `black`
-    - Static analysis with `pylint`
-    - Type checking with `mypy`
-    - Docstring styling with `pydocstyle`
-    - Running tests with `pytest`
-    - Building documentation with `mkdocs`
-    - Publishing to PyPI using `poetry`
-* Tooling to launch an IPython session with automatic reloading enabled
+* Ready to use application
+* Fast and secured 
+* Built-in modules and models:
+    - Authentication : User
+    - Admin: Dashboard
+    - Core: Index, and Command line arguments
+* Easy to modify 
 
-If you are instead looking for a [Python application](https://caremad.io/posts/2013/07/setup-vs-requirement/) template, check out one of the sibling projects:
-
-* [jacebrowning/template-django](https://github.com/jacebrowning/template-django)
-* [jacebrowning/template-flask](https://github.com/jacebrowning/template-flask)
-
-## Examples
-
-Here are a few sample projects based on this template:
-
-* [jacebrowning/minilog](https://github.com/jacebrowning/minilog)
-* [theovoss/Chess](https://github.com/theovoss/Chess)
-* [sprout42/StarStruct](https://github.com/sprout42/StarStruct)
-* [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
-* [flask-restful/flask-restful](https://github.com/flask-restful/flask-restful)
-
-## Usage
-
-Install `cookiecutter` and generate a project:
-
+## homebest.py Command Line arguments
+To create a superuser or owner of the system type the ff:
+```shell
+$ python homebest.py - create_superuser
 ```
-$ pip install cookiecutter
-$ cookiecutter gh:jacebrowning/template-python -f
+To create a module of the system type the ff:
+```shell
+$ python homebest.py - create_module {module name}
 ```
+## Your Module code
+In your module folder(eg.homebest/module_ko)
+Create your __init__.py then type the ff:
 
-Cookiecutter will ask you for some basic info (your name, project name, python package name, etc.) and generate a base Python project for you.
+```python
+from flask import Blueprint
 
-If you still need to use legacy Python or `nose` as the test runner, older versions of this template are available on branches:
+# URLS DICTIONARY
+module_ko_urls = {
+    'index': 'bp_module_ko.index',
+}
 
+bp_module_ko = Blueprint('bp_module_ko', __name__)
+
+@bp_core.route('/module_ko')
+def index():
+    return "HELLO WORLD"
 ```
-$ cookiecutter gh:jacebrowning/template-python -f --checkout=python2
+Note: Just one file you have a running system and module, that's super easy!!!!
 
-$ cookiecutter gh:jacebrowning/template-python -f --checkout=nose
+## Installation
+To install just clone the repository or download
+To clone type the ff:
+```shell
+$ git clone -b {version} git@github.com:pythondev0101/homebest-framework.git
 ```
 
 ## Updates
 
-Run the update tool, which is generated inside each project:
+To update type the ff:
 
-```
-$ bin/update
+```shell
+$ git pull origin {version}
 ```
