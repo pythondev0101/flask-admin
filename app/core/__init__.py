@@ -12,8 +12,6 @@ from app.auth import auth_urls
 bp_core = Blueprint('bp_core', __name__)
 
 
-
-
 @bp_core.route('/')
 def index():
     if request.method == "GET":

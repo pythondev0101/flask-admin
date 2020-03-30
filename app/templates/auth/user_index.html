@@ -10,11 +10,10 @@
                 <div>
                     All User Accounts
                     <div class="page-title-subheading">
-                        Here you can view all users in your system
+                        message
                     </div>
                 </div>
             </div>
-
             {% if context['forms']['UserCreateForm'].errors %}
             <ul class=errors>
             {% for error in context['forms']['UserCreateForm'].errors %}
@@ -42,7 +41,8 @@
                         </thead>
                         <tbody>
                             {% for user in context['users'] %}
-                            <tr id="{{ user.id }}" onclick="">
+                            <tr id="{{ user.id }}" onclick="row_click(this)" data-toggle="modal" data-id="1" data-target="#userModal">
+                                <param id="{{ user.id }}" name="{{ url_for('bp_auth.user_edit',user_id=user.id) }}">
                                 <th scope="row">{{ user.id }}</th>
                                 <td>{{ user.fname }}</td>
                                 <td>{{ user.lname }}</td>
@@ -78,9 +78,9 @@
                 <span aria-hidden="true">Next</span>
                 <span class="sr-only">Next</span></a></li>
                     </ul>
-                </nav>
-            </div>
             {% endif %}
+    </nav>
+</div>
 {% endblock %}
 
 {% block scripts %}

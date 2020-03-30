@@ -1,8 +1,8 @@
 """ MODULE: AUTH.ROUTES """
 
 """ FLASK IMPORTS """
-from flask import render_template, flash, redirect, url_for, request,jsonify,current_app
-from flask_login import current_user, login_user, logout_user
+from flask import render_template, flash, redirect, url_for, request, jsonify, current_app
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 import base64
 """--------------END--------------"""
@@ -15,58 +15,37 @@ from app import db
 
 """ MODULE: AUTH,ADMIN IMPORTS """
 from .models import User
-from .forms import LoginForm, UserCreateForm
+from .forms import LoginForm, UserForm,UserEditForm
 """--------------END--------------"""
 
 """ URL IMPORTS """
 from app.admin import admin_urls
 from app.core import core_urls
 from app.auth import auth_urls
-from app import system_models
 """--------------END--------------"""
 
 """ TEMPLATES IMPORTS """
 from . import auth_templates
 """--------------END--------------"""
 
+from . import context
+from datetime import datetime
 
-# TODO: AJAX for checking names
-# @app.route('/user_check', methods=['POST'])
-# def username_check():
-#     conn = None
-#     cursor = None
-#     try:
-#         username = request.form['username']
-#
-#         # validate the received values
-#         if username and request.method == 'POST':
-#             conn = mysql.connect()
-#             cursor = conn.cursor(pymysql.cursors.DictCursor)
-#             cursor.execute("SELECT * FROM user WHERE login_username=%s", username)
-#             row = cursor.fetchone()
-#
-#             if row:
-#                 resp = jsonify('<span style=\'color:red;\'>Username unavailable</span>')
-#                 resp.status_code = 200
-#                 return resp
-#             else:
-#                 resp = jsonify('<span style=\'color:green;\'>Username available</span>')
-#                 resp.status_code = 200
-#                 return resp
-#         else:
-#             resp = jsonify('<span style=\'color:red;\'>Username is required field.</span>')
-#             resp.status_code = 200
-#             return resp
-#     except Exception as e:
-#         print(e)
-#     finally:
-#         cursor.close()
-#         conn.close()
+@bp_auth.route('/user_delete/<id>', methods=['DELETE'])
+def user_delete(user_id):
+    try:
+        user = User.query.get_or_404(user_id)
+        db.session.delete(user)
+        db.session.commit()
+        return '', 204
+    except Exception as e:
+        db.session.rollback()
 
 
 @bp_auth.route('/user_create', methods=['POST'])
+@login_required
 def user_create():
-    user_create_form = UserCreateForm()
+    user_create_form = UserForm()
     if request.method == "POST":
         if user_create_form.validate_on_submit():
             user = User()
@@ -75,12 +54,6 @@ def user_create():
             user.lname = user_create_form.lname.data
             user.email = user_create_form.email.data
             user.set_password(user_create_form.password.data)
-            print("MYDEBUG!!!")
-            print("active:",user.active)
-            print("created_at:",user.created_at)
-            print("image_path:",user.image_path)
-            print(dir(user))
-            print("MYDEBUG!!!")
             db.session.add(user)
             db.session.commit()
             flash('New User Added Successfully!')
@@ -89,26 +62,51 @@ def user_create():
             return redirect(url_for(auth_urls['index']))
 
 
+@bp_auth.route('/user_edit/<int:user_id>', methods=['GET','POST'])
+@login_required
+def user_edit(user_id):
+    user = User.query.get_or_404(user_id)
+    user_edit_form = UserEditForm(obj=user)
+    if request.method == "GET":
+        context['forms'] = {'UserEditForm': user_edit_form}
+        context['modal'] = False
+        context['user_id'] = user_id
+        return render_template(auth_templates['edit'], context=context)
+    elif request.method == "POST":
+        if user_edit_form.validate_on_submit():
+            user.username = user_edit_form.username.data
+            user.fname = user_edit_form.fname.data
+            user.lname = user_edit_form.lname.data
+            user.email = user_edit_form.email.data
+            user.updated_at = datetime.now()
+            db.session.commit()
+            flash('User update Successfully!')
+            return redirect(url_for(auth_urls['index']))
+        for key, value in user_edit_form.errors.items():
+            print(key,value)
+        return "error"
+
+
 @bp_auth.route('/users')
+@login_required
 def index():
     page = request.args.get('page', 1, type=int)
     data_per_page = current_app.config['DATA_PER_PAGE']
     users = User.query.paginate(page,data_per_page,False)
-    user_create_form = UserCreateForm()
+    user_create_form = UserForm()
     next_url = url_for(auth_urls['index'], page=users.next_num) \
         if users.has_next else None
     prev_url = url_for(auth_urls['index'], page=users.prev_num) \
         if users.has_prev else None
-    context = {
-        'title': 'Users',
-        'system_models': system_models,
-        'users': users.items,
-        'active': 'Users',
-        'forms': {'UserCreateForm':user_create_form},
-        'next_url': next_url,
-        'prev_url': prev_url,
-        'data_per_page': data_per_page,
-    }
+
+    # Modify context
+    context['users'] = users.items
+    context['forms'] = {'UserCreateForm': user_create_form}
+    context['next_url'] = next_url
+    context['prev_url'] = prev_url
+    context['data_per_page'] = data_per_page
+    context['modal'] = True
+
     return render_template(auth_templates['index'],context=context)
 
 
@@ -136,6 +134,7 @@ def login():
 
 
 @bp_auth.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for(core_urls['index']))
@@ -171,3 +170,38 @@ def load_user_from_request(request):
     # finally, return None if both methods did not login the user
     return None
 
+
+# TODO: VIEW MODAL FORM
+# TODO: DELETE ALL CHECKED FROM USER_INDEX.html
+# TODO: AJAX for checking names
+# @app.route('/user_check', methods=['POST'])
+# def username_check():
+#     conn = None
+#     cursor = None
+#     try:
+#         username = request.form['username']
+#
+#         # validate the received values
+#         if username and request.method == 'POST':
+#             conn = mysql.connect()
+#             cursor = conn.cursor(pymysql.cursors.DictCursor)
+#             cursor.execute("SELECT * FROM user WHERE login_username=%s", username)
+#             row = cursor.fetchone()
+#
+#             if row:
+#                 resp = jsonify('<span style=\'color:red;\'>Username unavailable</span>')
+#                 resp.status_code = 200
+#                 return resp
+#             else:
+#                 resp = jsonify('<span style=\'color:green;\'>Username available</span>')
+#                 resp.status_code = 200
+#                 return resp
+#         else:
+#             resp = jsonify('<span style=\'color:red;\'>Username is required field.</span>')
+#             resp.status_code = 200
+#             return resp
+#     except Exception as e:
+#         print(e)
+#     finally:
+#         cursor.close()
+#         conn.close()
