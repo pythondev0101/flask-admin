@@ -6,8 +6,15 @@ from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from datetime import datetime
 """--------------END--------------"""
 
+# TODO: FOR FUTURE VERSION CHANGE THIS TO CLASS INHERITANCE
+class UserEditForm(FlaskForm):
+    active = BooleanField('Active', default=1)
+    username = StringField('Username', validators=[DataRequired()])
+    email = PasswordField('Email', validators=[DataRequired()])
+    fname = StringField('First Name', validators=[DataRequired()])
+    lname = StringField('Last Name', validators=[DataRequired()])
 
-class UserCreateForm(FlaskForm):
+class UserForm(FlaskForm):
     active = BooleanField('Active',default=1)
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])

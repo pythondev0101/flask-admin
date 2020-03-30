@@ -1,0 +1,95 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-graph text-success"> </i>
+                </div>
+                <div>
+                    Edit User Account
+                    <div class="page-title-subheading">
+                        message
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% with form = context['forms']['UserEditForm'] %}
+    <form action="{{ url_for('bp_auth.user_edit',user_id=context['user_id']) }}" id="user_edit_form" class="needs-validation" method="POST" novalidate>
+        {{ form.csrf_token }}
+        <div class="main-card mb-3 card">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="fname">First name</label>
+                    <input type="text" class="form-control" id="fname" name="fname" placeholder="First name" required value="{{ form.fname.data }}">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="lname">Last name</label>
+                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name" required value="{{ form.lname.data }}">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="username">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        </div>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                               aria-describedby="inputGroupPrepend" required value="{{ form.username.data }}">
+                        <div class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required value="{{ form.email.data }}">
+                    <div class="invalid-feedback">
+                        Please provide a valid email
+                    </div>
+                </div>
+            </div>
+            <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+            }, false);
+            });
+            }, false);
+            })();
+            </script>
+        </div>
+    </div>
+    </form>
+    {% endwith %}
+</div>
+{% endblock %}
+
+{% block inner_footer %}
+<div class="app-footer-right">
+    <button type="button" class="btn btn-secondary">Cancel</button>
+    <button form="user_edit_form" type="submit" class="btn btn-primary">Save</button>
+</div>
+{% endblock %}
+

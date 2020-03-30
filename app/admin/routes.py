@@ -15,13 +15,17 @@ from . import admin_templates
 """--------------END--------------"""
 
 
+# GLOBAL VARIABLE CONTEXT FOR URL RETURN
+context = {
+    'title': 'Admin',
+    'system_models': system_models,
+    'active': 'main_dashboard',
+    'forms': {},
+}
+
+
 @bp_admin.route('/')
 @login_required
 def index():
     # TODO: return total tables,users...
-    context = {
-        'title': 'Admin',
-        'system_models': system_models,
-        'active': 'main_dashboard',
-    }
     return render_template(admin_templates['index'], context=context)

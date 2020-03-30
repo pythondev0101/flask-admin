@@ -25,7 +25,7 @@
     <link href="{{ url_for('static', filename='css/homebest.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="app-container app-theme-my body-tabs-shadow fixed-sidebar fixed-header">
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <!-- ADMIN HEADER -->
         {% include 'admin/admin_header.html' %}
         <!-- ADMIN OPTIONS -->
@@ -51,15 +51,17 @@
     </div>
 <script type="text/javascript" src="{{ url_for('static', filename='js/lib/main.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/homebest.js') }}"></script>
-    {% block scripts %}
-    {% endblock %}
 
-    {% block toast %}
-    {% endblock %}
+    {% block scripts %}{% endblock %}
+
+    {% block toast %}{% endblock %}
+
 </body>
 </html>
 
 <!--INCLUDE HERE: MODALS-->
 {% if context['active'] == 'Users' %}
-    {% include 'auth/user_modals.html' %}
+    {% if context['modal'] %}
+        {% include 'auth/user_modals.html' %}
+    {% endif %}
 {% endif %}
