@@ -20,4 +20,4 @@ class HomeBestConfig:
     HOMEBEST_USER = os.getenv('HOMEBEST_USER')
     HOMEBEST_PASSWORD = os.getenv('HOMEBEST_PASSWORD')
     HOMEBEST_DATABASE = os.getenv('HOMEBEST_DATABASE')
-
+    HOMEBEST_SERVER = os.getenv('HOMEBEST_SERVER')
