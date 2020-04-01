@@ -10,6 +10,18 @@
     - Core: Index, and Command line arguments
 * Easy to modify 
 
+## Built-in Models (Your common project models)
+Don't create customers table or addresses table from scratch anymore, you will just implement then its good to go!!!
+Sample code to implement built-in models in your module
+```python
+from app.core.models import CoreCustomer, Base # Import the built-in models
+
+class Customer(CoreCustomer) # Inherit built-in model to your class to implement
+    __tablename__ = 'table_name'
+    # Include here your fields
+```
+Its super easy!!!
+
 ## homebest.py Command Line arguments
 To create a superuser or owner of the system type the ff:
 ```shell
