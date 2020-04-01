@@ -16,6 +16,10 @@ system_models = [
 ]
 """--------------END--------------"""
 
+""" EDITABLE: IMPORT HERE THE SYSTEM MODULES """
+system_modules = [
+    {'Administrator':{'icon':'fa-home','link':'bp_admin.index'}},
+]
 
 def create_app():
     app = Flask(__name__, instance_relative_config=False)

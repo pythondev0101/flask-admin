@@ -6,7 +6,7 @@ from flask_login import login_required
 """--------------END--------------"""
 
 """ APP IMPORTS  """
-from app import system_models
+from app import system_models,system_modules
 from app.admin import bp_admin
 """--------------END--------------"""
 
@@ -19,6 +19,7 @@ from . import admin_templates
 context = {
     'title': 'Admin',
     'system_models': system_models,
+    'modules': system_modules,
     'active': 'main_dashboard',
     'forms': {},
 }
