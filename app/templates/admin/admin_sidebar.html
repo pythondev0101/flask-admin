@@ -37,7 +37,7 @@
                 <li class="app-sidebar__heading">Admin Dashboards</li>
                 <li>
                     <a href="{{ url_for('bp_admin.index')}}" class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}">
-                        <i class="metismenu-icon fa fa-fw fa-home" aria-hidden="true"></i>
+                        <i class="metismenu-icon pe-7s-graph1 icon-gradient bg-premium-dark" aria-hidden="true"></i>
                         Main Dashboard
                     </a>
                 </li>
@@ -49,7 +49,7 @@
                 {% for model_name,val in value['models'].items() %}
                 <li>
                     <a href="#" class="{% if context['active']==model_name %} mm-active {% endif %}">
-                        <i class="metismenu-icon fa fa-fw {{ val['icon'] }}" aria-hidden="true"></i>
+                        <i class="metismenu-icon {{ val['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
                         {{ model_name }}
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>

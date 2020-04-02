@@ -34,7 +34,7 @@ from . import routes
 
 class UserModel():
     model_name= 'Users'
-    model_icon = 'fa-users'
+    model_icon = 'pe-7s-users'
     functions = {'View users': 'bp_auth.index'}
 
 
