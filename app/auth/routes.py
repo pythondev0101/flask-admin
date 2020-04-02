@@ -9,7 +9,7 @@ import base64
 
 """ APP IMPORTS  """
 from app.auth import bp_auth
-from app import login_manager
+from app import login_manager,context
 from app import db
 """--------------END--------------"""
 
@@ -28,8 +28,20 @@ from app.auth import auth_urls
 from . import auth_templates
 """--------------END--------------"""
 
-from . import context
 from datetime import datetime
+
+
+# This function will change context values depends in view
+def change_context(view):
+    # VALUES: title, module, active, forms, modal
+    context['module'] = 'admin'
+    if view == 'index':
+        context['title'] = 'Users'
+        context['active'] = 'Users'
+        context['modal'] = True
+    elif view == 'login':
+        context['title'] = 'Users'
+
 
 @bp_auth.route('/user_delete/<id>', methods=['DELETE'])
 def user_delete(user_id):
@@ -99,14 +111,13 @@ def index():
     prev_url = url_for(auth_urls['index'], page=users.prev_num) \
         if users.has_prev else None
 
-    # Modify context
+    # ADDITIONAL CONTEXT
     context['users'] = users.items
     context['forms'] = {'UserCreateForm': user_create_form}
     context['next_url'] = next_url
     context['prev_url'] = prev_url
     context['data_per_page'] = data_per_page
-    context['modal'] = True
-
+    change_context('index')
     return render_template(auth_templates['index'],context=context)
 
 

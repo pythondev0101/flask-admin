@@ -23,16 +23,26 @@
     -->
     <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/homebest.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <!-- ADMIN HEADER -->
+        {% block header %}
         {% include 'admin/admin_header.html' %}
+        {% endblock %}
+
         <!-- ADMIN OPTIONS -->
+        {% block options %}
         {% include 'admin/admin_options.html' %}
+        {% endblock %}
+
         <div class="app-main">
         <!-- ADMIN SIDEBAR -->
+        {% block sidebar %}
         {% include 'admin/admin_sidebar.html' %}
+        {% endblock %}
+
             <div class="app-main__outer">
                 <!-- CONTENT BLOCK -->
                 {% block content %}
@@ -60,8 +70,10 @@
 </html>
 
 <!--INCLUDE HERE: MODALS-->
+{% block modals %}
 {% if context['active'] == 'Users' %}
     {% if context['modal'] %}
         {% include 'auth/user_modals.html' %}
     {% endif %}
 {% endif %}
+{% endblock %}
