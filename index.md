@@ -76,6 +76,7 @@ $ python homebest.py --create_module {module_name}
 ```
 3. Go to the generated module folder in homebest/app/{module_name}
 4. Open and modify __init__.py
+
 ```python
 from flask import Blueprint
 from app import system_modules
@@ -119,12 +120,14 @@ class AdminModule():
     module_description = 'Administrator'
     models = [UserModel]
 ```
+
 NOTE: Change {module} to your module's name
 NOTE: Change AdminModule() and UserModel() to your preferred class names and modify their attributes
 5. Open and modify routes.py and models.py of your module
 6. It's time to include and register your module to app/__init__.py
 7. Open and update/modify app/__init__.py
 8. In app.app_context(): import your module there, sample...
+
 ```python
         """EDITABLE: IMPORT HERE THE SYSTEM MODULES  """
         from app import core
@@ -133,11 +136,13 @@ NOTE: Change AdminModule() and UserModel() to your preferred class names and mod
         from app import your_module
         """--------------END--------------"""
 ```
+
 ```python
         """EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
         modules = [admin.AdminModule, your_module.Module]
         """--------------END--------------"""
 ```
+
 ```python
         """EDITABLE: REGISTER HERE THE MODULE BLUEPRINTS"""
         app.register_blueprint(core.bp_core, url_prefix='/')
@@ -146,8 +151,10 @@ NOTE: Change AdminModule() and UserModel() to your preferred class names and mod
         app.register_blueprint(your_module.bp_module, url_prefix='/your_url_module')
         """--------------END--------------"""
 ```
+
 9. Then save the file.
 10. Your module is ready to use now, to run the system type the ff:
+
 ```shell
 $ flask run
 ```
