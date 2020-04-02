@@ -45,7 +45,7 @@
                 {% for module,value in context['system_modules'].items() %}
                 <li class="nav-item">
                     <a href="{{ url_for(value['link']) }}" class="nav-link">
-                        <i class="nav-link-icon fa {{ value['icon'] }}"> </i>
+                        <i class="nav-link-icon fa {{ value['icon'] }} {% if module == context['module'] %}icon-gradient bg-malibu-beach{% endif %}"> </i>
                         {{ value['description'] }}
                     </a>
                 </li>
