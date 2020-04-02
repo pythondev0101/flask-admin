@@ -8,15 +8,7 @@ r = FlaskRedis()
 login_manager = LoginManager()
 login_manager.login_view = 'bp_auth.login'
 
-# TODO: FOR FUTURE change this to automatic values eg. system_models=[USER OBJECT]
-""" EDITABLE: IMPORT HERE THE SYSTEM MODULES """
-# TODO: FOR FUTURE change this to automatic values eg. system_models=[USER OBJECT]
-""" EDITABLE: IMPORT HERE THE SYSTEM MODULES and their models/attributes """
-system_modules = {'admin':
-                      {'icon': 'fa-home', 'link': 'bp_admin.index','description':'Administrator',
-                       'models': {
-                           'Users': {'icon': 'fa-users', 'functions': {'View users': 'bp_auth.index'}}}},
-                  }
+system_modules = {}
 
 # GLOBAL VARIABLE CONTEXT FOR URL RETURN
 context = {
@@ -43,6 +35,18 @@ def create_app():
         from app import admin
         """--------------END--------------"""
 
+        """EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
+        modules = [admin.AdminModule]
+        """--------------END--------------"""
+
+        for module in modules:
+            system_modules[module.module_name] = {'description': module.module_description, 'link': module.module_link,
+                                                  'icon': module.module_icon, 'models': {}}
+            for model in module.models:
+                system_modules[module.module_name]['models'][model.model_name] = {'icon':model.model_icon,'functions': {}}
+                for function_name, function_link in model.functions.items():
+                    system_modules[module.module_name]['models'][model.model_name]['functions'][function_name] = function_link
+
         """EDITABLE: REGISTER HERE THE MODULE BLUEPRINTS"""
         app.register_blueprint(core.bp_core,url_prefix='/')
         app.register_blueprint(auth.bp_auth,url_prefix='/auth')
@@ -53,4 +57,3 @@ def create_app():
         return app
 # GLOBAL APP INSTANCE
 app = create_app()
-

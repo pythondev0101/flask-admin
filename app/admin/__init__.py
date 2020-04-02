@@ -29,3 +29,18 @@ context['module'] = 'admin'
 
 from . import routes
 
+""" THIS IS FOR ADMIN MODELS """
+
+
+class UserModel():
+    model_name= 'Users'
+    model_icon = 'fa-users'
+    functions = {'View users': 'bp_auth.index'}
+
+
+class AdminModule():
+    module_name = 'admin'
+    module_icon = 'fa-home'
+    module_link = 'bp_admin.index'
+    module_description = 'Administrator'
+    models = [UserModel]
