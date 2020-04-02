@@ -42,15 +42,13 @@
             </div>
                                         <!-- NAVIGATION FOR MODULES -->
             <ul class="header-menu nav">
-                {% for module in context['modules'] %}
-                {% for key,value in module.items() %}
+                {% for module,value in context['system_modules'].items() %}
                 <li class="nav-item">
                     <a href="{{ url_for(value['link']) }}" class="nav-link">
                         <i class="nav-link-icon fa {{ value['icon'] }}"> </i>
-                        {{ key }}
+                        {{ value['description'] }}
                     </a>
                 </li>
-                {% endfor %}
                 {% endfor %}
             </ul>
         </div>

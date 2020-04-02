@@ -1,7 +1,10 @@
 from flask import Blueprint
-from app import system_models
+from app import system_modules
 
 bp_auth = Blueprint('bp_auth',__name__,)
+
+blueprint_name = "bp_auth"  # The name of the module's blueprint
+module_name = "auth"  # The name of the module
 
 # URLS DICTIONARY
 auth_urls = {
@@ -19,15 +22,9 @@ auth_templates = {
     'edit': 'auth/user_edit.html',
 }
 
-# GLOBAL VARIABLE CONTEXT FOR URL RETURN
-context = {
-    'title': 'Users',
-    'system_models': system_models,
-    'active': 'Users',
-    'forms': {},
-    'modal': False,
-}
 
 from . import routes
 from . import models
+
+
 

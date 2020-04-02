@@ -41,16 +41,17 @@
                     </a>
                 </li>
                 <li class="app-sidebar__heading">System Models</li>
-                {% for model in context['system_models'] %}
-                {% for key,value in model.items() %}
+                {% for key,value in context['system_modules'].items() %}
+                {% if key == context['module'] %}
+                {% for model_name,val in value['models'].items() %}
                 <li>
-                    <a href="#" class="{% if context['active']==key %} mm-active {% endif %}">
-                        <i class="metismenu-icon fa fa-fw {{ value['icon'] }}" aria-hidden="true"></i>
-                        {{ key }}
+                    <a href="#" class="{% if context['active']==model_name %} mm-active {% endif %}">
+                        <i class="metismenu-icon fa fa-fw {{ val['icon'] }}" aria-hidden="true"></i>
+                        {{ model_name }}
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
-                        {% for function,link in value['functions'].items() %}
+                        {% for function,link in val['functions'].items() %}
                         <li>
                             <a href="{{ url_for(link) }}">
                                 <i class="metismenu-icon">
@@ -61,6 +62,7 @@
                     </ul>
                 </li>
                 {% endfor %}
+                {% endif %}
                 {% endfor %}
             </ul>
         </div>

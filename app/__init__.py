@@ -8,18 +8,25 @@ r = FlaskRedis()
 login_manager = LoginManager()
 login_manager.login_view = 'bp_auth.login'
 
-""" EDITABLE: IMPORT HERE THE SYSTEM MODELS AND THEIR FUNCTIONS  """
 # TODO: FOR FUTURE change this to automatic values eg. system_models=[USER OBJECT]
-system_models = [
-    # STRUCTURE: {Model name:{icon,functions:{Label name:link}}}
-    {'Users':{'icon':'fa-users','functions':{'View users':'bp_auth.index',}}},
-]
-"""--------------END--------------"""
-
 """ EDITABLE: IMPORT HERE THE SYSTEM MODULES """
-system_modules = [
-    {'Administrator':{'icon':'fa-home','link':'bp_admin.index'}},
-]
+# TODO: FOR FUTURE change this to automatic values eg. system_models=[USER OBJECT]
+""" EDITABLE: IMPORT HERE THE SYSTEM MODULES and their models/attributes """
+system_modules = {'admin':
+                      {'icon': 'fa-home', 'link': 'bp_admin.index','description':'Administrator',
+                       'models': {
+                           'Users': {'icon': 'fa-users', 'functions': {'View users': 'bp_auth.index'}}}},
+                  }
+
+# GLOBAL VARIABLE CONTEXT FOR URL RETURN
+context = {
+    'title': '',
+    'system_modules': system_modules,
+    'module':'',
+    'active': '',
+    'forms': {},
+    'modal': False,
+}
 
 def create_app():
     app = Flask(__name__, instance_relative_config=False)
