@@ -2,7 +2,7 @@
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{ url_for('bp_auth.user_create') }}" class="needs-validation" method="POST" novalidate>
+            <form id="form_create_user" action="{{ url_for('bp_auth.user_create') }}" class="needs-validation" method="POST" novalidate>
                 {{ context['forms']['UserCreateForm'].csrf_token }}
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Add new user account</h5>
@@ -31,15 +31,15 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label for="username">Username</label>
+                                    <label for="usernamecheck">Username</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="inputGroupPrepend">@</span>
                                         </div>
-                                        <input type="text" class="form-control" id="username" name="username"
-                                               placeholder="Username" aria-describedby="inputGroupPrepend" required>
-                                        <div class="invalid-feedback">
-                                            Please choose a username.
+                                        <input type="text" class="form-control" id="usernamecheck" name="usernamecheck"
+                                               placeholder="Username" aria-describedby="inputGroupPrepend" required onchange="username_check()">
+                                        <div id="username-invalid-feedback" class="invalid-feedback">
+                                            Please choose a username or username is already taken.
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +81,6 @@
                                             });
                                         }, false);
                                     })();
-
                             </script>
                         </div>
                     </div>
@@ -95,7 +94,27 @@
         </div>
     </div>
 </div>
-
+<script>
+                                  function username_check(){
+  var username = document.getElementById("usernamecheck").value;
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open("post", "http://localhost:5000/auth/username_check",true);
+  xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlHttp.onreadystatechange = function(){
+    if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            var response = xmlHttp.responseText.trim();
+            console.log(response)
+            if(xmlHttp.responseText.trim() == 1){
+                document.getElementById("username-invalid-feedback").style.display = "none";
+            }else if (xmlHttp.responseText.trim() == 0){
+                document.getElementById("username-invalid-feedback").style.display = "block";
+            }
+    }
+  }
+  var data = JSON.stringify({"usernamecheck": username});
+  xmlHttp.send(data);
+  }
+</script>
 
 <!-- user_view modal -->
 <div id="userModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
@@ -134,7 +153,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                                     </div>
-                                    <input disabled type="text" class="form-control" name="username"
+                                    <input disabled type="text" class="form-control" id="username" name="username"
                                            placeholder="Username" aria-describedby="inputGroupPrepend" required>
                                     <div class="invalid-feedback">
                                         Please choose a username.

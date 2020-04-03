@@ -5,27 +5,32 @@ from flask import render_template, flash, redirect, url_for, request, jsonify, c
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 import base64
+
 """--------------END--------------"""
 
 """ APP IMPORTS  """
 from app.auth import bp_auth
-from app import login_manager,context
+from app import login_manager, context
 from app import db
+
 """--------------END--------------"""
 
 """ MODULE: AUTH,ADMIN IMPORTS """
 from .models import User
-from .forms import LoginForm, UserForm,UserEditForm
+from .forms import LoginForm, UserForm, UserEditForm
+
 """--------------END--------------"""
 
 """ URL IMPORTS """
 from app.admin import admin_urls
 from app.core import core_urls
 from app.auth import auth_urls
+
 """--------------END--------------"""
 
 """ TEMPLATES IMPORTS """
 from . import auth_templates
+
 """--------------END--------------"""
 
 from datetime import datetime
@@ -41,6 +46,21 @@ def change_context(view):
         context['modal'] = True
     elif view == 'login':
         context['title'] = 'Users'
+
+
+@bp_auth.route('/username_check', methods=['POST'])
+def username_check():
+    if request.method == 'POST':
+        username = request.json['usernamecheck']
+        user = User.query.filter_by(username=username).first()
+        if user:
+            resp = jsonify(0)
+            resp.status_code = 200
+            return resp
+        else:
+            resp = jsonify(1)
+            resp.status_code = 200
+            return resp
 
 
 @bp_auth.route('/user_delete/<id>', methods=['DELETE'])
@@ -74,7 +94,7 @@ def user_create():
             return redirect(url_for(auth_urls['index']))
 
 
-@bp_auth.route('/user_edit/<int:user_id>', methods=['GET','POST'])
+@bp_auth.route('/user_edit/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def user_edit(user_id):
     user = User.query.get_or_404(user_id)
@@ -95,7 +115,7 @@ def user_edit(user_id):
             flash('User update Successfully!')
             return redirect(url_for(auth_urls['index']))
         for key, value in user_edit_form.errors.items():
-            print(key,value)
+            print(key, value)
         return "error"
 
 
@@ -104,7 +124,7 @@ def user_edit(user_id):
 def index():
     page = request.args.get('page', 1, type=int)
     data_per_page = current_app.config['DATA_PER_PAGE']
-    users = User.query.paginate(page,data_per_page,False)
+    users = User.query.paginate(page, data_per_page, False)
     user_create_form = UserForm()
     next_url = url_for(auth_urls['index'], page=users.next_num) \
         if users.has_next else None
@@ -118,7 +138,7 @@ def index():
     context['prev_url'] = prev_url
     context['data_per_page'] = data_per_page
     change_context('index')
-    return render_template(auth_templates['index'],context=context)
+    return render_template(auth_templates['index'], context=context)
 
 
 @bp_auth.route('/login', methods=['GET', 'POST'])
@@ -158,7 +178,6 @@ def load_user(user_id):
 
 @login_manager.request_loader
 def load_user_from_request(request):
-
     # first, try to login using the api_key url arg
     api_key = request.args.get('api_key')
     if api_key:
@@ -180,7 +199,6 @@ def load_user_from_request(request):
 
     # finally, return None if both methods did not login the user
     return None
-
 
 # TODO: VIEW MODAL FORM
 # TODO: DELETE ALL CHECKED FROM USER_INDEX.html
