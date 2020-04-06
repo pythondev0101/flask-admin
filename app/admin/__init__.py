@@ -35,7 +35,15 @@ from . import routes
 class UserModel():
     model_name= 'Users'
     model_icon = 'pe-7s-users'
-    functions = {'View users': 'bp_auth.index'}
+    model_description = "USERS"
+    functions = {'View Users': 'bp_auth.index','View User Permissions': 'bp_auth.index'}
+
+
+class RoleModel():
+    model_name= 'Roles'
+    model_icon = 'pe-7s-users'
+    model_description = "ROLES"
+    functions = {'View Roles': 'bp_auth.index'}
 
 
 class AdminModule():
@@ -43,4 +51,4 @@ class AdminModule():
     module_icon = 'fa-home'
     module_link = 'bp_admin.index'
     module_description = 'Administrator'
-    models = [UserModel]
+    models = [UserModel,RoleModel]

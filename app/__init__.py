@@ -2,7 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_redis import FlaskRedis
 from flask_login import LoginManager
-
 db = SQLAlchemy()
 r = FlaskRedis()
 login_manager = LoginManager()
@@ -39,10 +38,17 @@ def create_app():
         modules = [admin.AdminModule]
         """--------------END--------------"""
 
+        from app.core.models import HomeBestModel
+
         for module in modules:
             system_modules[module.module_name] = {'description': module.module_description, 'link': module.module_link,
                                                   'icon': module.module_icon, 'models': {}}
             for model in module.models:
+                homebestmodel = HomeBestModel.query.filter_by(name=model.model_name).first()
+                if not homebestmodel:
+                    new_model = HomeBestModel(model.model_name,module.module_name,model.model_description)
+                    db.session.add(new_model)
+                    db.session.commit()
                 system_modules[module.module_name]['models'][model.model_name] = {'icon':model.model_icon,'functions': {}}
                 for function_name, function_link in model.functions.items():
                     system_modules[module.module_name]['models'][model.model_name]['functions'][function_name] = function_link
@@ -52,7 +58,6 @@ def create_app():
         app.register_blueprint(auth.bp_auth,url_prefix='/auth')
         app.register_blueprint(admin.bp_admin,url_prefix='/admin')
         """--------------END--------------"""
-
         db.create_all()
         return app
 # GLOBAL APP INSTANCE

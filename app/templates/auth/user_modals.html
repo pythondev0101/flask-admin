@@ -31,12 +31,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label for="usernamecheck">Username</label>
+                                    <label for="username">Username</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="inputGroupPrepend">@</span>
                                         </div>
-                                        <input type="text" class="form-control" id="usernamecheck" name="usernamecheck"
+                                        <input type="text" class="form-control" id="username" name="username"
                                                placeholder="Username" aria-describedby="inputGroupPrepend" required onchange="username_check()">
                                         <div id="username-invalid-feedback" class="invalid-feedback">
                                             Please choose a username or username is already taken.
@@ -96,7 +96,7 @@
 </div>
 <script>
                                   function username_check(){
-  var username = document.getElementById("usernamecheck").value;
+  var username = document.getElementById("username").value;
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open("post", "http://localhost:5000/auth/username_check",true);
   xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -111,7 +111,7 @@
             }
     }
   }
-  var data = JSON.stringify({"usernamecheck": username});
+  var data = JSON.stringify({"username": username});
   xmlHttp.send(data);
   }
 </script>

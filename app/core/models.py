@@ -19,6 +19,19 @@ class Base(db.Model):
         self.active = 1
 
 
+class HomeBestModel(Base):
+    __tablename__ = 'core_model'
+    name = db.Column(db.String(64), nullable=False, server_default="")
+    module = db.Column(db.String(64), nullable=False, server_default="")
+    description = db.Column(db.String(128), nullable=True, server_default="")
+
+    def __init__(self,name,module,description):
+        Base.__init__(self)
+        self.name = name
+        self.module = module
+        self.description = description
+
+
 class CoreCustomer(Base):
     __abstract__ = True
     fname = db.Column(db.String(64), nullable=False, server_default="")

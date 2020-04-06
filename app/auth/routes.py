@@ -16,8 +16,9 @@ from app import db
 """--------------END--------------"""
 
 """ MODULE: AUTH,ADMIN IMPORTS """
-from .models import User
+from .models import User, UserPermission
 from .forms import LoginForm, UserForm, UserEditForm
+from app.core.models import HomeBestModel
 
 """--------------END--------------"""
 
@@ -36,6 +37,28 @@ from . import auth_templates
 from datetime import datetime
 
 
+@bp_auth.route('/permissions')
+@login_required
+def user_permission_index():
+    page = request.args.get('page', 1, type=int)
+    data_per_page = current_app.config['DATA_PER_PAGE']
+    user_permissions = UserPermission.query.paginate(page, data_per_page, False)
+    # user_create_form = UserForm()
+    next_url = url_for(auth_urls['user_permission_index'], page=user_permissions.next_num) \
+        if user_permissions.has_next else None
+    prev_url = url_for(auth_urls['user_permission_index'], page=user_permissions.prev_num) \
+        if user_permissions.has_prev else None
+
+    # ADDITIONAL CONTEXT
+    context['users'] = user_permissions.items
+    # context['forms'] = {'UserCreateForm': user_create_form}
+    context['next_url'] = next_url
+    context['prev_url'] = prev_url
+    context['data_per_page'] = data_per_page
+    change_context('index')
+    return render_template(auth_templates['user_permission_index'], context=context)
+
+
 # This function will change context values depends in view
 def change_context(view):
     # VALUES: title, module, active, forms, modal
@@ -46,12 +69,16 @@ def change_context(view):
         context['modal'] = True
     elif view == 'login':
         context['title'] = 'Users'
+    elif view == 'user_permission_index':
+        context['title'] = 'User Permissions'
+        context['active'] = 'Users'
+        context['modal'] = True
 
 
 @bp_auth.route('/username_check', methods=['POST'])
 def username_check():
     if request.method == 'POST':
-        username = request.json['usernamecheck']
+        username = request.json['username']
         user = User.query.filter_by(username=username).first()
         if user:
             resp = jsonify(0)
@@ -81,6 +108,10 @@ def user_create():
     if request.method == "POST":
         if user_create_form.validate_on_submit():
             user = User()
+            models = HomeBestModel.query.all()
+            for homebestmodel in models:
+                permission = UserPermission(model=homebestmodel, read=1, write=1, delete=1)
+                user.permissions.append(permission)
             user.username = user_create_form.username.data
             user.fname = user_create_form.fname.data
             user.lname = user_create_form.lname.data
@@ -91,6 +122,8 @@ def user_create():
             flash('New User Added Successfully!')
             return redirect(url_for(auth_urls['index']))
         else:
+            for key, value in user_create_form.errors.items():
+                print(key, value)
             return redirect(url_for(auth_urls['index']))
 
 
@@ -99,7 +132,17 @@ def user_create():
 def user_edit(user_id):
     user = User.query.get_or_404(user_id)
     user_edit_form = UserEditForm(obj=user)
+
     if request.method == "GET":
+        user_permissions = UserPermission.query.filter_by(user_id=user_id)
+        # models = HomeBestModel.query.all()
+        # exists = db.session.query(
+        #     db.session.query(User).filter_by(name='John Smith').exists()
+        # ).scalar()
+        models = db.session.query(HomeBestModel).outerjoin(UserPermission).filter(UserPermission.user_id == user_id).all()
+        print(models)
+        context['user_permissions'] = user_permissions
+        context['models'] = models
         context['forms'] = {'UserEditForm': user_edit_form}
         context['modal'] = False
         context['user_id'] = user_id
@@ -117,6 +160,24 @@ def user_edit(user_id):
         for key, value in user_edit_form.errors.items():
             print(key, value)
         return "error"
+
+
+@bp_auth.route('/user_add_permission/<int:user_id>/', methods=['POST'])
+@login_required
+def user_add_permission(user_id):
+    if request.method == "POST":
+        print(request.form)
+        user = User.query.get_or_404(user_id)
+        model = HomeBestModel.query.filter_by(id=request.args.get('model_id')).first()
+        read, write, delete = request.form.get('chk_read', 0), request.form.get('chk_write', 0), request.form.get(
+            'chk_delete', 0)
+        if read == 'on': read = 1
+        if write == 'on': write = 1
+        if delete == 'on': delete = 1
+        permission = UserPermission(user_id=user.id, model=model, read=read, write=write, delete=delete)
+        user.permissions.append(permission)
+        db.session.commit()
+        return redirect(url_for(auth_urls['edit'], user_id=user_id))
 
 
 @bp_auth.route('/users')

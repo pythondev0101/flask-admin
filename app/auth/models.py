@@ -25,6 +25,9 @@ class User(UserMixin, Base):
     email = db.Column(db.String(64), nullable=False, unique=True)
     password_hash = db.Column(db.String(128), nullable=False)
     image_path = db.Column(db.String(64),nullable=False)
+    permissions = db.relationship('UserPermission',cascade='all,delete',backref="user")
+    role_id = db.Column(db.Integer,db.ForeignKey('auth_role.id'))
+    role = db.relationship('Role',cascade='all,delete',backref="userrole")
 
     def __init__(self):
         Base.__init__(self)
@@ -39,3 +42,32 @@ class User(UserMixin, Base):
     def __repr__(self):
         return "<User {}>".format(self.username)
 
+
+class UserPermission(db.Model):
+    __tablename__ = 'auth_user_permission'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(db.Integer,db.ForeignKey('auth_user.id'))
+    model_id = db.Column(db.Integer,db.ForeignKey('core_model.id'))
+    model = db.relationship('HomeBestModel',cascade='all,delete',backref="userpermission")
+    read = db.Column(db.Boolean, nullable=False, default="1")
+    write = db.Column(db.Boolean, nullable=False, default="1")
+    delete = db.Column(db.Boolean, nullable=False, default="1")
+
+
+class Role(Base):
+    __tablename__ = 'auth_role'
+    name = db.Column(db.String(64), nullable=False)
+
+
+class RolePermission(db.Model):
+    __tablename__ = 'auth_role_permission'
+    id = db.Column(db.Integer, primary_key=True)
+
+    role_id = db.Column(db.Integer,db.ForeignKey('auth_role.id'))
+    model_id = db.Column(db.Integer,db.ForeignKey('core_model.id'))
+    model = db.relationship('HomeBestModel',cascade='all,delete',backref="rolepermission")
+    read = db.Column(db.Boolean, nullable=False, default="1")
+    write = db.Column(db.Boolean, nullable=False, default="1")
+    delete = db.Column(db.Boolean, nullable=False, default="1")
