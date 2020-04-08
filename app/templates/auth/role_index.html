@@ -8,7 +8,7 @@
                     <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"> </i>
                 </div>
                 <div>
-                    All User Accounts
+                    User Roles
                     <div class="page-title-subheading">
                         message
                     </div>
@@ -24,22 +24,18 @@
                 <div class="card-body">
                     <table id="index_table" class="mb-0 table table-hover">
                         <thead>
+                            {% for field in table_fields %}
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
-                                <th>Email</th>
+                                {{ field }}
                             </tr>
+                            {% endfor %}
                         </thead>
                         <tbody>
-                            {% for user in context['users'] %}
-                            <tr id="{{ user.id }}" onclick="user_row_click(this)" data-toggle="modal" data-id="1" data-target="#userModal">
-                                <param id="{{ user.id }}" name="{{ url_for('bp_auth.user_edit',user_id=user.id) }}">
-                                <td>{{ user.fname }}</td>
-                                <td>{{ user.lname }}</td>
-                                <td>{{ user.username }}</td>
-                                <td>{{ user.email }}</td>
-                                <td></td>
+                            {% for model in models %}
+                            <tr>
+                                <td>
+
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -72,24 +68,6 @@
             {% endif %}
     </nav>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    function add_delete_column(){
-        var tr = document.getElementById('index_table').tHead.children[0];
-        th = document.createElement('th');
-        th.innerHTML = "Delete";
-        tr.appendChild(th);
-        var new_cell = '\<div class="custom-checkbox custom-control"><input type="checkbox" id="" class="custom-control-input"><label class="custom-control-label" for=""></label></div>';
-
-        var table = document.getElementById("index_table");
-
-        for (var r = 1; r < table.rows.length; r++) {
-            table.rows[r].cells[5].insertAdjacentHTML('beforeend', new_cell);
-        }
-    }
-</script>
 {% endblock %}
 
 {% block toast %}

@@ -13,7 +13,7 @@ admin_urls = {
 
 # TEMPLATES DICTIONARY
 admin_templates = {
-    'index': 'admin/admin_index.html',
+    'index': 'admin/admin_dashboard.html',
 }
 
 # GLOBAL VARIABLE CONTEXT FOR URL RETURN
@@ -28,6 +28,7 @@ context['title'] = 'Admin'
 context['module'] = 'admin'
 
 from . import routes
+from . import models
 
 """ THIS IS FOR ADMIN MODELS """
 
@@ -36,14 +37,14 @@ class UserModel():
     model_name= 'Users'
     model_icon = 'pe-7s-users'
     model_description = "USERS"
-    functions = {'View Users': 'bp_auth.index','View User Permissions': 'bp_auth.index'}
+    functions = {'View Users': 'bp_auth.index','View User Permissions': 'bp_auth.user_permission_index'}
 
 
 class RoleModel():
     model_name= 'Roles'
     model_icon = 'pe-7s-users'
     model_description = "ROLES"
-    functions = {'View Roles': 'bp_auth.index'}
+    functions = {'View Roles': 'bp_auth.role_index'}
 
 
 class AdminModule():

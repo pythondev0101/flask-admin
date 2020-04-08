@@ -1,5 +1,4 @@
 from flask import Blueprint
-from app import system_modules
 
 bp_auth = Blueprint('bp_auth',__name__,)
 
@@ -14,6 +13,8 @@ auth_urls = {
     'edit': 'bp_auth.user_edit',
     'delete': 'bp_auth.user_delete',
     'user_add_permission': 'bp_auth.user_add_permission',
+    'user_permission_index': 'bp_auth.user_permission_index',
+    'role_index': 'bp_auth.role_index',
 }
 
 # TEMPLATES DICTIONARY
@@ -22,6 +23,7 @@ auth_templates = {
     'index': 'auth/user_index.html',
     'edit': 'auth/user_edit.html',
     'user_permission_index': 'auth/user_permission_index.html',
+    'role_index': 'auth/role_index.html',
 }
 
 

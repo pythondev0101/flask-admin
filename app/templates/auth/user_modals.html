@@ -2,7 +2,8 @@
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="form_create_user" action="{{ url_for('bp_auth.user_create') }}" class="needs-validation" method="POST" novalidate>
+            <form id="form_create_user" action="{{ url_for('bp_auth.user_create') }}" class="needs-validation"
+                  method="POST" novalidate>
                 {{ context['forms']['UserCreateForm'].csrf_token }}
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Add new user account</h5>
@@ -37,7 +38,8 @@
                                             <span class="input-group-text" id="inputGroupPrepend">@</span>
                                         </div>
                                         <input type="text" class="form-control" id="username" name="username"
-                                               placeholder="Username" aria-describedby="inputGroupPrepend" required onchange="username_check()">
+                                               placeholder="Username" aria-describedby="inputGroupPrepend" required
+                                               onchange="username_check()">
                                         <div id="username-invalid-feedback" class="invalid-feedback">
                                             Please choose a username or username is already taken.
                                         </div>
@@ -81,6 +83,7 @@
                                             });
                                         }, false);
                                     })();
+
                             </script>
                         </div>
                     </div>
@@ -95,9 +98,10 @@
     </div>
 </div>
 <script>
-                                  function username_check(){
+  function username_check(){
   var username = document.getElementById("username").value;
   var xmlHttp = new XMLHttpRequest();
+  var csrf_token = "{{ csrf_token() }}";
   xmlHttp.open("post", "http://localhost:5000/auth/username_check",true);
   xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlHttp.onreadystatechange = function(){
@@ -111,9 +115,11 @@
             }
     }
   }
+  xmlHttp.setRequestHeader("X-CSRFToken", csrf_token);
   var data = JSON.stringify({"username": username});
   xmlHttp.send(data);
   }
+
 </script>
 
 <!-- user_view modal -->
@@ -122,7 +128,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Add new user account</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">View user account</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -132,28 +138,31 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-4 mb-3">
-                                <label for="fname">First name</label>
-                                <input disabled type="text" class="form-control" name="fname" placeholder="First name"
+                                <label for="view_fname">First name</label>
+                                <input disabled type="text" class="form-control" id="view_fname" name="view_fname"
+                                       placeholder="First name" value=""
                                        required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="lname">Last name</label>
-                                <input disabled type="text" class="form-control" name="lname" placeholder="Last name"
+                                <label for="view_lname">Last name</label>
+                                <input disabled type="text" class="form-control" id="view_lname" name="view_lname"
+                                       placeholder="Last name" value=""
                                        required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="username">Username</label>
+                                <label for="view_username">Username</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                                     </div>
-                                    <input disabled type="text" class="form-control" id="username" name="username"
+                                    <input disabled type="text" class="form-control" id="view_username"
+                                           name="view_username" value=""
                                            placeholder="Username" aria-describedby="inputGroupPrepend" required>
                                     <div class="invalid-feedback">
                                         Please choose a username.
@@ -163,19 +172,12 @@
                         </div>
                         <div class="form-row">
                             <div class="col-md-6 mb-3">
-                                <label for="email">Email</label>
-                                <input disabled type="email" class="form-control" name="email" placeholder="Email"
+                                <label for="view_email">Email</label>
+                                <input disabled type="email" class="form-control" id="view_email" name="view_email"
+                                       placeholder="Email"
                                        required>
                                 <div class="invalid-feedback">
                                     Please provide a valid email
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="password">Password</label>
-                                <input disabled type="password" class="form-control" name="password"
-                                       placeholder="Password" required>
-                                <div class="invalid-feedback">
-                                    Please provide a valid password
                                 </div>
                             </div>
                         </div>

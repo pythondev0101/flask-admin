@@ -13,7 +13,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 from app.core.models import Base
 """--------------END--------------"""
-
+from app.admin.models import Admin
 
 # AUTH.MODEL.USER
 class User(UserMixin, Base):
@@ -50,15 +50,16 @@ class UserPermission(db.Model):
 
     user_id = db.Column(db.Integer,db.ForeignKey('auth_user.id'))
     model_id = db.Column(db.Integer,db.ForeignKey('core_model.id'))
-    model = db.relationship('HomeBestModel',cascade='all,delete',backref="userpermission")
+    model = db.relationship('HomeBestModel',backref="userpermission")
     read = db.Column(db.Boolean, nullable=False, default="1")
     write = db.Column(db.Boolean, nullable=False, default="1")
     delete = db.Column(db.Boolean, nullable=False, default="1")
 
 
-class Role(Base):
+class Role(Base,Admin):
     __tablename__ = 'auth_role'
     name = db.Column(db.String(64), nullable=False)
+    admin_index_fields = ['id','name']
 
 
 class RolePermission(db.Model):

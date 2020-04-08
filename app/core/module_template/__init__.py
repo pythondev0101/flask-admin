@@ -1,10 +1,9 @@
 from flask import Blueprint
-from app import system_models,system_modules
 
-bp_module = Blueprint('bp_module', __name__,)
+bp_blog = Blueprint('bp_module', __name__,)
 
 blueprint_name = ""  # The name of the module's blueprint
-module_name = "" # The name of the module
+module_name = ""  # The name of the module
 
 # URLS DICTIONARY
 # NOTE: CHANGE (model) to your module's model eg. customer_create
@@ -23,15 +22,6 @@ module_templates = {
     'edit': '{}/(model)_.html'.format(module_name),
 }
 
-# GLOBAL VARIABLE CONTEXT FOR URL RETURN
-context = {
-    'title': module_name,
-    'system_models': system_models,
-    'modules': system_modules,
-    'active': module_name,
-    'forms': {},
-    'modal': False,
-}
 
 from . import routes
 from . import models

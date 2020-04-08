@@ -10,7 +10,7 @@
                 <div>
                     Edit User Account
                     <div class="page-title-subheading">
-                        message
+                        message {{ session['permissions'] }}
                     </div>
                 </div>
             </div>
@@ -104,14 +104,16 @@
                 </thead>
                 <tbody>
                 {% for permission in context['user_permissions'] %}
+                <form action="{{url_for('bp_auth.user_delete_permission',permission_id=permission.id)}}" method="POST">
                 <tr>
                     <td scope="row"><strong>{{ permission.model.name }}</strong></td>
-                    <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.read %} checked {% endif %} type="checkbox" id="chk_read" name="chk_read" class="form-check-input"/></label></div></td>
-                    <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.write %} checked {% endif %} type="checkbox" id="chk_write" name="chk_write" class="form-check-input"/></label></div></td>
-                    <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.delete %} checked {% endif %} type="checkbox" id="chk_delete" name="chk_delete" class="form-check-input"/></label></div></td>
-                    <td><a href="" class="mb-2 mr-2 btn-transition btn btn-outline-danger">This permission</a></td>
+                    <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.read %} checked {% endif %} onclick="edit_chk({{ permission.id }})" type="checkbox" id="edit_chk_read_{{ permission.id }}" name="edit_chk_read_{{ permission.id }}" class="form-check-input"/></label></div></td>
+                    <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.write %} checked {% endif %} onclick="edit_chk({{ permission.id }})" type="checkbox" id="edit_chk_write_{{ permission.id }}" name="edit_chk_write_{{ permission.id }}" class="form-check-input"/></label></div></td>
+                    <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.delete %} checked {% endif %} onclick="edit_chk({{ permission.id }})" type="checkbox" id="edit_chk_delete_{{ permission.id }}" name="edit_chk_delete_{{ permission.id }}" class="form-check-input"/></label></div></td>
+                    <td><button type="submit" class="mb-2 mr-2 btn-transition btn btn-outline-danger">This permission</button></td>
                 </tr>
-                {% endfor %}
+                </form>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -156,3 +158,28 @@
 </div>
 {% endblock %}
 
+{% block scripts %}
+<script>
+  function edit_chk(permission_id){
+  var input_read = document.getElementById("edit_chk_read_".concat(permission_id)).checked;
+  var input_write = document.getElementById("edit_chk_write_".concat(permission_id)).checked;
+  var input_delete = document.getElementById("edit_chk_delete_".concat(permission_id)).checked;
+  var csrf_token = "{{ csrf_token() }}";
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open("post", "http://localhost:5000/auth/user_edit_permission",true);
+  xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlHttp.onreadystatechange = function(){
+    if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            if(xmlHttp.responseText.trim() == 1){
+                console.log("Saved");
+            }else if (xmlHttp.responseText.trim() == 0){
+                console.log("Not Saved");
+            }
+    }
+  }
+  xmlHttp.setRequestHeader("X-CSRFToken", csrf_token);
+  var data = JSON.stringify({"permission_id": permission_id,"read": input_read, "write": input_write, "delete": input_delete});
+  xmlHttp.send(data);
+  }
+</script>
+{% endblock %}

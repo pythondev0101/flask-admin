@@ -47,6 +47,7 @@
                 {% for key,value in context['system_modules'].items() %}
                 {% if key == context['module'] %}
                 {% for model_name,val in value['models'].items() %}
+                {% if session['permissions'][model_name]['read'] %}
                 <li>
                     <a href="#" class="{% if context['active']==model_name %} mm-active {% endif %}">
                         <i class="metismenu-icon {{ val['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
@@ -64,6 +65,7 @@
                         {% endfor %}
                     </ul>
                 </li>
+                {% endif %}
                 {% endfor %}
                 {% endif %}
                 {% endfor %}
