@@ -55,40 +55,24 @@ def change_context(view):
         context['title'] = 'User Permissions'
         context['active'] = 'Users'
         context['modal'] = False
-    elif view == 'role_index':
-        context['title'] = 'Roles'
-        context['active'] = 'Roles'
-        context['modal'] = False
 
 
 @bp_auth.route('/roles', methods=['GET', 'POST'])
 @login_required
 def role_index():
     fields = [Role.id,Role.name]
-    change_context('role_index')
-    return admin_index(Role, fields,auth_urls['role_index'],context)
+    return admin_index(Role, fields,auth_urls['role_index'])
 
 
 @bp_auth.route('/permissions', methods=['GET', 'POST'])
 @login_required
 def user_permission_index():
-    page = request.args.get('page', 1, type=int)
-    data_per_page = current_app.config['DATA_PER_PAGE']
-    user_permissions = UserPermission.query.paginate(page, data_per_page, False)
-    # user_create_form = UserForm()
-    next_url = url_for(auth_urls['user_permission_index'], page=user_permissions.next_num) \
-        if user_permissions.has_next else None
-    prev_url = url_for(auth_urls['user_permission_index'], page=user_permissions.prev_num) \
-        if user_permissions.has_prev else None
-
-    # ADDITIONAL CONTEXT
-    context['user_permissions'] = user_permissions.items
-    # context['forms'] = {'UserCreateForm': user_create_form}
-    context['next_url'] = next_url
-    context['prev_url'] = prev_url
-    context['data_per_page'] = data_per_page
     change_context('user_permission_index')
-    return render_template(auth_templates['user_permission_index'], context=context)
+    # index_fields = ['Username', 'Name','Model','Read','Write','Delete']
+
+    fields = [User.username,User.fname,HomeBestModel.name,UserPermission.read,UserPermission.write,UserPermission.delete]
+    model = [UserPermission,User]
+    return admin_index(*model, fields=fields, admin_index_url=auth_urls['user_permission_index'])
 
 
 @bp_auth.route('/username_check', methods=['POST'])

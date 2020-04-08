@@ -33,18 +33,7 @@ from . import models
 """ THIS IS FOR ADMIN MODELS """
 
 
-class UserModel():
-    model_name= 'Users'
-    model_icon = 'pe-7s-users'
-    model_description = "USERS"
-    functions = {'View Users': 'bp_auth.index','View User Permissions': 'bp_auth.user_permission_index'}
-
-
-class RoleModel():
-    model_name= 'Roles'
-    model_icon = 'pe-7s-users'
-    model_description = "ROLES"
-    functions = {'View Roles': 'bp_auth.role_index'}
+from app.auth.models import Role,User
 
 
 class AdminModule():
@@ -52,4 +41,4 @@ class AdminModule():
     module_icon = 'fa-home'
     module_link = 'bp_admin.index'
     module_description = 'Administrator'
-    models = [UserModel,RoleModel]
+    models = [User,Role]
