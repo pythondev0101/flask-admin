@@ -70,8 +70,11 @@
 </html>
 
 <!--INCLUDE HERE: MODALS-->
-{% if modal %}
-    {% block modals %}
-        {% include modal %}
-    {% endblock %}
-{% endif %}
+{% block modals %}
+    {% if create_modal %}
+        {% include create_modal %}
+    {% endif %}
+    {% if view_modal %}
+        {% include view_modal %}
+    {% endif %}
+{% endblock %}

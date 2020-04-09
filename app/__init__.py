@@ -20,6 +20,7 @@ context = {
     'active': '',
     'forms': {},
     'errors': {},
+    'create_modal': {},
 }
 
 def create_app():

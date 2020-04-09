@@ -45,8 +45,9 @@ context['module'] = 'admin'
 @login_required
 def role_index():
     fields = [Role.id, Role.name, Role.created_at]
-    return admin_index(Role, fields=fields, url=auth_urls['role_index'], action="auth/auth_actions.html",
-                       modal="auth/auth_modals.html", modal_id="createRoleModal")
+    form = RoleCreateForm()
+    return admin_index(Role, fields=fields, url=auth_urls['role_index'],
+                       create_url='bp_auth.role_create',edit_url="bp_auth.user_edit",form=form)
 
 
 @bp_auth.route('/permissions', methods=['GET', 'POST'])
@@ -55,17 +56,17 @@ def user_permission_index():
     fields = [UserPermission.id, User.username, User.fname, HomeBestModel.name, UserPermission.read,
               UserPermission.write, UserPermission.delete]
     model = [UserPermission, User]
-    return admin_index(*model, fields=fields, url=auth_urls['user_permission_index'])
+    return admin_index(*model, fields=fields, url=auth_urls['user_permission_index'],create_modal=False,
+                       view_modal=False,active="Users")
 
 
 @bp_auth.route('/users')
 @login_required
 def index():
-    user_create_form = UserForm()
-    context['forms'] = {'UserCreateForm': user_create_form}
+    form = UserForm()
     fields = [User.id, User.username, User.fname, User.lname, User.email]
-    return admin_index(User, fields=fields, url=auth_urls['index'], action="auth/auth_actions.html",
-                       modal="auth/auth_modals.html", modal_id="userModal", edit_url="bp_auth.user_edit")
+    return admin_index(User, fields=fields, url=auth_urls['index'],
+                       create_url='bp_auth.user_create',edit_url="bp_auth.user_edit",form=form)
 
 
 @bp_auth.route('/role_create', methods=['POST'])

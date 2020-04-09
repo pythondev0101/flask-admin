@@ -1,8 +1,14 @@
 <div class="page-title-actions">
-    <button type="button" data-toggle="modal" data-target=".bd-example-modal-lg" title="Add new user" data-placement="bottom"
+    {% if create_modal %}
+    <button type="button" data-toggle="modal" data-target="#create_modal" title="Add new user" data-placement="bottom"
             class="btn-shadow mr-3 btn btn-primary">
+        {% if context['active'] == 'Users' %}
         <i class="fa fa-user-plus"></i>
+        {% else %}
+        <i class="fa fa-plus"></i>
+        {% endif %}
     </button>
+    {% endif %}
     <div class="d-inline-block dropdown">
         <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="btn-shadow dropdown-toggle btn btn-info">

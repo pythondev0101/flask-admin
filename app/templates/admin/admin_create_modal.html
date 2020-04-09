@@ -1,0 +1,91 @@
+{% with modal = context['create_modal'] %}
+<div id="create_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="form_create" action="{{ url_for(modal['create_url']) }}" class="needs-validation" method="POST" novalidate>
+                {{ modal['create_form'].csrf_token }}
+                <div class="modal-header">
+                    <h5 class="modal-title">Add new {{ modal['title'] }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            {% for row in modal['fields'] %}
+                            <div class="form-row">
+                                {% for field in row %}
+                                <div class="col-md-4 mb-3">
+                                    <label for="{{ field.name }}">{{ field.label }}</label>
+                                    <input type="{{ field.type }}" class="form-control" id="{{ field.name }}" name="{{ field.name }}"
+                                           placeholder="{{ field.label }}" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid {{ field.label }}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            <script>
+                                    // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                    (function() {
+                                        'use strict';
+                                        window.addEventListener('load', function() {
+                                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                            var forms = document.getElementsByClassName('needs-validation');
+                                            // Loop over them and prevent submission
+                                            var validation = Array.prototype.filter.call(forms, function(form) {
+                                                form.addEventListener('submit', function(event) {
+                                                    if (form.checkValidity() === false) {
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                    }
+                                                    form.classList.add('was-validated');
+                                                }, false);
+                                            });
+                                        }, false);
+                                    })();
+
+                            </script>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endwith %}
+
+{% if context['active'] == 'Users' %}
+<script>
+  function username_check(){
+  var username = document.getElementById("username").value;
+  var xmlHttp = new XMLHttpRequest();
+  var csrf_token = "{{ csrf_token() }}";
+  xmlHttp.open("post", "http://localhost:5000/auth/username_check",true);
+  xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlHttp.onreadystatechange = function(){
+    if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            var response = xmlHttp.responseText.trim();
+            console.log(response)
+            if(xmlHttp.responseText.trim() == 1){
+                document.getElementById("username-invalid-feedback").style.display = "none";
+            }else if (xmlHttp.responseText.trim() == 0){
+                document.getElementById("username-invalid-feedback").style.display = "block";
+            }
+    }
+  }
+  xmlHttp.setRequestHeader("X-CSRFToken", csrf_token);
+  var data = JSON.stringify({"username": username});
+  xmlHttp.send(data);
+  }
+</script>
+{% endif %}

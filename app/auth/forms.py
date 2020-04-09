@@ -5,12 +5,18 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField,DateTi
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from datetime import datetime
 """--------------END--------------"""
+from app.admin.forms import AdminField,AdminForm
 
-
-class RoleCreateForm(FlaskForm):
+class RoleCreateForm(FlaskForm,AdminForm):
     name = StringField('name', validators=[DataRequired()])
     created_at = DateTimeField('Created At',format='%Y-%m-%dT%H:%M:%S', validators = [DataRequired()],
                                default=datetime.today())
+
+    a_name = AdminField('name','Role Name','text')
+
+    create_fields = [
+        [a_name]
+    ]
 
 
 # TODO: FOR FUTURE VERSION CHANGE THIS TO CLASS INHERITANCE
@@ -21,7 +27,7 @@ class UserEditForm(FlaskForm):
     fname = StringField('First Name', validators=[DataRequired()])
     lname = StringField('Last Name', validators=[DataRequired()])
 
-class UserForm(FlaskForm):
+class UserForm(FlaskForm,AdminForm):
     active = BooleanField('Active',default=1)
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -32,6 +38,16 @@ class UserForm(FlaskForm):
     created_at = DateTimeField('Created At',format='%Y-%m-%dT%H:%M:%S', validators = [DataRequired()],
                                default=datetime.today())
 
+    a_username = AdminField('username','Username','text')
+    a_fname = AdminField('fname','First Name','text')
+    a_lname = AdminField('lname','Last Name','text')
+    a_email = AdminField('email','Email','email')
+    a_password = AdminField('password','Password','password')
+
+    create_fields = [
+        [a_fname,a_lname,a_username],
+        [a_email,a_password]
+    ]
 
 # AUTH.FORMS.LOGINFORM
 class LoginForm(FlaskForm):

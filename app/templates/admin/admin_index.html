@@ -36,8 +36,8 @@
                         <tbody>
 
                         {% for model in models %}
-                        {% if modal %}
-                        <tr id="{{ model[0] }}" onclick="row_click(this, '{{context['active']}}')" data-toggle="modal" data-target="#{{ modal_id }}">
+                        {% if view_modal %}
+                        <tr id="{{ model[0] }}" onclick="row_click(this, '{{context['active']}}')" data-toggle="modal" data-target="#viewModal">
                             <param id="{{ model[0] }}" name="{{ url_for(edit_url,oid=model[0]) }}">
                             {% else %}
                             <tr>
