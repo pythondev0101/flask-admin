@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>{{ context['title'] }}</title>
+    <title>{{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -23,16 +23,26 @@
     -->
     <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/homebest.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <!-- ADMIN HEADER -->
+        {% block header %}
         {% include 'admin/admin_header.html' %}
+        {% endblock %}
+
         <!-- ADMIN OPTIONS -->
+        {% block options %}
         {% include 'admin/admin_options.html' %}
+        {% endblock %}
+
         <div class="app-main">
         <!-- ADMIN SIDEBAR -->
+        {% block sidebar %}
         {% include 'admin/admin_sidebar.html' %}
+        {% endblock %}
+
             <div class="app-main__outer">
                 <!-- CONTENT BLOCK -->
                 {% block content %}
@@ -60,8 +70,11 @@
 </html>
 
 <!--INCLUDE HERE: MODALS-->
-{% if context['active'] == 'Users' %}
-    {% if context['modal'] %}
-        {% include 'auth/user_modals.html' %}
+{% block modals %}
+    {% if create_modal %}
+        {% include create_modal %}
     {% endif %}
-{% endif %}
+    {% if view_modal %}
+        {% include view_modal %}
+    {% endif %}
+{% endblock %}

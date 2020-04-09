@@ -1,22 +1,16 @@
-//$(function(){
-//    $('#userModal').modal({
-//        keyboard: true,
-//        backdrop: "static",
-//        show:false,
-//
-//    }).on('show', function(){ //subscribe to show method
-//       var getIdFromRow = $(event.target).closest('tr').data('id'); //get the id from tr
-//        //make your ajax call populate items or what even you need
-//       //$(this).find('#useredit').html($('<b> Order Id selected: ' + getIdFromRow  + '</b>'))
-//       document.getElementById("user_edit_button").setAttribute("href", "https://www.w3schools.com");
-//
-//    });
-//});
+window.addEventListener('load', function () {
 
+})
 
-function row_click(row_obj){
+function row_click(row_obj,model){
+    if (model == "Users"){
     var url = document.getElementById(row_obj.id).name;
     document.getElementById("user_edit_button").setAttribute("href", url);
+    document.getElementById("view_fname").value = row_obj.cells[0].innerHTML;
+    document.getElementById("view_lname").value = row_obj.cells[1].innerHTML;
+    document.getElementById("view_username").value = row_obj.cells[2].innerHTML;
+    document.getElementById("view_email").value = row_obj.cells[3].innerHTML;
+    }
 
 }
 

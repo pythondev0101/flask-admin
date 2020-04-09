@@ -40,25 +40,16 @@
                 </div>
                 <button class="close"></button>
             </div>
+                                        <!-- NAVIGATION FOR MODULES -->
             <ul class="header-menu nav">
+                {% for module,value in context['system_modules'].items() %}
                 <li class="nav-item">
-                    <a href="javascript:void(0);" class="nav-link">
-                        <i class="nav-link-icon fa fa-database"> </i>
-                        Statistics
+                    <a href="{{ url_for(value['link']) }}" class="nav-link">
+                        <i class="nav-link-icon fa {{ value['icon'] }} {% if module == context['module'] %}icon-gradient bg-malibu-beach{% endif %}"> </i>
+                        {{ value['description'] }}
                     </a>
                 </li>
-                <li class="btn-group nav-item">
-                    <a href="javascript:void(0);" class="nav-link">
-                        <i class="nav-link-icon fa fa-edit"></i>
-                        Projects
-                    </a>
-                </li>
-                <li class="dropdown nav-item">
-                    <a href="javascript:void(0);" class="nav-link">
-                        <i class="nav-link-icon fa fa-cog"></i>
-                        Settings
-                    </a>
-                </li>
+                {% endfor %}
             </ul>
         </div>
         <div class="app-header-right">
