@@ -44,8 +44,8 @@ class User(UserMixin, Base, Admin):
     def __repr__(self):
         return "<User {}>".format(self.username)
 
-    index_fields = ['id', 'name']
-    index_title = "All Roles"
+    index_fields = ['Username','First name', 'last name','email']
+    index_title = "Users"
     index_message = "Message"
     title = index_title
     model_name = 'Users'
@@ -78,7 +78,7 @@ class UserPermission(db.Model, Admin):
 class Role(Base, Admin):
     __tablename__ = 'auth_role'
     name = db.Column(db.String(64), nullable=False)
-    index_fields = ['id', 'name']
+    index_fields = ['name', 'Created']
     index_title = "All Roles"
     index_message = "Message"
     title = index_title

@@ -6,6 +6,13 @@ from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from datetime import datetime
 """--------------END--------------"""
 
+
+class RoleCreateForm(FlaskForm):
+    name = StringField('name', validators=[DataRequired()])
+    created_at = DateTimeField('Created At',format='%Y-%m-%dT%H:%M:%S', validators = [DataRequired()],
+                               default=datetime.today())
+
+
 # TODO: FOR FUTURE VERSION CHANGE THIS TO CLASS INHERITANCE
 class UserEditForm(FlaskForm):
     active = BooleanField('Active', default=1)
@@ -32,15 +39,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Log in')
-
-
-class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    password_confirm = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Register User')
-
 
 def validate_username(self, username):
     user = User.query.filter_by(username=username.data).first()

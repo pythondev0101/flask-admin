@@ -70,10 +70,8 @@
 </html>
 
 <!--INCLUDE HERE: MODALS-->
-{% block modals %}
-{% if context['active'] == 'Users' %}
-    {% if context['modal'] %}
-        {% include 'auth/user_modals.html' %}
-    {% endif %}
+{% if modal %}
+    {% block modals %}
+        {% include modal %}
+    {% endblock %}
 {% endif %}
-{% endblock %}

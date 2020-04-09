@@ -15,12 +15,11 @@ system_modules = {}
 
 # GLOBAL VARIABLE CONTEXT FOR URL RETURN
 context = {
-    'title': '',
     'system_modules': system_modules,
     'module':'',
     'active': '',
     'forms': {},
-    'modal': False,
+    'errors': {},
 }
 
 def create_app():

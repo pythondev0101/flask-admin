@@ -17,7 +17,7 @@ from app import db
 
 """ MODULE: AUTH,ADMIN IMPORTS """
 from .models import User, UserPermission, Role
-from .forms import LoginForm, UserForm, UserEditForm
+from .forms import LoginForm, UserForm, UserEditForm, RoleCreateForm
 from app.core.models import HomeBestModel
 
 """--------------END--------------"""
@@ -35,44 +35,60 @@ from . import auth_templates
 """--------------END--------------"""
 
 from datetime import datetime
-from sqlalchemy import text
 from flask_cors import cross_origin
 from app.admin.routes import admin_index
 
 context['module'] = 'admin'
 
 
-# This function will change context values depends in view
-def change_context(view):
-    # VALUES: title, module, active, forms, modal
-    if view == 'index':
-        context['title'] = 'Users'
-        context['active'] = 'Users'
-        context['modal'] = True
-    elif view == 'login':
-        context['title'] = 'Users'
-    elif view == 'user_permission_index':
-        context['title'] = 'User Permissions'
-        context['active'] = 'Users'
-        context['modal'] = False
-
-
 @bp_auth.route('/roles', methods=['GET', 'POST'])
 @login_required
 def role_index():
-    fields = [Role.id,Role.name]
-    return admin_index(Role, fields,auth_urls['role_index'])
+    fields = [Role.id, Role.name, Role.created_at]
+    return admin_index(Role, fields=fields, url=auth_urls['role_index'], action="auth/auth_actions.html",
+                       modal="auth/auth_modals.html", modal_id="createRoleModal")
 
 
 @bp_auth.route('/permissions', methods=['GET', 'POST'])
 @login_required
 def user_permission_index():
-    change_context('user_permission_index')
-    # index_fields = ['Username', 'Name','Model','Read','Write','Delete']
+    fields = [UserPermission.id, User.username, User.fname, HomeBestModel.name, UserPermission.read,
+              UserPermission.write, UserPermission.delete]
+    model = [UserPermission, User]
+    return admin_index(*model, fields=fields, url=auth_urls['user_permission_index'])
 
-    fields = [User.username,User.fname,HomeBestModel.name,UserPermission.read,UserPermission.write,UserPermission.delete]
-    model = [UserPermission,User]
-    return admin_index(*model, fields=fields, admin_index_url=auth_urls['user_permission_index'])
+
+@bp_auth.route('/users')
+@login_required
+def index():
+    user_create_form = UserForm()
+    context['forms'] = {'UserCreateForm': user_create_form}
+    fields = [User.id, User.username, User.fname, User.lname, User.email]
+    return admin_index(User, fields=fields, url=auth_urls['index'], action="auth/auth_actions.html",
+                       modal="auth/auth_modals.html", modal_id="userModal", edit_url="bp_auth.user_edit")
+
+
+@bp_auth.route('/role_create', methods=['POST'])
+@login_required
+def role_create():
+    try:
+        role_create_form = RoleCreateForm()
+        if request.method == "POST":
+            if role_create_form.validate_on_submit():
+                role = Role()
+                role.name = role_create_form.name.data
+                role.updated_at = datetime.now()
+                db.session.add(role)
+                db.session.commit()
+                flash('New Role Added Successfully!')
+                return redirect(url_for(auth_urls['role_index']))
+            else:
+                for key, value in role_create_form.errors.items():
+                    print(key, value)
+                return redirect(url_for(auth_urls['role_index']))
+    except Exception as e:
+        context['errors']['SystemError'] = e
+        return redirect(url_for(auth_urls['role_index']))
 
 
 @bp_auth.route('/username_check', methods=['POST'])
@@ -104,46 +120,50 @@ def user_delete(user_id):
 @bp_auth.route('/user_create', methods=['POST'])
 @login_required
 def user_create():
-    user_create_form = UserForm()
-    if request.method == "POST":
-        if user_create_form.validate_on_submit():
-            user = User()
-            models = HomeBestModel.query.all()
-            for homebestmodel in models:
-                permission = UserPermission(model=homebestmodel, read=1, write=1, delete=1)
-                user.permissions.append(permission)
-            user.username = user_create_form.username.data
-            user.fname = user_create_form.fname.data
-            user.lname = user_create_form.lname.data
-            user.email = user_create_form.email.data
-            user.set_password(user_create_form.password.data)
-            db.session.add(user)
-            db.session.commit()
-            flash('New User Added Successfully!')
-            return redirect(url_for(auth_urls['index']))
-        else:
-            for key, value in user_create_form.errors.items():
-                print(key, value)
-            return redirect(url_for(auth_urls['index']))
+    try:
+        user_create_form = UserForm()
+        if request.method == "POST":
+            if user_create_form.validate_on_submit():
+                user = User()
+                models = HomeBestModel.query.all()
+                for homebestmodel in models:
+                    permission = UserPermission(model=homebestmodel, read=1, write=1, delete=1)
+                    user.permissions.append(permission)
+                user.username = user_create_form.username.data
+                user.fname = user_create_form.fname.data
+                user.lname = user_create_form.lname.data
+                user.email = user_create_form.email.data
+                user.set_password(user_create_form.password.data)
+                db.session.add(user)
+                db.session.commit()
+                flash('New User Added Successfully!')
+                return redirect(url_for(auth_urls['index']))
+            else:
+                for key, value in user_create_form.errors.items():
+                    print(key, value)
+                    context['errors'][key] = value
+                return redirect(url_for(auth_urls['index']))
+    except Exception as e:
+        context['errors']['SystemError'] = e
+        return redirect(url_for(auth_urls['index']))
 
 
-@bp_auth.route('/user_edit/<int:user_id>', methods=['GET', 'POST'])
+@bp_auth.route('/user_edit/<int:oid>', methods=['GET', 'POST'])
 @login_required
 @cross_origin()
-def user_edit(user_id):
-    user = User.query.get_or_404(user_id)
+def user_edit(oid):
+    user = User.query.get_or_404(oid)
     user_edit_form = UserEditForm(obj=user)
     # TODO: MOVE PERMISSIONS IN SESSIONS
-
     if request.method == "GET":
-        user_permissions = UserPermission.query.filter_by(user_id=user_id)
+        user_permissions = UserPermission.query.filter_by(user_id=oid)
         permission_model = db.session.query(UserPermission.model_id)
         models = db.session.query(HomeBestModel).filter(~HomeBestModel.id.in_(permission_model))
         context['user_permissions'] = user_permissions
         context['models'] = models
         context['forms'] = {'UserEditForm': user_edit_form}
         context['modal'] = False
-        context['user_id'] = user_id
+        context['user_id'] = oid
         return render_template(auth_templates['edit'], context=context)
     elif request.method == "POST":
         if user_edit_form.validate_on_submit():
@@ -220,32 +240,11 @@ def user_delete_permission(permission_id):
             db.session.rollback()
 
 
-@bp_auth.route('/users')
-@login_required
-def index():
-    page = request.args.get('page', 1, type=int)
-    data_per_page = current_app.config['DATA_PER_PAGE']
-    users = User.query.paginate(page, data_per_page, False)
-    user_create_form = UserForm()
-    next_url = url_for(auth_urls['index'], page=users.next_num) \
-        if users.has_next else None
-    prev_url = url_for(auth_urls['index'], page=users.prev_num) \
-        if users.has_prev else None
-
-    # ADDITIONAL CONTEXT
-    context['users'] = users.items
-    context['forms'] = {'UserCreateForm': user_create_form}
-    context['next_url'] = next_url
-    context['prev_url'] = prev_url
-    context['data_per_page'] = data_per_page
-    change_context('index')
-    return render_template(auth_templates['index'], context=context)
-
-
 @bp_auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()  # Instance of auth.forms.loginform
     if request.method == "GET":
+        context['title'] = 'Users'
         if current_user.is_authenticated:
             return redirect(url_for(admin_urls['admin']))
         # TODO: make templates dictionary
@@ -288,63 +287,3 @@ def logout():
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
-
-
-@login_manager.request_loader
-def load_user_from_request(request):
-    # first, try to login using the api_key url arg
-    api_key = request.args.get('api_key')
-    if api_key:
-        user = User.query.filter_by(api_key=api_key).first()
-        if user:
-            return user
-
-    # next, try to login using Basic Auth
-    api_key = request.headers.get('Authorization')
-    if api_key:
-        api_key = api_key.replace('Basic ', '', 1)
-        try:
-            api_key = base64.b64decode(api_key)
-        except TypeError:
-            pass
-        user = User.query.filter_by(api_key=api_key).first()
-        if user:
-            return user
-
-    # finally, return None if both methods did not login the user
-    return None
-
-# TODO: VIEW MODAL FORM
-# TODO: DELETE ALL CHECKED FROM USER_INDEX.html
-# TODO: AJAX for checking names
-# @app.route('/user_check', methods=['POST'])
-# def username_check():
-#     conn = None
-#     cursor = None
-#     try:
-#         username = request.form['username']
-#
-#         # validate the received values
-#         if username and request.method == 'POST':
-#             conn = mysql.connect()
-#             cursor = conn.cursor(pymysql.cursors.DictCursor)
-#             cursor.execute("SELECT * FROM user WHERE login_username=%s", username)
-#             row = cursor.fetchone()
-#
-#             if row:
-#                 resp = jsonify('<span style=\'color:red;\'>Username unavailable</span>')
-#                 resp.status_code = 200
-#                 return resp
-#             else:
-#                 resp = jsonify('<span style=\'color:green;\'>Username available</span>')
-#                 resp.status_code = 200
-#                 return resp
-#         else:
-#             resp = jsonify('<span style=\'color:red;\'>Username is required field.</span>')
-#             resp.status_code = 200
-#             return resp
-#     except Exception as e:
-#         print(e)
-#     finally:
-#         cursor.close()
-#         conn.close()

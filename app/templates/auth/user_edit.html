@@ -17,7 +17,7 @@
         </div>
     </div>
     {% with form = context['forms']['UserEditForm'] %}
-    <form action="{{ url_for('bp_auth.user_edit',user_id=context['user_id']) }}" id="user_edit_form"
+    <form action="{{ url_for('bp_auth.user_edit',oid=context['user_id']) }}" id="user_edit_form"
           class="needs-validation" method="POST" novalidate>
         {{ form.csrf_token }}
         <div class="main-card mb-3 card">
