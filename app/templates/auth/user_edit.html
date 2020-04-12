@@ -105,8 +105,8 @@
                 <tbody>
                 {% for permission in context['user_permissions'] %}
                 <form action="{{url_for('bp_auth.user_delete_permission',permission_id=permission.id)}}" method="POST">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <tr>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <td scope="row"><strong>{{ permission.model.name }}</strong></td>
                     <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.read %} checked {% endif %} onclick="edit_chk({{ permission.id }})" type="checkbox" id="edit_chk_read_{{ permission.id }}" name="edit_chk_read_{{ permission.id }}" class="form-check-input"/></label></div></td>
                     <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.write %} checked {% endif %} onclick="edit_chk({{ permission.id }})" type="checkbox" id="edit_chk_write_{{ permission.id }}" name="edit_chk_write_{{ permission.id }}" class="form-check-input"/></label></div></td>
