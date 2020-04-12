@@ -44,7 +44,7 @@ class User(UserMixin, Base, Admin):
     def __repr__(self):
         return "<User {}>".format(self.username)
 
-    index_fields = ['Username','First name', 'last name','email']
+    index_fields = ['Username','First name', 'last name','email','role']
     index_title = "Users"
     index_message = "Message"
     title = index_title

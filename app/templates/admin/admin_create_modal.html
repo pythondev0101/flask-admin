@@ -1,8 +1,10 @@
 {% with modal = context['create_modal'] %}
-<div id="create_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="create_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="form_create" action="{{ url_for(modal['create_url']) }}" class="needs-validation" method="POST" novalidate>
+            <form id="form_create" action="{{ url_for(modal['create_url']) }}" class="needs-validation" method="POST"
+                  novalidate>
                 {{ modal['create_form'].csrf_token }}
                 <div class="modal-header">
                     <h5 class="modal-title">Add new {{ modal['title'] }}</h5>
@@ -16,9 +18,29 @@
                             {% for row in modal['fields'] %}
                             <div class="form-row">
                                 {% for field in row %}
+                                {% if field.type == 'select' %}
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="{{ field.name }}" class="">{{ field.label }}</label>
+                                        <select name="{{ field.name }}" id="{{ field.name }}" class="form-control">
+                                            <option value=""></option>
+                                            {% for odata in field.data %}
+                                            <option value="{{ odata.id }}">{{ odata.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid {{ field.label }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
                                 <div class="col-md-4 mb-3">
                                     <label for="{{ field.name }}">{{ field.label }}</label>
-                                    <input type="{{ field.type }}" class="form-control" id="{{ field.name }}" name="{{ field.name }}"
+                                    <input type="{{ field.type }}" class="form-control" id="{{ field.name }}"
+                                           name="{{ field.name }}"
                                            placeholder="{{ field.label }}" required>
                                     <div class="valid-feedback">
                                         Looks good!
@@ -27,6 +49,7 @@
                                         Please provide a valid {{ field.label }}
                                     </div>
                                 </div>
+                                {% endif %}
                                 {% endfor %}
                             </div>
                             {% endfor %}
@@ -49,6 +72,9 @@
                                             });
                                         }, false);
                                     })();
+
+
+
 
                             </script>
                         </div>
@@ -87,5 +113,8 @@
   var data = JSON.stringify({"username": username});
   xmlHttp.send(data);
   }
+
+
+
 </script>
 {% endif %}

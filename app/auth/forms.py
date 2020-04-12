@@ -1,12 +1,12 @@
 """ MODULE: AUTH.FORMS"""
 """ FLASK IMPORTS """
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField,DateTimeField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField,DateTimeField, SelectField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from datetime import datetime
 """--------------END--------------"""
-from app.admin.forms import AdminField,AdminForm
-
+from app.admin.forms import AdminField,AdminForm, AdminSelectField
+from .models import Role
 class RoleCreateForm(FlaskForm,AdminForm):
     name = StringField('name', validators=[DataRequired()])
     created_at = DateTimeField('Created At',format='%Y-%m-%dT%H:%M:%S', validators = [DataRequired()],
@@ -35,6 +35,9 @@ class UserForm(FlaskForm,AdminForm):
     fname = StringField('First Name', validators=[DataRequired()])
     lname = StringField('Last Name', validators=[DataRequired()])
 
+    role_id = SelectField('Role', choices=[(row.id,row.name) for row in Role.query.all()],
+                          validators=[DataRequired()])
+
     created_at = DateTimeField('Created At',format='%Y-%m-%dT%H:%M:%S', validators = [DataRequired()],
                                default=datetime.today())
 
@@ -43,10 +46,11 @@ class UserForm(FlaskForm,AdminForm):
     a_lname = AdminField('lname','Last Name','text')
     a_email = AdminField('email','Email','email')
     a_password = AdminField('password','Password','password')
+    a_role = AdminSelectField('role_id','Role','select', Role)
 
     create_fields = [
         [a_fname,a_lname,a_username],
-        [a_email,a_password]
+        [a_email,a_password,a_role]
     ]
 
 # AUTH.FORMS.LOGINFORM

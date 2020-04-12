@@ -41,9 +41,10 @@ def admin_index(*model, fields, url, action="admin/admin_actions.html", create_m
     data_per_page = current_app.config['DATA_PER_PAGE']
     if len(model) == 1:
         models = model[0].query.with_entities(*fields).paginate(page, data_per_page, False)
+        print(model[0].query.with_entities(*fields))
     else:
-        models = model[0].query.join(model[1]).with_entities(*fields).paginate(page, data_per_page, False)
-
+        models = model[0].query.outerjoin(model[1]).with_entities(*fields).paginate(page, data_per_page, False)
+        print(model[0].query.outerjoin(model[1]).with_entities(*fields))
     table_fields = model[0].index_fields
 
     title = model[0].title
@@ -76,7 +77,11 @@ def set_modal(url, form):
     for row in form.create_fields:
         fields.append([])
         for field in row:
-            fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type})
+            if field.input_type == 'select':
+                data = field.data.query.all()
+                fields[row_count].append({'name':field.name,'label':field.label,'type':field.input_type,'data': data})
+            else:
+                fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type})
         row_count = row_count + 1
     context['create_modal'] = {
         'create_url': url,
