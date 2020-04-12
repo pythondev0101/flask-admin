@@ -228,7 +228,7 @@ def user_add_permission(user_id):
         user.permissions.append(permission)
         db.session.commit()
         load_permissions(current_user.id)
-        return redirect(url_for(auth_urls['edit'], user_id=user_id))
+        return redirect(url_for(auth_urls['edit'], oid=user_id))
 
 
 @bp_auth.route('/user_delete_permission/<int:permission_id>/', methods=['POST'])

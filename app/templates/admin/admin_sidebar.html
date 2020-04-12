@@ -47,6 +47,7 @@
                 {% for key,value in context['system_modules'].items() %}
                 {% if key == context['module'] %}
                 {% for model_name,val in value['models'].items() %}
+                {% if model_name in session['permissions'] %}
                 {% if session['permissions'][model_name]['read'] %}
                 <li>
                     <a href="#" class="{% if context['active']==model_name %} mm-active {% endif %}">
@@ -65,6 +66,7 @@
                         {% endfor %}
                     </ul>
                 </li>
+                {% endif %}
                 {% endif %}
                 {% endfor %}
                 {% endif %}

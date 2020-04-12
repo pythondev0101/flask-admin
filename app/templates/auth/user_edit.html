@@ -104,16 +104,15 @@
                 </thead>
                 <tbody>
                 {% for permission in context['user_permissions'] %}
+                 <tr>
                 <form action="{{url_for('bp_auth.user_delete_permission',permission_id=permission.id)}}" method="POST">
-                    <tr>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <td scope="row"><strong>{{ permission.model.name }}</strong></td>
                     <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.read %} checked {% endif %} onclick="edit_chk({{ permission.id }})" type="checkbox" id="edit_chk_read_{{ permission.id }}" name="edit_chk_read_{{ permission.id }}" class="form-check-input"/></label></div></td>
                     <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.write %} checked {% endif %} onclick="edit_chk({{ permission.id }})" type="checkbox" id="edit_chk_write_{{ permission.id }}" name="edit_chk_write_{{ permission.id }}" class="form-check-input"/></label></div></td>
                     <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if permission.delete %} checked {% endif %} onclick="edit_chk({{ permission.id }})" type="checkbox" id="edit_chk_delete_{{ permission.id }}" name="edit_chk_delete_{{ permission.id }}" class="form-check-input"/></label></div></td>
                     <td><button type="submit" class="mb-2 mr-2 btn-transition btn btn-outline-danger">This permission</button></td>
-                </tr>
-                </form>
+                </form></tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -135,15 +134,16 @@
                 </thead>
                 <tbody>
                 {% for model in context['models'] %}
+                <tr>
                 <form action="{{ url_for('bp_auth.user_add_permission',user_id=context['user_id'],model_id=model.id) }}" method="POST">
-                    <tr>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <td scope="row"><strong>{{ model.name }}</strong></td>
                     <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input type="checkbox" id="chk_read" name="chk_read" class="form-check-input"/></label></div></td>
                     <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input type="checkbox" id="chk_write" name="chk_write" class="form-check-input"/></label></div></td>
                     <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input type="checkbox" id="chk_delete" name="chk_delete" class="form-check-input"/></label></div></td>
                     <td><button type="submit" class="mb-2 mr-2 btn-transition btn btn-outline-success">This permission</button></td>
-                </tr>
                 </form>
+                </tr>
                 {% endfor %}
                 </tbody>
             </table>
