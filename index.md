@@ -171,17 +171,17 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
                 create_url="", edit_url="", template="admin/admin_index.html", active="")
 ```
 Parameters:
-*model = takes a list of models to query and show in the html table
-fields = takes a list of fields what to query in the model
-url = takes the url route of the created function
-form = takes a FlaskForm instance in creating new data
-action = default is admin_actions.html, override this to replace admin_actions.html to your custom actions
-create_modal = default is admin_create_modal.html, override this to replace default modal form to your custom modal form, set to None to not activate the modal form
-view_modal = default is admin_view_modal.html, override this to replace default view modal, set to None to not activate the view modal
-create_url = takes the url of create object 
-edit_url = takes the url of edit object
-template = default is admin_index.html, override to replace default to your custom index html
-active = basta para alam ng css kung sino lalagyan ng mm-active na class, malalaman mo din haha
+* *model = takes a list of models to query and show in the html table
+* fields = takes a list of fields what to query in the model
+* url = takes the url route of the created function
+* form = takes a FlaskForm instance in creating new data
+* action = default is admin_actions.html, override this to replace admin_actions.html to your custom actions
+* create_modal = default is admin_create_modal.html, override this to replace default modal form to your custom modal form, set to None * to not activate the modal form
+* view_modal = default is admin_view_modal.html, override this to replace default view modal, set to None to not activate the view modal
+* create_url = takes the url of create object 
+* edit_url = takes the url of edit object
+* template = default is admin_index.html, override to replace default to your custom index html
+* active = basta para alam ng css kung sino lalagyan ng mm-active na class, malalaman mo din haha
 
 ### Example
 Mag create lang ng view function, itong view function na to ito yung magpapakita ng list ng data eg. (List of Customers)
