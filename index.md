@@ -67,7 +67,7 @@ $ git pull origin {version}
 
 # Documentation
 
-### Creating a Module
+## Creating a Module
 
 1. Go to homebest folder
 2. To create module folder and files, type the ff:
@@ -158,3 +158,40 @@ NOTE: Change AdminModule() and UserModel() to your preferred class names and mod
 ```shell
 $ flask run
 ```
+# The ADMIN Module
+
+## The admin_index function
+### This function will create index page and table of given model
+### Mapapadali nito ang paggawa ng simpleng page na pinapakita yung mga listahan ng data
+### Meron din itong Modal form para sa paggawa ng bagong data
+
+```python
+def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
+                create_modal="admin/admin_create_modal.html", view_modal="admin/admin_view_modal.html",
+                create_url="", edit_url="", template="admin/admin_index.html", active="")
+```
+Parameters:
+*model = takes a list of models to query and show in the html table
+fields = takes a list of fields what to query in the model
+url = takes the url route of the created function
+form = takes a FlaskForm instance in creating new data
+action = default is admin_actions.html, override this to replace admin_actions.html to your custom actions
+create_modal = default is admin_create_modal.html, override this to replace default modal form to your custom modal form, set to None to not activate the modal form
+view_modal = default is admin_view_modal.html, override this to replace default view modal, set to None to not activate the view modal
+create_url = takes the url of create object 
+edit_url = takes the url of edit object
+template = default is admin_index.html, override to replace default to your custom index html
+active = basta para alam ng css kung sino lalagyan ng mm-active na class, malalaman mo din haha
+
+### Example
+Mag create lang ng view function, itong view function na to ito yung magpapakita ng list ng data eg. (List of Customers)
+```python
+@bp_module.route('/customers')
+def list_of_customers():
+    form = CustomerCreateForm()
+    fields = [Customer.id, Customer.fname, Customer.lname, Customer.email]
+    return admin_index(Customer, fields=fields, url='bp_module.list_of_customers',
+                       create_url='bp_module.customer_create', edit_url="bp_module.customer_edit", form=form)
+
+```
+Yang code lang na yan meron ka ng page na list of customers. Very Basic hehe
