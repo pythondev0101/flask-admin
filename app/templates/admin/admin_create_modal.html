@@ -23,7 +23,7 @@
                                     <div class="position-relative form-group">
                                         <label for="{{ field.name }}" class="">{{ field.label }}</label>
                                         <select name="{{ field.name }}" id="{{ field.name }}" class="form-control">
-                                            <option value=""></option>
+                                            <option></option>
                                             {% for odata in field.data %}
                                             <option value="{{ odata.id }}">{{ odata.name }}</option>
                                             {% endfor %}
@@ -72,10 +72,6 @@
                                             });
                                         }, false);
                                     })();
-
-
-
-
                             </script>
                         </div>
                     </div>

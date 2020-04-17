@@ -11,13 +11,13 @@ import base64
 """ APP IMPORTS  """
 from app.auth import bp_auth
 from app import login_manager, context
-from app import db
+from app import db, name
 
 """--------------END--------------"""
 
 """ MODULE: AUTH,ADMIN IMPORTS """
 from .models import User, UserPermission, Role
-from .forms import LoginForm, UserForm, UserEditForm, RoleCreateForm
+from .forms import LoginForm, UserForm, UserEditForm, RoleCreateForm, UserPermissionForm
 from app.core.models import HomeBestModel
 
 """--------------END--------------"""
@@ -36,7 +36,7 @@ from . import auth_templates
 
 from datetime import datetime
 from flask_cors import cross_origin
-from app.admin.routes import admin_index
+from app.admin.routes import admin_index, admin_edit
 
 context['module'] = 'admin'
 
@@ -56,7 +56,8 @@ def user_permission_index():
     fields = [UserPermission.id, User.username, User.fname, HomeBestModel.name, UserPermission.read,
               UserPermission.write, UserPermission.delete]
     model = [UserPermission, User]
-    return admin_index(*model, fields=fields, url=auth_urls['user_permission_index'], create_modal=False,
+    form = UserPermissionForm()
+    return admin_index(*model, fields=fields, form=form, url=auth_urls['user_permission_index'], create_modal=False,
                        view_modal=False, active="Users")
 
 
@@ -158,29 +159,28 @@ def user_create():
 @cross_origin()
 def user_edit(oid):
     user = User.query.get_or_404(oid)
-    user_edit_form = UserEditForm(obj=user)
-    # TODO: MOVE PERMISSIONS IN SESSIONS
+    form = UserEditForm(obj=user)
     if request.method == "GET":
-        user_permissions = UserPermission.query.filter_by(user_id=oid)
+        user_permissions = UserPermission.query.outerjoin(HomeBestModel, HomeBestModel.id == UserPermission.model_id). \
+            with_entities(UserPermission.id, HomeBestModel.name, UserPermission.read, UserPermission.write,
+                          UserPermission.delete).filter(UserPermission.user_id == oid)
         permission_model = db.session.query(UserPermission.model_id)
         models = db.session.query(HomeBestModel).filter(~HomeBestModel.id.in_(permission_model))
-        context['user_permissions'] = user_permissions
-        context['models'] = models
-        context['forms'] = {'UserEditForm': user_edit_form}
-        context['modal'] = False
-        context['user_id'] = oid
-        return render_template(auth_templates['edit'], context=context)
+        form.model_inline.models = models
+        form.permission_inline.models = user_permissions
+        fields_data = [user.fname, user.lname, user.username, user.email, user.role_id]
+        return admin_edit(form=form, fields_data=fields_data, update_url=auth_urls['edit'], oid=oid, modal_form=True)
     elif request.method == "POST":
-        if user_edit_form.validate_on_submit():
-            user.username = user_edit_form.username.data
-            user.fname = user_edit_form.fname.data
-            user.lname = user_edit_form.lname.data
-            user.email = user_edit_form.email.data
+        if form.validate_on_submit():
+            user.username = form.username.data
+            user.fname = form.fname.data
+            user.lname = form.lname.data
+            user.email = form.email.data
             user.updated_at = datetime.now()
             db.session.commit()
             flash('User update Successfully!')
             return redirect(url_for(auth_urls['index']))
-        for key, value in user_edit_form.errors.items():
+        for key, value in form.errors.items():
             print(key, value)
         return "error"
 
@@ -213,11 +213,11 @@ def user_edit_permission():
         print('GG')
 
 
-@bp_auth.route('/user_add_permission/<int:user_id>/', methods=['POST'])
+@bp_auth.route('/user_add_permission/<int:oid>/', methods=['POST'])
 @login_required
-def user_add_permission(user_id):
+def user_add_permission(oid):
     if request.method == "POST":
-        user = User.query.get_or_404(user_id)
+        user = User.query.get_or_404(oid)
         model = HomeBestModel.query.filter_by(id=request.args.get('model_id')).first()
         read, write, delete = request.form.get('chk_read', 0), request.form.get('chk_write', 0), request.form.get(
             'chk_delete', 0)
@@ -228,15 +228,15 @@ def user_add_permission(user_id):
         user.permissions.append(permission)
         db.session.commit()
         load_permissions(current_user.id)
-        return redirect(url_for(auth_urls['edit'], oid=user_id))
+        return redirect(url_for(auth_urls['edit'], oid=oid))
 
 
-@bp_auth.route('/user_delete_permission/<int:permission_id>/', methods=['POST'])
+@bp_auth.route('/user_delete_permission/<int:oid>/', methods=['POST'])
 @login_required
-def user_delete_permission(permission_id):
+def user_delete_permission(oid):
     if request.method == "POST":
         try:
-            permission = UserPermission.query.get(permission_id)
+            permission = UserPermission.query.get(oid)
             db.session.delete(permission)
             db.session.commit()
             load_permissions(current_user.id)
@@ -249,11 +249,9 @@ def user_delete_permission(permission_id):
 def login():
     form = LoginForm()  # Instance of auth.forms.loginform
     if request.method == "GET":
-        context['title'] = 'Users'
         if current_user.is_authenticated:
             return redirect(url_for(admin_urls['admin']))
-        # TODO: make templates dictionary
-        return render_template('auth/user_login.html', title='Log In', form=form)
+        return render_template(auth_templates['login'], title=name, form=form)
     elif request.method == "POST":
         if form.validate_on_submit():
             user = User.query.filter_by(username=form.username.data).first()

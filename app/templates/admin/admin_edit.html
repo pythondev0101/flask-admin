@@ -1,0 +1,183 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-graph text-success"> </i>
+                </div>
+                <div>
+                    {{ edit_title }}
+                    <div class="page-title-subheading">
+                        {{ edit_message}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="{{ url_for(update_url,oid=oid) }}" id="edit_form"
+          class="needs-validation" method="POST" novalidate>
+        {{ form.csrf_token }}
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                {% with edit = context['edit_model'] %}
+                {% for row in edit.fields %}
+                <div class="form-row">
+                    {% for field in row %}
+                    {% if field.type == 'select' %}
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="{{ field.name }}" class="">{{ field.label }}</label>
+                            <select name="{{ field.name }}" id="{{ field.name }}" class="form-control">
+                                <option></option>
+                                {% for odata in field.data %}
+                                <option value="{{ odata.id }}" {% if field.value==odata.id %}selected{% endif %}>
+                                    {{ odata.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid {{ field.label }}
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-md-4 mb-3">
+                        <label for="{{ field.name }}">{{ field.label }}</label>
+                        <input type="{{ field.type }}" class="form-control" id="{{ field.name }}"
+                               name="{{ field.name }}"
+                               placeholder="{{ field.label }}"
+                               required value="{{ field.value }}">
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please provide a valid {{ field.label }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                {% endwith %}
+                <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+            }, false);
+            });
+            }, false);
+            })();
+                </script>
+            </div>
+        </div>
+    </form>
+    {% if inlines %}
+    {% for inline in inlines %}
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <h5 class="card-title">{{ inline.title.upper() }}</h5>
+            <table class="mb-0 table table-hover">
+                <thead>
+                <tr>
+                    {% for header in inline.headers %}
+                    <th>{{ header.upper() }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for imodel in inline.models %}
+                <tr>
+                    {% if modal_form %}
+                    <form action="{{ form_url }}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        {% endif %}
+
+                        {% for dh in inline.types %}
+                        {% if dh == 'text' %}
+                        <td>{{ imodel[loop.index] }}</td>
+                        {% elif dh == 'checkbox' %}
+                        <td>
+                            <div class="position-relative form-check form-check-inline"><label class="form-check-label"><input
+                                    {% if imodel[loop.index] %} checked {% endif %} onclick="" type="checkbox" id=""
+                                    name="" class="form-check-input"/></label></div>
+                        </td>
+                        {% elif dh == 'delete_button' %}
+                        <td>
+                            <button type="submit" class="mb-2 mr-2 btn-transition btn btn-outline-danger">This {{
+                                imodel[loop.index] }}
+                            </button>
+                        </td>
+                        {% else %}
+                        <td>awef</td>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if modal_form %}
+                    </form>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block inner_footer %}
+<div class="app-footer-right">
+    <button type="button" class="btn btn-secondary">Cancel</button>
+    <button form="edit_form" type="submit" class="btn btn-primary">Save</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function edit_chk(permission_id){
+  var input_read = document.getElementById("edit_chk_read_".concat(permission_id)).checked;
+  var input_write = document.getElementById("edit_chk_write_".concat(permission_id)).checked;
+  var input_delete = document.getElementById("edit_chk_delete_".concat(permission_id)).checked;
+  var csrf_token = "{{ csrf_token() }}";
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open("post", "http://localhost:5000/auth/user_edit_permission",true);
+  xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlHttp.onreadystatechange = function(){
+    if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            if(xmlHttp.responseText.trim() == 1){
+                console.log("Saved");
+            }else if (xmlHttp.responseText.trim() == 0){
+                console.log("Not Saved");
+            }
+    }
+  }
+  xmlHttp.setRequestHeader("X-CSRFToken", csrf_token);
+  var data = JSON.stringify({"permission_id": permission_id,"read": input_read, "write": input_write, "delete": input_delete});
+  xmlHttp.send(data);
+  }
+
+
+
+
+
+
+
+</script>
+{% endblock %}
