@@ -161,11 +161,10 @@ def user_edit(oid):
     user = User.query.get_or_404(oid)
     form = UserEditForm(obj=user)
     if request.method == "GET":
-        user_permissions = UserPermission.query.outerjoin(HomeBestModel, HomeBestModel.id == UserPermission.model_id). \
-            with_entities(UserPermission.id, HomeBestModel.name, UserPermission.read, UserPermission.write,
-                          UserPermission.delete).filter(UserPermission.user_id == oid)
-        permission_model = db.session.query(UserPermission.model_id)
-        models = db.session.query(HomeBestModel).filter(~HomeBestModel.id.in_(permission_model))
+        user_permissions = UserPermission.query.filter_by(user_id=oid)
+        query1 = db.session.query(UserPermission.model_id).filter_by(user_id=oid)
+        models = db.session.query(HomeBestModel).filter(~HomeBestModel.id.in_(query1))
+        print(models.all())
         form.model_inline.models = models
         form.permission_inline.models = user_permissions
         fields_data = [user.fname, user.lname, user.username, user.email, user.role_id]

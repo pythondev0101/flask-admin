@@ -50,14 +50,8 @@ def admin_edit(form, fields_data, update_url, oid, modal_form=False, template="a
         'fields': fields
     }
 
-    for inline in form.inlines:
-        count = 0
-        for i in inline.models:
-            count = count + 1
-        inline.models_count = count
-
     return render_template(template, context=context, form=form, update_url=update_url,
-                           oid=oid, inlines=form.inlines,modal_form=modal_form,edit_title=form.edit_title,)
+                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,)
 
 
 def admin_index(*model, fields, url, form, action="admin/admin_actions.html",

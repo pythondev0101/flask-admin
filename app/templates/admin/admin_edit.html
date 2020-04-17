@@ -87,8 +87,8 @@
             </div>
         </div>
     </form>
-    {% if inlines %}
-    {% for inline in inlines %}
+    {% if form.inlines %}
+    {% for inline in form.inlines %}
     <div class="main-card mb-3 card">
         <div class="card-body">
             <h5 class="card-title">{{ inline.title.upper() }}</h5>
@@ -101,38 +101,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for imodel in inline.models %}
-                <tr>
-                    {% if modal_form %}
-                    <form action="{{ form_url }}" method="POST">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                        {% endif %}
-
-                        {% for dh in inline.types %}
-                        {% if dh == 'text' %}
-                        <td>{{ imodel[loop.index] }}</td>
-                        {% elif dh == 'checkbox' %}
-                        <td>
-                            <div class="position-relative form-check form-check-inline"><label class="form-check-label"><input
-                                    {% if imodel[loop.index] %} checked {% endif %} onclick="" type="checkbox" id=""
-                                    name="" class="form-check-input"/></label></div>
-                        </td>
-                        {% elif dh == 'delete_button' %}
-                        <td>
-                            <button type="submit" class="mb-2 mr-2 btn-transition btn btn-outline-danger">This {{
-                                imodel[loop.index] }}
-                            </button>
-                        </td>
-                        {% else %}
-                        <td>awef</td>
-                        {% endif %}
-                        {% endfor %}
-
-                        {% if modal_form %}
-                    </form>
-                    {% endif %}
-                </tr>
-                {% endfor %}
+                    {% include inline.html %}
                 </tbody>
             </table>
         </div>

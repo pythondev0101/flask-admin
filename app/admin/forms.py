@@ -67,24 +67,20 @@ class AdminEditField(object):
 
 class AdminInlineForm(object):
     models = None
-    models_count = 0
-    url_params = None
 
     @property
     def headers(self):
         raise NotImplementedError('Must implement headers')
 
     @property
-    def types(self):
-        raise NotImplementedError('Must implement types')
-
-    @property
     def title(self):
         raise NotImplementedError('Must implement title')
 
     @property
-    def form_url(self):
-        raise NotImplementedError('Must implement edit_url')
+    def html(self):
+        raise NotImplementedError('Must implement html')
+
+
 
 
 

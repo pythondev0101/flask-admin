@@ -30,16 +30,13 @@ class RoleCreateForm(FlaskForm, AdminIndexForm):
 
 class PermissionInlineForm(AdminInlineForm):
     headers =['Model','Read','write','delete','Remove']
-    types = ['text','checkbox','checkbox','checkbox','delete_button']
     title = "Edit Rights"
-    form_url = 'url_for(bp_auth.user_delete_permission,oid=imodel)'
-    url_params = ""
-
+    html = 'auth/permission_inline.html'
 
 class ModelInlineForm(AdminInlineForm):
     headers = ['Model','Read','write','delete','add']
-    types = ['text','checkbox','checkbox','checkbox','add_button']
     title = "Add Rights"
+    html = 'auth/model_inline.html'
 
 
 # TODO: FOR FUTURE VERSION CHANGE THIS TO CLASS INHERITANCE
