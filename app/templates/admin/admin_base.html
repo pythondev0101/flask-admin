@@ -61,7 +61,16 @@
     </div>
 <script type="text/javascript" src="{{ url_for('static', filename='js/lib/main.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/homebest.js') }}"></script>
-
+    <script>
+    (function() {
+      var header_color = document.getElementById('{{ context['header_color'] }}');
+      var sidebar_color = document.getElementById('{{ context['sidebar_color'] }}');
+      setTimeout(function() {
+        header_color.click();
+        sidebar_color.click();
+      }, 100);
+    })();
+    </script>
     {% block scripts %}{% endblock %}
 
     {% block toast %}{% endblock %}

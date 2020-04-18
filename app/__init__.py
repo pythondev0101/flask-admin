@@ -19,6 +19,8 @@ context = {
     'active': '',
     'errors': {},
     'create_modal': {},
+    'header_color':"header_color3",
+    'sidebar_color':"sidebar_color3"
 }
 
 
