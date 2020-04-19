@@ -25,7 +25,7 @@ class Post(Base, Admin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
     post_title = db.Column(db.String(64))
-    content = db.Column(db.String(16000000))
+    content = db.Column(db.Text())
     index_fields = ['Title', 'Created at', 'updated at']
     index_title = "Posts"
     index_message = "Message"
