@@ -1,0 +1,153 @@
+{% extends "blog/blog_index.html" %}
+{% block content %}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"> </i>
+                </div>
+                <div>
+                    {{ index_title }}
+                    <div class="page-title-subheading">
+                        {{ index_message }}
+                    </div>
+                </div>
+            </div>
+            {% block actions %}
+            {% if action %}
+            {% include action %}
+            {% endif %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <table id="index_table" class="mb-0 table table-hover table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            {% for field in table_fields %}
+                            <th>{{ field.upper() }}</th>
+                            {% endfor %}
+                            <th>DELETE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for model in models %}
+                        {% if view_modal %}
+                        <tr id="{{ model[0] }}" onclick="row_click(this, '{{context['active']}}')" data-toggle="modal"
+                            data-target="#viewModal">
+                            <param id="{{ model[0] }}" name="{{ url_for(edit_url,oid=model[0]) }}">
+                            {% else %}
+                        <tr>
+                            {% endif %}
+
+                            {% for values in model %}
+                            {% if loop.index > 1 %}
+                            <td>{{ values }}</td>
+
+                            {% endif %}
+                            {% endfor %}
+                            <td>
+                                <form action="{{url_for('bp_blog.post_destroy',post_id=model[0])}}"
+                                      method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <button type="submit" class="mb-2 mr-2 btn-transition btn btn-outline-danger">This
+                                        post
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block inner_footer %}
+<div class="app-footer-left">
+    <nav class="" aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if prev_url %}
+            <li class="page-item">
+                <a href="{{ prev_url }}" class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">Previous</span>
+                    <span class="sr-only">Previous</span></a>
+            </li>
+            {% endif %}
+
+            {% if next_url %}
+            <li class="page-item">
+                <a href="{{ next_url }}" class="page-link" aria-label="Next">
+                    <span aria-hidden="true">Next</span>
+                    <span class="sr-only">Next</span></a></li>
+        </ul>
+        {% endif %}
+    </nav>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function add_delete_column(){
+        var tr = document.getElementById('index_table').tHead.children[0];
+        th = document.createElement('th');
+        th.innerHTML = "Delete";
+        tr.appendChild(th);
+        var new_cell = '\<div class="custom-checkbox custom-control"><input type="checkbox" id="" class="custom-control-input"><label class="custom-control-label" for=""></label></div>';
+
+        var table = document.getElementById("index_table");
+
+        for (var r = 1; r < table.rows.length; r++) {
+            table.rows[r].cells[5].insertAdjacentHTML('beforeend', new_cell);
+        }
+    }
+
+
+
+
+
+
+
+
+</script>
+{% endblock %}
+
+{% block toast %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div id="toast-container" class="toast-top-center">
+    {% for message in messages %}
+    <div class="toast toast-success" aria-live="polite" style="">
+        <div class="toast-progress" style="width: 0%;"></div>
+        <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+        <div class="toast-title">Saved!</div>
+        <div class="toast-message">{{ message }}</div>
+    </div>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+{% if context['errors'] %}
+<div id="toast-container" class="toast-top-center">
+    {% for key,error in context['errors'].items() %}
+    <div class="toast toast-error" aria-live="polite" style="">
+        <div class="toast-progress" style="width: 0%;"></div>
+        <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">{{ key, error }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+

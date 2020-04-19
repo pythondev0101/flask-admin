@@ -38,19 +38,22 @@ def create_app():
         from app import core
         from app import auth
         from app import admin
+        from app import blog
         """--------------END--------------"""
 
         """EDITABLE: REGISTER HERE THE MODULE BLUEPRINTS"""
         app.register_blueprint(core.bp_core, url_prefix='/')
         app.register_blueprint(auth.bp_auth, url_prefix='/auth')
         app.register_blueprint(admin.bp_admin, url_prefix='/admin')
+        app.register_blueprint(blog.bp_blog, url_prefix='/blog')
+
         """--------------END--------------"""
 
         db.create_all()
         db.session.commit()
 
         """EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
-        modules = [admin.AdminModule]
+        modules = [admin.AdminModule,blog.BlogModule]
         """--------------END--------------"""
 
         from app.core.models import HomeBestModel
