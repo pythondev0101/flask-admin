@@ -40,7 +40,7 @@
                 </div>
                 <button class="close"></button>
             </div>
-                                        <!-- NAVIGATION FOR MODULES -->
+            <!-- NAVIGATION FOR MODULES -->
             <ul class="header-menu nav">
                 {% for module,value in context['system_modules'].items() %}
                 <li class="nav-item">
@@ -57,6 +57,7 @@
                 <div class="widget-content p-0">
                     <div class="widget-content-wrapper">
                         <div class="widget-content-left">
+                            {% if current_user.is_authenticated %}
                             <div class="btn-group">
                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
                                     <img width="42" class="rounded-circle"
@@ -65,10 +66,16 @@
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true"
                                      class="dropdown-menu dropdown-menu-right">
-                                    <button type="button" tabindex="0" class="dropdown-item">User Account</button>
+                                    <a href="{{ url_for('bp_auth.user_edit',oid=current_user.id) }}"
+                                       class="dropdown-item">User Account</a>
                                     <a href="{{ url_for('bp_auth.logout') }}" class="dropdown-item">Log out</a>
                                 </div>
                             </div>
+                            {% else %}
+                            <div class="widget-heading">
+                                <a href="{{ url_for('bp_auth.login') }}">Sign in</a>
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="widget-content-left  ml-3 header-user-info">
                             <div class="widget-heading">

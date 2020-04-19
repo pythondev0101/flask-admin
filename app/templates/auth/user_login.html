@@ -8,18 +8,15 @@
     <link href="{{ url_for('static', filename='css/homebest.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
     {% if title %}
-    <title>HomeBest Water Billing System</title>
+    <title>{{ title }}</title>
     {% else %}
-    <title>Welcome to HomeBest Water Billing System</title>
+    <title>HomeBest</title>
     {% endif %}
 </head>
 <body>
 <div class="limiter">
     <div class="container-login100" style="background-image: url('/static/img/bg-01.jpg');">
         <div class="wrap-login100 p-t-30 p-b-50">
-				<span class="login100-form-title p-b-41">
-					Account Login
-				</span>
             <form action="{{ url_for('bp_auth.login') }}" method="POST" class="login100-form p-b-33 p-t-5 needs-validation" novalidate="">
                 {{ form.csrf_token }}
                 <div class="form-row">

@@ -18,25 +18,45 @@ from . import admin_templates
 from . import context
 
 
-def change_context(view):
-    # VALUES: title, module, active, forms, modal
-    context['module'] = 'admin'
-    if view == 'index':
-        context['title'] = 'Admin'
-        context['active'] = 'main_dashboard'
-        context['modal'] = False
-
-
 @bp_admin.route('/')
 @login_required
 def index():
     # TODO: return total tables,users...
-    change_context('index')
+    context['title'] = 'Admin'
+    context['active'] = 'main_dashboard'
     return render_template(admin_templates['index'], context=context)
 
 
-def admin_index(*model, fields, url, action="admin/admin_actions.html", create_modal="admin/admin_create_modal.html",
-                view_modal="admin/admin_view_modal.html", create_url="", edit_url="", form=None, template="admin/admin_index.html", active=""):
+def admin_edit(form, fields_data, update_url, oid, modal_form=False, template="admin/admin_edit.html"):
+    # Note: fields_data is just temporary
+    # TODO: inherit flask form to get values in constructor
+    fields = []
+    row_count = 0
+    field_count = 0
+    for row in form.edit_fields:
+        fields.append([])
+        for field in row:
+            if field.input_type == 'select':
+                data = field.data.query.all()
+                fields[row_count].append(
+                    {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data,
+                     'value': fields_data[field_count]})
+            else:
+                fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type,
+                                          'value': fields_data[field_count]})
+            field_count = field_count + 1
+        row_count = row_count + 1
+    context['edit_model'] = {
+        'fields': fields
+    }
+
+    return render_template(template, context=context, form=form, update_url=update_url,
+                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,)
+
+
+def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
+                create_modal="admin/admin_create_modal.html", view_modal="admin/admin_view_modal.html",
+                create_url="", edit_url="", template="admin/admin_index.html", active=""):
     page = request.args.get('page', 1, type=int)
     data_per_page = current_app.config['DATA_PER_PAGE']
     if len(model) == 1:
@@ -45,11 +65,12 @@ def admin_index(*model, fields, url, action="admin/admin_actions.html", create_m
     else:
         models = model[0].query.outerjoin(model[1]).with_entities(*fields).paginate(page, data_per_page, False)
         print(model[0].query.outerjoin(model[1]).with_entities(*fields))
-    table_fields = model[0].index_fields
 
-    title = model[0].title
-    index_title = model[0].index_title
-    index_message = model[0].index_message
+    table_fields = form.index_headers
+    title = form.title
+    index_title = form.index_title
+    index_message = form.index_message
+
     next_url = url_for(url, page=models.next_num) \
         if models.has_next else None
     prev_url = url_for(url, page=models.prev_num) \
@@ -79,7 +100,8 @@ def set_modal(url, form):
         for field in row:
             if field.input_type == 'select':
                 data = field.data.query.all()
-                fields[row_count].append({'name':field.name,'label':field.label,'type':field.input_type,'data': data})
+                fields[row_count].append(
+                    {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data})
             else:
                 fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type})
         row_count = row_count + 1

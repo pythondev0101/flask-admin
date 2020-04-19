@@ -17,9 +17,10 @@ context = {
     'system_modules': system_modules,
     'module': '',
     'active': '',
-    'forms': {},
     'errors': {},
     'create_modal': {},
+    'header_color':"header_color3",
+    'sidebar_color':"sidebar_color3"
 }
 
 
@@ -76,4 +77,5 @@ def create_app():
 
 
 # GLOBAL APP INSTANCE
+name = "HomeBest"
 app = create_app()

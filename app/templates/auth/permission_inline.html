@@ -1,0 +1,12 @@
+{% for imodel in inline.models %}
+<tr>
+<form action="{{url_for('bp_auth.user_delete_permission',oid=imodel.id)}}" method="POST">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+<td scope="row"><strong>{{ imodel.model.name }}</strong></td>
+<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.read %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_read_{{ imodel.id }}" name="edit_chk_read_{{ imodel.id }}" class="form-check-input"/></label></div></td>
+<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.write %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_write_{{ imodel.id }}" name="edit_chk_write_{{ imodel.id }}" class="form-check-input"/></label></div></td>
+<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.delete %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_delete_{{ imodel.id }}" name="edit_chk_delete_{{ imodel.id }}" class="form-check-input"/></label></div></td>
+<td><button type="submit" class="mb-2 mr-2 btn-transition btn btn-outline-danger">This permission</button></td>
+</form>
+</tr>
+{% endfor %}
