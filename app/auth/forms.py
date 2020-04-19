@@ -113,13 +113,13 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Log in')
 
 
-def validate_username(self, username):
-    user = User.query.filter_by(username=username.data).first()
-    if user is not None:
-        raise ValidationError('User exists, please use another username')
+# def validate_username(self, username):
+#     user = User.query.filter_by(username=username.data).first()
+#     if user is not None:
+#         raise ValidationError('User exists, please use another username')
 
 
-def validate_email(self, email):
-    user = User.query.filter_by(email=email.data).first()
-    if user is not None:
-        raise ValidationError('User exists, please use another email')
+# def validate_email(self, email):
+#     user = User.query.filter_by(email=email.data).first()
+#     if user is not None:
+#         raise ValidationError('User exists, please use another email')
