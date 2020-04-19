@@ -268,6 +268,10 @@ def login():
 
 
 def load_permissions(user_id):
+    user = User.query.get(user_id)
+    if not user and not current_user.is_authenticated:
+        context['system_modules'].pop('admin')
+    
     user_permissions = UserPermission.query.filter_by(user_id=user_id)
     session.pop('permissions', None)
     if "permissions" not in session:
@@ -276,7 +280,9 @@ def load_permissions(user_id):
         session['permissions'][user_permission.model.name] = {"read": user_permission.read,
                                                               "write": user_permission.write,
                                                               "delete": user_permission.delete}
-    print(session['permissions'])
+
+    
+    print(context['system_modules'])
 
 
 @bp_auth.route('/logout')
