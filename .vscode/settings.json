@@ -1,5 +1,0 @@
-{
-    "python.pythonPath": "/home/homebest/venvs/homebest/bin/python",
-    "python.linting.enabled": false,
-    "python.formatting.provider": "black",
-}
