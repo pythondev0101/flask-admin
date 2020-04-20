@@ -1,46 +1,51 @@
-from flask import Flask, session
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
+# LOCAL IMPORTS
+from config import app_config
 
-csrf = CSRFProtect()
+# INITIALIZE FLASK IMPORTS
 db = SQLAlchemy()
-
+migrate = Migrate()
+csrf = CSRFProtect()
 login_manager = LoginManager()
-login_manager.login_view = 'bp_auth.login'
 
-
-system_modules = {}
-
-# GLOBAL VARIABLE CONTEXT FOR URL RETURN
-context = {
-    'system_modules': system_modules,
-    'module':'',
-    'active': '',
-    'forms': {},
-    'errors': {},
-    'create_modal': {},
-}
-
-def create_app():
+def create_app(config_name):
     app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object('config.Config')
+    app.config.from_object(app_config[config_name])
+    # app.config.from_pyfile('config.py')
 
     db.init_app(app)
+    migrate.init_app(app, db)
     login_manager.init_app(app)
     CORS(app)
     csrf.init_app(app)
 
+    login_manager.login_view = 'bp_auth.login'
+    login_manager.login_message = "You must be logged in to access this page."
+
     with app.app_context():
+
         """EDITABLE: IMPORT HERE THE SYSTEM MODULES  """
         from app import core
         from app import auth
         from app import admin
         """--------------END--------------"""
 
+        """EDITABLE: REGISTER HERE THE MODULE BLUEPRINTS"""
+        app.register_blueprint(core.bp_core, url_prefix='/')
+        app.register_blueprint(auth.bp_auth, url_prefix='/auth')
+        app.register_blueprint(admin.bp_admin, url_prefix='/admin')
+        """--------------END--------------"""
+
+        # db.create_all()
+        # db.session.commit()
+
         """EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
-        modules = [admin.AdminModule]
+        modules = [admin.AdminModule,blog.BlogModule]
         """--------------END--------------"""
 
         from app.core.models import HomeBestModel
@@ -59,14 +64,21 @@ def create_app():
                 for function_name, function_link in model.functions.items():
                     system_modules[module.module_name]['models'][model.model_name]['functions'][function_name] = function_link
 
+    return app
 
 
-        """EDITABLE: REGISTER HERE THE MODULE BLUEPRINTS"""
-        app.register_blueprint(core.bp_core,url_prefix='/')
-        app.register_blueprint(auth.bp_auth,url_prefix='/auth')
-        app.register_blueprint(admin.bp_admin,url_prefix='/admin')
-        """--------------END--------------"""
-        db.create_all()
-        return app
 # GLOBAL APP INSTANCE
-app = create_app()
+name = "HomeBest"
+
+system_modules = {}
+
+# GLOBAL VARIABLE CONTEXT FOR URL RETURN
+context = {
+    'system_modules': system_modules,
+    'module': '',
+    'active': '',
+    'errors': {},
+    'create_modal': {},
+    'header_color':"header_color3",
+    'sidebar_color':"sidebar_color3"
+}

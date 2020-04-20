@@ -1,19 +1,8 @@
 """ ADMIN MODELS"""
+from app import db
 
 
 class Admin(object):
-    @property
-    def index_fields(self):
-        raise NotImplementedError('Must implement index_fields')
-
-    @property
-    def index_title(self):
-        raise NotImplementedError('Must implement index_title')
-
-    @property
-    def index_message(self):
-        raise NotImplementedError('Must implement index_message')
-
     @property
     def model_name(self):
         raise NotImplementedError('Must implement model_name')
@@ -30,7 +19,10 @@ class Admin(object):
     def functions(self):
         raise NotImplementedError('Must implement functions')
 
-    def __int__(self):
-        self.title = self.index_title
 
-
+class AdminOptions(db.Model):
+    __tablename__ = 'admin_options'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
+    header_color = db.Column(db.String(64))
+    sidebar_color = db.Column(db.String(64))

@@ -10,7 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 """--------------END--------------"""
 
 """ APP IMPORTS  """
-from app import db
+from app import db,login_manager
 from app.core.models import Base
 
 """--------------END--------------"""
@@ -44,17 +44,16 @@ class User(UserMixin, Base, Admin):
     def __repr__(self):
         return "<User {}>".format(self.username)
 
-    index_fields = ['Username','First name', 'last name','email']
-    index_title = "Users"
-    index_message = "Message"
-    title = index_title
     model_name = 'Users'
     model_icon = 'pe-7s-users'
     model_description = "USERS"
     functions = {'View Users': 'bp_auth.index', 'View User Permissions': 'bp_auth.user_permission_index'}
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
-class UserPermission(db.Model, Admin):
+class UserPermission(db.Model):
     __tablename__ = 'auth_user_permission'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
@@ -63,11 +62,6 @@ class UserPermission(db.Model, Admin):
     read = db.Column(db.Boolean, nullable=False, default="1")
     write = db.Column(db.Boolean, nullable=False, default="1")
     delete = db.Column(db.Boolean, nullable=False, default="1")
-
-    index_fields = ['Username', 'Name','Model','Read','Write','Delete']
-    index_title = "User Permissions"
-    index_message = "Message"
-    title = index_title
 
     model_name = ""
     model_icon = ""
@@ -78,10 +72,7 @@ class UserPermission(db.Model, Admin):
 class Role(Base, Admin):
     __tablename__ = 'auth_role'
     name = db.Column(db.String(64), nullable=False)
-    index_fields = ['name', 'Created']
-    index_title = "All Roles"
-    index_message = "Message"
-    title = index_title
+
     model_name = "Roles"
     model_icon = "pe-7s-users"
     model_description = "ROLES"

@@ -19,3 +19,6 @@ def index():
             return redirect(url_for(admin_urls['admin']))
         else:
             return redirect(url_for(auth_urls['login']))
+
+
+from . import models
