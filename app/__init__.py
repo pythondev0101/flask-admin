@@ -45,7 +45,7 @@ def create_app(config_name):
         # db.session.commit()
 
         """EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
-        modules = [admin.AdminModule]
+        modules = [admin.AdminModule,blog.BlogModule]
         """--------------END--------------"""
 
         from app.core.models import HomeBestModel

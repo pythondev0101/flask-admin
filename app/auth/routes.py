@@ -271,7 +271,7 @@ def login():
 def load_permissions(user_id):
     user = User.query.get(user_id)
     if not user and not current_user.is_authenticated:
-        context['system_modules'].pop('admin')
+        context['system_modules'].pop('admin',None)
     
     user_permissions = UserPermission.query.filter_by(user_id=user_id)
     session.pop('permissions', None)
