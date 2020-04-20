@@ -1,37 +1,31 @@
-from flask import Flask, session
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
+# LOCAL IMPORTS
+from config import app_config
 
-csrf = CSRFProtect()
+# INITIALIZE FLASK IMPORTS
 db = SQLAlchemy()
-
+migrate = Migrate()
+csrf = CSRFProtect()
 login_manager = LoginManager()
-login_manager.login_view = 'bp_auth.login'
 
-system_modules = {}
-
-# GLOBAL VARIABLE CONTEXT FOR URL RETURN
-context = {
-    'system_modules': system_modules,
-    'module': '',
-    'active': '',
-    'errors': {},
-    'create_modal': {},
-    'header_color':"header_color3",
-    'sidebar_color':"sidebar_color3"
-}
-
-
-def create_app():
+def create_app(config_name):
     app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object('config.Config')
+    app.config.from_object(app_config[config_name])
+    # app.config.from_pyfile('config.py')
 
     db.init_app(app)
+    migrate.init_app(app, db)
     login_manager.init_app(app)
     CORS(app)
     csrf.init_app(app)
+
+    login_manager.login_view = 'bp_auth.login'
+    login_manager.login_message = "You must be logged in to access this page."
 
     with app.app_context():
 
@@ -47,8 +41,8 @@ def create_app():
         app.register_blueprint(admin.bp_admin, url_prefix='/admin')
         """--------------END--------------"""
 
-        db.create_all()
-        db.session.commit()
+        # db.create_all()
+        # db.session.commit()
 
         """EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
         modules = [admin.AdminModule]
@@ -75,4 +69,16 @@ def create_app():
 
 # GLOBAL APP INSTANCE
 name = "HomeBest"
-app = create_app()
+
+system_modules = {}
+
+# GLOBAL VARIABLE CONTEXT FOR URL RETURN
+context = {
+    'system_modules': system_modules,
+    'module': '',
+    'active': '',
+    'errors': {},
+    'create_modal': {},
+    'header_color':"header_color3",
+    'sidebar_color':"sidebar_color3"
+}

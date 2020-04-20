@@ -45,8 +45,8 @@ class UserEditForm(FlaskForm,AdminEditForm):
     email = StringField('Email', validators=[DataRequired()])
     fname = StringField('First Name', validators=[DataRequired()])
     lname = StringField('Last Name', validators=[DataRequired()])
-    role_id = SelectField('Role',coerce=int, choices=[(row.id, row.name) for row in Role.query.all()],
-                          validators=[DataRequired()])
+    # role_id = SelectField('Role',coerce=int, choices=[(row.id, row.name) for row in Role.query.all()],
+    #                       validators=[DataRequired()])
 
     a_username = AdminEditField('username', 'Username', 'text',username)
     a_fname = AdminEditField('fname', 'First Name', 'text',fname)
@@ -74,8 +74,8 @@ class UserForm(FlaskForm, AdminIndexForm):
     fname = StringField('First Name', validators=[DataRequired()])
     lname = StringField('Last Name', validators=[DataRequired()])
 
-    role_id = SelectField('Role',coerce=int, choices=[(row.id, row.name) for row in Role.query.all()],
-                          validators=[DataRequired()])
+    # role_id = SelectField('Role',coerce=int, choices=[(row.id, row.name) for row in Role.query.all()],
+    #                       validators=[DataRequired()])
 
     created_at = DateTimeField('Created At', format='%Y-%m-%dT%H:%M:%S', validators=[DataRequired()],
                                default=datetime.today())

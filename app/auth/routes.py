@@ -260,6 +260,7 @@ def login():
             else:
                 login_user(user, remember=form.remember_me.data)
                 load_permissions(user.id)
+                print(context['system_modules'])
                 # flash('Login request for user {}, remember_me={}'.format(form.username.data,form.remember_me.data))
                 next_page = request.args.get('next')
                 if not next_page or url_parse(next_page).netloc != '':
@@ -290,8 +291,3 @@ def load_permissions(user_id):
 def logout():
     logout_user()
     return redirect(url_for(core_urls['index']))
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)

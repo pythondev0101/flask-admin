@@ -10,7 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 """--------------END--------------"""
 
 """ APP IMPORTS  """
-from app import db
+from app import db,login_manager
 from app.core.models import Base
 
 """--------------END--------------"""
@@ -49,6 +49,9 @@ class User(UserMixin, Base, Admin):
     model_description = "USERS"
     functions = {'View Users': 'bp_auth.index', 'View User Permissions': 'bp_auth.user_permission_index'}
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 class UserPermission(db.Model):
     __tablename__ = 'auth_user_permission'

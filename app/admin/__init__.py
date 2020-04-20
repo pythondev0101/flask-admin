@@ -1,7 +1,7 @@
 from flask import Blueprint
-from app import system_modules,context
+from app import context
 
-bp_admin = Blueprint('bp_admin',__name__,)
+bp_admin = Blueprint('bp_admin',__name__,template_folder='templates')
 
 blueprint_name = "bp_admin"  # The name of the module's blueprint
 module_name = "admin" # The name of the module
@@ -16,22 +16,14 @@ admin_templates = {
     'index': 'admin/admin_dashboard.html',
 }
 
-# GLOBAL VARIABLE CONTEXT FOR URL RETURN
-# context = {
-#     'title': 'Admin',
-#     'system_modules': system_modules,
-#     'module': module_name,
-#     'active': 'main_dashboard',
-#     'forms': {},
-# }
 context['title'] = 'Admin'
 context['module'] = 'admin'
 
 from . import routes
 from . import models
 
-""" THIS IS FOR ADMIN MODELS """
 
+""" THIS IS FOR ADMIN MODELS """
 
 from app.auth.models import Role,User
 
