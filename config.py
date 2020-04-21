@@ -8,7 +8,7 @@ def get_database():
     user = os.environ.get('DATABASE_USER')
     password = os.environ.get('DATABASE_PASSWORD')
     database = os.environ.get('DATABASE_NAME')
-    return "mysql+pymysql://{}:{}@{}/{}".format(user,password,host,database)
+    return "mysql://{}:{}@{}/{}".format(user,password,host,database)
 
 
 class Config(object):
