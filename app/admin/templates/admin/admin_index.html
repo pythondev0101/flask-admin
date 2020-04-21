@@ -82,7 +82,11 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        
+    });
+
     function add_delete_column(){
         var tr = document.getElementById('index_table').tHead.children[0];
         th = document.createElement('th');
@@ -96,8 +100,6 @@
             table.rows[r].cells[5].insertAdjacentHTML('beforeend', new_cell);
         }
     }
-
-
 </script>
 {% endblock %}
 
