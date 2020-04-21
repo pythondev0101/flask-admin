@@ -90,7 +90,7 @@ class UserForm(FlaskForm, AdminIndexForm):
         [a_email, a_password]
     ]
 
-    index_headers = ['Username', 'First name', 'last name', 'email', 'role']
+    index_headers = ['Username', 'First name', 'last name', 'email']
     index_title = "Users"
     index_message = "Message"
     title = index_title

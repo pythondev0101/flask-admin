@@ -39,13 +39,12 @@
                         {% if view_modal %}
                         <tr id="{{ model[0] }}" onclick="row_click(this, '{{context['active']}}')" data-toggle="modal" data-target="#viewModal">
                             <param id="{{ model[0] }}" name="{{ url_for(edit_url,oid=model[0]) }}">
-                            {% else %}
-                            <tr>
-                            {% endif %}
-
+                        {% else %}
+                        <tr>
+                        {% endif %}
                             {% for values in model %}
                             {% if loop.index > 1 %}
-                            <td>{{ values }}</td>
+                            <td style="font-weight: bold;">{{ values }}</td>
                             {% endif %}
                             {% endfor %}
                         </tr>

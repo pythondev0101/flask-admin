@@ -16,16 +16,3 @@ admin_templates = {
 
 from . import routes
 from . import models
-
-
-""" THIS IS FOR ADMIN MODELS """
-
-from app.auth.models import User
-
-
-class AdminModule():
-    module_name = 'admin'
-    module_icon = 'fa-home'
-    module_link = 'bp_admin.index'
-    module_description = 'Administrator'
-    models = [User]

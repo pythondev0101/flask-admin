@@ -14,13 +14,9 @@ def create_superuser(fname,lname,username,password,email):
                                  charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
-            sql = "INSERT INTO `auth_user` (`username`, `fname`,`lname`,`password_hash`,`email`,`image_path`,`active`) VALUES (%s, %s,%s, %s,%s,%s,1)"
+            sql = "INSERT INTO `auth_user` (`username`, `fname`,`lname`,`password_hash`,`email`,`image_path`,`active`,`is_superuser`) VALUES (%s, %s,%s, %s,%s,%s,1,1)"
             image_path = 'img/user_default_image.png'
             cursor.execute(sql, (username, fname,lname,generate_password_hash(password),email,image_path))
-            sql = "INSERT INTO `auth_user_permission` (`user_id`,`model_id`,`read`,`write`,`delete`) VALUES (1,1,1,1,1)"
-            cursor.execute(sql)
-            sql = "INSERT INTO `auth_user_permission` (`user_id`,`model_id`,`read`,`write`,`delete`) VALUES (1,2,1,1,1)"
-            cursor.execute(sql)
         connection.commit()
     except Exception as e:
         connection.rollback();

@@ -1,6 +1,5 @@
 import os
 from app import create_app,db
-from config import HomeBestConfig
 # import subprocess
 
 config_name = os.getenv('FLASK_CONFIG')

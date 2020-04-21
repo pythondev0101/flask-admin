@@ -38,7 +38,7 @@ def create_app(config_name):
         """EDITABLE: IMPORT HERE THE SYSTEM MODULES  """
         from app.core import bp_core
         from app.auth import bp_auth
-        from app.admin import bp_admin,AdminModule
+        from app.admin import bp_admin
         """--------------END--------------"""
 
         """EDITABLE: REGISTER HERE THE MODULE BLUEPRINTS"""
@@ -50,6 +50,8 @@ def create_app(config_name):
         db.session.commit()
 
         """EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
+        from app.admin.admin import AdminModule
+
         modules = [AdminModule]
         """--------------END--------------"""
         create_modules(modules)
@@ -76,5 +78,7 @@ def create_modules(modules):
                 system_modules[module.module_name]['models'][model.model_name]['functions'][function_name] = function_link
 
     print(system_modules)
+
+
 
 

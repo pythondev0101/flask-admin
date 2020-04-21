@@ -27,6 +27,7 @@ class User(UserMixin, Base, Admin):
     password_hash = db.Column(db.String(128), nullable=False)
     image_path = db.Column(db.String(64), nullable=False)
     permissions = db.relationship('UserPermission', cascade='all,delete', backref="user")
+    is_superuser = db.Column(db.Boolean,nullable=False, default="0")
     # role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id'))
     # role = db.relationship('Role', cascade='all,delete', backref="userrole")
 

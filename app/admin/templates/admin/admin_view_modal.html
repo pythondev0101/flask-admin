@@ -17,7 +17,7 @@
                             {% for field in row %}
                             <div class="col-md-4 mb-3">
                                 <label for="view_{{ field.name }}">{{ field.label }}</label>
-                                <input disabled type="text" class="form-control" id="view_{{ field.name }}" name="view_{{ field.name }}"
+                                <input style="font-weight: bold;" disabled type="text" class="form-control" id="view_{{ field.name }}" name="view_{{ field.name }}"
                                        placeholder="{{ field.label }}" value=""
                                        required>
                             </div>

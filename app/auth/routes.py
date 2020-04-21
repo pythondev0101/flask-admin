@@ -64,8 +64,8 @@ def user_permission_index():
 @login_required
 def index():
     form = UserForm()
-    fields = [User.id, User.username, User.fname, User.lname, User.email, Role.name]
-    models = [User, User.role]
+    fields = [User.id, User.username, User.fname, User.lname, User.email]
+    models = [User]
     return admin_index(*models, fields=fields, url=auth_urls['index'],
                        create_url='bp_auth.user_create', edit_url="bp_auth.user_edit", form=form)
 
@@ -135,14 +135,6 @@ def user_create():
             user.fname = form.fname.data
             user.lname = form.lname.data
             user.email = form.email.data
-            print("!!!!!!!!!!!!!!")
-            print(form.role_id.data)
-            if form.role_id.data == '':
-                user.role_id = None
-                
-            else:
-                user.role_id = int(form.role_id.data)
-
             user.set_password(form.password.data)
             db.session.add(user)
             db.session.commit()
@@ -167,7 +159,7 @@ def user_edit(oid):
         models = db.session.query(HomeBestModel).filter(~HomeBestModel.id.in_(query1))
         form.model_inline.models = models
         form.permission_inline.models = user_permissions
-        fields_data = [user.fname, user.lname, user.username, user.email, user.role_id]
+        fields_data = [user.fname, user.lname, user.username, user.email]
         return admin_edit(form=form, fields_data=fields_data, update_url=auth_urls['edit'], oid=oid, modal_form=True)
     elif request.method == "POST":
         if form.validate_on_submit():
@@ -277,11 +269,15 @@ def load_permissions(user_id):
     session.pop('permissions', None)
     if "permissions" not in session:
         session['permissions'] = {}
-    for user_permission in user_permissions:
-        session['permissions'][user_permission.model.name] = {"read": user_permission.read,
-                                                              "write": user_permission.write,
-                                                              "delete": user_permission.delete}
-
+    if user.is_superuser:
+        all_permissions = HomeBestModel.query.all()
+        for permission in all_permissions:
+            session['permissions'][permission.name] = {"read": True, \
+                "write": True, "delete": True}        
+    else:
+        for user_permission in user_permissions:
+            session['permissions'][user_permission.model.name] = {"read": user_permission.read, \
+                "write": user_permission.write, "delete": user_permission.delete}
     print(session['permissions'])
 
 @bp_auth.route('/logout')
