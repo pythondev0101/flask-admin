@@ -31,7 +31,7 @@ class ProductionConfig(Config):
     """
     Production configurations
     """
-    SQLALCHEMY_DATABASE_URI = get_database()
+    SQLALCHEMY_DATABASE_URI = "mysql://pythondev0101:databasepassword@pythondev0101.mysql.pythonanywhere-services.com/pythondev0101$db_homebest"
     DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
