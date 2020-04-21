@@ -17,8 +17,6 @@ class Config(object):
     DATA_PER_PAGE = 7
 
 
-
-
 class DevelopmentConfig(Config):
     """
     Development configurations
