@@ -37,10 +37,10 @@
 
                         {% for model in models %}
                         {% if view_modal %}
-                        <tr id="{{ model[0] }}" onclick="row_click(this, '{{context['active']}}')" data-toggle="modal" data-target="#viewModal">
+                        <tr class='item' id="{{ model[0] }}" onclick="row_click(this, '{{context['active']}}')" data-toggle="modal" data-target="#viewModal">
                             <param id="{{ model[0] }}" name="{{ url_for(edit_url,oid=model[0]) }}">
                         {% else %}
-                        <tr>
+                        <tr class='item'>
                         {% endif %}
                             {% for values in model %}
                             {% if loop.index > 1 %}
@@ -84,22 +84,54 @@
 {% block scripts %}
 <script type="text/javascript">
     $(document).ready(function(){
-        
+        $("#btndelete").click(function(){
+            if($('#btndelete').text()=='Delete'){
+                $('#nav_action_btns').after("<button id='btn_confirm_delete' type='button' tabindex='1' class='dropdown-item'>Confirm Delete</button>");
+                $('#btndelete').html("Cancel");
+                $("tr").removeAttr("data-toggle");
+                $("tr").find("th:last").after('<th>DELETE</th>');
+                $("tr").find("td:last").after("<td><input class='chkbox' type='checkbox'></td>");
+                var ids = [];
+                var csrf_token = "{{ csrf_token() }}";
+                $("#btn_confirm_delete").click(function(){
+                    $("tr.item").each(function() {
+                        var check = $(this).find("input.chkbox").is(':checked');
+                        if(check){
+                            ids.push(this.id)
+                        }
+                    });
+                    $.ajaxSetup({
+                        beforeSend: function(xhr, settings) {
+                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                            }
+                        }
+                    });
+                    $.ajax({
+                        url: "/auth/_users_delete",
+                        type: "POST",
+                        dataType: "json",
+                        data: JSON.stringify({'ids': ids}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(data) {
+                            if(data.result == 2){
+                                alert("Must check some user!");
+                            }else{
+                                location.reload();
+                            }
+                        }
+                    });
+                });
+            }else{
+                $("#btn_confirm_delete").remove();
+                $('#btndelete').html("Delete");
+                $("tr").attr("data-toggle","modal");
+                $("tr").find("th:last").remove();
+                $("tr").find("td:last").remove();
+            }
+        });
     });
 
-    function add_delete_column(){
-        var tr = document.getElementById('index_table').tHead.children[0];
-        th = document.createElement('th');
-        th.innerHTML = "Delete";
-        tr.appendChild(th);
-        var new_cell = '\<div class="custom-checkbox custom-control"><input type="checkbox" id="" class="custom-control-input"><label class="custom-control-label" for=""></label></div>';
-
-        var table = document.getElementById("index_table");
-
-        for (var r = 1; r < table.rows.length; r++) {
-            table.rows[r].cells[5].insertAdjacentHTML('beforeend', new_cell);
-        }
-    }
 </script>
 {% endblock %}
 
@@ -108,7 +140,7 @@
 {% if messages %}
 <div id="toast-container" class="toast-top-center">
     {% for message in messages %}
-    <div class="toast toast-success" aria-live="polite" style="">
+    <div class="toast toast-success" aria-live="polite">
         <div class="toast-progress" style="width: 0%;"></div>
         <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
         <div class="toast-title">Saved!</div>
@@ -123,7 +155,7 @@
 {% if context['errors'] %}
 <div id="toast-container" class="toast-top-center">
     {% for key,error in context['errors'].items() %}
-    <div class="toast toast-error" aria-live="polite" style="">
+    <div class="toast toast-error" aria-live="polite">
         <div class="toast-progress" style="width: 0%;"></div>
         <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
         <div class="toast-title">Error!</div>

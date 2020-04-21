@@ -10,11 +10,16 @@
                 <div>
                     {{ edit_title }}
                     <div class="page-title-subheading">
-                        {{ edit_message}}
+                    {{ edit_message}}
                     </div>
                 </div>
             </div>
         </div>
+        {% block actions %}
+        {% if action %}
+        {% include action %}
+        {% endif %}
+        {% endblock %}
     </div>
     <form action="{{ url_for(update_url,oid=oid) }}" id="edit_form"
           class="needs-validation" method="POST" novalidate>
@@ -126,7 +131,7 @@
   var input_delete = document.getElementById("edit_chk_delete_".concat(permission_id)).checked;
   var csrf_token = "{{ csrf_token() }}";
   var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open("post", "http://localhost:5000/auth/user_edit_permission",true);
+  xmlHttp.open("post", "/auth/user_edit_permission",true);
   xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlHttp.onreadystatechange = function(){
     if(xmlHttp.readyState == 4 && xmlHttp.status == 200){

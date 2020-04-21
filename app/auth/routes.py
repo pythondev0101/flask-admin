@@ -99,11 +99,25 @@ def username_check():
         username = request.json['username']
         user = User.query.filter_by(username=username).first()
         if user:
-            resp = jsonify(0)
+            resp = jsonify(result=0)
             resp.status_code = 200
             return resp
         else:
-            resp = jsonify(1)
+            resp = jsonify(result=1)
+            resp.status_code = 200
+            return resp
+
+@bp_auth.route('/_email_check',methods=["POST"])
+def email_check():
+    if request.method == 'POST':
+        email = request.json['email']
+        user = User.query.filter_by(email=email).first()
+        if user:
+            resp = jsonify(result=0)
+            resp.status_code = 200
+            return resp
+        else:
+            resp = jsonify(result=1)
             resp.status_code = 200
             return resp
 
@@ -119,32 +133,64 @@ def user_delete(user_id):
         db.session.rollback()
 
 
+@bp_auth.route('/_users_delete',methods=["POST"])
+@cross_origin()
+def users_delete():
+    data = request.get_json()
+    print(data['ids'])
+    try:
+        if not data['ids']:
+            resp = jsonify(result=2)
+            resp.headers.add('Access-Control-Allow-Origin', '*')
+            resp.status_code = 200
+            return resp
+
+        for idx in data['ids']:
+            user = User.query.filter_by(id=int(idx)).first()
+            db.session.delete(user)
+        db.session.commit()
+        resp = jsonify(result=1)
+        resp.headers.add('Access-Control-Allow-Origin', '*')
+        resp.status_code = 200
+        flash('Successfully deleted users')
+        return resp
+    except Exception as e:
+        context['errors']['Deletion error'] = str(e)
+        db.session.rollback()
+        resp = jsonify(result=0)
+        resp.headers.add('Access-Control-Allow-Origin', '*')
+        resp.status_code = 200
+        return resp
+
 @bp_auth.route('/user_create', methods=['POST'])
 @login_required
 def user_create():
-    # try:
-    form = UserForm()
-    if request.method == "POST":
-        if form.validate_on_submit():
-            user = User()
-            models = HomeBestModel.query.all()
-            for homebestmodel in models:
-                permission = UserPermission(model=homebestmodel, read=1, write=1, delete=1)
-                user.permissions.append(permission)
-            user.username = form.username.data
-            user.fname = form.fname.data
-            user.lname = form.lname.data
-            user.email = form.email.data
-            user.set_password(form.password.data)
-            db.session.add(user)
-            db.session.commit()
-            flash('New User Added Successfully!')
-            return redirect(url_for(auth_urls['index']))
-        else:
-            for key, value in form.errors.items():
-                print(key, value)
-                context['errors'][key] = value
-            return redirect(url_for(auth_urls['index']))
+    try:
+        form = UserForm()
+        if request.method == "POST":
+            if form.validate_on_submit():
+                user = User()
+                models = HomeBestModel.query.all()
+                for homebestmodel in models:
+                    permission = UserPermission(model=homebestmodel, read=1, write=1, delete=1)
+                    user.permissions.append(permission)
+                user.username = form.username.data
+                user.fname = form.fname.data
+                user.lname = form.lname.data
+                user.email = form.email.data
+                user.set_password(form.password.data)
+                user.is_superuser = 0
+                db.session.add(user)
+                db.session.commit()
+                flash('New User Added Successfully!')
+                return redirect(url_for(auth_urls['index']))
+            else:
+                for key, value in form.errors.items():
+                    context['errors'][key] = value
+                return redirect(url_for(auth_urls['index']))
+    except Exception as e:
+        context['errors']['Internal Error'] = str(e)
+        return redirect(url_for(auth_urls['index']))
 
 
 @bp_auth.route('/user_edit/<int:oid>', methods=['GET', 'POST'])
@@ -192,16 +238,14 @@ def user_edit_permission():
             db.session.commit()
             load_permissions(current_user.id)
             resp = jsonify(1)
-            # resp.headers.add('Access-Control-Allow-Origin', '*')
+            resp.headers.add('Access-Control-Allow-Origin', '*')
             resp.status_code = 200
             return resp
         else:
             resp = jsonify(0)
-            # resp.headers.add('Access-Control-Allow-Origin', '*')
+            resp.headers.add('Access-Control-Allow-Origin', '*')
             resp.status_code = 200
             return resp
-    else:
-        print('GG')
 
 
 @bp_auth.route('/user_add_permission/<int:oid>/', methods=['POST'])

@@ -42,10 +42,10 @@
                                     <input style="font-weight: bold;" type="{{ field.type }}" class="form-control" id="{{ field.name }}"
                                            name="{{ field.name }}"
                                            placeholder="{{ field.label }}" required>
-                                    <div class="valid-feedback">
+                                    <div id="{{ field.name }}-valid-feedback" class="valid-feedback">
                                         Looks good!
                                     </div>
-                                    <div class="invalid-feedback">
+                                    <div id="{{ field.name }}-invalid-feedback" class="invalid-feedback">
                                         Please provide a valid {{ field.label }}
                                     </div>
                                 </div>
@@ -88,29 +88,63 @@
 
 {% if context['active'] == 'Users' %}
 <script>
-  function username_check(){
-  var username = document.getElementById("username").value;
-  var xmlHttp = new XMLHttpRequest();
-  var csrf_token = "{{ csrf_token() }}";
-  xmlHttp.open("post", "http://localhost:5000/auth/username_check",true);
-  xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xmlHttp.onreadystatechange = function(){
-    if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
-            var response = xmlHttp.responseText.trim();
-            console.log(response)
-            if(xmlHttp.responseText.trim() == 1){
-                document.getElementById("username-invalid-feedback").style.display = "none";
-            }else if (xmlHttp.responseText.trim() == 0){
-                document.getElementById("username-invalid-feedback").style.display = "block";
-            }
-    }
-  }
-  xmlHttp.setRequestHeader("X-CSRFToken", csrf_token);
-  var data = JSON.stringify({"username": username});
-  xmlHttp.send(data);
-  }
-
-
-
+    $(document).ready(function(){
+        $("#username").change(function(){
+            var csrf_token = "{{ csrf_token() }}";
+            var username = document.getElementById("username").value;
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                    }
+                }
+            });
+            $.ajax({
+                url: "/auth/username_check",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({'username': username}),
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    if(data.result == 1){
+                        $("#username-invalid-feedback").text("Please provide a valid Username");
+                        document.getElementById("username-invalid-feedback").style.display = "none";
+                        document.getElementById("username-valid-feedback").style.display = "block";
+                    }else{
+                        $("#username-invalid-feedback").text("Username is already taken.");
+                        document.getElementById("username-valid-feedback").style.display = "none";
+                        document.getElementById("username-invalid-feedback").style.display = "block";
+                    }
+                }
+            });
+        });
+        $("#email").change(function(){
+            var csrf_token = "{{ csrf_token() }}";
+            var email = document.getElementById("email").value;
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                    }
+                }
+            });
+            $.ajax({
+                url: "/auth/_email_check",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({'email': email}),
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    if(data.result == 1){
+                        $("#email-invalid-feedback").text("Please provide a valid Email");
+                        document.getElementById("email-invalid-feedback").style.display = "none";
+                    }else{
+                        $("#email-invalid-feedback").text("Email is already taken.");
+                        document.getElementById("email-invalid-feedback").style.display = "block";
+                    }
+                }
+            });
+        });
+    });
 </script>
 {% endif %}
