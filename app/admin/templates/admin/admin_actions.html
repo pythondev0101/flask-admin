@@ -1,4 +1,5 @@
 <div class="page-title-actions">
+    
     {% if create_modal %}
     <button type="button" data-toggle="modal" data-target="#create_modal" title="Add new user" data-placement="bottom"
             class="btn-shadow mr-3 btn btn-primary">
@@ -9,6 +10,7 @@
         {% endif %}
     </button>
     {% endif %}
+
     <div class="d-inline-block dropdown">
         <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="btn-shadow dropdown-toggle btn btn-info">
@@ -20,7 +22,9 @@
         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
             <ul class="nav flex-column">
                 <li id="nav_action_btns" class="nav-item">
+                    {% block dropdown_buttons %}
                     <button id="btndelete" type="button" tabindex="0" class="dropdown-item">Delete</button>
+                    {% endblock %}
                 </li>
             </ul>
         </div>

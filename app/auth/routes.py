@@ -206,7 +206,8 @@ def user_edit(oid):
         form.model_inline.models = models
         form.permission_inline.models = user_permissions
         fields_data = [user.fname, user.lname, user.username, user.email]
-        return admin_edit(form=form, fields_data=fields_data, update_url=auth_urls['edit'], oid=oid, modal_form=True)
+        return admin_edit(form=form, fields_data=fields_data, update_url=auth_urls['edit'], \
+            action="auth/user_edit_action.html",oid=oid, modal_form=True)
     elif request.method == "POST":
         if form.validate_on_submit():
             user.username = form.username.data
