@@ -1,5 +1,5 @@
 import os
-from app import create_app
+from app import create_app,db
 from config import HomeBestConfig
 # import subprocess
 

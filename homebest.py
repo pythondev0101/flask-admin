@@ -8,20 +8,25 @@ import os
 from shutil import copyfile
 
 
-def create_superuser(fname,lname,username,password):
-    connection = pymysql.connect(host=config.HOMEBEST_HOST,user=config.HOMEBEST_USER,
-                                 password=config.HOMEBEST_PASSWORD,db=config.HOMEBEST_DATABASE,
+def create_superuser(fname,lname,username,password,email):
+    connection = pymysql.connect(host=config.HOST,user=config.USER,
+                                 password=config.PASSWORD,db=config.DATABASE,
                                  charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
-            sql = "INSERT INTO `auth_user` (`username`, `fname`,`lname`,`password_hash`,`image_path`,`active`,`email`) VALUES (%s, %s,%s, %s,%s,1,'')"
+            sql = "INSERT INTO `auth_user` (`username`, `fname`,`lname`,`password_hash`,`email`,`image_path`,`active`) VALUES (%s, %s,%s, %s,%s,%s,1)"
             image_path = 'img/user_default_image.png'
-            cursor.execute(sql, (username, fname,lname,generate_password_hash(password),image_path))
+            cursor.execute(sql, (username, fname,lname,generate_password_hash(password),email,image_path))
             sql = "INSERT INTO `auth_user_permission` (`user_id`,`model_id`,`read`,`write`,`delete`) VALUES (1,1,1,1,1)"
             cursor.execute(sql)
             sql = "INSERT INTO `auth_user_permission` (`user_id`,`model_id`,`read`,`write`,`delete`) VALUES (1,2,1,1,1)"
             cursor.execute(sql)
         connection.commit()
+    except Exception as e:
+        connection.rollback();
+        print(e)
+
+        return False
     finally:
         connection.close()
     return True
@@ -59,8 +64,8 @@ if __name__ == '__main__':
         lname = input("Enter Last name:")
         username = input("Enter Username:")
         password = input("Enter Password:")
-
-        if create_superuser(fname, lname, username, password):
+        email = input("Enter Email:")
+        if create_superuser(fname, lname, username, password,email):
             print("SuperUser created!")
         else:
             print("SuperUser not created!")

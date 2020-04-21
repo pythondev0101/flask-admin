@@ -1,22 +1,19 @@
 """ MODULE: ADMIN.ROUTES """
 """ FLASK IMPORTS """
-from flask import render_template, flash, redirect, url_for, request, current_app
+from flask import render_template, flash, redirect, url_for, request, current_app,g
 from flask_login import login_required
-
 """--------------END--------------"""
 
 """ APP IMPORTS  """
-from app import system_modules
 from app.admin import bp_admin
 
 """--------------END--------------"""
 
 """ TEMPLATES IMPORTS """
 from . import admin_templates
-
 """--------------END--------------"""
-from . import context
 
+from app import context
 
 @bp_admin.route('/')
 @login_required

@@ -1,7 +1,7 @@
-#TODO: create Base,Customer model
-from app import db
+""" CORE MODELS """
 from datetime import datetime
 
+from app import db
 
 # MODEL.BASE
 class Base(db.Model):
