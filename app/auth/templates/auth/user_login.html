@@ -49,7 +49,6 @@
                         </div>
                     </div>
                 </div>
-                {{ form.remember_me.label }} {{ form.remember_me }}
                 <div class="container-login100-form-btn m-t-32">
                     <button class="login100-form-btn" type="submit">Login</button>
                 </div>
@@ -78,5 +77,21 @@
     </script>
 </div>
 <script type="text/javascript" src="{{ url_for('static', filename='js/lib/main.js') }}"></script>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div id="toast-container" class="toast-top-center">
+    {% for message in messages %}
+    <div class="toast toast-error" aria-live="polite">
+        <div class="toast-progress" style="width: 0%;"></div>
+        <div class="toast-title">Login Failed!</div>
+        <div class="toast-message">{{ message }}</div>
+    </div>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+
 </body>
 </html>

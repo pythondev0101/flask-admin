@@ -3,13 +3,20 @@ from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+def get_database():
+    host = os.environ.get('DATABASE_HOST')
+    user = os.environ.get('DATABASE_USER')
+    password = os.environ.get('DATABASE_PASSWORD')
+    database = os.environ.get('DATABASE_NAME')
+    return "mysql+pymysql://{}:{}@{}/{}".format(user,password,host,database)
+
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
     CORS_HEADERS = 'Content-Type'
     DATA_PER_PAGE = 7
+
+
 
 
 class DevelopmentConfig(Config):
@@ -17,24 +24,27 @@ class DevelopmentConfig(Config):
     Development configurations
     """
 
+    SQLALCHEMY_DATABASE_URI = get_database()
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
-    SQLALCHEMY_ECHO = True
-
+    # SQLALCHEMY_ECHO = True
 
 class ProductionConfig(Config):
     """
     Production configurations
     """
-
+    SQLALCHEMY_DATABASE_URI = get_database()
     DEBUG = False
-
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     
+
 class TestingConfig(Config):
     """
     Testing configurations
     """
 
     TESTING = True
+    # SQLALCHEMY_ECHO = True
 
 
 app_config = {
@@ -46,8 +56,7 @@ app_config = {
 
 class HomeBestConfig:
     load_dotenv()
-    HOMEBEST_HOST = os.getenv('HOMEBEST_HOST')
-    HOMEBEST_USER = os.getenv('HOMEBEST_USER')
-    HOMEBEST_PASSWORD = os.getenv('HOMEBEST_PASSWORD')
-    HOMEBEST_DATABASE = os.getenv('HOMEBEST_DATABASE')
-    HOMEBEST_SERVER = os.getenv('HOMEBEST_SERVER')
+    HOST = os.environ.get('DATABASE_HOST')
+    USER = os.environ.get('DATABASE_USER')
+    PASSWORD = os.environ.get('DATABASE_PASSWORD')
+    DATABASE = os.environ.get('DATABASE_NAME')

@@ -1,7 +1,8 @@
 """ MODULE: AUTH.ROUTES """
 
 """ FLASK IMPORTS """
-from flask import render_template, flash, redirect, url_for, request, jsonify, current_app, session
+from flask import render_template, flash, redirect, url_for, request, jsonify, \
+    current_app, session,g
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 import base64
@@ -10,14 +11,12 @@ import base64
 
 """ APP IMPORTS  """
 from app.auth import bp_auth
-from app import login_manager, context
-from app import db, name
-
+from app import db, context
 """--------------END--------------"""
 
 """ MODULE: AUTH,ADMIN IMPORTS """
-from .models import User, UserPermission, Role
-from .forms import LoginForm, UserForm, UserEditForm, RoleCreateForm, UserPermissionForm
+from .models import User, UserPermission
+from .forms import LoginForm, UserForm, UserEditForm, UserPermissionForm
 from app.core.models import HomeBestModel
 
 """--------------END--------------"""
@@ -41,13 +40,13 @@ from app.admin.routes import admin_index, admin_edit
 context['module'] = 'admin'
 
 
-@bp_auth.route('/roles', methods=['GET', 'POST'])
-@login_required
-def role_index():
-    fields = [Role.id, Role.name, Role.created_at]
-    form = RoleCreateForm()
-    return admin_index(Role, fields=fields, url=auth_urls['role_index'],
-                       create_url='bp_auth.role_create', edit_url="bp_auth.user_edit", form=form)
+# @bp_auth.route('/roles', methods=['GET', 'POST'])
+# @login_required
+# def role_index():
+#     fields = [Role.id, Role.name, Role.created_at]
+#     form = RoleCreateForm()
+#     return admin_index(Role, fields=fields, url=auth_urls['role_index'],
+#                        create_url='bp_auth.role_create', edit_url="bp_auth.user_edit", form=form)
 
 
 @bp_auth.route('/permissions', methods=['GET', 'POST'])
@@ -65,33 +64,33 @@ def user_permission_index():
 @login_required
 def index():
     form = UserForm()
-    fields = [User.id, User.username, User.fname, User.lname, User.email, Role.name]
-    models = [User, User.role]
+    fields = [User.id, User.username, User.fname, User.lname, User.email]
+    models = [User]
     return admin_index(*models, fields=fields, url=auth_urls['index'],
                        create_url='bp_auth.user_create', edit_url="bp_auth.user_edit", form=form)
 
 
-@bp_auth.route('/role_create', methods=['POST'])
-@login_required
-def role_create():
-    try:
-        role_create_form = RoleCreateForm()
-        if request.method == "POST":
-            if role_create_form.validate_on_submit():
-                role = Role()
-                role.name = role_create_form.name.data
-                role.updated_at = datetime.now()
-                db.session.add(role)
-                db.session.commit()
-                flash('New Role Added Successfully!')
-                return redirect(url_for(auth_urls['role_index']))
-            else:
-                for key, value in role_create_form.errors.items():
-                    print(key, value)
-                return redirect(url_for(auth_urls['role_index']))
-    except Exception as e:
-        context['errors']['SystemError'] = e
-        return redirect(url_for(auth_urls['role_index']))
+# @bp_auth.route('/role_create', methods=['POST'])
+# @login_required
+# def role_create():
+#     try:
+#         role_create_form = RoleCreateForm()
+#         if request.method == "POST":
+#             if role_create_form.validate_on_submit():
+#                 role = Role()
+#                 role.name = role_create_form.name.data
+#                 role.updated_at = datetime.now()
+#                 db.session.add(role)
+#                 db.session.commit()
+#                 flash('New Role Added Successfully!')
+#                 return redirect(url_for(auth_urls['role_index']))
+#             else:
+#                 for key, value in role_create_form.errors.items():
+#                     print(key, value)
+#                 return redirect(url_for(auth_urls['role_index']))
+#     except Exception as e:
+#         context['errors']['SystemError'] = e
+#         return redirect(url_for(auth_urls['role_index']))
 
 
 @bp_auth.route('/username_check', methods=['POST'])
@@ -124,34 +123,28 @@ def user_delete(user_id):
 @login_required
 def user_create():
     # try:
-    user_create_form = UserForm()
+    form = UserForm()
     if request.method == "POST":
-        if user_create_form.validate_on_submit():
+        if form.validate_on_submit():
             user = User()
             models = HomeBestModel.query.all()
             for homebestmodel in models:
                 permission = UserPermission(model=homebestmodel, read=1, write=1, delete=1)
                 user.permissions.append(permission)
-            user.username = user_create_form.username.data
-            user.fname = user_create_form.fname.data
-            user.lname = user_create_form.lname.data
-            user.email = user_create_form.email.data
-            user.role_id = user_create_form.role_id.data
-            user.set_password(user_create_form.password.data)
+            user.username = form.username.data
+            user.fname = form.fname.data
+            user.lname = form.lname.data
+            user.email = form.email.data
+            user.set_password(form.password.data)
             db.session.add(user)
             db.session.commit()
             flash('New User Added Successfully!')
             return redirect(url_for(auth_urls['index']))
         else:
-            for key, value in user_create_form.errors.items():
+            for key, value in form.errors.items():
                 print(key, value)
                 context['errors'][key] = value
             return redirect(url_for(auth_urls['index']))
-
-
-# except Exception as e:
-#     context['errors']['SystemError'] = e
-#     return redirect(url_for(auth_urls['index']))
 
 
 @bp_auth.route('/user_edit/<int:oid>', methods=['GET', 'POST'])
@@ -164,10 +157,9 @@ def user_edit(oid):
         user_permissions = UserPermission.query.filter_by(user_id=oid)
         query1 = db.session.query(UserPermission.model_id).filter_by(user_id=oid)
         models = db.session.query(HomeBestModel).filter(~HomeBestModel.id.in_(query1))
-        print(models.all())
         form.model_inline.models = models
         form.permission_inline.models = user_permissions
-        fields_data = [user.fname, user.lname, user.username, user.email, user.role_id]
+        fields_data = [user.fname, user.lname, user.username, user.email]
         return admin_edit(form=form, fields_data=fields_data, update_url=auth_urls['edit'], oid=oid, modal_form=True)
     elif request.method == "POST":
         if form.validate_on_submit():
@@ -247,10 +239,11 @@ def user_delete_permission(oid):
 @bp_auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()  # Instance of auth.forms.loginform
+
     if request.method == "GET":
         if current_user.is_authenticated:
             return redirect(url_for(admin_urls['admin']))
-        return render_template(auth_templates['login'], title=name, form=form)
+        return render_template(auth_templates['login'], title=context['app_name'], form=form)
     elif request.method == "POST":
         if form.validate_on_submit():
             user = User.query.filter_by(username=form.username.data).first()
@@ -260,7 +253,6 @@ def login():
             else:
                 login_user(user, remember=form.remember_me.data)
                 load_permissions(user.id)
-                print(context['system_modules'])
                 # flash('Login request for user {}, remember_me={}'.format(form.username.data,form.remember_me.data))
                 next_page = request.args.get('next')
                 if not next_page or url_parse(next_page).netloc != '':
@@ -277,14 +269,16 @@ def load_permissions(user_id):
     session.pop('permissions', None)
     if "permissions" not in session:
         session['permissions'] = {}
-    for user_permission in user_permissions:
-        session['permissions'][user_permission.model.name] = {"read": user_permission.read,
-                                                              "write": user_permission.write,
-                                                              "delete": user_permission.delete}
-
-    
-    print(context['system_modules'])
-
+    if user.is_superuser:
+        all_permissions = HomeBestModel.query.all()
+        for permission in all_permissions:
+            session['permissions'][permission.name] = {"read": True, \
+                "write": True, "delete": True}        
+    else:
+        for user_permission in user_permissions:
+            session['permissions'][user_permission.model.name] = {"read": user_permission.read, \
+                "write": user_permission.write, "delete": user_permission.delete}
+    print(session['permissions'])
 
 @bp_auth.route('/logout')
 @login_required

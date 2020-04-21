@@ -1,13 +1,31 @@
 # OPEN SHELL THEN ENTER THE FOLLOWING
+
 sudo apt-get install python3-dev python3-pip
+
 pip3 install --upgrade pip setuptools
+
 cd ~
+
 mkdir venvs
+
 python3 -m venv venvs/homebest
+
 source ~/venvs/flaskproj/bin/activate
+
 git clone -b develop git@github.com:pythondev0101/homebest-framework.git
+
 cd homebest-framework
+
 # Note: Change .env values(eg.database,user,password)
+
 pip3 install -r requirements.txt
+
 sudo apt-get install mysql-server
-python3 homebest.py --create_superuser
+
+# Note: python3 homebest.py --create_superuser is not stable
+
+flask db init
+
+flask db migrate 
+
+flask db upgrade
