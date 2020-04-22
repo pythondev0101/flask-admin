@@ -5,9 +5,9 @@ window.addEventListener('load', function () {
 function row_click(row_obj,model){
     if (model == "Users"){
         if(document.body.contains(document.getElementById('user_edit_button'))){
+            var url = document.getElementById(row_obj.id).name;
             document.getElementById("user_edit_button").setAttribute("href", url);
         }
-        var url = document.getElementById(row_obj.id).name;
         document.getElementById("view_fname").value = row_obj.cells[1].innerHTML;
         document.getElementById("view_lname").value = row_obj.cells[2].innerHTML;
         document.getElementById("view_username").value = row_obj.cells[0].innerHTML;
