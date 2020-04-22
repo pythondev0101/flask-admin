@@ -66,9 +66,11 @@
     (function() {
       var header_color = document.getElementById('{{ context['header_color'] }}');
       var sidebar_color = document.getElementById('{{ context['sidebar_color'] }}');
+      var fixed_footer = document.getElementById('chkbox_fixed_footer');
       setTimeout(function() {
         header_color.click();
         sidebar_color.click();
+        fixed_footer.click();
       }, 100);
     })();
     </script>
@@ -87,5 +89,9 @@
     {% endif %}
     {% if view_modal %}
         {% include view_modal %}
+    {% endif %}
+
+    {% if extra_modal %}
+        {% include extra_modal %}
     {% endif %}
 {% endblock %}

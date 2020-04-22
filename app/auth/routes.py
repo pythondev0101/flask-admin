@@ -122,7 +122,16 @@ def email_check():
             return resp
 
 
-@bp_auth.route('/user_delete/<id>', methods=['DELETE'])
+@bp_auth.route('/change_password/<int:oid>',methods=['POST'])
+def change_password(oid):
+    user = User.query.get_or_404(oid)
+    user.set_password(request.form.get('password'))
+    db.session.commit()
+    flash("Password change successfully!")
+    return redirect(request.referrer)
+
+
+@bp_auth.route('/user_delete/<oid>', methods=['DELETE'])
 def user_delete(user_id):
     try:
         user = User.query.get_or_404(user_id)
@@ -207,7 +216,7 @@ def user_edit(oid):
         form.permission_inline.models = user_permissions
         fields_data = [user.fname, user.lname, user.username, user.email]
         return admin_edit(form=form, fields_data=fields_data, update_url=auth_urls['edit'], \
-            action="auth/user_edit_action.html",oid=oid, modal_form=True)
+            action="auth/user_edit_action.html",oid=oid, modal_form=True,extra_modal='auth/user_change_password_modal.html')
     elif request.method == "POST":
         if form.validate_on_submit():
             user.username = form.username.data

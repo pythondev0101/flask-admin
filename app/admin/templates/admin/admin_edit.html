@@ -124,6 +124,38 @@
 </div>
 {% endblock %}
 
+{% block toast %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div id="toast-container" class="toast-top-center">
+    {% for message in messages %}
+    <div class="toast toast-success" aria-live="polite">
+        <div class="toast-progress" style="width: 0%;"></div>
+        <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+        <div class="toast-title">Saved!</div>
+        <div class="toast-message">{{ message }}</div>
+    </div>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+{% if context['errors'] %}
+<div id="toast-container" class="toast-top-center">
+    {% for key,error in context['errors'].items() %}
+    <div class="toast toast-error" aria-live="polite">
+        <div class="toast-progress" style="width: 0%;"></div>
+        <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+        <div class="toast-title">Error!</div>
+        <div class="toast-message">{{ key, error }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% if context['active'] == 'Users' %}
 {% block scripts %}
 <script>
   function edit_chk(permission_id){
@@ -147,12 +179,6 @@
   var data = JSON.stringify({"permission_id": permission_id,"read": input_read, "write": input_write, "delete": input_delete});
   xmlHttp.send(data);
   }
-
-
-
-
-
-
-
 </script>
 {% endblock %}
+{% endif %}

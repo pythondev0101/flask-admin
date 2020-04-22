@@ -24,7 +24,7 @@ def index():
     return render_template(admin_templates['index'], context=context)
 
 
-def admin_edit(form, fields_data, update_url, oid, modal_form=False, action=None, template="admin/admin_edit.html"):
+def admin_edit(form, fields_data, update_url, oid, modal_form=False, action=None, extra_modal=None , template="admin/admin_edit.html"):
     # Note: fields_data is just temporary
     # TODO: inherit flask form to get values in constructor
     fields = []
@@ -48,7 +48,7 @@ def admin_edit(form, fields_data, update_url, oid, modal_form=False, action=None
     }
 
     return render_template(template, context=context, form=form, update_url=update_url,
-                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,action=action)
+                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,action=action,extra_modal=extra_modal)
 
 
 def admin_index(*model, fields, url, form, action="admin/admin_actions.html",

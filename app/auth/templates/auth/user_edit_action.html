@@ -1,5 +1,7 @@
 {% extends 'admin/admin_actions.html' %}
 
 {% block dropdown_buttons %}
-<button id="btn_change_password" type="button" tabindex="0" class="dropdown-item">Change Password</button>
+    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#changepasswordmodal">
+        Change Password
+    </button>
 {% endblock %}
