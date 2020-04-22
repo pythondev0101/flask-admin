@@ -326,15 +326,16 @@ def load_permissions(user_id):
     session.pop('permissions', None)
     if "permissions" not in session:
         session['permissions'] = {}
-    if user.is_superuser:
-        all_permissions = HomeBestModel.query.all()
-        for permission in all_permissions:
-            session['permissions'][permission.name] = {"read": True, "create": True, \
-                "write": True, "delete": True}        
-    else:
-        for user_permission in user_permissions:
-            session['permissions'][user_permission.model.name] = {"read": user_permission.read, "create": user_permission.create, \
-                "write": user_permission.write, "delete": user_permission.delete}
+    if user:
+        if user.is_superuser:
+            all_permissions = HomeBestModel.query.all()
+            for permission in all_permissions:
+                session['permissions'][permission.name] = {"read": True, "create": True, \
+                    "write": True, "delete": True}        
+        else:
+            for user_permission in user_permissions:
+                session['permissions'][user_permission.model.name] = {"read": user_permission.read, "create": user_permission.create, \
+                    "write": user_permission.write, "delete": user_permission.delete}
     print(session['permissions'])
 
 @bp_auth.route('/logout')
