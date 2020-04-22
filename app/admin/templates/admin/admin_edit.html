@@ -160,6 +160,7 @@
 <script>
   function edit_chk(permission_id){
   var input_read = document.getElementById("edit_chk_read_".concat(permission_id)).checked;
+  var input_create = document.getElementById("edit_chk_create_".concat(permission_id)).checked;
   var input_write = document.getElementById("edit_chk_write_".concat(permission_id)).checked;
   var input_delete = document.getElementById("edit_chk_delete_".concat(permission_id)).checked;
   var csrf_token = "{{ csrf_token() }}";
@@ -176,7 +177,8 @@
     }
   }
   xmlHttp.setRequestHeader("X-CSRFToken", csrf_token);
-  var data = JSON.stringify({"permission_id": permission_id,"read": input_read, "write": input_write, "delete": input_delete});
+  var data = JSON.stringify({"permission_id": permission_id,"read": input_read, "create": input_create,
+   "write": input_write, "delete": input_delete});
   xmlHttp.send(data);
   }
 </script>

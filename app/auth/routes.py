@@ -52,7 +52,7 @@ context['module'] = 'admin'
 @bp_auth.route('/permissions', methods=['GET', 'POST'])
 @login_required
 def user_permission_index():
-    fields = [UserPermission.id, User.username, User.fname, HomeBestModel.name, UserPermission.read,
+    fields = [UserPermission.id, User.username, User.fname, HomeBestModel.name, UserPermission.read, UserPermission.create,
               UserPermission.write, UserPermission.delete]
     model = [UserPermission, User]
     form = UserPermissionForm()
@@ -181,7 +181,7 @@ def user_create():
                 user = User()
                 models = HomeBestModel.query.all()
                 for homebestmodel in models:
-                    permission = UserPermission(model=homebestmodel, read=1, write=1, delete=1)
+                    permission = UserPermission(model=homebestmodel, read=1,create=0, write=0, delete=0)
                     user.permissions.append(permission)
                 user.username = form.username.data
                 user.fname = form.fname.data
@@ -238,11 +238,13 @@ def user_edit_permission():
     if request.method == 'POST':
         permission_id = request.json['permission_id']
         read = request.json['read']
+        create = request.json['create']
         write = request.json['write']
         delete = request.json['delete']
         permission = UserPermission.query.get(permission_id)
         if permission:
             permission.read = read
+            permission.create = create
             permission.write = write
             permission.delete = delete
             db.session.commit()
@@ -264,12 +266,13 @@ def user_add_permission(oid):
     if request.method == "POST":
         user = User.query.get_or_404(oid)
         model = HomeBestModel.query.filter_by(id=request.args.get('model_id')).first()
-        read, write, delete = request.form.get('chk_read', 0), request.form.get('chk_write', 0), request.form.get(
-            'chk_delete', 0)
+        read, create, write, delete = request.form.get('chk_read', 0), request.form.get('chk_create', 0), \
+            request.form.get('chk_write', 0), request.form.get('chk_delete', 0)
         if read == 'on': read = 1
+        if create == 'on': create = 1
         if write == 'on': write = 1
         if delete == 'on': delete = 1
-        permission = UserPermission(user_id=user.id, model=model, read=read, write=write, delete=delete)
+        permission = UserPermission(user_id=user.id, model=model, read=read, create=create, write=write, delete=delete)
         user.permissions.append(permission)
         db.session.commit()
         load_permissions(current_user.id)
@@ -326,11 +329,11 @@ def load_permissions(user_id):
     if user.is_superuser:
         all_permissions = HomeBestModel.query.all()
         for permission in all_permissions:
-            session['permissions'][permission.name] = {"read": True, \
+            session['permissions'][permission.name] = {"read": True, "create": True, \
                 "write": True, "delete": True}        
     else:
         for user_permission in user_permissions:
-            session['permissions'][user_permission.model.name] = {"read": user_permission.read, \
+            session['permissions'][user_permission.model.name] = {"read": user_permission.read, "create": user_permission.create, \
                 "write": user_permission.write, "delete": user_permission.delete}
     print(session['permissions'])
 

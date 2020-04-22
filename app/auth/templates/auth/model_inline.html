@@ -4,6 +4,7 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 <td scope="row"><strong>{{ model.name }}</strong></td>
 <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input type="checkbox" id="chk_read" name="chk_read" class="form-check-input"/></label></div></td>
+<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input type="checkbox" id="chk_create" name="chk_create" class="form-check-input"/></label></div></td>
 <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input type="checkbox" id="chk_write" name="chk_write" class="form-check-input"/></label></div></td>
 <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input type="checkbox" id="chk_delete" name="chk_delete" class="form-check-input"/></label></div></td>
 <td><button type="submit" class="mb-2 mr-2 btn-transition btn btn-outline-success">This permission</button></td>

@@ -29,12 +29,12 @@ from app.admin.forms import AdminCreateField, AdminIndexForm, AdminSelectField,A
 
 
 class PermissionInlineForm(AdminInlineForm):
-    headers =['Model','Read','write','delete','Remove']
+    headers =['Model','Read','create','write','delete','Remove']
     title = "Edit Rights"
     html = 'auth/permission_inline.html'
 
 class ModelInlineForm(AdminInlineForm):
-    headers = ['Model','Read','write','delete','add']
+    headers = ['Model','Read','create','write','delete','add']
     title = "Add Rights"
     html = 'auth/model_inline.html'
 
@@ -97,7 +97,7 @@ class UserForm(FlaskForm, AdminIndexForm):
 
 
 class UserPermissionForm(AdminIndexForm):
-    index_headers = ['Username', 'Name', 'Model', 'Read', 'Write', 'Delete']
+    index_headers = ['Username', 'Name', 'Model', 'Read','create', 'Write', 'Delete']
     index_title = "User Permissions"
     index_message = "Message"
     title = index_title

@@ -60,8 +60,9 @@ class UserPermission(db.Model):
     model_id = db.Column(db.Integer, db.ForeignKey('core_model.id'))
     model = db.relationship('HomeBestModel', backref="userpermission")
     read = db.Column(db.Boolean, nullable=False, default="1")
-    write = db.Column(db.Boolean, nullable=False, default="1")
-    delete = db.Column(db.Boolean, nullable=False, default="1")
+    create = db.Column(db.Boolean, nullable=False, default="0")
+    write = db.Column(db.Boolean, nullable=False, default="0")
+    delete = db.Column(db.Boolean, nullable=False, default="0")
 
     model_name = ""
     model_icon = ""
