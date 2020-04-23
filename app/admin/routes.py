@@ -98,8 +98,10 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
 def set_modal(url, form):
     fields = []
     row_count = 0
+    field_sizes = []
     for row in form.create_fields:
         fields.append([])
+        field_count = 0
         for field in row:
             if field.input_type == 'select':
                 data = field.data.query.all()
@@ -107,9 +109,15 @@ def set_modal(url, form):
                     {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data})
             else:
                 fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type})
+            field_count = field_count + 1
+        if field_count <= 2:
+            field_sizes.append(6)
+        elif field_count >= 3:
+            field_sizes.append(4)
         row_count = row_count + 1
     context['create_modal'] = {
         'create_url': url,
         'create_form': form,
-        'fields': fields
+        'fields': fields,
+        'fields_sizes':field_sizes
     }

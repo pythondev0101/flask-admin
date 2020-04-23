@@ -16,10 +16,11 @@
                     <div class="main-card mb-3 card">
                         <div class="card-body">
                             {% for row in modal['fields'] %}
+                            {% set row_counter = loop %}
                             <div class="form-row">
                                 {% for field in row %}
                                 {% if field.type == 'select' %}
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-{{ modal['fields_sizes'][row_counter.index-1] }} mb-3">
                                     <div class="position-relative form-group">
                                         <label for="{{ field.name }}" class="">{{ field.label }}</label>
                                         <select name="{{ field.name }}" id="{{ field.name }}" class="form-control">
@@ -37,7 +38,7 @@
                                     </div>
                                 </div>
                                 {% else %}
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-{{ modal['fields_sizes'][row_counter.index-1] }} mb-3">
                                     <label for="{{ field.name }}">{{ field.label }}</label>
                                     <input style="font-weight: bold;" type="{{ field.type }}" class="form-control" id="{{ field.name }}"
                                            name="{{ field.name }}"
