@@ -42,7 +42,7 @@
                                     <label for="{{ field.name }}">{{ field.label.upper() }}</label>
                                     <input style="font-weight: bold;" type="{{ field.type }}" class="form-control" id="{{ field.name }}"
                                            name="{{ field.name }}"
-                                           placeholder="{{ field.label }}" required>
+                                           placeholder="{{ field.label.lower() }}" required>
                                     <div id="{{ field.name }}-valid-feedback" class="valid-feedback">
                                         Looks good!
                                     </div>
