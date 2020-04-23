@@ -1,0 +1,10 @@
+# for pythonanywhere wsgi.py
+
+import os
+import sys
+
+path = '/home/  /homebest_path'
+if path not in sys.path:
+    sys.path.append(path)
+
+from run import app as application

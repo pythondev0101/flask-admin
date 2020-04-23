@@ -21,6 +21,7 @@ def index():
     # TODO: return total tables,users...
     context['title'] = 'Admin'
     context['active'] = 'main_dashboard'
+    context['module'] = 'admin'
     return render_template(admin_templates['index'], context=context)
 
 

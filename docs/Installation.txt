@@ -18,7 +18,13 @@ cd homebest-framework
 
 # Note: Change .env values(eg.database,user,password)
 
+which python3 #Output: /usr/bin/python3
+
+mkvirtualenv --python=/usr/bin/python3 env_homebest
+
 pip3 install -r requirements.txt
+
+pip3 install mysqlclient # FOR PYTHONANYWHERE
 
 sudo apt-get install mysql-server
 
