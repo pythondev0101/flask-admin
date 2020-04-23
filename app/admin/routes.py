@@ -14,6 +14,7 @@ from . import admin_templates
 """--------------END--------------"""
 
 from app import context
+from app.core.models import HomeBestModel
 
 @bp_admin.route('/')
 @login_required
@@ -74,8 +75,12 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
     prev_url = url_for(url, page=models.prev_num) \
         if models.has_prev else None
 
-    context['create_modal']['title'] = model[0].model_name
-    context['active'] = model[0].model_name
+    model_name = model[0].model_name
+    context['create_modal']['title'] = model_name
+    context['active'] = model_name
+    check_module = HomeBestModel.query.with_entities(HomeBestModel.module).filter_by(name=model_name).first()
+    if check_module:
+        context['module'] = check_module[0]
     if active:
         context['active'] = active
 
