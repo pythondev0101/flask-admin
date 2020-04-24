@@ -23,7 +23,7 @@ class User(UserMixin, Base, Admin):
     username = db.Column(db.String(64), nullable=False, index=True, unique=True)
     fname = db.Column(db.String(64), nullable=False, server_default="")
     lname = db.Column(db.String(64), nullable=False, server_default="")
-    email = db.Column(db.String(64), nullable=False, unique=True)
+    email = db.Column(db.String(64), nullable=True, unique=True)
     password_hash = db.Column(db.String(128), nullable=False)
     image_path = db.Column(db.String(64), nullable=False)
     permissions = db.relationship('UserPermission', cascade='all,delete', backref="user")
