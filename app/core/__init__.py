@@ -78,3 +78,55 @@ def create_module(module_name):
         print(e)
     else:
         print("Successfully created the directory %s " % module_path)
+
+
+@bp_core.cli.command("install")
+def install():
+    from sqlalchemy import text
+    import csv
+    from config import basedir
+    import platform
+    from app import db
+    from .models import CoreCity,CoreProvince
+
+    print("Installing...")
+    if platform.system() == "Windows":
+        provinces_path = basedir + "\\app" + "\\core" + "\\csv" + "\\provinces.csv"
+        cities_path = basedir + "\\app" + "\\core" + "\\csv" + "\\cities.csv"
+    elif platform.system() == "Linux":
+        provinces_path = basedir + "/app/core/csv/provinces.csv"
+        cities_path = basedir + "/app/core/csv/cities.csv"
+    else:
+        raise Exception
+    print("Inserting provinces to database...")
+    if CoreProvince.query.count() < 88:
+        with open(provinces_path) as f:
+            csv_file = csv.reader(f)
+            for id,row in enumerate(csv_file):
+                if not id == 0:
+                    province = CoreProvince()
+                    province.id = int(row[0])
+                    province.name = row[2]
+                    db.session.add(province)
+            db.session.commit()
+        print("Provinces done...")
+    else:
+        print("Provinces exists...")
+    print("")
+    print("Inserting cities to database...")
+    if CoreCity.query.count() < 1647:
+        with open(cities_path) as f:
+            csv_file = csv.reader(f)
+            for id,row in enumerate(csv_file):
+                if not id == 0:
+                    city = CoreCity()
+                    city.id = int(row[0])
+                    city.name = row[2]
+                    city.province_id = None
+                    db.session.add(city)
+            db.session.commit()
+        print("Cities done...")
+    else:
+        print("Cities exists...")
+
+    print("Installation complete...")

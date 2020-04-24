@@ -43,10 +43,14 @@ class CoreCustomer(Base):
 
 
 class CoreCity(Base):
-    __abstract__ = True
+    __tablename__ = 'core_city'
+    id = db.Column(db.Integer,primary_key=True, autoincrement=False)
     name = db.Column(db.String(64), nullable=False,server_default="")
+    province_id = db.Column(db.Integer, db.ForeignKey('core_province.id'), nullable=True)
+    province = db.relationship("CoreProvince")
 
 
 class CoreProvince(Base):
-    __abstract__ = True
+    __tablename__ = 'core_province'
+    id = db.Column(db.Integer,primary_key=True, autoincrement=False)
     name = db.Column(db.String(64), nullable=False,server_default="")
