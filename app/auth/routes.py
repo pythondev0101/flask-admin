@@ -23,7 +23,6 @@ from app.core.models import HomeBestModel
 
 """ URL IMPORTS """
 from app.admin import admin_urls
-from app.core import core_urls
 from app.auth import auth_urls
 
 """--------------END--------------"""
@@ -342,4 +341,4 @@ def load_permissions(user_id):
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for(core_urls['index']))
+    return redirect(url_for('core.index'))
