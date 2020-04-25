@@ -37,6 +37,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% elif field.type == 'numeric' %}
+                                <div class="col-md-{{ modal['fields_sizes'][row_counter.index-1] }} mb-3">
+                                    <label for="{{ field.name }}">{{ field.label.upper() }}</label>
+                                    <input style="font-weight: bold;" type="number" class="form-control" id="{{ field.name }}"
+                                           name="{{ field.name }}" placeholder="Php" step="0.01" min="0"
+                                           placeholder="{{ field.label.lower() }}" required>
+                                    <div id="{{ field.name }}-valid-feedback" class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div id="{{ field.name }}-invalid-feedback" class="invalid-feedback">
+                                        Please provide a valid {{ field.label }}
+                                    </div>
+                                </div>
                                 {% else %}
                                 <div class="col-md-{{ modal['fields_sizes'][row_counter.index-1] }} mb-3">
                                     <label for="{{ field.name }}">{{ field.label.upper() }}</label>
