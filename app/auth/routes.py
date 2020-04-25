@@ -126,7 +126,7 @@ def change_password(oid):
     user = User.query.get_or_404(oid)
     user.set_password(request.form.get('password'))
     db.session.commit()
-    flash("Password change successfully!")
+    flash("Password change successfully!",'success')
     return redirect(request.referrer)
 
 
@@ -160,10 +160,10 @@ def users_delete():
         resp = jsonify(result=1)
         resp.headers.add('Access-Control-Allow-Origin', '*')
         resp.status_code = 200
-        flash('Successfully deleted users')
+        flash('Successfully deleted users','success')
         return resp
     except Exception as e:
-        context['errors']['Deletion error'] = str(e)
+        flash(str(e),'error')
         db.session.rollback()
         resp = jsonify(result=0)
         resp.headers.add('Access-Control-Allow-Origin', '*')
@@ -190,14 +190,14 @@ def user_create():
                 user.is_superuser = 0
                 db.session.add(user)
                 db.session.commit()
-                flash('New User Added Successfully!')
+                flash('New User Added Successfully!','success')
                 return redirect(url_for(auth_urls['index']))
             else:
                 for key, value in form.errors.items():
-                    context['errors'][key] = value
+                    flash(key + value, 'error')
                 return redirect(url_for(auth_urls['index']))
     except Exception as e:
-        context['errors']['Internal Error'] = str(e)
+        flash(str(e),'error')
         return redirect(url_for(auth_urls['index']))
 
 
@@ -224,7 +224,7 @@ def user_edit(oid):
             user.email = form.email.data
             user.updated_at = datetime.now()
             db.session.commit()
-            flash('User update Successfully!')
+            flash('User update Successfully!','success')
             return redirect(url_for(auth_urls['index']))
         for key, value in form.errors.items():
             print(key, value)
@@ -304,12 +304,11 @@ def login():
         if form.validate_on_submit():
             user = User.query.filter_by(username=form.username.data).first()
             if user is None or not user.check_password(form.password.data):
-                flash('Invalid username or password')
+                flash('Invalid username or password','success')
                 return redirect(url_for(auth_urls['login']))
             else:
                 login_user(user, remember=form.remember_me.data)
                 load_permissions(user.id)
-                # flash('Login request for user {}, remember_me={}'.format(form.username.data,form.remember_me.data))
                 next_page = request.args.get('next')
                 if not next_page or url_parse(next_page).netloc != '':
                     next_page = url_for(admin_urls['admin'])
