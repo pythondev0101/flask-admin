@@ -50,10 +50,10 @@ class AdminCreateField(object):
 
 
 class AdminSelectField(object):
-    def __init__(self, name, label, input_type, data):
+    def __init__(self, name, label, data):
         self.name = name
         self.label = label
-        self.input_type = input_type
+        self.input_type = 'select'
         self.data = data
 
 
