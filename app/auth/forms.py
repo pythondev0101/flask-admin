@@ -40,7 +40,7 @@ class ModelInlineForm(AdminInlineForm):
 
 
 # TODO: FOR FUTURE VERSION CHANGE THIS TO CLASS INHERITANCE
-class UserEditForm(FlaskForm,AdminEditForm):
+class UserEditForm(AdminEditForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
     fname = StringField('First Name', validators=[DataRequired()])
@@ -65,7 +65,7 @@ class UserEditForm(FlaskForm,AdminEditForm):
     model_inline = ModelInlineForm()
     inlines = [permission_inline,model_inline]
 
-class UserForm(FlaskForm, AdminIndexForm):
+class UserForm(AdminIndexForm):
     active = BooleanField('Active', default=1)
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -93,14 +93,12 @@ class UserForm(FlaskForm, AdminIndexForm):
     index_headers = ['Username', 'First name', 'last name', 'email']
     index_title = "Users"
     index_message = "Message"
-    title = index_title
 
 
 class UserPermissionForm(AdminIndexForm):
     index_headers = ['Username', 'Name', 'Model', 'Read','create', 'Write', 'Delete']
     index_title = "User Permissions"
     index_message = "Message"
-    title = index_title
 
 
 # AUTH.FORMS.LOGINFORM

@@ -1,7 +1,8 @@
 """ Admin form """
+from flask_wtf import FlaskForm
 
 
-class AdminIndexForm(object):
+class AdminIndexForm(FlaskForm):
     @property
     def index_headers(self):
         raise NotImplementedError('Must implement index_headers')
@@ -17,12 +18,12 @@ class AdminIndexForm(object):
     @property
     def create_fields(self):
         raise NotImplementedError('Must implement create_fields')
-
-    def __int__(self):
+    
+    def __init__(self):
+        super(AdminIndexForm,self).__init__()
         self.title = self.index_title
 
-
-class AdminEditForm(object):
+class AdminEditForm(FlaskForm):
     inlines = None
 
     @property
