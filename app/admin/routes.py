@@ -1,6 +1,6 @@
 """ MODULE: ADMIN.ROUTES """
 """ FLASK IMPORTS """
-from flask import render_template, flash, redirect, url_for, request, current_app,g
+from flask import render_template, flash, redirect, url_for, request, current_app,g,jsonify
 from flask_login import login_required
 """--------------END--------------"""
 
@@ -15,6 +15,9 @@ from . import admin_templates
 
 from app import context
 from app.core.models import HomeBestModel
+from sqlalchemy import text
+from flask_cors import cross_origin
+from app import db
 
 @bp_admin.route('/')
 @login_required
@@ -24,6 +27,26 @@ def index():
     context['active'] = 'main_dashboard'
     context['module'] = 'admin'
     return render_template(admin_templates['index'], context=context)
+
+
+@bp_admin.route('/_get_view_modal_data',methods=["POST"])
+@cross_origin()
+def get_view_modal_data():
+    try:
+        table,column,id = request.json['table'],request.json['column'],request.json['id']
+        query = "select {} from {} where id = {} limit 1".format(column,table,id)
+        sql = text(query)
+        row = db.engine.execute(sql)
+        res = [x[0] for x in row]
+        resp = jsonify(result=res[0],column=column)
+        resp.headers.add('Access-Control-Allow-Origin', '*')
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        resp = jsonify(result="")
+        resp.headers.add('Access-Control-Allow-Origin', '*')
+        resp.status_code = 200
+        return resp
 
 
 def admin_edit(form, fields_data, update_url, oid, modal_form=False, action=None, extra_modal=None , template="admin/admin_edit.html"):
@@ -87,18 +110,21 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
     if create_url and create_modal:
         set_modal(create_url, form)
 
+    table = model[0].__tablename__
+
     return render_template(template, context=context,
                            models=models.items, table_fields=table_fields,
                            next_url=next_url, prev_url=prev_url,
                            index_title=index_title, index_message=index_message,
                            title=title, action=action, create_modal=create_modal,
-                           view_modal=view_modal, edit_url=edit_url)
+                           view_modal=view_modal, edit_url=edit_url,table=table)
 
 
 def set_modal(url, form):
     fields = []
     row_count = 0
     field_sizes = []
+    js_fields = []
     for row in form.create_fields:
         fields.append([])
         field_count = 0
@@ -110,6 +136,7 @@ def set_modal(url, form):
             else:
                 fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type})
             field_count = field_count + 1
+            js_fields.append(field.name)
         if field_count <= 2:
             field_sizes.append(6)
         elif field_count >= 3:
@@ -119,5 +146,6 @@ def set_modal(url, form):
         'create_url': url,
         'create_form': form,
         'fields': fields,
-        'fields_sizes':field_sizes
+        'fields_sizes':field_sizes,
+        'js_fields':js_fields
     }

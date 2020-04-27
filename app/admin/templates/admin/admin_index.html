@@ -37,10 +37,10 @@
 
                         {% for model in models %}
                         {% if view_modal %}
-                        <tr class='item' id="{{ model[0] }}" onclick="row_click(this, '{{context['active']}}')" data-toggle="modal" data-target="#viewModal">
-                            <param id="{{ model[0] }}" name="{{ url_for(edit_url,oid=model[0]) }}">
+                        <tr class='item row_object' id="{{ model[0] }}"  data-toggle="modal" data-target="#viewModal">
+                            <param id="param_{{ model[0] }}" name="param_{{ model[0] }}" value="{{ url_for(edit_url,oid=model[0]) }}">
                         {% else %}
-                        <tr class='item'>
+                        <tr class='item row_object'>
                         {% endif %}
                             {% for values in model %}
                             {% if loop.index > 1 %}
@@ -129,6 +129,53 @@
                 $("tr").find("th:last").remove();
                 $("tr").find("td:last").remove();
             }
+        });
+
+        $(".row_object").click(function(){
+            var view_modal = '{{ view_modal }}';
+            if (view_modal != 'False'){
+                var id = '#param_' + $(this).attr('id');
+                if(document.body.contains(document.getElementById('view_edit_button'))){
+                    var url = $(id).attr('value');
+                    document.getElementById("view_edit_button").setAttribute("href", url);
+                    var fields = {{ context['create_modal']['js_fields'] | tojson }};
+                    var ctr;
+                    var field;
+                    var field_id = $(this).attr('id');
+                    var csrf_token = "{{ csrf_token() }}";
+                    var table = '{{ table }}';
+                    $.ajaxSetup({
+                        beforeSend: function(xhr, settings) {
+                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                            }
+                        }
+                    });
+                    for (ctr=0; ctr < fields.length; ctr++){
+                        $.ajax({
+                            url: "/admin/_get_view_modal_data",
+                            type: "POST",
+                            dataType: "json",
+                            data: JSON.stringify({'table': table,'column': fields[ctr],'id':field_id}),
+                            contentType: "application/json; charset=utf-8",
+                            success: function(data) {
+                                if (data.result){
+                                    field = "#view_" + data.column;
+                                    $(field).val(data.result);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+            //if(document.body.contains(document.getElementById('view_edit_button'))){
+            //    var url = document.getElementById(row_obj.id).name;
+            //    document.getElementById("view_edit_button").setAttribute("href", url);
+            //}
+            //document.getElementById("view_fname").value = row_obj.cells[1].innerHTML;
+            //document.getElementById("view_lname").value = row_obj.cells[2].innerHTML;
+            //document.getElementById("view_username").value = row_obj.cells[0].innerHTML;
+            //document.getElementById("view_email").value = row_obj.cells[3].innerHTML;
         });
     });
 
