@@ -38,7 +38,7 @@
                         {% for model in models %}
                         {% if view_modal %}
                         <tr class='item row_object' id="{{ model[0] }}"  data-toggle="modal" data-target="#viewModal">
-                            <param id="param_{{ model[0] }}" name="param_{{ model[0] }}" value="{{ url_for(edit_url,oid=model[0]) }}">
+                            <param id="param_{{ model[0] }}" name="param_{{ model[0] }}" {% if edit_url %} value="{{ url_for(edit_url,oid=model[0]) }}" {% endif %}>
                         {% else %}
                         <tr class='item row_object' id="{{ model[0] }}">
                         {% endif %}
