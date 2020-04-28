@@ -82,12 +82,11 @@ class UserForm(AdminIndexForm):
     a_fname = AdminCreateField('fname', 'First Name', 'text')
     a_lname = AdminCreateField('lname', 'Last Name', 'text')
     a_email = AdminCreateField('email', 'Email', 'email')
-    a_password = AdminCreateField('password', 'Password', 'password')
     # a_role = AdminSelectField('role_id', 'Role', 'select', Role)
 
     create_fields = [
-        [a_fname, a_lname, a_username],
-        [a_email, a_password]
+        [a_fname, a_lname],
+        [a_username,a_email]
     ]
 
     index_headers = ['Username', 'First name', 'last name', 'email']

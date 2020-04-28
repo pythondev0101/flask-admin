@@ -40,7 +40,7 @@
                         <tr class='item row_object' id="{{ model[0] }}"  data-toggle="modal" data-target="#viewModal">
                             <param id="param_{{ model[0] }}" name="param_{{ model[0] }}" value="{{ url_for(edit_url,oid=model[0]) }}">
                         {% else %}
-                        <tr class='item row_object'>
+                        <tr class='item row_object' id="{{ model[0] }}">
                         {% endif %}
                             {% for values in model %}
                             {% if loop.index > 1 %}
@@ -100,6 +100,7 @@
                             ids.push(this.id)
                         }
                     });
+                    var table = '{{ table }}';
                     $.ajaxSetup({
                         beforeSend: function(xhr, settings) {
                             if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
@@ -108,14 +109,14 @@
                         }
                     });
                     $.ajax({
-                        url: "/auth/_users_delete",
+                        url: "/admin/_delete_data",
                         type: "POST",
                         dataType: "json",
-                        data: JSON.stringify({'ids': ids}),
+                        data: JSON.stringify({'ids': ids,'table':table}),
                         contentType: "application/json; charset=utf-8",
                         success: function(data) {
                             if(data.result == 2){
-                                alert("Must check some user!");
+                                alert("Must check some row!");
                             }else{
                                 location.reload();
                             }

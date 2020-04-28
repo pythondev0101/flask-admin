@@ -145,7 +145,6 @@ def user_delete(user_id):
 @cross_origin()
 def users_delete():
     data = request.get_json()
-    print(data['ids'])
     try:
         if not data['ids']:
             resp = jsonify(result=2)

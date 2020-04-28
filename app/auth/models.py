@@ -56,7 +56,7 @@ def load_user(user_id):
 class UserPermission(db.Model):
     __tablename__ = 'auth_user_permission'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id', ondelete='CASCADE'))
     model_id = db.Column(db.Integer, db.ForeignKey('core_model.id'))
     model = db.relationship('HomeBestModel', backref="userpermission")
     read = db.Column(db.Boolean, nullable=False, default="1")

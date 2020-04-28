@@ -29,6 +29,36 @@ def index():
     return render_template(admin_templates['index'], context=context)
 
 
+@bp_admin.route('/_delete_data',methods=["POST"])
+@cross_origin()
+def delete_data():
+    table = request.json['table']
+    data = request.json['ids']
+    try:
+        if not data:
+            resp = jsonify(result=2)
+            resp.headers.add('Access-Control-Allow-Origin', '*')
+            resp.status_code = 200
+            return resp
+
+        for idx in data:
+            query = "DELETE from {} where id = {}".format(table,idx)
+            db.engine.execute(text(query))
+
+        resp = jsonify(result=1)
+        resp.headers.add('Access-Control-Allow-Origin', '*')
+        resp.status_code = 200
+        flash('Successfully deleted!','success')
+        return resp
+    except Exception as e:
+        flash(str(e),'error')
+        db.session.rollback()
+        resp = jsonify(result=0)
+        resp.headers.add('Access-Control-Allow-Origin', '*')
+        resp.status_code = 200
+        return resp
+    
+
 @bp_admin.route('/_get_view_modal_data',methods=["POST"])
 @cross_origin()
 def get_view_modal_data():
