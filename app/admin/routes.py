@@ -79,7 +79,8 @@ def get_view_modal_data():
         return resp
 
 
-def admin_edit(form, fields_data, update_url, oid, modal_form=False, action=None, extra_modal=None , template="admin/admin_edit.html"):
+def admin_edit(form, fields_data, update_url, oid, modal_form=False, action=None, \
+    model=None,extra_modal=None , template="admin/admin_edit.html"):
     # Note: fields_data is just temporary
     # TODO: inherit flask form to get values in constructor
     fields = []
@@ -101,6 +102,15 @@ def admin_edit(form, fields_data, update_url, oid, modal_form=False, action=None
     context['edit_model'] = {
         'fields': fields
     }
+
+    if model:
+        model_name = model.model_name
+        context['create_modal']['title'] = model_name
+        context['active'] = model_name
+        check_module = HomeBestModel.query.with_entities(HomeBestModel.module).filter_by(name=model_name).first()
+        if check_module:
+            context['module'] = check_module[0]
+
 
     return render_template(template, context=context, form=form, update_url=update_url,
                            oid=oid,modal_form=modal_form,edit_title=form.edit_title,action=action,extra_modal=extra_modal)

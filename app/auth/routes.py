@@ -141,34 +141,6 @@ def user_delete(user_id):
         db.session.rollback()
 
 
-@bp_auth.route('/_users_delete',methods=["POST"])
-@cross_origin()
-def users_delete():
-    data = request.get_json()
-    try:
-        if not data['ids']:
-            resp = jsonify(result=2)
-            resp.headers.add('Access-Control-Allow-Origin', '*')
-            resp.status_code = 200
-            return resp
-
-        for idx in data['ids']:
-            user = User.query.filter_by(id=int(idx)).first()
-            db.session.delete(user)
-        db.session.commit()
-        resp = jsonify(result=1)
-        resp.headers.add('Access-Control-Allow-Origin', '*')
-        resp.status_code = 200
-        flash('Successfully deleted users','success')
-        return resp
-    except Exception as e:
-        flash(str(e),'error')
-        db.session.rollback()
-        resp = jsonify(result=0)
-        resp.headers.add('Access-Control-Allow-Origin', '*')
-        resp.status_code = 200
-        return resp
-
 @bp_auth.route('/user_create', methods=['POST'])
 @login_required
 def user_create():
@@ -214,7 +186,7 @@ def user_edit(oid):
         form.permission_inline.models = user_permissions
         fields_data = [user.fname, user.lname, user.username, user.email]
         return admin_edit(form=form, fields_data=fields_data, update_url=auth_urls['edit'], \
-            action="auth/user_edit_action.html",oid=oid, modal_form=True,extra_modal='auth/user_change_password_modal.html')
+            action="auth/user_edit_action.html",oid=oid, modal_form=True,extra_modal='auth/user_change_password_modal.html',model=User)
     elif request.method == "POST":
         if form.validate_on_submit():
             user.username = form.username.data
