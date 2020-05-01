@@ -21,13 +21,10 @@ from app import db
 
 @bp_admin.route('/')
 @login_required
-def index():
-    # TODO: return total tables,users...
-    context['title'] = 'Admin'
-    context['active'] = 'main_dashboard'
-    context['module'] = 'admin'
-    return render_template(admin_templates['index'], context=context)
+def dashboard():
+    return admin_dashboard()
 
+    
 
 @bp_admin.route('/_delete_data',methods=["POST"])
 @cross_origin()
@@ -189,3 +186,27 @@ def set_modal(url, form):
         'fields_sizes':field_sizes,
         'js_fields':js_fields
     }
+
+
+def admin_dashboard(box1=None,box2=None,box3=None,box4=None):
+    from app.auth.models import User
+    if not box1:
+        box1 = DashboardBox("Total Modules","Installed",db.session.query(HomeBestModel.module).count())
+
+    if not box2:
+        box2 = DashboardBox("System Models","Total models",HomeBestModel.query.count())
+
+    if not box3:
+        box3 = DashboardBox("Users","Total users",User.query.count())
+    
+    context['active'] = 'main_dashboard'
+    context['module'] = 'admin'
+    return render_template("admin/admin_dashboard.html", context=context,title='Admin Dashboard', \
+        box1=box1,box2=box2,box3=box3)
+
+
+class DashboardBox:
+    def __init__(self,heading,subheading, number):
+        self.heading = heading
+        self.subheading = subheading
+        self.number = number

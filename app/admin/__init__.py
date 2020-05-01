@@ -6,7 +6,7 @@ module_name = "admin" # The name of the module
 
 # URLS DICTIONARY
 admin_urls = {
-    'admin': 'bp_admin.index',
+    'admin': 'bp_admin.dashboard',
 }
 
 # TEMPLATES DICTIONARY

@@ -36,7 +36,7 @@
                 {% block first_sidebar_navigation %}
                 <li class="app-sidebar__heading">Admin Dashboards</li>
                 <li>
-                    <a href="{{ url_for('bp_admin.index')}}" class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}">
+                    <a href="{{ url_for('bp_admin.dashboard')}}" class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}">
                         <i class="metismenu-icon pe-7s-graph1 icon-gradient bg-premium-dark" aria-hidden="true"></i>
                         Main Dashboard
                     </a>
