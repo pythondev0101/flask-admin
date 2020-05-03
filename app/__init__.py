@@ -1,3 +1,9 @@
+"""
+app/__init__.py
+====================================
+Create our application
+"""
+
 from flask import Flask,g
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -20,6 +26,12 @@ context = {'system_modules': system_modules, 'module': '', 'active': '', 'errors
         'app_name':"HomeBest"}
 
 def create_app(config_name):
+    """
+    Return the app at crenecreate nito ang application
+    ----------
+    config_name
+        A string para kung ano ang gagamiting environment configuration(eg.develop,production,testing)
+    """
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object(app_config[config_name])
     # app.config.from_pyfile('config.py')
@@ -46,6 +58,7 @@ def create_app(config_name):
         app.register_blueprint(bp_auth, url_prefix='/auth')
         app.register_blueprint(bp_admin, url_prefix='/admin')
         """--------------END--------------"""
+
         db.create_all()
         db.session.commit()
 
@@ -54,12 +67,22 @@ def create_app(config_name):
 
         modules = [AdminModule]
         """--------------END--------------"""
+        
         create_modules(modules)
 
     return app
 
 
 def create_modules(modules):
+    """
+    Tatanggap to ng list ng modules tapos iinsert nya sa database yung mga models o tables nila, \
+        para malaman ng system kung ano yung mga models(eg. Users,Customers)
+    Parameters
+    ----------
+    modules
+        Listahan ng mga modules na iinstall sa system
+    """
+
     from app.core.models import HomeBestModel
 
     for module in modules:
