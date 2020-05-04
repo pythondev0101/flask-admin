@@ -81,7 +81,6 @@ def admin_edit(form, update_url, oid, modal_form=False, action=None, \
     # TODO: inherit flask form to get values in constructor
     fields = []
     row_count = 0
-    field_count = 0
     
     for row in form.edit_fields():
         fields.append([])
@@ -94,7 +93,6 @@ def admin_edit(form, update_url, oid, modal_form=False, action=None, \
             else:
                 fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type,
                                           'value': field.data})
-            field_count = field_count + 1
         row_count = row_count + 1
     context['edit_model'] = {
         'fields': fields
@@ -162,7 +160,7 @@ def set_modal(url, form):
     row_count = 0
     field_sizes = []
     js_fields = []
-    for row in form.create_fields:
+    for row in form.create_fields():
         fields.append([])
         field_count = 0
         for field in row:
