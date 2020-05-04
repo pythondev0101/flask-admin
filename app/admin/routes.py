@@ -76,24 +76,24 @@ def get_view_modal_data():
         return resp
 
 
-def admin_edit(form, fields_data, update_url, oid, modal_form=False, action=None, \
+def admin_edit(form, update_url, oid, modal_form=False, action=None, \
     model=None,extra_modal=None , template="admin/admin_edit.html"):
-    # Note: fields_data is just temporary
     # TODO: inherit flask form to get values in constructor
     fields = []
     row_count = 0
     field_count = 0
-    for row in form.edit_fields:
+    
+    for row in form.edit_fields():
         fields.append([])
         for field in row:
             if field.input_type == 'select':
                 data = field.data.query.all()
                 fields[row_count].append(
                     {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data,
-                     'value': fields_data[field_count]})
+                     'value': field.data})
             else:
                 fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type,
-                                          'value': fields_data[field_count]})
+                                          'value': field.data})
             field_count = field_count + 1
         row_count = row_count + 1
     context['edit_model'] = {

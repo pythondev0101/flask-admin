@@ -8,7 +8,7 @@ from datetime import datetime
 """--------------END--------------"""
 
 from app.admin.forms import AdminCreateField, AdminIndexForm, AdminSelectField,AdminEditForm,\
-    AdminEditField,AdminInlineForm
+    AdminInlineForm, AdminField
 
 
 # class RoleCreateForm(FlaskForm, AdminIndexForm):
@@ -41,22 +41,13 @@ class ModelInlineForm(AdminInlineForm):
 
 # TODO: FOR FUTURE VERSION CHANGE THIS TO CLASS INHERITANCE
 class UserEditForm(AdminEditForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
-    fname = StringField('First Name', validators=[DataRequired()])
-    lname = StringField('Last Name', validators=[DataRequired()])
-    # role_id = IntegerField('Role')
-
-    a_username = AdminEditField('username', 'Username', 'text',username)
-    a_fname = AdminEditField('fname', 'First Name', 'text',fname)
-    a_lname = AdminEditField('lname', 'Last Name', 'text',lname)
-    a_email = AdminEditField('email', 'Email', 'email',email)
-    # a_role = AdminSelectField('role_id', 'Role', 'select', Role)
-
-    edit_fields = [
-        [a_fname, a_lname, a_username],
-        [a_email]
-    ]
+    username = AdminField(label='Username', validators=[DataRequired()],input_type='text')
+    email = AdminField(label='Email', validators=[DataRequired()],input_type='text')
+    fname = AdminField(label='First Name', validators=[DataRequired()],input_type='text')
+    lname = AdminField(label='Last Name', validators=[DataRequired()],input_type='text')
+    
+    def edit_fields(self):
+        return [[self.fname, self.lname],[self.username,self.email]]
 
     edit_title = "Edit User"
     edit_message = "message"
@@ -64,6 +55,7 @@ class UserEditForm(AdminEditForm):
     permission_inline = PermissionInlineForm()
     model_inline = ModelInlineForm()
     inlines = [permission_inline,model_inline]
+
 
 class UserForm(AdminIndexForm):
     active = BooleanField('Active', default=1)
