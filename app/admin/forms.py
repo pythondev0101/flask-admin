@@ -46,14 +46,6 @@ class AdminEditForm(FlaskForm):
         raise NotImplementedError('Must implement fields_data')
 
 
-class AdminSelectField(object):
-    def __init__(self, name, label, data):
-        self.name = name
-        self.label = label
-        self.input_type = 'select'
-        self.data = data
-
-
 class AdminInlineForm(object):
     models = None
 
@@ -74,10 +66,14 @@ class AdminField(Field):
 
     widget = widgets.TextInput()
     
-    def __init__(self,input_type="text",*args, **kwargs):
+    def __init__(self,input_type="text",model=None,*args, **kwargs):
         super(AdminField,self).__init__(*args,**kwargs)
-        self.input_type = input_type
         self.label = kwargs.get('label')
+        self.model = model
+        if self.model:
+            self.input_type = 'select'
+        else:
+            self.input_type = input_type
 
     def process_formdata(self, valuelist):
         if valuelist:

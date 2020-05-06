@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from datetime import datetime
 """--------------END--------------"""
 
-from app.admin.forms import AdminIndexForm, AdminSelectField,AdminEditForm, AdminInlineForm, AdminField
+from app.admin.forms import AdminIndexForm,AdminEditForm, AdminInlineForm, AdminField
 
 
 class PermissionInlineForm(AdminInlineForm):

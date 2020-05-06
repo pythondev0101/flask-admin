@@ -86,7 +86,7 @@ def admin_edit(form, update_url, oid, modal_form=False, action=None, \
         fields.append([])
         for field in row:
             if field.input_type == 'select':
-                data = field.data.query.all()
+                data = field.model.query.all()
                 fields[row_count].append(
                     {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data,
                      'value': field.data})
@@ -165,7 +165,7 @@ def set_modal(url, form):
         field_count = 0
         for field in row:
             if field.input_type == 'select':
-                data = field.data.query.all()
+                data = field.model.query.all()
                 fields[row_count].append(
                     {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data})
             else:
