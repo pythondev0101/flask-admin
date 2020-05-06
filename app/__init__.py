@@ -19,7 +19,7 @@ migrate = Migrate()
 csrf = CSRFProtect()
 login_manager = LoginManager()
 
-system_modules = {}
+system_modules = []
 
 context = {'system_modules': system_modules, 'module': '', 'active': '', 'errors': {}, 
         'create_modal': {}, 'header_color': "header_color15", 'sidebar_color': "sidebar_color15",
@@ -68,12 +68,12 @@ def create_app(config_name):
         modules = [AdminModule]
         """--------------END--------------"""
         
-        create_modules(modules)
+        _create_modules(modules)
 
     return app
 
 
-def create_modules(modules):
+def _create_modules(modules):
     """
     Tatanggap to ng list ng modules tapos iinsert nya sa database yung mga models o tables nila, \
         para malaman ng system kung ano yung mga models(eg. Users,Customers)
@@ -84,10 +84,14 @@ def create_modules(modules):
     """
 
     from app.core.models import HomeBestModel
+    
+    module_count = 0
 
     for module in modules:
-        system_modules[module.module_name] = {'description': module.module_description,
-        'link': module.module_link,'icon': module.module_icon, 'models': {}}
+        system_modules.append({'name':module.module_name,'description': module.module_description,
+        'link': module.module_link,'icon': module.module_icon, 'models': []})
+        
+        model_count = 0
 
         for model in module.models:
             homebestmodel = HomeBestModel.query.filter_by(name=model.model_name).first()
@@ -95,12 +99,15 @@ def create_modules(modules):
                 new_model = HomeBestModel(model.model_name, module.module_name, model.model_description)
                 db.session.add(new_model)
                 db.session.commit()
-            system_modules[module.module_name]['models'][model.model_name] = {'icon': model.model_icon,
-            'functions': {}}
+            system_modules[module_count]['models'].append({'name':model.model_name,'icon': model.model_icon,
+            'functions': []})
             for function_name, function_link in model.functions.items():
-                system_modules[module.module_name]['models'][model.model_name]['functions'][function_name] = function_link
+                system_modules[module_count]['models'][model_count]['functions'].append({
+                    function_name:function_link
+                })
 
-    print(system_modules)
+            model_count = model_count + 1
+        module_count = module_count + 1
 
 
 

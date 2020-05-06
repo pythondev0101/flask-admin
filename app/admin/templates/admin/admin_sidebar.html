@@ -44,25 +44,27 @@
                 {% endblock %}
                 {% block second_sidebar_navigation %}
                 <li class="app-sidebar__heading">System Models</li>
-                    {% for key,value in context['system_modules'].items() %}
-                        {% if key == context['module'] %}
-                            {% for model_name,val in value['models'].items() %}
-                                {% if model_name in session['permissions'] %}
-                                    {% if session['permissions'][model_name]['read'] %}
+                    {% for module in context['system_modules'] %}
+                        {% if module['name'] == context['module'] %}
+                            {% for model in module['models'] %}
+                                {% if model['name'] in session['permissions'] %}
+                                    {% if session['permissions'][model['name']]['read'] %}
                                         <li>
-                                            <a href="#" class="{% if context['active']==model_name %} mm-active {% endif %}">
-                                                <i class="metismenu-icon {{ val['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
-                                                {{ model_name }}
+                                            <a href="#" class="{% if context['active']==model['name'] %} mm-active {% endif %}">
+                                                <i class="metismenu-icon {{ model['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                                {{ model['name'] }}
                                                 <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                             </a>
                                             <ul>
-                                                {% for function,link in val['functions'].items() %}
+                                                {% for function in model['functions'] %}
+                                                {% for name,link in function.items() %}
                                                 <li>
                                                     <a href="{{ url_for(link) }}">
                                                         <i class="metismenu-icon">
-                                                        </i>{{ function }}
+                                                        </i>{{ name }}
                                                     </a>
                                                 </li>
+                                                {% endfor %}
                                                 {% endfor %}
                                             </ul>
                                         </li>
