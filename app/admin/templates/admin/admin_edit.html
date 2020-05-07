@@ -5,7 +5,8 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    <i class="pe-7s-graph text-success"> </i>
+                    <img width="42" class="rounded-circle"
+                    src="{{url_for('static', filename=current_user.image_path)}}" alt="">
                 </div>
                 <div>
                     {{ edit_title }}

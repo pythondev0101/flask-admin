@@ -157,7 +157,8 @@ def user_create():
                 user.fname = form.fname.data
                 user.lname = form.lname.data
                 user.email = form.email.data
-                user.set_password(form.password.data)
+                #TODO: add default password in settings
+                user.set_password("password")
                 user.is_superuser = 0
                 db.session.add(user)
                 db.session.commit()
@@ -165,7 +166,7 @@ def user_create():
                 return redirect(url_for(auth_urls['index']))
             else:
                 for key, value in form.errors.items():
-                    flash(key + value, 'error')
+                    flash(str(key) + str(value), 'error')
                 return redirect(url_for(auth_urls['index']))
     except Exception as e:
         flash(str(e),'error')
