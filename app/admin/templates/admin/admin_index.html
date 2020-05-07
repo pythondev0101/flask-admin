@@ -84,6 +84,7 @@
 {% block scripts %}
 <script type="text/javascript">
     $(document).ready(function(){
+        $('#index_table').DataTable();
         $("#btndelete").click(function(){
             if($('#btndelete').text()=='Delete'){
                 $('#nav_action_btns').after("<button id='btn_confirm_delete' type='button' tabindex='1' class='dropdown-item'>Confirm Delete</button>");
