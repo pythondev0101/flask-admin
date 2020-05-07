@@ -58,7 +58,7 @@
 </div>
 {% endblock %}
 
-{% block inner_footer %}
+<!-- {% block inner_footer %}
 <div class="app-footer-left">
     <nav class="" aria-label="Page navigation example">
         <ul class="pagination">
@@ -79,12 +79,20 @@
         {% endif %}
     </nav>
 </div>
-{% endblock %}
+{% endblock %} -->
 
 {% block scripts %}
 <script type="text/javascript">
     $(document).ready(function(){
-        $('#index_table').DataTable();
+        var table = $('#index_table').DataTable({
+            "dom": 'rtip',
+            "pageLength": 8
+        });
+
+        $('.search-input').on('keyup', function () {
+            table.search(this.value).draw();
+        } );
+
         $("#btndelete").click(function(){
             if($('#btndelete').text()=='Delete'){
                 $('#nav_action_btns').after("<button id='btn_confirm_delete' type='button' tabindex='1' class='dropdown-item'>Confirm Delete</button>");

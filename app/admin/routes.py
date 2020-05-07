@@ -114,24 +114,18 @@ def admin_edit(form, update_url, oid, modal_form=False, action=None, \
 def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
                 create_modal="admin/admin_create_modal.html", view_modal="admin/admin_view_modal.html",
                 create_url="", edit_url="", template="admin/admin_index.html", active=""):
-    page = request.args.get('page', 1, type=int)
-    data_per_page = current_app.config['DATA_PER_PAGE']
+
     if len(model) == 1:
-        models = model[0].query.with_entities(*fields).paginate(page, data_per_page, False)
+        models = model[0].query.with_entities(*fields).all()
         print(model[0].query.with_entities(*fields))
     else:
-        models = model[0].query.outerjoin(model[1]).with_entities(*fields).paginate(page, data_per_page, False)
+        models = model[0].query.outerjoin(model[1]).with_entities(*fields).all()
         print(model[0].query.outerjoin(model[1]).with_entities(*fields))
 
     table_fields = form.index_headers
     title = form.title
     index_title = form.index_title
     index_message = form.index_message
-
-    next_url = url_for(url, page=models.next_num) \
-        if models.has_next else None
-    prev_url = url_for(url, page=models.prev_num) \
-        if models.has_prev else None
 
     model_name = model[0].model_name
     context['create_modal']['title'] = model_name
@@ -148,8 +142,7 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
     table = model[0].__tablename__
 
     return render_template(template, context=context,
-                           models=models.items, table_fields=table_fields,
-                           next_url=next_url, prev_url=prev_url,
+                           models=models, table_fields=table_fields,
                            index_title=index_title, index_message=index_message,
                            title=title, action=action, create_modal=create_modal,
                            view_modal=view_modal, edit_url=edit_url,table=table)
