@@ -167,9 +167,9 @@ def set_modal(url, form):
             if field.input_type == 'select':
                 data = field.model.query.all()
                 fields[row_count].append(
-                    {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data})
+                    {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data,'placeholder':field.placeholder})
             else:
-                fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type})
+                fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type,'placeholder':field.placeholder})
             field_count = field_count + 1
             js_fields.append(field.name)
         if field_count <= 2:

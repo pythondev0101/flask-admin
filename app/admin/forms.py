@@ -66,10 +66,16 @@ class AdminField(Field):
 
     widget = widgets.TextInput()
     
-    def __init__(self,input_type="text",model=None,*args, **kwargs):
+    def __init__(self,input_type="text",placeholder='',model=None,*args, **kwargs):
         super(AdminField,self).__init__(*args,**kwargs)
         self.label = kwargs.get('label')
         self.model = model
+        
+        if placeholder == '':
+            self.placeholder = self.label.upper()
+        else:
+            self.placeholder = placeholder
+
         if self.model:
             self.input_type = 'select'
         else:
