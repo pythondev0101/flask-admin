@@ -41,7 +41,8 @@
                                 <div class="col-md-{{ modal['fields_sizes'][row_counter.index-1] }} mb-3">
                                     <label for="{{ field.name }}">{{ field.label.upper() }}</label>
                                     <input type="number" class="form-control" id="{{ field.name }}"
-                                           name="{{ field.name }}" placeholder="{{ field.placeholder }}" step="0.01" min="0" required>
+                                           name="{{ field.name }}" placeholder="{{ field.placeholder }}" step="0.01" min="0"
+                                           {% if field.required %} required {% endif %}>
                                     <div id="{{ field.name }}-valid-feedback" class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -54,7 +55,8 @@
                                     <label for="{{ field.name }}">{{ field.label.upper() }}</label>
                                     <input type="{{ field.type }}" class="form-control" id="{{ field.name }}"
                                            name="{{ field.name }}"
-                                           placeholder="{{ field.placeholder }}" required>
+                                           placeholder="{{ field.placeholder }}"
+                                           {% if field.required %} required {% endif %}>
                                     <div id="{{ field.name }}-valid-feedback" class="valid-feedback">
                                         Looks good!
                                     </div>

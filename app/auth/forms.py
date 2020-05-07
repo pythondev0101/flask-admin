@@ -40,7 +40,7 @@ class UserEditForm(AdminEditForm):
 
 class UserForm(AdminIndexForm):
     username = AdminField(label='Username',input_type='text',validators=[DataRequired()])
-    email = AdminField(label='Email', input_type='email',validators=[DataRequired()])
+    email = AdminField(label='Email', input_type='email',required=False)
     fname = AdminField(label='First Name', input_type='text',validators=[DataRequired()])
     lname = AdminField(label='Last Name', input_type='text',validators=[DataRequired()])
 

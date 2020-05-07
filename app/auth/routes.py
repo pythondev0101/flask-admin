@@ -156,7 +156,12 @@ def user_create():
                 user.username = form.username.data
                 user.fname = form.fname.data
                 user.lname = form.lname.data
-                user.email = form.email.data
+
+                if form.email.data == '':
+                    user.email = None
+                else:
+                    user.email = form.email.data
+
                 #TODO: add default password in settings
                 user.set_password("password")
                 user.is_superuser = 0
