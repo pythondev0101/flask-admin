@@ -46,7 +46,7 @@
                 <li class="nav-item">
                     <a href="{{ url_for(module['link']) }}" class="nav-link">
                         <i class="nav-link-icon fa {{ module['icon'] }} {% if module['name'] == context['module'] %}icon-gradient bg-malibu-beach{% endif %}"> </i>
-                        {{ module['description'] }}
+                        {{ module['short_description'] }}
                     </a>
                 </li>
             {% endfor %}

@@ -2,6 +2,8 @@
 from datetime import datetime
 
 from app import db
+import enum
+
 
 # MODEL.BASE
 class Base(db.Model):
@@ -22,14 +24,35 @@ class Base(db.Model):
 class HomeBestModel(Base):
     __tablename__ = 'core_model'
     name = db.Column(db.String(64), nullable=False, server_default="")
-    module = db.Column(db.String(64), nullable=False, server_default="")
+    module_id = db.Column(db.Integer, db.ForeignKey('core_module.id'))
     description = db.Column(db.String(128), nullable=True, server_default="")
 
-    def __init__(self,name,module,description):
+    def __init__(self,name,module_id,description):
         Base.__init__(self)
         self.name = name
-        self.module = module
+        self.module_id = module_id
         self.description = description
+
+
+class ModuleStatus(enum.Enum):
+    installed = "Installed"
+    uninstalled = "Not Installed"
+
+
+class HomeBestModule(Base):
+    __tablename__ = 'core_module'
+    name = db.Column(db.String(64), nullable=False, server_default="")
+    short_description = db.Column(db.String(64), nullable=False, server_default="")
+    long_description = db.Column(db.String(255), nullable=False, server_default="")
+    status = db.Column(db.Enum(ModuleStatus),default=ModuleStatus.uninstalled,nullable=False)
+    version = db.Column(db.String(64), nullable=False, server_default="")
+    models = db.relationship('HomeBestModel', cascade='all,delete', backref="homebestmodule")
+
+    def __init__(self,name,short_description,version):
+        Base.__init__(self)
+        self.name = name
+        self.short_description = short_description
+        self.version = version
 
 
 class CoreCustomer(Base):

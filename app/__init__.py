@@ -68,12 +68,12 @@ def create_app(config_name):
         modules = [AdminModule]
         """--------------END--------------"""
         
-        _create_modules(modules)
+        _install_modules(modules)
 
     return app
 
 
-def _create_modules(modules):
+def _install_modules(modules):
     """
     Tatanggap to ng list ng modules tapos iinsert nya sa database yung mga models o tables nila, \
         para malaman ng system kung ano yung mga models(eg. Users,Customers)
@@ -83,20 +83,31 @@ def _create_modules(modules):
         Listahan ng mga modules na iinstall sa system
     """
 
-    from app.core.models import HomeBestModel
+    from app.core.models import HomeBestModel,HomeBestModule
     
     module_count = 0
 
     for module in modules:
-        system_modules.append({'name':module.module_name,'description': module.module_description,
-        'link': module.module_link,'icon': module.module_icon, 'models': []})
+        system_modules.append({'name':module.module_name,'short_description': module.module_short_description,
+        'long_description':module.module_long_description,'link': module.module_link,
+        'icon': module.module_icon, 'models': []})
         
+        homebest_module = HomeBestModule.query.filter_by(name=module.module_name).first()
+        last_id = 0
+        if not homebest_module:
+            new_module = HomeBestModule(module.module_name,module.module_short_description,module.version)
+            new_module.long_description = module.module_long_description
+            new_module.status = 'installed'
+            db.session.add(new_module)
+            db.session.commit()
+            last_id = new_module.id
+
         model_count = 0
 
         for model in module.models:
             homebestmodel = HomeBestModel.query.filter_by(name=model.model_name).first()
             if not homebestmodel:
-                new_model = HomeBestModel(model.model_name, module.module_name, model.model_description)
+                new_model = HomeBestModel(model.model_name, last_id, model.model_description)
                 db.session.add(new_model)
                 db.session.commit()
             system_modules[module_count]['models'].append({'name':model.model_name,'icon': model.model_icon,

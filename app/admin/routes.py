@@ -14,7 +14,7 @@ from . import admin_templates
 """--------------END--------------"""
 
 from app import context
-from app.core.models import HomeBestModel
+from app.core.models import HomeBestModel,HomeBestModule
 from sqlalchemy import text
 from flask_cors import cross_origin
 from app import db
@@ -24,6 +24,14 @@ from app import db
 def dashboard():
     return admin_dashboard()
 
+
+@bp_admin.route('/apps')
+def apps():
+    context['active'] = 'apps'
+
+    modules = HomeBestModule.query.all()
+
+    return render_template('admin/admin_apps.html',context=context,title='Apps',modules=modules)
     
 
 @bp_admin.route('/_delete_data',methods=["POST"])
@@ -130,9 +138,11 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
     model_name = model[0].model_name
     context['create_modal']['title'] = model_name
     context['active'] = model_name
-    check_module = HomeBestModel.query.with_entities(HomeBestModel.module).filter_by(name=model_name).first()
-    if check_module:
-        context['module'] = check_module[0]
+    query1 = HomeBestModel.query.filter_by(name=model_name).first()
+
+    if query1:
+        check_module = HomeBestModule.query.get(query1.id)
+        context['module'] = check_module.name
     if active:
         context['active'] = active
 
@@ -189,7 +199,7 @@ def set_modal(url, form):
 def admin_dashboard(box1=None,box2=None,box3=None,box4=None):
     from app.auth.models import User
     if not box1:
-        box1 = DashboardBox("Total Modules","Installed",db.session.query(HomeBestModel.module).count())
+        box1 = DashboardBox("Total Modules","Installed",HomeBestModule.query.count())
 
     if not box2:
         box2 = DashboardBox("System Models","Total models",HomeBestModel.query.count())

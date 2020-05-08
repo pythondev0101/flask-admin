@@ -38,7 +38,11 @@
                 <li>
                     <a href="{{ url_for('bp_admin.dashboard')}}" class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}">
                         <i class="metismenu-icon pe-7s-graph1 icon-gradient bg-premium-dark" aria-hidden="true"></i>
-                        Main Dashboard
+                        Dashboard
+                    </a>
+                    <a href="{{ url_for('bp_admin.apps')}}" class="{% if context['active']=='apps' %} mm-active {% endif %}">
+                        <i class="metismenu-icon pe-7s-plugin icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                        Apps
                     </a>
                 </li>
                 {% endblock %}
