@@ -22,10 +22,10 @@ class ModelInlineForm(AdminInlineForm):
 
 # TODO: FOR FUTURE VERSION CHANGE THIS TO CLASS INHERITANCE
 class UserEditForm(AdminEditForm):
-    username = AdminField(label='Username', validators=[DataRequired()],input_type='text')
-    email = AdminField(label='Email', validators=[DataRequired()],input_type='text')
-    fname = AdminField(label='First Name', validators=[DataRequired()],input_type='text')
-    lname = AdminField(label='Last Name', validators=[DataRequired()],input_type='text')
+    username = AdminField(label='Username', validators=[DataRequired()])
+    email = AdminField(label='Email', input_type='email',required=False)
+    fname = AdminField(label='First Name', validators=[DataRequired()])
+    lname = AdminField(label='Last Name', validators=[DataRequired()])
     
     def edit_fields(self):
         return [[self.fname, self.lname],[self.username,self.email]]
@@ -39,10 +39,10 @@ class UserEditForm(AdminEditForm):
 
 
 class UserForm(AdminIndexForm):
-    username = AdminField(label='Username',input_type='text',validators=[DataRequired()])
+    username = AdminField(label='Username', validators=[DataRequired()])
     email = AdminField(label='Email', input_type='email',required=False)
-    fname = AdminField(label='First Name', input_type='text',validators=[DataRequired()])
-    lname = AdminField(label='Last Name', input_type='text',validators=[DataRequired()])
+    fname = AdminField(label='First Name', validators=[DataRequired()])
+    lname = AdminField(label='Last Name', validators=[DataRequired()])
 
     def create_fields(self):
         return [[self.fname, self.lname],[self.username,self.email]]

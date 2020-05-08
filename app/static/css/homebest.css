@@ -513,3 +513,7 @@ input {
  opacity:  10 !important;
  font-weight: lighter !important;
 }
+
+.input_required{
+  background-color: lavender;
+}

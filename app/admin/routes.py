@@ -89,31 +89,46 @@ def admin_edit(form, update_url, oid, modal_form=False, action=None, \
     # TODO: inherit flask form to get values in constructor
     fields = []
     row_count = 0
-    
+    field_sizes = []
+
     for row in form.edit_fields():
         fields.append([])
+        field_count = 0
+
         for field in row:
+
             if field.input_type == 'select':
                 data = field.model.query.all()
+                # TODO: Dapat rektang AdminField nalang iaappend sa fields hindi na dictionary
                 fields[row_count].append(
                     {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data,
-                     'value': field.data})
+                     'value': field.data,'placeholder':field.placeholder,'required':field.required})
             else:
                 fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type,
-                                          'value': field.data})
+                                          'value': field.data,'placeholder':field.placeholder,'required':field.required})
+            field_count = field_count + 1
+
+        if field_count <= 2:
+            field_sizes.append(6)
+        elif field_count >= 3:
+            field_sizes.append(4)
+
         row_count = row_count + 1
     context['edit_model'] = {
-        'fields': fields
+        'fields': fields,
+        'fields_sizes':field_sizes,
     }
 
     if model:
         model_name = model.model_name
         context['create_modal']['title'] = model_name
         context['active'] = model_name
-        check_module = HomeBestModel.query.with_entities(HomeBestModel.module).filter_by(name=model_name).first()
-        if check_module:
-            context['module'] = check_module[0]
+    
+    query1 = HomeBestModel.query.filter_by(name=model_name).first()
 
+    if query1:
+        check_module = HomeBestModule.query.get(query1.id)
+        context['module'] = check_module.name
 
     return render_template(template, context=context, form=form, update_url=update_url,
                            oid=oid,modal_form=modal_form,edit_title=form.edit_title,action=action,extra_modal=extra_modal)
@@ -147,7 +162,7 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
         context['active'] = active
 
     if create_url and create_modal:
-        set_modal(create_url, form)
+        _set_modal(create_url, form)
 
     table = model[0].__tablename__
 
@@ -158,7 +173,7 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
                            view_modal=view_modal, edit_url=edit_url,table=table)
 
 
-def set_modal(url, form):
+def _set_modal(url, form):
     fields = []
     row_count = 0
     field_sizes = []
@@ -169,6 +184,7 @@ def set_modal(url, form):
         for field in row:
             if field.input_type == 'select':
                 data = field.model.query.all()
+                # TODO: Dapat rektang AdminField nalang iaappend sa fields hindi na dictionary
                 fields[row_count].append(
                     {
                         'name': field.name, 'label': field.label, 'type': field.input_type, 
