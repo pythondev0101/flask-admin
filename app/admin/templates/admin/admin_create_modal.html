@@ -23,8 +23,9 @@
                                 <div class="col-md-{{ modal['fields_sizes'][row_counter.index-1] }} mb-3">
                                     <div class="position-relative form-group">
                                         <label for="{{ field.name }}" class="">{{ field.label.upper() }}</label>
-                                        <select name="{{ field.name }}" id="{{ field.name }}" class="form-control">
-                                            <option></option>
+                                        <select name="{{ field.name }}" id="{{ field.name }}" class="form-control {% if field.required %}input_required{% endif %}"
+                                        {% if field.required %}required{% endif %}>
+                                            <option value="">Choose...</option>
                                             {% for odata in field.data %}
                                             <option value="{{ odata.id }}">{{ odata.name }}</option>
                                             {% endfor %}
@@ -43,7 +44,7 @@
                                     <input type="number" class="form-control {% if field.required %}input_required{% endif %}" 
                                            id="{{ field.name }}"
                                            name="{{ field.name }}" placeholder="{{ field.placeholder }}" step="0.01" min="0"
-                                           {% if field.required %} required {% endif %}>
+                                           {% if field.required %}required{% endif %}>
                                     <div id="{{ field.name }}-valid-feedback" class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -58,7 +59,7 @@
                                            id="{{ field.name }}"
                                            name="{{ field.name }}"
                                            placeholder="{{ field.placeholder }}"
-                                           {% if field.required %} required {% endif %}>
+                                           {% if field.required %}required{% endif %}>
                                     <div id="{{ field.name }}-valid-feedback" class="valid-feedback">
                                         Looks good!
                                     </div>

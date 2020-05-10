@@ -73,7 +73,7 @@ def get_view_modal_data():
         sql = text(query)
         row = db.engine.execute(sql)
         res = [x[0] for x in row]
-        resp = jsonify(result=res[0],column=column)
+        resp = jsonify(result=str(res[0]),column=column)
         resp.headers.add('Access-Control-Allow-Origin', '*')
         resp.status_code = 200
         return resp
@@ -140,10 +140,14 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
 
     if len(model) == 1:
         models = model[0].query.with_entities(*fields).all()
-        print(model[0].query.with_entities(*fields))
-    else:
+        print(models)
+    elif len(model) == 2: 
         models = model[0].query.outerjoin(model[1]).with_entities(*fields).all()
-        print(model[0].query.outerjoin(model[1]).with_entities(*fields))
+        print(models)
+    elif len(model) == 3:
+        query1 = db.session.query(model[0],model[1],model[2])
+        models = query1.outerjoin(model[1]).outerjoin(model[2]).with_entities(*fields).all()
+        print(models)
 
     table_fields = form.index_headers
     title = form.title
@@ -156,7 +160,7 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
     query1 = HomeBestModel.query.filter_by(name=model_name).first()
 
     if query1:
-        check_module = HomeBestModule.query.get(query1.id)
+        check_module = HomeBestModule.query.get(query1.module_id)
         context['module'] = check_module.name
     if active:
         context['active'] = active

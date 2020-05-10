@@ -38,22 +38,12 @@ from app.admin.routes import admin_index, admin_edit
 
 context['module'] = 'admin'
 
-
-# @bp_auth.route('/roles', methods=['GET', 'POST'])
-# @login_required
-# def role_index():
-#     fields = [Role.id, Role.name, Role.created_at]
-#     form = RoleCreateForm()
-#     return admin_index(Role, fields=fields, url=auth_urls['role_index'],
-#                        create_url='bp_auth.role_create', edit_url="bp_auth.user_edit", form=form)
-
-
 @bp_auth.route('/permissions', methods=['GET', 'POST'])
 @login_required
 def user_permission_index():
     fields = [UserPermission.id, User.username, User.fname, HomeBestModel.name, UserPermission.read, UserPermission.create,
               UserPermission.write, UserPermission.delete]
-    model = [UserPermission, User]
+    model = [UserPermission, User,HomeBestModel]
     form = UserPermissionForm()
     return admin_index(*model, fields=fields, form=form, url=auth_urls['user_permission_index'], create_modal=False,
                        view_modal=False, active="Users")
@@ -67,29 +57,6 @@ def index():
     models = [User]
     return admin_index(*models, fields=fields, url=auth_urls['index'],
                        create_url='bp_auth.user_create', edit_url="bp_auth.user_edit", form=form)
-
-
-# @bp_auth.route('/role_create', methods=['POST'])
-# @login_required
-# def role_create():
-#     try:
-#         role_create_form = RoleCreateForm()
-#         if request.method == "POST":
-#             if role_create_form.validate_on_submit():
-#                 role = Role()
-#                 role.name = role_create_form.name.data
-#                 role.updated_at = datetime.now()
-#                 db.session.add(role)
-#                 db.session.commit()
-#                 flash('New Role Added Successfully!')
-#                 return redirect(url_for(auth_urls['role_index']))
-#             else:
-#                 for key, value in role_create_form.errors.items():
-#                     print(key, value)
-#                 return redirect(url_for(auth_urls['role_index']))
-#     except Exception as e:
-#         context['errors']['SystemError'] = e
-#         return redirect(url_for(auth_urls['role_index']))
 
 
 @bp_auth.route('/username_check', methods=['POST'])
