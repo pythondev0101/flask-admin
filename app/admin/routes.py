@@ -127,9 +127,10 @@ def admin_edit(form, update_url, oid, modal_form=False, action=None, \
     query1 = HomeBestModel.query.filter_by(name=model_name).first()
 
     if query1:
-        check_module = HomeBestModule.query.get(query1.id)
+        check_module = HomeBestModule.query.get(query1.module_id)
         context['module'] = check_module.name
-
+    for x in context['system_modules']:
+        print(x)
     return render_template(template, context=context, form=form, update_url=update_url,
                            oid=oid,modal_form=modal_form,edit_title=form.edit_title,action=action,extra_modal=extra_modal)
 
