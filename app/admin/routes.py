@@ -86,7 +86,6 @@ def get_view_modal_data():
 
 def admin_edit(form, update_url, oid, modal_form=False, action=None, \
     model=None,extra_modal=None , template="admin/admin_edit.html"):
-    # TODO: inherit flask form to get values in constructor
     fields = []
     row_count = 0
     field_sizes = []

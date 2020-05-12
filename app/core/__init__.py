@@ -41,8 +41,6 @@ def create_superuser():
 @bp_core.cli.command("create_module")
 @click.argument("module_name")
 def create_module(module_name):
-    # TODO: FOR FUTURE VERSION CHECK OS
-    # For windows only
     try:
         import os
         from config import basedir

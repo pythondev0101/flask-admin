@@ -148,7 +148,7 @@
                 if(document.body.contains(document.getElementById('view_edit_button'))){
                     var url = $(id).attr('value');
                     document.getElementById("view_edit_button").setAttribute("href", url);
-                    var fields = {{ context['create_modal']['js_fields'] | tojson }};
+                    var fields = {% if context['create_modal']['js_fields'] %} {{ context['create_modal']['js_fields'] | tojson }} {% endif %};
                     var ctr;
                     var field;
                     var field_id = $(this).attr('id');
