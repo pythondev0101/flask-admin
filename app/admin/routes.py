@@ -175,7 +175,7 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
                            models=models, table_fields=table_fields,
                            index_title=index_title, index_message=index_message,
                            title=title, action=action, create_modal=create_modal,
-                           view_modal=view_modal, edit_url=edit_url,table=table)
+                           view_modal=view_modal, edit_url=edit_url,table=table,rendered_model=model[0])
 
 
 def _set_modal(url, form):

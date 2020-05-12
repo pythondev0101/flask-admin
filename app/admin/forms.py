@@ -14,16 +14,13 @@ class AdminIndexForm(FlaskForm):
         raise NotImplementedError('Must implement index_title')
 
     @property
-    def index_message(self):
-        raise NotImplementedError('Must implement index_message')
-
-    @property
     def create_fields(self):
         raise NotImplementedError('Must implement create_fields')
     
     def __init__(self,*args,**kwargs):
         super(AdminIndexForm,self).__init__(*args,**kwargs)
         self.title = self.index_title
+        self.index_message = 'List of models'
 
 
 class AdminEditForm(FlaskForm):

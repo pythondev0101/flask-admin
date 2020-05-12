@@ -5,15 +5,7 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    {% for module in context['system_modules'] %}
-                        {% if module['name'] == context['module'] %}
-                            {% for model in module['models'] %}
-                                {% if model['name'] == context['active'] %}
-                                <i class="{{ model['icon'] }} icon-gradient bg-happy-itmeo"></i>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
+                    <i class="{{ rendered_model.model_icon }} icon-gradient bg-happy-itmeo"></i>
                 </div>
                 <div>
                     {{ index_title }}
