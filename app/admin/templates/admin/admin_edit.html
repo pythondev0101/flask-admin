@@ -36,8 +36,9 @@
                     <div class="col-md-{{ edit['fields_sizes'][row_counter.index-1] }} mb-3">
                         <div class="position-relative form-group">
                             <label for="{{ field.name }}" class="">{{ field.label }}</label>
-                            <select name="{{ field.name }}" id="{{ field.name }}" class="form-control">
-                                <option></option>
+                            <select name="{{ field.name }}" id="{{ field.name }}" class="form-control {% if field.required %}input_required{% endif %}"
+                            {% if field.required %}required{% endif %}>
+                                <option value="">Choose...</option>
                                 {% for odata in field.data %}
                                 <option value="{{ odata.id }}" {% if field.value==odata.id %}selected{% endif %}>
                                     {{ odata.name }}
@@ -73,7 +74,8 @@
                                id="{{ field.name }}"
                                name="{{ field.name }}"
                                placeholder="{{ field.placeholder }}"
-                               {% if field.required %}required{% endif %} value="{{ field.value }}">
+                               {% if field.required %}required{% endif %} 
+                               value="{% if not field.value == None %}{{field.value}}{% endif %}">
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -114,7 +116,7 @@
     <div class="main-card mb-3 card">
         <div class="card-body">
             <h5 class="card-title">{{ inline.title.upper() }}</h5>
-            <table class="mb-0 table table-hover">
+            <table class="mb-0 table table-hover inline_table">
                 <thead>
                 <tr>
                     {% for header in inline.headers %}
@@ -167,9 +169,17 @@
 {% endwith %}
 {% endblock %}
 
-{% if context['active'] == 'Users' %}
 {% block scripts %}
 <script>
+    $(document).ready(function(){
+        var table = $('.inline_table').DataTable({
+            "dom": 'rtip',
+            "scrollY": "200px",
+            "scrollCollapse": true,
+            "paging": false,
+        });
+    });
+
   function edit_chk(permission_id){
   var input_read = document.getElementById("edit_chk_read_".concat(permission_id)).checked;
   var input_create = document.getElementById("edit_chk_create_".concat(permission_id)).checked;
@@ -202,4 +212,3 @@
   })();
 </script>
 {% endblock %}
-{% endif %}

@@ -152,7 +152,7 @@ def user_edit(oid):
     user = User.query.get_or_404(oid)
     form = UserEditForm(obj=user)
     if request.method == "GET":
-        user_permissions = UserPermission.query.filter_by(user_id=oid)
+        user_permissions = UserPermission.query.filter_by(user_id=oid).all()
         query1 = db.session.query(UserPermission.model_id).filter_by(user_id=oid)
         models = db.session.query(HomeBestModel).filter(~HomeBestModel.id.in_(query1))
         form.model_inline.models = models

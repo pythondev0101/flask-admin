@@ -1,6 +1,6 @@
 <div class="page-title-actions">
     
-    {% if create_modal %}
+    {% if create_modal and session['permissions'][context['active']] is defined %}
     {% if session['permissions'][context['active']]['create'] or current_user.is_superuser %}
     <button type="button" data-toggle="modal" data-target="#create_modal" title="Create new" data-placement="bottom"
             class="btn-shadow mr-3 btn btn-primary">
@@ -23,12 +23,23 @@
         </button>
         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
             <ul class="nav flex-column">
+                {% if session['permissions'][context['active']] is defined %}
                 {% if session['permissions'][context['active']]['delete'] or current_user.is_superuser %}
                 <li id="nav_action_btns" class="nav-item">
                     {% block dropdown_buttons %}
                     <button id="btndelete" type="button" tabindex="0" class="dropdown-item">Delete</button>
                     {% endblock %}
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a disabled="" href="javascript:void(0);" class="nav-link disabled">
+                        <i class="nav-link-icon lnr-file-empty"></i>
+                        <span>
+                            No actions
+                        </span>
+                    </a>
+                </li>
+                {% endif %}
                 {% else %}
                 <li class="nav-item">
                     <a disabled="" href="javascript:void(0);" class="nav-link disabled">
