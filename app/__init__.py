@@ -69,7 +69,7 @@ def create_app(config_name):
         """--------------END--------------"""
         
         _install_modules(modules)
-
+        # TODO: separate install yung mga models na hindi na include sa admin page
     return app
 
 
@@ -92,6 +92,7 @@ def _install_modules(modules):
         'long_description':module.module_long_description,'link': module.module_link,
         'icon': module.module_icon, 'models': []})
         
+        # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
         homebest_module = HomeBestModule.query.filter_by(name=module.module_name).first()
         last_id = 0
         if not homebest_module:
@@ -116,8 +117,18 @@ def _install_modules(modules):
                 system_modules[module_count]['models'][model_count]['functions'].append({
                     function_name:function_link
                 })
-
+        
             model_count = model_count + 1
+
+        if len(module.no_admin_models) > 0 :
+
+            for xmodel in module.no_admin_models:
+                homebestmodel = HomeBestModel.query.filter_by(name=xmodel.model_name).first()
+                if not homebestmodel:
+                    new_model = HomeBestModel(xmodel.model_name, last_id, xmodel.model_description,False)
+                    db.session.add(new_model)
+                    db.session.commit()
+
         module_count = module_count + 1
 
 

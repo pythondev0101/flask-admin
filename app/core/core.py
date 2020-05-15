@@ -3,6 +3,8 @@
 
 class CoreModule:
 
+    no_admin_models = []
+
     @property
     def module_name(self):
         raise NotImplementedError('Must implement module_name')

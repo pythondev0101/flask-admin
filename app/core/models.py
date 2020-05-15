@@ -25,12 +25,14 @@ class HomeBestModel(Base):
     name = db.Column(db.String(64), nullable=False, server_default="")
     module_id = db.Column(db.Integer, db.ForeignKey('core_module.id'))
     description = db.Column(db.String(128), nullable=True, server_default="")
+    admin_included = db.Column(db.Boolean,default="1")
 
-    def __init__(self,name,module_id,description):
+    def __init__(self,name,module_id,description,admin_included=True):
         Base.__init__(self)
         self.name = name
         self.module_id = module_id
         self.description = description
+        self.admin_included = admin_included
 
 
 class ModuleStatus(enum.Enum):
@@ -56,18 +58,18 @@ class HomeBestModule(Base):
 
 class CoreCustomer(Base):
     __abstract__ = True
-    fname = db.Column(db.String(64), nullable=False, server_default="")
-    lname = db.Column(db.String(64), nullable=False, server_default="")
-    phone = db.Column(db.String(64), nullable=False, server_default="")
-    email = db.Column(db.String(64), nullable=False, unique=True)
-    zip = db.Column(db.Integer,nullable=False)
-    street = db.Column(db.String(64), nullable=False,server_default="")
+    fname = db.Column(db.String(64), nullable=False, default="")
+    lname = db.Column(db.String(64), nullable=False, default="")
+    phone = db.Column(db.String(64), nullable=True, default="")
+    email = db.Column(db.String(64), nullable=True, unique=True)
+    zip = db.Column(db.Integer,nullable=True,default=None)
+    street = db.Column(db.String(64), nullable=True,default="")
 
 
 class CoreCity(Base):
     __tablename__ = 'core_city'
     id = db.Column(db.Integer,primary_key=True, autoincrement=False)
-    name = db.Column(db.String(64), nullable=False,server_default="")
+    name = db.Column(db.String(64), nullable=False,default="")
     province_id = db.Column(db.Integer, db.ForeignKey('core_province.id'), nullable=True)
     province = db.relationship("CoreProvince")
 
@@ -75,4 +77,4 @@ class CoreCity(Base):
 class CoreProvince(Base):
     __tablename__ = 'core_province'
     id = db.Column(db.Integer,primary_key=True, autoincrement=False)
-    name = db.Column(db.String(64), nullable=False,server_default="")
+    name = db.Column(db.String(64), nullable=False,default="")
