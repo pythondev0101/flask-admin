@@ -1,18 +1,5 @@
 <div class="page-title-actions">
     
-    {% if create_modal and session['permissions'][context['active']] is defined %}
-    {% if session['permissions'][context['active']]['create'] or current_user.is_superuser %}
-    <button type="button" data-toggle="modal" data-target="#create_modal" title="Create new" data-placement="bottom"
-            class="btn-shadow mr-3 btn btn-primary">
-        {% if context['active'] == 'Users' %}
-        <i class="fa fa-user-plus"></i>
-        {% else %}
-        <i class="fa fa-plus"></i>
-        {% endif %}
-    </button>
-    {% endif %}
-    {% endif %}
-
     <div class="d-inline-block dropdown">
         <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="btn-shadow dropdown-toggle btn btn-info">
@@ -27,7 +14,10 @@
                 {% if session['permissions'][context['active']]['delete'] or current_user.is_superuser %}
                 <li id="nav_action_btns" class="nav-item">
                     {% block dropdown_buttons %}
-                    <button id="btndelete" type="button" tabindex="0" class="dropdown-item">Delete {{context['active'].lower()}}</button>
+                    <form action="{{url_for('bp_admin.delete',delete_table=delete_table,oid=oid,index_url=index_url)}}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button type='submit' tabindex="0" class="dropdown-item">Delete</button>
+                    </form>
                     {% endblock %}
                 </li>
                 {% else %}

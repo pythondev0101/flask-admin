@@ -19,6 +19,10 @@ from sqlalchemy import text
 from flask_cors import cross_origin
 from app import db
 
+# TODO: Para ito sa pag delete dito mag sstore index_url ng kung anong dinelete, 
+# issue to kapag rekta inopen yung edit page sa url address
+index_url = ""
+
 @bp_admin.route('/')
 @login_required
 def dashboard():
@@ -32,7 +36,21 @@ def apps():
     modules = HomeBestModule.query.all()
 
     return render_template('admin/admin_apps.html',context=context,title='Apps',modules=modules)
-    
+
+
+@bp_admin.route('/delete/<string:delete_table>/<int:oid>',methods=['POST'])
+@login_required
+def delete(delete_table,oid):
+    try:
+        index_url = request.args.get('index_url')
+        query = "DELETE from {} where id = {}".format(delete_table,oid)
+        db.engine.execute(text(query))
+        flash('Deleted Successfully!','success')
+        return redirect(url_for(index_url))
+    except Exception as e:
+        flash(str(e),'error')
+        return redirect(request.referrer)
+
 
 @bp_admin.route('/_delete_data',methods=["POST"])
 @cross_origin()
@@ -84,7 +102,7 @@ def get_view_modal_data():
         return resp
 
 
-def admin_edit(form, update_url, oid, modal_form=False, action=None, \
+def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit_actions.html", \
     model=None,extra_modal=None , template="admin/admin_edit.html"):
     fields = []
     row_count = 0
@@ -122,16 +140,17 @@ def admin_edit(form, update_url, oid, modal_form=False, action=None, \
         model_name = model.model_name
         context['create_modal']['title'] = model_name
         context['active'] = model_name
-    
+        delete_table = model.__tablename__
+
     query1 = HomeBestModel.query.filter_by(name=model_name).first()
 
     if query1:
         check_module = HomeBestModule.query.get(query1.module_id)
         context['module'] = check_module.name
-    for x in context['system_modules']:
-        print(x)
+    
     return render_template(template, context=context, form=form, update_url=update_url,
-                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,action=action,extra_modal=extra_modal)
+                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,delete_table=delete_table,
+                           action=action,extra_modal=extra_modal,index_url=index_url)
 
 
 def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
@@ -169,6 +188,9 @@ def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
         _set_modal(create_url, form)
 
     table = model[0].__tablename__
+
+    global index_url
+    index_url = url
 
     return render_template(template, context=context,
                            models=models, table_fields=table_fields,

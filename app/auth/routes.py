@@ -97,17 +97,6 @@ def change_password(oid):
     return redirect(request.referrer)
 
 
-@bp_auth.route('/user_delete/<oid>', methods=['DELETE'])
-def user_delete(user_id):
-    try:
-        user = User.query.get_or_404(user_id)
-        db.session.delete(user)
-        db.session.commit()
-        return '', 204
-    except Exception as e:
-        db.session.rollback()
-
-
 @bp_auth.route('/user_create', methods=['POST'])
 @login_required
 def user_create():
