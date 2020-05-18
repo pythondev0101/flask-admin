@@ -24,18 +24,7 @@ def index():
 # Create Superuser command
 @bp_core.cli.command('create_superuser')
 def create_superuser():
-    from app.auth.models import User
-    from app import db
-    user = User()
-    user.fname = input("Enter First name: ")
-    user.lname = input("Enter Last name: ")
-    user.username = input("Enter Username: ")
-    user.set_password(input("Enter password: "))
-    user.is_superuser = 1
-    user.email = ""
-    db.session.add(user)
-    db.session.commit()
-    print("SuperUser Created!")
+    _create_superuser()
 
 
 @bp_core.cli.command("create_module")
@@ -87,7 +76,12 @@ def install():
     from app import db
     from .models import CoreCity,CoreProvince
 
+    print("Create a SuperUser/owner...")
+
+    _create_superuser()
+
     print("Installing...")
+
     if platform.system() == "Windows":
         provinces_path = basedir + "\\app" + "\\core" + "\\csv" + "\\provinces.csv"
         cities_path = basedir + "\\app" + "\\core" + "\\csv" + "\\cities.csv"
@@ -128,3 +122,18 @@ def install():
         print("Cities exists...")
 
     print("Installation complete...")
+
+
+def _create_superuser():
+    from app.auth.models import User
+    from app import db
+    user = User()
+    user.fname = input("Enter First name: ")
+    user.lname = input("Enter Last name: ")
+    user.username = input("Enter Username: ")
+    user.email = input("Enter Email: ")
+    user.set_password(input("Enter password: "))
+    user.is_superuser = 1
+    db.session.add(user)
+    db.session.commit()
+    print("SuperUser Created!")
