@@ -113,10 +113,13 @@ def _install_modules(modules):
                 db.session.commit()
             system_modules[module_count]['models'].append({'name':model.model_name,'icon': model.model_icon,
             'functions': []})
-            for function_name, function_link in model.functions.items():
-                system_modules[module_count]['models'][model_count]['functions'].append({
-                    function_name:function_link
-                })
+            
+            for function in model.functions:
+                print(function)
+                for function_name, function_link in function.items():
+                    system_modules[module_count]['models'][model_count]['functions'].append({
+                        function_name:function_link
+                    })
         
             model_count = model_count + 1
 

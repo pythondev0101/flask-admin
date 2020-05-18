@@ -47,7 +47,7 @@ class User(UserMixin, Base, Admin):
     model_name = 'Users'
     model_icon = 'pe-7s-users'
     model_description = "USERS"
-    functions = {'View Users': 'bp_auth.index'}
+    functions = [{'View users': 'bp_auth.index'},{'View user roles': 'bp_auth.index'}]
 
 @login_manager.user_loader
 def load_user(user_id):
