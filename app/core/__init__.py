@@ -75,10 +75,7 @@ def install():
     import platform
     from app import db
     from .models import CoreCity,CoreProvince
-
-    print("Create a SuperUser/owner...")
-
-    _create_superuser()
+    from app.auth.models import Role, RolePermission
 
     print("Installing...")
 
@@ -90,6 +87,7 @@ def install():
         cities_path = basedir + "/app/core/csv/cities.csv"
     else:
         raise Exception
+
     print("Inserting provinces to database...")
     if CoreProvince.query.count() < 88:
         with open(provinces_path) as f:
@@ -101,9 +99,9 @@ def install():
                     province.name = row[2]
                     db.session.add(province)
             db.session.commit()
-        print("Provinces done...")
+        print("Provinces done!")
     else:
-        print("Provinces exists...")
+        print("Provinces exists!")
     print("")
     print("Inserting cities to database...")
     if CoreCity.query.count() < 1647:
@@ -117,11 +115,24 @@ def install():
                     city.province_id = None
                     db.session.add(city)
             db.session.commit()
-        print("Cities done...")
+        print("Cities done!")
     else:
-        print("Cities exists...")
+        print("Cities exists!")
 
-    print("Installation complete...")
+    print("Inserting system roles...")
+    if Role.query.count() > 0:
+        print("Role already inserted!")
+    else:
+        role = Role()
+        role.name = "Individual"
+        db.session.add(role)
+        db.session.commit()
+        print("Individual role inserted!")
+
+    print("Create a SuperUser/owner...")
+    _create_superuser()
+
+    print("Installation complete!")
 
 
 def _create_superuser():
@@ -134,6 +145,7 @@ def _create_superuser():
     user.email = input("Enter Email: ")
     user.set_password(input("Enter password: "))
     user.is_superuser = 1
+    user.role_id = 1
     db.session.add(user)
     db.session.commit()
     print("SuperUser Created!")

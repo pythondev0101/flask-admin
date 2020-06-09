@@ -15,8 +15,8 @@ from app import db, context
 """--------------END--------------"""
 
 """ MODULE: AUTH,ADMIN IMPORTS """
-from .models import User, UserPermission
-from .forms import LoginForm, UserForm, UserEditForm, UserPermissionForm
+from .models import User, UserPermission, Role, RolePermission
+from .forms import LoginForm, UserForm, UserEditForm, UserPermissionForm,RoleCreateForm, RoleEditForm
 from app.core.models import HomeBestModel
 
 """--------------END--------------"""
@@ -38,7 +38,139 @@ from app.admin.routes import admin_index, admin_edit
 
 context['module'] = 'admin'
 
-@bp_auth.route('/permissions', methods=['GET', 'POST'])
+@bp_auth.route('/roles')
+@login_required
+def roles():
+    fields = [Role.id,Role.name,Role.active]
+    form = RoleCreateForm()
+    form.inline.models = HomeBestModel.query.all()
+    return admin_index(Role,fields=fields,form=form,url='', create_modal="auth/role_create_modal.html", \
+        create_url='bp_auth.role_create',edit_url='bp_auth.role_edit',active='Users', \
+            view_modal="auth/role_view_modal.html")
+
+
+@bp_auth.route('/role_create',methods=['GET','POST'])
+@login_required
+def role_create():
+    form = RoleCreateForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            role = Role()
+            role.name = form.name.data
+            models = HomeBestModel.query.all()
+            r = request.form
+            for model in models:
+                mid = model.id
+                has_model = False
+                read,create,write,delete = 0,0,0,0
+                read_string = 'chk_read_{}'.format(mid)
+                create_string = 'chk_create_{}'.format(mid)
+                write_string = 'chk_write_{}'.format(mid)
+                delete_string = 'chk_delete_{}'.format(mid)
+
+                if r.get(read_string) == 'on': read,has_model = 1,True
+                if r.get(create_string) == 'on': create,has_model = 1,True
+                if r.get(write_string) == 'on': write,has_model = 1, True
+                if r.get(delete_string) == 'on': delete,has_model = 1,True
+
+                if has_model:
+                    permission = RolePermission(model=model,read=read,create=create,write=write,delete=delete)
+                    role.role_permissions.append(permission)
+            
+            db.session.add(role)
+            db.session.commit()
+            flash('Role added successfully!','success')
+            return redirect(url_for('bp_auth.roles'))
+
+
+@bp_auth.route('/role_edit/<int:oid>',methods=['GET','POST'])
+@login_required
+def role_edit(oid):
+    role = Role.query.get_or_404(oid)
+    form = RoleEditForm(obj=role)
+
+    if request.method == "GET":
+        role_permissions = RolePermission.query.filter_by(role_id=oid).all()
+        query1 = db.session.query(RolePermission.model_id).filter_by(role_id=oid)
+        models = db.session.query(HomeBestModel).filter(~HomeBestModel.id.in_(query1))
+        form.model_inline.models = models
+        form.permission_inline.models = role_permissions
+        return admin_edit(form,"bp_auth.role_edit",oid,model=Role)
+    elif request.method == "POST":
+        if form.validate_on_submit():
+            role.name = form.name.data
+            role.updated_at = datetime.now()
+            db.session.commit()
+            flash('Role update Successfully!','success')
+            return redirect(url_for('bp_auth.roles'))
+        else:    
+            for key, value in form.errors.items():
+                flash(str(key) + str(value), 'error')
+            return redirect(url_for('bp_auth.roles'))
+
+
+@bp_auth.route('/role_add_permission/<int:oid>/', methods=['POST'])
+@login_required
+def role_add_permission(oid):
+    if request.method == "POST":
+        role = Role.query.get_or_404(oid)
+        model = HomeBestModel.query.filter_by(id=request.args.get('model_id')).first()
+        read, create, write, delete = request.form.get('chk_read', 0), request.form.get('chk_create', 0), \
+            request.form.get('chk_write', 0), request.form.get('chk_delete', 0)
+        if read == 'on': read = 1
+        if create == 'on': create = 1
+        if write == 'on': write = 1
+        if delete == 'on': delete = 1
+        permission = RolePermission(role_id=role.id, model=model, read=read, create=create, write=write, delete=delete)
+        role.role_permissions.append(permission)
+        db.session.commit()
+        load_permissions(current_user.id)
+        return redirect(url_for('bp_auth.role_edit', oid=oid))
+
+
+@bp_auth.route('/role_delete_permission/<int:oid>/', methods=['POST'])
+@login_required
+def role_delete_permission(oid):
+    if request.method == "POST":
+        try:
+            permission = RolePermission.query.get(oid)
+            db.session.delete(permission)
+            db.session.commit()
+            load_permissions(current_user.id)
+            return redirect(request.referrer)
+        except Exception as e:
+            db.session.rollback()
+            flash("Error occured: " + str(e),'error')
+            return redirect(request.referrer)
+
+@bp_auth.route('/role_edit_permission', methods=['POST'])
+@cross_origin()
+def role_edit_permission():
+    if request.method == 'POST':
+        permission_id = request.json['permission_id']
+        read = request.json['read']
+        create = request.json['create']
+        write = request.json['write']
+        delete = request.json['delete']
+        permission = RolePermission.query.get(permission_id)
+        if permission:
+            permission.read = read
+            permission.create = create
+            permission.write = write
+            permission.delete = delete
+            db.session.commit()
+            load_permissions(current_user.id)
+            resp = jsonify(1)
+            resp.headers.add('Access-Control-Allow-Origin', '*')
+            resp.status_code = 200
+            return resp
+        else:
+            resp = jsonify(0)
+            resp.headers.add('Access-Control-Allow-Origin', '*')
+            resp.status_code = 200
+            return resp
+
+@bp_auth.route('/permissions')
 @login_required
 def user_permission_index():
     fields = [UserPermission.id, User.username, User.fname, HomeBestModel.name, UserPermission.read, UserPermission.create,
@@ -117,7 +249,7 @@ def user_create():
                     user.email = None
                 else:
                     user.email = form.email.data
-
+                user.role_id = form.role_id.data
                 #TODO: add default password in settings
                 user.set_password("password")
                 user.is_superuser = 0
@@ -154,6 +286,7 @@ def user_edit(oid):
             user.fname = form.fname.data
             user.lname = form.lname.data
             user.email = form.email.data
+            user.role_id = form.role_id.data
             user.updated_at = datetime.now()
             db.session.commit()
             flash('User update Successfully!','success')
