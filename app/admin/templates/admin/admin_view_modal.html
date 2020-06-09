@@ -43,8 +43,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {% if edit_url %}
                     {% if session['permissions'][context['active']]['write'] or current_user.is_superuser %}
                     <a id="view_edit_button" href="" class="btn btn-primary">Edit</a>
+                    {% endif %}
                     {% endif %}
                 </div>
             </div>

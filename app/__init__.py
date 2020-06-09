@@ -115,7 +115,6 @@ def _install_modules(modules):
             'functions': []})
             
             for function in model.functions:
-                print(function)
                 for function_name, function_link in function.items():
                     system_modules[module_count]['models'][model_count]['functions'].append({
                         function_name:function_link
