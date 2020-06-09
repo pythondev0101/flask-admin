@@ -28,8 +28,8 @@ class User(UserMixin, Base, Admin):
     image_path = db.Column(db.String(64), nullable=False)
     permissions = db.relationship('UserPermission', cascade='all,delete', backref="user")
     is_superuser = db.Column(db.Boolean,nullable=False, default="0")
-    # role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id'))
-    # role = db.relationship('Role', cascade='all,delete', backref="userrole")
+    role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id'),nullable=True)
+    role = db.relationship('Role', cascade='all,delete', backref="userrole")
 
     def __init__(self):
         Base.__init__(self)
@@ -47,11 +47,8 @@ class User(UserMixin, Base, Admin):
     model_name = 'Users'
     model_icon = 'pe-7s-users'
     model_description = "USERS"
-    functions = {'View Users': 'bp_auth.index'}
+    functions = [{'View users': 'bp_auth.index'},{'View roles': 'bp_auth.roles'}]
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
 
 class UserPermission(db.Model):
     __tablename__ = 'auth_user_permission'
@@ -64,29 +61,27 @@ class UserPermission(db.Model):
     write = db.Column(db.Boolean, nullable=False, default="0")
     delete = db.Column(db.Boolean, nullable=False, default="0")
 
-    model_name = ""
-    model_icon = ""
-    model_description = ""
-    functions = {}
+
+class Role(Base):
+    __tablename__ = 'auth_role'
+    name = db.Column(db.String(64), nullable=False)
+    role_permissions = db.relationship('RolePermission', cascade='all,delete', backref="role")
+    model_name = 'Roles'
+    model_icon = 'pe-7s-users'
+    model_description = "Roles"
+
+class RolePermission(db.Model):
+    __tablename__ = 'auth_role_permission'
+    id = db.Column(db.Integer, primary_key=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id',ondelete='CASCADE'))
+    model_id = db.Column(db.Integer, db.ForeignKey('core_model.id'))
+    model = db.relationship('HomeBestModel', cascade='all,delete', backref="rolepermission")
+    read = db.Column(db.Boolean, nullable=False, default="1")
+    create = db.Column(db.Boolean, nullable=False, default="0")
+    write = db.Column(db.Boolean, nullable=False, default="0")
+    delete = db.Column(db.Boolean, nullable=False, default="0")
 
 
-# class Role(Base, Admin):
-#     __tablename__ = 'auth_role'
-#     name = db.Column(db.String(64), nullable=False)
-
-#     model_name = "Roles"
-#     model_icon = "pe-7s-users"
-#     model_description = "ROLES"
-#     functions = {'View Roles': 'bp_auth.role_index'}
-
-
-# class RolePermission(db.Model):
-#     __tablename__ = 'auth_role_permission'
-#     id = db.Column(db.Integer, primary_key=True)
-
-#     role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id'))
-#     model_id = db.Column(db.Integer, db.ForeignKey('core_model.id'))
-#     model = db.relationship('HomeBestModel', cascade='all,delete', backref="rolepermission")
-#     read = db.Column(db.Boolean, nullable=False, default="1")
-#     write = db.Column(db.Boolean, nullable=False, default="1")
-#     delete = db.Column(db.Boolean, nullable=False, default="1")
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
