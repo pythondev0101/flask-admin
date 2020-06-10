@@ -384,22 +384,27 @@ def load_permissions(user_id):
     user = User.query.get(user_id)
     if not user and not current_user.is_authenticated:
         context['system_modules'].pop('admin',None)
-    
-    user_permissions = UserPermission.query.filter_by(user_id=user_id)
-    session.pop('permissions', None)
-    if "permissions" not in session:
-        session['permissions'] = {}
-    if user:
+    else:
+        session.pop('permissions', None)
+        if "permissions" not in session:
+            session['permissions'] = {}
+
         if user.is_superuser:
             all_permissions = HomeBestModel.query.all()
             for permission in all_permissions:
                 session['permissions'][permission.name] = {"read": True, "create": True, \
-                    "write": True, "delete": True}        
-        else:
+                    "write": True, "delete": True}  
+        elif user.role.name == "Individual" or user.role_id == 1:
+            user_permissions = UserPermission.query.filter_by(user_id=user_id)
             for user_permission in user_permissions:
                 session['permissions'][user_permission.model.name] = {"read": user_permission.read, "create": user_permission.create, \
                     "write": user_permission.write, "delete": user_permission.delete}
-    print(session['permissions'])
+        else:
+            role_permissions = RolePermission.query.filter_by(role_id=user.role_id)
+            for role_permission in role_permissions:
+                session['permissions'][role_permission.model.name] = {"read": role_permission.read, "create": role_permission.create, \
+                    "write": role_permission.write, "delete": role_permission.delete}
+
 
 @bp_auth.route('/logout')
 @login_required
