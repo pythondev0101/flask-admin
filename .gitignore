@@ -65,6 +65,4 @@ target/
 
 migrations/
 instance/
-app/blog/
-app/wbs/
 .env
