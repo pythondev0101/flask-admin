@@ -42,14 +42,14 @@
             </div>
             <!-- NAVIGATION FOR MODULES -->
             <ul class="header-menu nav">
-                {% for module,value in context['system_modules'].items() %}
+            {% for module in context['system_modules'] %}
                 <li class="nav-item">
-                    <a href="{{ url_for(value['link']) }}" class="nav-link">
-                        <i class="nav-link-icon fa {{ value['icon'] }} {% if module == context['module'] %}icon-gradient bg-malibu-beach{% endif %}"> </i>
-                        {{ value['description'] }}
+                    <a href="{{ url_for(module['link']) }}" class="nav-link">
+                        <i class="nav-link-icon fa {{ module['icon'] }} {% if module['name'] == context['module'] %}icon-gradient bg-malibu-beach{% endif %}"> </i>
+                        {{ module['short_description'] }}
                     </a>
                 </li>
-                {% endfor %}
+            {% endfor %}
             </ul>
         </div>
         <div class="app-header-right">

@@ -5,7 +5,7 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"> </i>
+                    <i class="{{ rendered_model.__amicon__ }} icon-gradient bg-happy-itmeo"></i>
                 </div>
                 <div>
                     {{ index_title }}
@@ -29,7 +29,7 @@
                         <thead>
                         <tr>
                             {% for field in table_fields %}
-                            <th>{{ field.upper() }}</th>
+                            <th style="text-align: center;">{{ field.upper() }}</th>
                             {% endfor %}
                         </tr>
                         </thead>
@@ -44,7 +44,15 @@
                         {% endif %}
                             {% for values in model %}
                             {% if loop.index > 1 %}
-                            <td style="font-weight: bold;">{{ values }}</td>
+                            <!-- TEMPORARY conversion ng boolean word 'true' to 'YES' and 'false' to 'NO' -->
+                            <td style="font-weight: bold; text-align:center">
+                                {% if values|string == 'True' %}
+                                YES
+                                {% elif values|string == 'False' %}
+                                NO
+                                {% elif values == none %}
+                                {% else %} {{ values }} 
+                                {% endif %}</td>
                             {% endif %}
                             {% endfor %}
                         </tr>
@@ -58,32 +66,18 @@
 </div>
 {% endblock %}
 
-{% block inner_footer %}
-<div class="app-footer-left">
-    <nav class="" aria-label="Page navigation example">
-        <ul class="pagination">
-            {% if prev_url %}
-            <li class="page-item">
-                <a href="{{ prev_url }}" class="page-link" aria-label="Previous">
-                    <span aria-hidden="true">Previous</span>
-                    <span class="sr-only">Previous</span></a>
-            </li>
-            {% endif %}
-
-            {% if next_url %}
-            <li class="page-item">
-                <a href="{{ next_url }}" class="page-link" aria-label="Next">
-                    <span aria-hidden="true">Next</span>
-                    <span class="sr-only">Next</span></a></li>
-        </ul>
-        {% endif %}
-    </nav>
-</div>
-{% endblock %}
-
 {% block scripts %}
 <script type="text/javascript">
     $(document).ready(function(){
+        var table = $('#index_table').DataTable({
+            "dom": 'rtip',
+            "pageLength": 8
+        });
+
+        $('.search-input').on('keyup', function () {
+            table.search(this.value).draw();
+        } );
+
         $("#btndelete").click(function(){
             if($('#btndelete').text()=='Delete'){
                 $('#nav_action_btns').after("<button id='btn_confirm_delete' type='button' tabindex='1' class='dropdown-item'>Confirm Delete</button>");
@@ -132,14 +126,14 @@
             }
         });
 
-        $(".row_object").click(function(){
+        $("#index_table tbody").on('click','.row_object',function(){
             var view_modal = '{{ view_modal }}';
             if (view_modal != 'False'){
                 var id = '#param_' + $(this).attr('id');
                 if(document.body.contains(document.getElementById('view_edit_button'))){
                     var url = $(id).attr('value');
                     document.getElementById("view_edit_button").setAttribute("href", url);
-                    var fields = {{ context['create_modal']['js_fields'] | tojson }};
+                    var fields = {% if context['create_modal']['js_fields'] %} {{ context['create_modal']['js_fields'] | tojson }} {% else %} '' {% endif %};
                     var ctr;
                     var field;
                     var field_id = $(this).attr('id');
@@ -162,21 +156,121 @@
                             success: function(data) {
                                 if (data.result){
                                     field = "#view_" + data.column;
-                                    $(field).val(data.result);
+                                    var input_type = $(field).attr('type');
+                                    if (input_type == 'checkbox'){
+                                        if (data.result == '1'){
+                                            $(field).attr('checked',true);
+                                        }else{
+                                            $(field).attr('checked', false);
+                                        }
+                                    }else{
+                                        $(field).val(data.result);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+                else{
+                    var fields = {% if context['create_modal']['js_fields'] %} {{ context['create_modal']['js_fields'] | tojson }} {% else %} '' {% endif %};
+                    var ctr;
+                    var field;
+                    var field_id = $(this).attr('id');
+                    var csrf_token = "{{ csrf_token() }}";
+                    var table = '{{ table }}';
+                    $.ajaxSetup({
+                        beforeSend: function(xhr, settings) {
+                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                            }
+                        }
+                    });
+                    for (ctr=0; ctr < fields.length; ctr++){
+                        $.ajax({
+                            url: "/admin/_get_view_modal_data",
+                            type: "POST",
+                            dataType: "json",
+                            data: JSON.stringify({'table': table,'column': fields[ctr],'id':field_id}),
+                            contentType: "application/json; charset=utf-8",
+                            success: function(data) {
+                                if (data.result){
+                                    field = "#view_" + data.column;
+                                    var input_type = $(field).attr('type');
+                                    if (input_type == 'checkbox'){
+                                        if (data.result == '1'){
+                                            $(field).attr('checked',true);
+                                        }else{
+                                            $(field).attr('checked', false);
+                                        }
+                                    }else{
+                                        $(field).val(data.result);
+                                    }
                                 }
                             }
                         });
                     }
                 }
             }
-            //if(document.body.contains(document.getElementById('view_edit_button'))){
-            //    var url = document.getElementById(row_obj.id).name;
-            //    document.getElementById("view_edit_button").setAttribute("href", url);
-            //}
-            //document.getElementById("view_fname").value = row_obj.cells[1].innerHTML;
-            //document.getElementById("view_lname").value = row_obj.cells[2].innerHTML;
-            //document.getElementById("view_username").value = row_obj.cells[0].innerHTML;
-            //document.getElementById("view_email").value = row_obj.cells[3].innerHTML;
+            
+        });
+
+        $("#username").change(function(){
+            var csrf_token = "{{ csrf_token() }}";
+            var username = document.getElementById("username").value;
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                    }
+                }
+            });
+            $.ajax({
+                url: "/auth/username_check",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({'username': username}),
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    if(data.result == 1){
+                        $("#username-invalid-feedback").text("Please provide a valid Username");
+                        document.getElementById("username-invalid-feedback").style.display = "none";
+                        document.getElementById("username-valid-feedback").style.display = "block";
+                    }else{
+                        $("#username-invalid-feedback").text("Username is already taken.");
+                        document.getElementById("username-valid-feedback").style.display = "none";
+                        document.getElementById("username-invalid-feedback").style.display = "block";
+                    }
+                }
+            });
+        });
+        $("#email").change(function(){
+            var csrf_token = "{{ csrf_token() }}";
+            var email = document.getElementById("email").value;
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                    }
+                }
+            });
+            $.ajax({
+                url: "/auth/_email_check",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({'email': email}),
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    if(data.result == 1){
+                        $("#email-invalid-feedback").text("Please provide a valid Email");
+                        document.getElementById("email-invalid-feedback").style.display = "none";
+                        document.getElementById("email-valid-feedback").style.display = "block";
+                    }else{
+                        $("#email-invalid-feedback").text("Email is already taken.");
+                        document.getElementById("email-valid-feedback").style.display = "none";
+                        document.getElementById("email-invalid-feedback").style.display = "block";
+                    }
+                }
+            });
         });
     });
 

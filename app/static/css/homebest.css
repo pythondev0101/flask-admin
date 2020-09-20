@@ -476,3 +476,44 @@ iframe {
   }
 }
 
+input {
+  font-weight: bold !important;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  color:   grey !important;
+  font-weight: lighter !important;
+  opacity:  10 !important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+ color:    grey !important;
+ opacity:  10 !important;
+ font-weight: lighter !important;
+
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+ color:    grey !important;
+ opacity: 10 !important;
+ font-weight: lighter !important;
+
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color:    grey !important;
+ font-weight: lighter !important;
+
+
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+ color:    grey !important;
+ font-weight: lighter !important;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+ color:    grey !important;
+ opacity:  10 !important;
+ font-weight: lighter !important;
+}
+
+.input_required{
+  background-color: lavender;
+}

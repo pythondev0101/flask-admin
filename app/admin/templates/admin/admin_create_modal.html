@@ -23,8 +23,9 @@
                                 <div class="col-md-{{ modal['fields_sizes'][row_counter.index-1] }} mb-3">
                                     <div class="position-relative form-group">
                                         <label for="{{ field.name }}" class="">{{ field.label.upper() }}</label>
-                                        <select name="{{ field.name }}" id="{{ field.name }}" class="form-control">
-                                            <option></option>
+                                        <select name="{{ field.name }}" id="{{ field.name }}" class="form-control {% if field.required %}input_required{% endif %}"
+                                        {% if field.required %}required{% endif %}>
+                                            <option value="">Choose...</option>
                                             {% for odata in field.data %}
                                             <option value="{{ odata.id }}">{{ odata.name }}</option>
                                             {% endfor %}
@@ -40,9 +41,10 @@
                                 {% elif field.type == 'numeric' %}
                                 <div class="col-md-{{ modal['fields_sizes'][row_counter.index-1] }} mb-3">
                                     <label for="{{ field.name }}">{{ field.label.upper() }}</label>
-                                    <input style="font-weight: bold;" type="number" class="form-control" id="{{ field.name }}"
-                                           name="{{ field.name }}" placeholder="Php" step="0.01" min="0"
-                                           placeholder="{{ field.label.lower() }}" required>
+                                    <input type="number" class="form-control {% if field.required %}input_required{% endif %}" 
+                                           id="{{ field.name }}"
+                                           name="{{ field.name }}" placeholder="{{ field.placeholder }}" step="0.01" min="0"
+                                           {% if field.required %}required{% endif %}>
                                     <div id="{{ field.name }}-valid-feedback" class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -50,12 +52,25 @@
                                         Please provide a valid {{ field.label }}
                                     </div>
                                 </div>
+                                <!-- FIELD FOR CHECKBOXES -->
+                                {% elif field.type == 'checkbox' %}
+                                <div class="position-relative form-group">
+                                    <div>
+                                        <div class="custom-checkbox custom-control custom-control-inline">
+                                            <input type="checkbox" id="{{ field.name }}" name="{{ field.name }}" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="{{ field.name }}">{{ field.label }}</label></div>
+                                    </div>
+                                </div>
                                 {% else %}
                                 <div class="col-md-{{ modal['fields_sizes'][row_counter.index-1] }} mb-3">
                                     <label for="{{ field.name }}">{{ field.label.upper() }}</label>
-                                    <input style="font-weight: bold;" type="{{ field.type }}" class="form-control" id="{{ field.name }}"
+                                    <input type="{{ field.type }}" class="form-control {% if field.required %}input_required{% endif %}" 
+                                           id="{{ field.name }}"
                                            name="{{ field.name }}"
-                                           placeholder="{{ field.label.lower() }}" required>
+                                           placeholder="{{ field.placeholder }}"
+                                           {% if field.required %}required{% endif %}
+                                           {% if field.readonly %}readonly{% endif %}
+                                           value="{{field.auto_generated}}">
                                     <div id="{{ field.name }}-valid-feedback" class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -99,66 +114,3 @@
     </div>
 </div>
 {% endwith %}
-
-{% if context['active'] == 'Users' %}
-<script>
-    $(document).ready(function(){
-        $("#username").change(function(){
-            var csrf_token = "{{ csrf_token() }}";
-            var username = document.getElementById("username").value;
-            $.ajaxSetup({
-                beforeSend: function(xhr, settings) {
-                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                    }
-                }
-            });
-            $.ajax({
-                url: "/auth/username_check",
-                type: "POST",
-                dataType: "json",
-                data: JSON.stringify({'username': username}),
-                contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    if(data.result == 1){
-                        $("#username-invalid-feedback").text("Please provide a valid Username");
-                        document.getElementById("username-invalid-feedback").style.display = "none";
-                        document.getElementById("username-valid-feedback").style.display = "block";
-                    }else{
-                        $("#username-invalid-feedback").text("Username is already taken.");
-                        document.getElementById("username-valid-feedback").style.display = "none";
-                        document.getElementById("username-invalid-feedback").style.display = "block";
-                    }
-                }
-            });
-        });
-        $("#email").change(function(){
-            var csrf_token = "{{ csrf_token() }}";
-            var email = document.getElementById("email").value;
-            $.ajaxSetup({
-                beforeSend: function(xhr, settings) {
-                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                    }
-                }
-            });
-            $.ajax({
-                url: "/auth/_email_check",
-                type: "POST",
-                dataType: "json",
-                data: JSON.stringify({'email': email}),
-                contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    if(data.result == 1){
-                        $("#email-invalid-feedback").text("Please provide a valid Email");
-                        document.getElementById("email-invalid-feedback").style.display = "none";
-                    }else{
-                        $("#email-invalid-feedback").text("Email is already taken.");
-                        document.getElementById("email-invalid-feedback").style.display = "block";
-                    }
-                }
-            });
-        });
-    });
-</script>
-{% endif %}

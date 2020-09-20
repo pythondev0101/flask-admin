@@ -1,31 +1,13 @@
 """ MODULE: AUTH.FORMS"""
 """ FLASK IMPORTS """
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateTimeField, SelectField, \
-    IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from datetime import datetime
 """--------------END--------------"""
 
-from app.admin.forms import AdminCreateField, AdminIndexForm, AdminSelectField,AdminEditForm,\
-    AdminEditField,AdminInlineForm
-
-
-# class RoleCreateForm(FlaskForm, AdminIndexForm):
-#     name = StringField('name', validators=[DataRequired()])
-#     created_at = DateTimeField('Created At', format='%Y-%m-%dT%H:%M:%S', validators=[DataRequired()],
-#                                default=datetime.today())
-
-#     a_name = AdminCreateField('name', 'Role Name', 'text')
-
-#     create_fields = [
-#         [a_name]
-#     ]
-
-#     index_headers = ['name', 'Created']
-#     index_title = "All Roles"
-#     index_message = "Message"
-#     title = index_title
+from app.admin.forms import AdminIndexForm,AdminEditForm, AdminInlineForm, AdminField
+from .models import Role
 
 
 class PermissionInlineForm(AdminInlineForm):
@@ -41,22 +23,14 @@ class ModelInlineForm(AdminInlineForm):
 
 # TODO: FOR FUTURE VERSION CHANGE THIS TO CLASS INHERITANCE
 class UserEditForm(AdminEditForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
-    fname = StringField('First Name', validators=[DataRequired()])
-    lname = StringField('Last Name', validators=[DataRequired()])
-    # role_id = IntegerField('Role')
+    username = AdminField(label='Username', validators=[DataRequired()])
+    email = AdminField(label='Email', input_type='email',required=False)
+    fname = AdminField(label='First Name', validators=[DataRequired()])
+    lname = AdminField(label='Last Name', validators=[DataRequired()])
+    role_id = AdminField(label='Role',validators=[DataRequired()],input_type='number',model=Role)
 
-    a_username = AdminEditField('username', 'Username', 'text',username)
-    a_fname = AdminEditField('fname', 'First Name', 'text',fname)
-    a_lname = AdminEditField('lname', 'Last Name', 'text',lname)
-    a_email = AdminEditField('email', 'Email', 'email',email)
-    # a_role = AdminSelectField('role_id', 'Role', 'select', Role)
-
-    edit_fields = [
-        [a_fname, a_lname, a_username],
-        [a_email]
-    ]
+    def edit_fields(self):
+        return [[self.fname, self.lname],[self.username,self.email],[self.role_id]]
 
     edit_title = "Edit User"
     edit_message = "message"
@@ -65,29 +39,16 @@ class UserEditForm(AdminEditForm):
     model_inline = ModelInlineForm()
     inlines = [permission_inline,model_inline]
 
+
 class UserForm(AdminIndexForm):
-    active = BooleanField('Active', default=1)
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    email = PasswordField('Email', validators=[DataRequired()])
-    fname = StringField('First Name', validators=[DataRequired()])
-    lname = StringField('Last Name', validators=[DataRequired()])
+    username = AdminField(label='Username', validators=[DataRequired()])
+    email = AdminField(label='Email', input_type='email',required=False)
+    fname = AdminField(label='First Name', validators=[DataRequired()])
+    lname = AdminField(label='Last Name', validators=[DataRequired()])
+    role_id = AdminField(label='Role',validators=[DataRequired()],input_type='number',model=Role)
 
-    # role_id = StringField('Role')
-
-    created_at = DateTimeField('Created At', format='%Y-%m-%dT%H:%M:%S', validators=[DataRequired()],
-                               default=datetime.today())
-
-    a_username = AdminCreateField('username', 'Username', 'text')
-    a_fname = AdminCreateField('fname', 'First Name', 'text')
-    a_lname = AdminCreateField('lname', 'Last Name', 'text')
-    a_email = AdminCreateField('email', 'Email', 'email')
-    # a_role = AdminSelectField('role_id', 'Role', 'select', Role)
-
-    create_fields = [
-        [a_fname, a_lname],
-        [a_username,a_email]
-    ]
+    def create_fields(self):
+        return [[self.fname, self.lname],[self.username,self.email],[self.role_id]]
 
     index_headers = ['Username', 'First name', 'last name', 'email']
     index_title = "Users"
@@ -98,6 +59,42 @@ class UserPermissionForm(AdminIndexForm):
     index_headers = ['Username', 'Name', 'Model', 'Read','create', 'Write', 'Delete']
     index_title = "User Permissions"
     index_message = "Message"
+
+
+class RoleModelInlineForm(AdminInlineForm):
+    headers = ['Model','Read','create','write','delete']
+    title = "Add role permissions"
+
+
+class RoleCreateForm(AdminIndexForm):
+    index_headers = ['Role Name','Active']
+    index_title = "User Roles"
+    index_message = "Groups of permissions"
+
+    name = AdminField(label="Name",validators=[DataRequired()])
+
+    def create_fields(self):
+        return [[self.name]]
+
+    inline = RoleModelInlineForm()
+
+    inlines = [inline]
+
+
+class RoleEditForm(AdminEditForm):
+    name = AdminField(label="Name",validators=[DataRequired()])
+
+    def edit_fields(self):
+        return [[self.name]]
+
+    edit_title = "Edit Role"
+    edit_message = "message"
+    
+    permission_inline = PermissionInlineForm()
+    model_inline = ModelInlineForm()
+    permission_inline.html = "auth/role_permission_inline.html"
+    model_inline.html = 'auth/role_model_inline.html'
+    inlines = [permission_inline,model_inline]
 
 
 # AUTH.FORMS.LOGINFORM

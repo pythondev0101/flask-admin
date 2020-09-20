@@ -1,8 +1,9 @@
+{% if inline.models | length > 0 %}
 {% for imodel in inline.models %}
 <tr>
 <form action="{{url_for('bp_auth.user_delete_permission',oid=imodel.id)}}" method="POST">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-<td scope="row"><strong>{{ imodel.model.name }}</strong></td>
+<td scope="row"><strong>{{ imodel.model.description }}</strong></td>
 <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.read %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_read_{{ imodel.id }}" name="edit_chk_read_{{ imodel.id }}" class="form-check-input"/></label></div></td>
 <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.create %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_create_{{ imodel.id }}" name="edit_chk_create_{{ imodel.id }}" class="form-check-input"/></label></div></td>
 <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.write %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_write_{{ imodel.id }}" name="edit_chk_write_{{ imodel.id }}" class="form-check-input"/></label></div></td>
@@ -11,3 +12,8 @@
 </form>
 </tr>
 {% endfor %}
+{% else %}
+<tr>
+    <td colspan="6" style="text-align: center;">No permissions (Add permission below)</td>
+</tr>
+{% endif %}

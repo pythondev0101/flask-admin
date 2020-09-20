@@ -7,10 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ url_for('static', filename='css/homebest.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     {% if title %}
-    <title>{{ title }}</title>
+    <title>{{ title }} Login</title>
     {% else %}
-    <title>HomeBest</title>
+    <title>HomeBest Login</title>
     {% endif %}
 </head>
 <body>
@@ -19,7 +20,7 @@
         <div class="wrap-login100 p-t-30 p-b-50">
             <form action="{{ url_for('bp_auth.login') }}" method="POST" class="login100-form p-b-33 p-t-5 needs-validation" novalidate="">
                 {{ form.csrf_token }}
-                <div class="form-row">
+                <div class="form-row" style="margin-left: 20px !important; padding-top: 10px !important;">
                     <div class="col-md-11 mb-3">
                         <label for="username">Username</label>
                         <div class="input-group">
@@ -34,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="form-row" style="margin-left: 20px !important; padding-top: 10px !important;">
                     <div class="col-md-11 mb-3">
                         <label for="password">Password</label>
                         <div class="input-group">
@@ -50,7 +51,8 @@
                     </div>
                 </div>
                 <div class="container-login100-form-btn m-t-32">
-                    <button class="login100-form-btn" type="submit">Login</button>
+                    <button class="mb-2 mr-2 btn-transition btn btn-outline-info">Login
+                    </button>
                 </div>
             </form>
         </div>

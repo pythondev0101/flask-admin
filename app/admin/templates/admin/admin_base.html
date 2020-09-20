@@ -24,6 +24,7 @@
     <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/homebest.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link href="{{ url_for('static', filename='DataTables/datatables.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -62,16 +63,16 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/lib/main.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/homebest.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/lib/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='DataTables/datatables.js') }}"></script>
 <script>
     (function() {
       var header_color = document.getElementById('{{ context['header_color'] }}');
       var sidebar_color = document.getElementById('{{ context['sidebar_color'] }}');
       var fixed_footer = document.getElementById('chkbox_fixed_footer');
-      setTimeout(function() {
-        header_color.click();
-        sidebar_color.click();
-        fixed_footer.click();
-      }, 100);
+      //setTimeout(function() {
+        //header_color.click();
+        //sidebar_color.click();
+      //}, 100);
     })();
     </script>
     
@@ -84,7 +85,7 @@
 
 <!--INCLUDE HERE: MODALS-->
 {% block modals %}
-    {% if create_modal %}
+    {% if create_modal and context['create_modal']['create_url'] %}
         {% include create_modal %}
     {% endif %}
     {% if view_modal %}

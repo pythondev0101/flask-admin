@@ -1,5 +1,7 @@
 """ Admin form """
 from flask_wtf import FlaskForm
+from wtforms import Field
+from wtforms import widgets
 
 
 class AdminIndexForm(FlaskForm):
@@ -12,16 +14,14 @@ class AdminIndexForm(FlaskForm):
         raise NotImplementedError('Must implement index_title')
 
     @property
-    def index_message(self):
-        raise NotImplementedError('Must implement index_message')
-
-    @property
     def create_fields(self):
         raise NotImplementedError('Must implement create_fields')
     
-    def __init__(self):
-        super(AdminIndexForm,self).__init__()
+    def __init__(self,*args,**kwargs):
+        super(AdminIndexForm,self).__init__(*args,**kwargs)
         self.title = self.index_title
+        self.index_message = 'List of models'
+
 
 class AdminEditForm(FlaskForm):
     inlines = None
@@ -43,29 +43,6 @@ class AdminEditForm(FlaskForm):
         raise NotImplementedError('Must implement fields_data')
 
 
-class AdminCreateField(object):
-    def __init__(self, name, label, input_type):
-        self.name = name
-        self.label = label
-        self.input_type = input_type
-
-
-class AdminSelectField(object):
-    def __init__(self, name, label, data):
-        self.name = name
-        self.label = label
-        self.input_type = 'select'
-        self.data = data
-
-
-class AdminEditField(object):
-    def __init__(self, name, label, input_type,value):
-        self.name = name
-        self.label = label
-        self.input_type = input_type
-        self.value = value
-
-
 class AdminInlineForm(object):
     models = None
 
@@ -82,8 +59,34 @@ class AdminInlineForm(object):
         raise NotImplementedError('Must implement html')
 
 
+class AdminField(Field):
 
+    widget = widgets.TextInput()
+    # if no validators argument then make required = False
+    def __init__(self,input_type="text",placeholder='',model=None,required=True,readonly=False,*args, **kwargs):
+        super(AdminField,self).__init__(*args,**kwargs)
+        self.label = kwargs.get('label')
+        self.model = model
+        self.required = required
+        self.readonly = readonly
+        self.auto_generated = ""
 
+        if placeholder == '':
+            self.placeholder = self.label.upper()
+        else:
+            self.placeholder = placeholder
 
+        if self.model:
+            self.input_type = 'select'
+        else:
+            self.input_type = input_type
 
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = valuelist[0]
+        elif self.data is None:
+            self.data = ''
+
+    def _value(self):
+        return text_type(self.data) if self.data is not None else ''
 

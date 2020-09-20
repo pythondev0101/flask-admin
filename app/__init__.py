@@ -19,11 +19,17 @@ migrate = Migrate()
 csrf = CSRFProtect()
 login_manager = LoginManager()
 
-system_modules = {}
+system_modules = []
 
 context = {'system_modules': system_modules, 'module': '', 'active': '', 'errors': {}, 
         'create_modal': {}, 'header_color': "header_color15", 'sidebar_color': "sidebar_color15",
         'app_name':"HomeBest"}
+
+
+def internal_server_error(e):
+    from flask import render_template
+    return render_template('admin/internal_server_error.html'), 500
+
 
 def create_app(config_name):
     """
@@ -34,7 +40,7 @@ def create_app(config_name):
     """
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object(app_config[config_name])
-    # app.config.from_pyfile('config.py')
+    app.register_error_handler(500, internal_server_error)
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -68,12 +74,12 @@ def create_app(config_name):
         modules = [AdminModule]
         """--------------END--------------"""
         
-        create_modules(modules)
-
+        _install_modules(modules)
     return app
 
 
-def create_modules(modules):
+# MOVE THE INSTALLATION OF MODULES AND MODELS TO FLASK CORE INSTALL COMMAND
+def _install_modules(modules):
     """
     Tatanggap to ng list ng modules tapos iinsert nya sa database yung mga models o tables nila, \
         para malaman ng system kung ano yung mga models(eg. Users,Customers)
@@ -83,25 +89,55 @@ def create_modules(modules):
         Listahan ng mga modules na iinstall sa system
     """
 
-    from app.core.models import HomeBestModel
+    from app.core.models import HomeBestModel,HomeBestModule
+    
+    module_count = 0
 
     for module in modules:
-        system_modules[module.module_name] = {'description': module.module_description,
-        'link': module.module_link,'icon': module.module_icon, 'models': {}}
+        system_modules.append({'name':module.module_name,'short_description': module.module_short_description,
+        'long_description':module.module_long_description,'link': module.module_link,
+        'icon': module.module_icon, 'models': []})
+        
+        # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
+        homebest_module = HomeBestModule.query.filter_by(name=module.module_name).first()
+        last_id = 0
+        if not homebest_module:
+            new_module = HomeBestModule(module.module_name,module.module_short_description,module.version)
+            new_module.long_description = module.module_long_description
+            new_module.status = 'installed'
+            db.session.add(new_module)
+            db.session.commit()
+            print("MODULE - {}: SUCCESS".format(new_module.name))
+            last_id = new_module.id
+
+        model_count = 0
 
         for model in module.models:
-            homebestmodel = HomeBestModel.query.filter_by(name=model.model_name).first()
+            homebestmodel = HomeBestModel.query.filter_by(name=model.__amname__).first()
             if not homebestmodel:
-                new_model = HomeBestModel(model.model_name, module.module_name, model.model_description)
+                new_model = HomeBestModel(model.__amname__, last_id, model.__amdescription__)
                 db.session.add(new_model)
                 db.session.commit()
-            system_modules[module.module_name]['models'][model.model_name] = {'icon': model.model_icon,
-            'functions': {}}
-            for function_name, function_link in model.functions.items():
-                system_modules[module.module_name]['models'][model.model_name]['functions'][function_name] = function_link
+                print("MODEL - {}: SUCCESS".format(new_model.name))
+            system_modules[module_count]['models'].append({'name':model.__amname__,'description':model.__amdescription__,\
+                'icon': model.__amicon__, 'functions': []})
+            
+            for function in model.__amfunctions__:
+                for function_name, function_link in function.items():
+                    system_modules[module_count]['models'][model_count]['functions'].append({
+                        function_name:function_link
+                    })
+        
+            model_count = model_count + 1
 
-    print(system_modules)
+        if len(module.no_admin_models) > 0 :
 
+            for xmodel in module.no_admin_models:
+                homebestmodel = HomeBestModel.query.filter_by(name=xmodel.__amname__).first()
+                if not homebestmodel:
+                    new_model = HomeBestModel(xmodel.__amname__, last_id, xmodel.__amdescription__,False)
+                    db.session.add(new_model)
+                    db.session.commit()
+                    print("MODEL - {}: SUCCESS".format(new_model.name))
 
-
-
+        module_count = module_count + 1
