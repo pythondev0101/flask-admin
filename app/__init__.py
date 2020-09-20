@@ -25,6 +25,12 @@ context = {'system_modules': system_modules, 'module': '', 'active': '', 'errors
         'create_modal': {}, 'header_color': "header_color15", 'sidebar_color': "sidebar_color15",
         'app_name':"HomeBest"}
 
+
+def internal_server_error(e):
+    from flask import render_template
+    return render_template('admin/internal_server_error.html'), 500
+
+
 def create_app(config_name):
     """
     Return the app at crenecreate nito ang application
@@ -34,7 +40,7 @@ def create_app(config_name):
     """
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object(app_config[config_name])
-    # app.config.from_pyfile('config.py')
+    app.register_error_handler(500, internal_server_error)
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -72,6 +78,7 @@ def create_app(config_name):
     return app
 
 
+# MOVE THE INSTALLATION OF MODULES AND MODELS TO FLASK CORE INSTALL COMMAND
 def _install_modules(modules):
     """
     Tatanggap to ng list ng modules tapos iinsert nya sa database yung mga models o tables nila, \
@@ -100,20 +107,22 @@ def _install_modules(modules):
             new_module.status = 'installed'
             db.session.add(new_module)
             db.session.commit()
+            print("MODULE - {}: SUCCESS".format(new_module.name))
             last_id = new_module.id
 
         model_count = 0
 
         for model in module.models:
-            homebestmodel = HomeBestModel.query.filter_by(name=model.model_name).first()
+            homebestmodel = HomeBestModel.query.filter_by(name=model.__amname__).first()
             if not homebestmodel:
-                new_model = HomeBestModel(model.model_name, last_id, model.model_description)
+                new_model = HomeBestModel(model.__amname__, last_id, model.__amdescription__)
                 db.session.add(new_model)
                 db.session.commit()
-            system_modules[module_count]['models'].append({'name':model.model_name,'icon': model.model_icon,
-            'functions': []})
+                print("MODEL - {}: SUCCESS".format(new_model.name))
+            system_modules[module_count]['models'].append({'name':model.__amname__,'description':model.__amdescription__,\
+                'icon': model.__amicon__, 'functions': []})
             
-            for function in model.functions:
+            for function in model.__amfunctions__:
                 for function_name, function_link in function.items():
                     system_modules[module_count]['models'][model_count]['functions'].append({
                         function_name:function_link
@@ -124,10 +133,11 @@ def _install_modules(modules):
         if len(module.no_admin_models) > 0 :
 
             for xmodel in module.no_admin_models:
-                homebestmodel = HomeBestModel.query.filter_by(name=xmodel.model_name).first()
+                homebestmodel = HomeBestModel.query.filter_by(name=xmodel.__amname__).first()
                 if not homebestmodel:
-                    new_model = HomeBestModel(xmodel.model_name, last_id, xmodel.model_description,False)
+                    new_model = HomeBestModel(xmodel.__amname__, last_id, xmodel.__amdescription__,False)
                     db.session.add(new_model)
                     db.session.commit()
+                    print("MODEL - {}: SUCCESS".format(new_model.name))
 
         module_count = module_count + 1

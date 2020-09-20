@@ -9,7 +9,7 @@
     <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     {% if title %}
-    <title>{{ title }}</title>
+    <title>{{ title }} Login</title>
     {% else %}
     <title>HomeBest Login</title>
     {% endif %}
@@ -20,7 +20,7 @@
         <div class="wrap-login100 p-t-30 p-b-50">
             <form action="{{ url_for('bp_auth.login') }}" method="POST" class="login100-form p-b-33 p-t-5 needs-validation" novalidate="">
                 {{ form.csrf_token }}
-                <div class="form-row">
+                <div class="form-row" style="margin-left: 20px !important; padding-top: 10px !important;">
                     <div class="col-md-11 mb-3">
                         <label for="username">Username</label>
                         <div class="input-group">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="form-row" style="margin-left: 20px !important; padding-top: 10px !important;">
                     <div class="col-md-11 mb-3">
                         <label for="password">Password</label>
                         <div class="input-group">

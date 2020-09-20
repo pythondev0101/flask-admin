@@ -85,7 +85,7 @@
 
 <!--INCLUDE HERE: MODALS-->
 {% block modals %}
-    {% if create_modal %}
+    {% if create_modal and context['create_modal']['create_url'] %}
         {% include create_modal %}
     {% endif %}
     {% if view_modal %}

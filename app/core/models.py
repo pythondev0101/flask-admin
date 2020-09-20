@@ -14,6 +14,11 @@ class Base(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    # TODO: I relate na to sa users table 
+    # Sa ngayon i store nalang muna yung names kasi andaming error kapag foreign key
+    created_by = db.Column(db.String(64),nullable=True)
+    updated_by = db.Column(db.String(64),nullable=True)
+
     def __init__(self):
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
@@ -71,10 +76,26 @@ class CoreCity(Base):
     id = db.Column(db.Integer,primary_key=True, autoincrement=False)
     name = db.Column(db.String(64), nullable=False,default="")
     province_id = db.Column(db.Integer, db.ForeignKey('core_province.id'), nullable=True)
-    province = db.relationship("CoreProvince")
+    province = db.relationship("CoreProvince",backref='city')
 
 
 class CoreProvince(Base):
     __tablename__ = 'core_province'
     id = db.Column(db.Integer,primary_key=True, autoincrement=False)
     name = db.Column(db.String(64), nullable=False,default="")
+
+
+class CoreLog(db.Model):
+    __tablename__ = 'core_log'
+    __amname__ = 'core_log'
+    __amdescription__ = 'System Log'
+    __amicon__ = 'pe-7s-notebook'
+    __amfunctions__ = [{}]
+    
+    """ COLUMNS """
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('auth_user.id',ondelete="SET NULL"),nullable=True)
+    user = db.relationship('User',backref='user_logs')
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    description = db.Column(db.String(500),nullable=True)
+    data = db.Column(db.String(500),nullable=True)

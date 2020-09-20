@@ -75,7 +75,7 @@ def install():
     import platform
     from app import db
     from .models import CoreCity,CoreProvince
-    from app.auth.models import Role, RolePermission
+    from app.auth.models import User, Role, RolePermission
 
     print("Installing...")
 
@@ -129,8 +129,9 @@ def install():
         db.session.commit()
         print("Individual role inserted!")
 
-    print("Create a SuperUser/owner...")
-    _create_superuser()
+    if not User.query.count() > 0:
+        print("Creating a SuperUser/owner...")
+        _create_superuser()
 
     print("Installation complete!")
 
@@ -146,6 +147,7 @@ def _create_superuser():
     user.set_password(input("Enter password: "))
     user.is_superuser = 1
     user.role_id = 1
+    user.created_by = "System"	
     db.session.add(user)
     db.session.commit()
     print("SuperUser Created!")

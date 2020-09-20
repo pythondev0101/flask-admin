@@ -38,15 +38,26 @@ from app.admin.routes import admin_index, admin_edit
 
 context['module'] = 'admin'
 
+def _log_create(description,data):
+    from app.core.models import CoreLog
+    log = CoreLog()
+    log.user_id = current_user.id
+    log.date = datetime.utcnow()
+    log.description = description
+    log.data = data
+    db.session.add(log)
+    db.session.commit()
+    print("Log created!")
+
 @bp_auth.route('/roles')
 @login_required
-def roles():
+def roles(**kwargs):
     fields = [Role.id,Role.name,Role.active]
     form = RoleCreateForm()
     form.inline.models = HomeBestModel.query.all()
     return admin_index(Role,fields=fields,form=form,url='', create_modal="auth/role_create_modal.html", \
-        create_url='bp_auth.role_create',edit_url='bp_auth.role_edit',active='Users', \
-            view_modal="auth/role_view_modal.html")
+        create_url='bp_auth.role_create',edit_url='bp_auth.role_edit', \
+            view_modal="auth/role_view_modal.html",kwargs=kwargs)
 
 
 @bp_auth.route('/role_create',methods=['GET','POST'])
@@ -85,7 +96,7 @@ def role_create():
 
 @bp_auth.route('/role_edit/<int:oid>',methods=['GET','POST'])
 @login_required
-def role_edit(oid):
+def role_edit(oid,**kwargs):
     role = Role.query.get_or_404(oid)
     form = RoleEditForm(obj=role)
 
@@ -95,7 +106,7 @@ def role_edit(oid):
         models = db.session.query(HomeBestModel).filter(~HomeBestModel.id.in_(query1))
         form.model_inline.models = models
         form.permission_inline.models = role_permissions
-        return admin_edit(form,"bp_auth.role_edit",oid,model=Role)
+        return admin_edit(form,"bp_auth.role_edit",oid,model=Role,kwargs=kwargs)
     elif request.method == "POST":
         if form.validate_on_submit():
             role.name = form.name.data
@@ -183,12 +194,11 @@ def user_permission_index():
 
 @bp_auth.route('/users')
 @login_required
-def index():
+def index(**kwargs):
     form = UserForm()
     fields = [User.id, User.username, User.fname, User.lname, User.email]
     models = [User]
-    return admin_index(*models, fields=fields, url=auth_urls['index'],
-                       create_url='bp_auth.user_create', edit_url="bp_auth.user_edit", form=form)
+    return admin_index(*models, fields=fields, url=auth_urls['index'], create_url='bp_auth.user_create', edit_url="bp_auth.user_edit", form=form,kwargs=kwargs)
 
 
 @bp_auth.route('/username_check', methods=['POST'])
@@ -231,45 +241,52 @@ def change_password(oid):
 
 @bp_auth.route('/user_create', methods=['POST'])
 @login_required
-def user_create():
-    try:
-        form = UserForm()
-        if request.method == "POST":
-            if form.validate_on_submit():
-                user = User()
-                models = HomeBestModel.query.all()
-                for homebestmodel in models:
-                    permission = UserPermission(model=homebestmodel, read=1,create=0, write=0, delete=0)
-                    user.permissions.append(permission)
-                user.username = form.username.data
-                user.fname = form.fname.data
-                user.lname = form.lname.data
-
-                if form.email.data == '':
-                    user.email = None
+def user_create(**kwargs):
+    if check_create('Users'):
+        url = auth_urls['index']
+        if 'url' in kwargs:
+            url = kwargs.get('url')
+        try:
+            form = UserForm()
+            if request.method == "POST":
+                if form.validate_on_submit():
+                    user = User()
+                    models = HomeBestModel.query.all()
+                    for homebestmodel in models:
+                        permission = UserPermission(model=homebestmodel, read=1,create=0, write=0, delete=0)
+                        user.permissions.append(permission)
+                    user.username = form.username.data
+                    user.fname = form.fname.data
+                    user.lname = form.lname.data
+                    if form.email.data == '':
+                        user.email = None
+                    else:
+                        user.email = form.email.data
+                    user.role_id = form.role_id.data
+                    #TODO: add default password in settings
+                    user.set_password("password")
+                    user.is_superuser = 0
+                    user.created_by = "{} {}".format(current_user.fname,current_user.lname)
+                    db.session.add(user)
+                    db.session.commit()
+                    flash('New User Added Successfully!','success')
+                    _log_create("New user added","UserID={}".format(user.id))
+                    return redirect(url_for(url))
                 else:
-                    user.email = form.email.data
-                user.role_id = form.role_id.data
-                #TODO: add default password in settings
-                user.set_password("password")
-                user.is_superuser = 0
-                db.session.add(user)
-                db.session.commit()
-                flash('New User Added Successfully!','success')
-                return redirect(url_for(auth_urls['index']))
-            else:
-                for key, value in form.errors.items():
-                    flash(str(key) + str(value), 'error')
-                return redirect(url_for(auth_urls['index']))
-    except Exception as e:
-        flash(str(e),'error')
-        return redirect(url_for(auth_urls['index']))
+                    for key, value in form.errors.items():
+                        flash(str(key) + str(value), 'error')
+                    return redirect(url_for(url))
+        except Exception as e:
+            flash(str(e),'error')
+            return redirect(url_for(url))
+    else:
+        return render_template("auth/authorization_error.html")
 
 
 @bp_auth.route('/user_edit/<int:oid>', methods=['GET', 'POST'])
 @login_required
 @cross_origin()
-def user_edit(oid):
+def user_edit(oid,**kwargs):
     user = User.query.get_or_404(oid)
     form = UserEditForm(obj=user)
     if request.method == "GET":
@@ -279,21 +296,27 @@ def user_edit(oid):
         form.model_inline.models = models
         form.permission_inline.models = user_permissions
         return admin_edit(form=form, update_url=auth_urls['edit'], action="auth/user_edit_action.html", \
-            oid=oid, modal_form=True,extra_modal='auth/user_change_password_modal.html',model=User)
+            oid=oid, modal_form=True,extra_modal='auth/user_change_password_modal.html',model=User,kwargs=kwargs)
     elif request.method == "POST":
         if form.validate_on_submit():
-            user.username = form.username.data
-            user.fname = form.fname.data
-            user.lname = form.lname.data
-            user.email = form.email.data
-            user.role_id = form.role_id.data
-            user.updated_at = datetime.now()
-            db.session.commit()
-            flash('User update Successfully!','success')
-            return redirect(url_for(auth_urls['index']))
+            try:
+                user.username = form.username.data
+                user.fname = form.fname.data
+                user.lname = form.lname.data
+                user.email = form.email.data
+                user.role_id = form.role_id.data
+                user.updated_at = datetime.now()
+                user.updated_by = "{} {}".format(current_user.fname,current_user.lname)
+                db.session.commit()
+                flash('User update Successfully!','success')
+                _log_create('User update',"UserID={}".format(oid))
+                return redirect(url_for('bp_iwms.users'))
+            except Exception as e:
+                flash(str(e),'error')
+                return redirect(url_for('bp_iwms.users'))
         for key, value in form.errors.items():
-            print(key, value)
-        return "error"
+            flash(str(key) + str(value), 'error')
+        return redirect(url_for('bp_iwms.users'))
 
 
 @bp_auth.route('/user_edit_permission', methods=['POST'])
@@ -395,6 +418,7 @@ def load_permissions(user_id):
                 session['permissions'][permission.name] = {"read": True, "create": True, \
                     "write": True, "delete": True}  
         elif user.role.name == "Individual" or user.role_id == 1:
+            # TODO: GAMITIN ANG user.permissions kaysa mag query pa ulit
             user_permissions = UserPermission.query.filter_by(user_id=user_id)
             for user_permission in user_permissions:
                 session['permissions'][user_permission.model.name] = {"read": user_permission.read, "create": user_permission.create, \
@@ -404,7 +428,20 @@ def load_permissions(user_id):
             for role_permission in role_permissions:
                 session['permissions'][role_permission.model.name] = {"read": role_permission.read, "create": role_permission.create, \
                     "write": role_permission.write, "delete": role_permission.delete}
+    print(session)
 
+def check_create(model_name):
+    if current_user.is_superuser:
+        return True
+    else:
+        user = User.query.get(current_user.id)
+        for perm in user.permissions:
+            if model_name == perm.model.name:
+                if perm.create:
+                    return True
+                else:
+                    return False
+        return False
 
 @bp_auth.route('/logout')
 @login_required

@@ -62,12 +62,14 @@ class AdminInlineForm(object):
 class AdminField(Field):
 
     widget = widgets.TextInput()
-    
-    def __init__(self,input_type="text",placeholder='',model=None,required=True,*args, **kwargs):
+    # if no validators argument then make required = False
+    def __init__(self,input_type="text",placeholder='',model=None,required=True,readonly=False,*args, **kwargs):
         super(AdminField,self).__init__(*args,**kwargs)
         self.label = kwargs.get('label')
         self.model = model
         self.required = required
+        self.readonly = readonly
+        self.auto_generated = ""
 
         if placeholder == '':
             self.placeholder = self.label.upper()
