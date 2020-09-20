@@ -168,7 +168,7 @@ $ flask run
 ```python
 def admin_index(*model, fields, url, form, action="admin/admin_actions.html",
                 create_modal="admin/admin_create_modal.html", view_modal="admin/admin_view_modal.html",
-                create_url="", edit_url="", template="admin/admin_index.html", active="")
+                create_url="", edit_url="", template="admin/admin_table.html", active="")
 ```
 Parameters:
 * *model = takes a list of models to query and show in the html table
@@ -180,7 +180,7 @@ Parameters:
 * view_modal = default is admin_view_modal.html, override this to replace default view modal, set to None to not activate the view modal
 * create_url = takes the url of create object 
 * edit_url = takes the url of edit object
-* template = default is admin_index.html, override to replace default to your custom index html
+* template = default is admin_table.html, override to replace default to your custom index html
 * active = basta para alam ng css kung sino lalagyan ng mm-active na class, malalaman mo din haha
 
 ### Example
