@@ -1,0 +1,52 @@
+{% extends 'admin/admin_dashboard.html' %}
+
+{% block extra_head %}
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet'/>
+{% endblock %}
+
+{% block content %}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-graph2 icon-gradient bg-mean-fruit">
+                    </i>
+                </div>
+                <div>Dashboard
+                    <div class="page-title-subheading">
+                        Inventory, Sales and Purchases Activity
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <div class="card-title">Map</div>
+                    <div id='map' style='width: 100%; height: 500px;'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    var longitude = 121.0223;
+    var latitude = 14.6091;
+        
+    mapboxgl.accessToken = 'pk.eyJ1IjoicHl0aG9uZGV2MDEwMSIsImEiOiJja2ZlMDhocjYwMDlyMnFvNDlmdzg1ODJ2In0.uVKowS-cSgFJZoslqxABmw';
+    var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [longitude,latitude],
+    zoom: 10,
+    });
+    </script>
+{% endblock %}
