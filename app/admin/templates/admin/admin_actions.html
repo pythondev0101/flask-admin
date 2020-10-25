@@ -2,7 +2,11 @@
     
     {% if create_modal and session['permissions'][context['model']] is defined %}
     {% if session['permissions'][context['model']]['create'] or current_user.is_superuser %}
-
+    {% if rendered_model.__amname__ == 'area' %} 
+    <a href="{{ url_for('bp_bds.area_create') }}" type="button" class="btn-shadow mr-3 btn btn-primary">
+        <i class="fa fa-plus"></i>
+    </a>
+    {% else %}
     <button type="button" data-toggle="modal" data-target="#create_modal" title="Create new" data-placement="bottom"
             class="btn-shadow mr-3 btn btn-primary">
         {% if rendered_model.__amname__ == 'user' %}
@@ -11,6 +15,7 @@
         <i class="fa fa-plus"></i>
         {% endif %}
     </button>
+    {% endif %}
     {% endif %}
     {% endif %}
 

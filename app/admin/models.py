@@ -12,6 +12,9 @@ class Admin(object):
     """
     __amicon__ = ""
     
+    """New feature from delivery module"""
+    __list_view_url__ = ''
+
     @property
     def __amname__(self):
         """ Ito yung parang code nya(eg. auth) for authentication.

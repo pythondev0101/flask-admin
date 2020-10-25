@@ -212,6 +212,9 @@ def admin_index(*model, fields, form=None, url='', action="admin/admin_actions.h
             if 'create_url' in kwargs:
                 create_url = kwargs.get('create_url')
 
+            if 'module' in kwargs:
+                context['module'] = kwargs.get('module')
+
             # THIS IS FOR BOOLEAN WORD CONVERSION
             # if 'convert_boolean' in kwargs:
             #     if kwargs.get('convert_boolean') == 2:
