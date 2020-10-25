@@ -1,8 +1,32 @@
 {% extends 'admin/admin_dashboard.html' %}
 
+{% block sidebar %}
+    {% include 'bds/bds_sidebar.html' %}
+{% endblock %}
+
 {% block extra_head %}
-<script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet'/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet'/>
+<style>
+    .marker {
+        background-image: url('/static/img/mapbox-icon.png');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+    .mapboxgl-popup {
+        max-width: 200px;
+    }
+      
+    .mapboxgl-popup-content {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
@@ -11,12 +35,12 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    <i class="pe-7s-graph2 icon-gradient bg-mean-fruit">
+                    <i class="pe-7s-map-2 icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>Dashboard
+                <div>Map
                     <div class="page-title-subheading">
-                        Inventory, Sales and Purchases Activity
+                      Delivery
                     </div>
                 </div>
             </div>
@@ -38,15 +62,56 @@
 {% block scripts %}
 <script>
 
-    var longitude = 121.0223;
-    var latitude = 14.6091;
-        
+
     mapboxgl.accessToken = 'pk.eyJ1IjoicHl0aG9uZGV2MDEwMSIsImEiOiJja2ZlMDhocjYwMDlyMnFvNDlmdzg1ODJ2In0.uVKowS-cSgFJZoslqxABmw';
+
+    var longitude = 121.0535681;
+    var latitude = 14.5100119;
+        
     var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [longitude,latitude],
     zoom: 10,
     });
-    </script>
+
+    var geojson = {type: 'FeatureCollection',features: []};
+
+    $.ajax({
+      url: '/bds/api/deliveries?query=all',
+      dataType: 'json',
+      async: false,
+      success: function(data) {
+        for(i=0; i < data.deliveries.length; ++i){
+          geojson.features.push({
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [data.deliveries[i].longitude, data.deliveries[i].latitude],
+            },
+            properties: {
+              title: data.deliveries[i].subscriber_fname,
+              description: data.deliveries[i].status
+            }
+          })
+        }
+      }
+    });
+
+    // add markers to map
+    geojson.features.forEach(function(marker) {
+        // create a HTML element for each feature
+        var el = document.createElement('div');
+        el.className = 'marker';
+        // make a marker for each feature and add to the map
+        console.log(marker);
+        new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+            .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+            .addTo(map);
+    });
+
+
+</script>
 {% endblock %}

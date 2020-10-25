@@ -1,0 +1,17 @@
+{% extends "admin/admin_sidebar.html" %} 
+
+{% block first_sidebar_navigation %}
+<li class="app-sidebar__heading">Administration</li>
+<li>
+  <a
+    href="{{ url_for('bp_bds.dashboard')}}"
+    class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}"
+  >
+    <i
+      class="metismenu-icon pe-7s-map-2 icon-gradient bg-premium-dark"
+      aria-hidden="true"
+    ></i>
+    Map
+  </a>
+</li>
+{% endblock %}

@@ -1,0 +1,45 @@
+<div id="add_subscriber_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add subscriber</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <table style="width:100%;" id="tbl_subscribers" class="mb-0 table table-sm">
+                                <thead>
+                                <tr>
+                                    <th style="display:none;">ID</th>
+                                    <th>ADD</th>
+                                    <th>FIRST NAME</th>
+                                    <th>LAST NAME</th>
+                                    <th>ADDRESS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for subscriber in subscribers %}
+                                <tr class="item" id="{{ subscriber.id }}">
+                                    <td style="display:none;">{{ subscriber.id }}</td>
+                                    <td><input class="chkbox" type="checkbox"></td>
+                                    <td>{{subscriber.fname}}</td>
+                                    <td>{{subscriber.lname}}</td>
+                                    <td>{{subscriber.address}}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_add_subscriber" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

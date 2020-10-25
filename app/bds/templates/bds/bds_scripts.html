@@ -1,0 +1,195 @@
+{% extends "admin/admin_base.html" %}
+
+
+{% block scripts %}
+
+
+<!-- AREA SCRIPTS -->
+{% if context['model'] == 'area' %}
+<script>
+    $(document).ready(function(){
+
+        var table_subscribers = $('#tbl_subscribers').DataTable({
+        });
+
+        var table_messengers = $('#tbl_messengers').DataTable({
+        });
+        
+        var dtbl_subscribers = $("#tbl_subscribers_line").DataTable({
+        });
+
+        var dtbl_messengers = $("#tbl_messengers_line").DataTable({
+        });
+
+
+        $("#btn_add_subscriber").click(function(){
+            $("tr").each(function() {
+                var check = $(this).find("input.chkbox").is(':checked');
+                if(check){
+
+                    var id = $(this).find("td").eq(0).html();
+                    var fname = $(this).find("td").eq(2).html();
+                    var lname = $(this).find("td").eq(3).html();
+                    var address = $(this).find("td").eq(4).html();
+
+                    $('#tbl_subscribers_line tr:last').after(
+                        `<tr>
+                            <td style="display:none;"><input name="subscribers[]" type="hidden" value="${id}"></td>
+                            <td style='width:50px'><input class="chkbox" type="checkbox"></td>
+                            <td class='text-center'>${fname}</td>
+                            <td class='text-center'>${lname}</td>
+                            <td class='text-center'>${address}</td>
+                        </tr>
+                        `
+                        );
+
+                    var row = dtbl_subscribers.row.add([
+                    `<input name="subscribers[]" type="hidden" value="${id}">`,
+                    `<input class="chkbox" type="checkbox">`,
+                    fname,
+                    lname,
+                    address
+                    ]);
+                    dtbl_subscribers.row(row).column(0).nodes().to$().addClass('myHiddenColumn');
+                    dtbl_subscribers.row(row).draw();
+                    table_subscribers.row($(this)).remove().draw();
+                }
+            });
+        });
+
+
+        $("#btn_add_messenger").click(function(){
+            $("tr").each(function() {
+                var check = $(this).find("input.chkbox").is(':checked');
+                if(check){
+
+                    var id = $(this).find("td").eq(0).html();
+                    var fname = $(this).find("td").eq(2).html();
+                    var lname = $(this).find("td").eq(3).html();
+                    var username = $(this).find("td").eq(4).html();
+
+                    $('#tbl_messengers_line tr:last').after(
+                        `<tr>
+                            <td style="display:none;"><input name="messengers[]" type="hidden" value="${id}"></input></td>
+                            <td style='width:50px'><input class="chkbox" type="checkbox"></td>
+                            <td class='text-center'>${fname}</td>
+                            <td class='text-center'>${lname}</td>
+                            <td class='text-center'>${username}</td>
+                        </tr>
+                        `
+                        );
+
+                    table_messengers.row($(this)).remove().draw();
+                }
+            });
+        });
+
+
+        $("#btn_delete_subscriber").click(function(){
+            $("#tbl_subscribers_line tr").each(function() {
+                var check = $(this).find("input.chkbox").is(':checked');
+                if (check){
+            
+                    var row = table_subscribers.row.add([
+                        $(this).find("input").eq(0).val(),
+                        "<input class='chkbox' type='checkbox'>",
+                        $(this).find("td").eq(2).html(),
+                        $(this).find("td").eq(3).html(),
+                        $(this).find("td").eq(4).html(),
+                    ]);
+                    table_subscribers.row(row).column(0).nodes().to$().addClass('myHiddenColumn');
+                    table_subscribers.row(row).draw();
+                    //$(this).remove();
+                    dtbl_subscribers.row($(this)).remove().draw();
+                }
+            });
+        });
+
+
+        $("#btn_delete_messenger").click(function(){
+            $("#tbl_messengers_line tr").each(function() {
+                var check = $(this).find("input.chkbox").is(':checked');
+                if (check){
+            
+                    var row = table_messengers.row.add([
+                        $(this).find("input").eq(0).val(),
+                        "<input class='chkbox' type='checkbox'>",
+                        $(this).find("td").eq(2).html(),
+                        $(this).find("td").eq(3).html(),
+                        $(this).find("td").eq(4).html()
+                    ]);
+                    table_messengers.row(row).column(0).nodes().to$().addClass('myHiddenColumn');
+                    table_messengers.row(row).draw();
+                    $(this).remove();
+                }
+            });
+        });
+
+
+    });
+</script>
+{% endif %}
+
+{% endblock %}
+
+
+{% block modals %}
+    {% if context['model'] == 'area' %}
+        {% include "bds/bds_add_subscriber_modal.html" %}
+        {% include "bds/bds_add_messenger_modal.html" %}
+    {% endif %}
+{% endblock %}
+
+
+{% block sidebar %}
+    {% include 'bds/bds_sidebar.html' %}
+{% endblock %}
+
+
+{% block inner_footer %}
+{% if context['model'] == 'delivery' %}
+<!-- pass -->
+{% else %}
+<div class="app-footer-right">
+    <button type="button" class="btn btn-secondary" onclick="history.back(-1)" 
+    style="margin-right: 10px;">Cancel</button>
+    <button form="create_form" type="submit" class="btn btn-primary">Save</button>
+</div>
+{% endif %}
+{% endblock %}
+
+
+{% block extra_head %}
+<style>
+    .myHiddenColumn {
+        display: none;
+    }
+</style>
+{% endblock %}
+
+
+{% block toast %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div id="toast-container" class="toast-top-center">
+    {% for category, message in messages %}
+        {% if category == 'success' %}
+        <div class="toast toast-success" aria-live="polite">
+            <div class="toast-progress" style="width: 0%;"></div>
+            <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+            <div class="toast-title">Success!</div>
+            <div class="toast-message">{{ message }}</div>
+        </div>
+        {% elif category == 'error' %}
+        <div class="toast toast-error" aria-live="polite">
+            <div class="toast-progress" style="width: 0%;"></div>
+            <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+            <div class="toast-title">Error!</div>
+            <div class="toast-message">{{ message }}</div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}

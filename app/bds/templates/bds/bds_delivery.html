@@ -1,0 +1,213 @@
+{% extends 'bds/bds_scripts.html' %}
+
+
+{% block content %}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-paper-plane icon-gradient bg-happy-itmeo">
+                    </i>
+                </div>
+                <div>Delivery
+                    <div class="page-title-subheading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+        <li class="nav-item">
+            <a role="tab" class="nav-link show active" id="tab-0" data-toggle="tab" href="#tab-content-0" aria-selected="true">
+                <span>Status</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a role="tab" class="nav-link show" id="tab-1" data-toggle="tab" href="#tab-content-1" aria-selected="false">
+                <span>Animated Lines</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a role="tab" class="nav-link show" id="tab-2" data-toggle="tab" href="#tab-content-2" aria-selected="false">
+                <span>Basic</span>
+            </a>
+        </li>
+    </ul> -->
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade active show" id="tab-content-0" role="tabpanel">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-header"><i class="header-icon lnr-gift icon-gradient bg-grow-early"> </i>Subscribers
+                            <div class="btn-actions-pane-right">
+                                <div class="nav">
+                                    <div class="dropleft btn-group">
+                                        <button id="btn_area_label" type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="btn-wide mb-2 mr-2 dropdown-toggle btn btn-primary">{{areas[0].name}}</button>
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu" x-placement="right-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(78px, -5px, 0px);">
+                                            {% for area in areas %}
+                                            <button type="button" tabindex="0" class="dropdown-item btn_area">{{area.name}}</button>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane show active" id="tab-eg6-0" role="tabpanel">
+                                    <div class="table-responsive">
+                                        <table id="tbl_subscribers" class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">ID</th>
+                                                <th>Name</th>
+                                                <th class="text-center">ADDRESS</th>
+                                                <th class="text-center">STATUS</th>
+                                                <th class="text-center">ACTIONS</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane show" id="tab-eg6-1" role="tabpanel">
+                                </div>
+                                <div class="tab-pane show" id="tab-eg6-2" role="tabpanel">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-block text-center card-footer">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <button id="btn_reset_all" class="mr-2 btn-icon btn-icon-only btn btn-outline-danger">Reset all</button>
+                            <button id="btn_deliver_all" type="button" class="btn-wide btn btn-success">Deliver all</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+    $(document).ready(function(){
+        var csrf_token = "{{ csrf_token() }}";
+        
+        var dtbl_subscribers = $('#tbl_subscribers').DataTable({
+        });
+
+
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                }
+            }
+        });
+        
+        
+        load_data($("#btn_area_label").html());
+
+
+        $(".btn_area").click(function(){
+            var _area_name = $(this).html();
+
+            $("#btn_area_label").html(_area_name);
+
+            load_data(_area_name);
+        })
+
+
+        $("#btn_deliver_all").click(function(){
+            var _area_name = $("#btn_area_label").html()
+            $.ajax({
+                url: "/bds/api/deliver",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({'area_name': _area_name}),
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    load_data(_area_name);
+                }
+            });
+        });
+
+
+        $("#btn_reset_all").click(function(){
+            var _area_name = $("#btn_area_label").html()
+            $.ajax({
+                url: "/bds/api/reset",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({'area_name': _area_name}),
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    load_data(_area_name);
+                }
+            });
+        });
+
+
+        function load_data(area_name){
+                
+            var _url = "/bds/api/get-area-subscribers" + "?area_name=" + area_name;
+
+            var td_actions = `
+            <button type="button" class="btn btn-danger btn-sm">Reset</button>
+            <button type="button" class="btn btn-primary btn-sm">Details</button>
+            <button type="button" class="btn btn-success btn-sm">Deliver</button>
+            `;
+            var td_status = "";
+
+            $.ajax({
+                url: _url,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    dtbl_subscribers.clear().draw();
+                    for(i=0; i < data.subscribers.length; ++i){
+                        var td_name = `<div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left flex2">
+                                    <div class="widget-heading">${data.subscribers[i].fname}</div>
+                                    <div class="widget-subheading opacity-7">${data.subscribers[i].lname}</div>
+                                </div>
+                            </div>
+                        </div>`
+                        
+                        if (data.subscribers[i].status == "NOT YET DELIVERED"){
+                            td_status = `<div class="badge badge-info">NOT YET DELIVERED</div>`;    
+                        } else if (data.subscribers[i].status == "IN-PROGRESS"){
+                            td_status = `<div class="badge badge-danger">IN-PROGRESS</div>`;    
+                        } else if (data.subscribers[i].status == "DELIVERED"){
+                            td_status = `<div class="badge badge-success">DELIVERED</div>`;    
+                        } else if (data.subscribers[i].status == "PENDING"){
+                            td_status = `<div class="badge badge-warning">PENDING</div>`;    
+                        }
+
+                        var row = dtbl_subscribers.row.add([
+                            data.subscribers[i].id,
+                            td_name,
+                            data.subscribers[i].address,
+                            td_status,
+                            td_actions,
+                        ]);
+                        dtbl_subscribers.row(row).column(4).nodes().to$().addClass('text-center');
+                        dtbl_subscribers.row(row).column(3).nodes().to$().addClass('text-center');
+                        dtbl_subscribers.row(row).draw();
+                    }
+                }
+            });
+        }
+
+    });
+
+</script>
+
+{% endblock %}

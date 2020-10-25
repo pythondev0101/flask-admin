@@ -1,0 +1,174 @@
+{% extends "bds/bds_scripts.html" %}
+
+{% block content %}
+    <div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-flag text-success">
+                    </i>
+                </div>
+                <div>Edit area
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+        <li class="nav-item">
+            <a role="tab" class="nav-link show active" id="tab-0" data-toggle="tab" href="#tab-content-0" aria-selected="true">
+                <span>General Information</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a role="tab" class="nav-link show" id="tab-1" data-toggle="tab" href="#tab-content-1" aria-selected="false">
+                <span>Messengers</span>
+            </a>
+        </li>
+    </ul>
+    <form action="{{ url_for('bp_bds.area_edit',oid=oid) }}" id="create_form" class="needs-validation" method="POST" novalidate>
+    {{ form.csrf_token }}
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade active show" id="tab-content-0" role="tabpanel">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="name" class="">Name</label>
+                                    <input name="name" id="name" type="text" class="form-control input_required" required value={{form.name.data}}>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid name
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="code" class="">Code</label>
+                                    <input name="code" id="code" type="text" class="form-control input_required" required value="{{form.code.data}}">
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid code
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group">
+                                    <label for="description" class="">Description</label>
+                                    <input name="description" id="description" type="text" class="form-control" value="{{form.description.data}}">
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid description
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="col-lg-14">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                    <h5 class="card-title">Area Subscribers</h5>
+                    <div class="table-responsive">
+                        <table id="tbl_subscribers_line" class="mb-0 table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="display:none;"></th>
+                                <th></th>
+                                <th class="text-center">FIRST NAME</th>
+                                <th class="text-center">LAST NAME</th>
+                                <th class="text-center">ADDRESS</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for subscriber in area.subscribers %}
+                                <tr>
+                                    <td style="display:none;"><input name="subscribers[]" type="hidden" value="${id}"></td>
+                                    <td style='width:50px'><input class="chkbox" type="checkbox"></td>
+                                    <td class='text-center'>{{subscriber.fname}}</td>
+                                    <td class='text-center'>{{subscriber.lname}}</td>
+                                    <td class='text-center'>{{subscriber.address}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-block text-center card-footer">
+                        <button id="btn_delete_subscriber" type="button" class="mr-2 btn-icon btn-icon-only btn btn-outline-danger"><i class="pe-7s-trash btn-icon-wrapper"> </i></button>
+                        <button type="button" class="btn-wide btn btn-success" data-toggle="modal" data-target="#add_subscriber_modal" data-placement="bottom">Add</button>
+                    </div>
+                </div>
+            </div>
+                </div>
+        </div>
+
+        <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
+            <div class="col-lg-14">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tbl_messengers_line" class="mb-0 table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="display:none;"></th>
+                                <th></th>
+                                <th class="text-center">FIRST NAME</th>
+                                <th class="text-center">LAST NAME</th>
+                                <th class="text-center">USERNAME</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for messenger in messengers %}
+                                <tr>
+                                    <td style="display:none;"><input name="messengers[]" type="hidden" value="${id}"></td>
+                                    <td style='width:50px'><input class="chkbox" type="checkbox"></td>
+                                    <td class='text-center'>{{messenger.fname}}</td>
+                                    <td class='text-center'>{{messenger.lname}}</td>
+                                    <td class='text-center'>{{messenger.username}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-block text-center card-footer">
+                        <button id="btn_delete_messenger" type="button" class="mr-2 btn-icon btn-icon-only btn btn-outline-danger"><i class="pe-7s-trash btn-icon-wrapper"> </i></button>
+                        <button type="button" class="btn-wide btn btn-success" data-toggle="modal" data-target="#add_messenger_modal" data-placement="bottom">Add</button>
+                    </div>
+                </div>
+            </div>
+                </div>
+    </div>
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+            }, false);
+            });
+            }, false);
+            })();
+        </script>
+</div>
+    </form>
+</div>
+{% endblock %}
+

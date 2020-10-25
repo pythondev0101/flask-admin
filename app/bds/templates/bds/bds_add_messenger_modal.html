@@ -1,0 +1,45 @@
+<div id="add_messenger_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add messenger</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <table style="width:100%;" id="tbl_messengers" class="mb-0 table table-sm">
+                                <thead>
+                                <tr>
+                                    <th style="display:none;">ID</th>
+                                    <th>ADD</th>
+                                    <th>FIRST NAME</th>
+                                    <th>LAST NAME</th>
+                                    <th>ADDRESS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for messenger in messengers %}
+                                <tr class="item" id="{{ messenger.id }}">
+                                    <td style="display:none;">{{ messenger.id }}</td>
+                                    <td><input class="chkbox" type="checkbox"></td>
+                                    <td>{{messenger.fname}}</td>
+                                    <td>{{messenger.lname}}</td>
+                                    <td>{{messenger.username}}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btn_add_messenger" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
