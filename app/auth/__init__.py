@@ -28,6 +28,6 @@ auth_templates = {
 
 from . import routes
 from . import models
-
+from . import api
 
 

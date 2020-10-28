@@ -35,6 +35,8 @@ class User(UserMixin, Base, Admin):
     is_superuser = db.Column(db.Boolean,nullable=False, default="0")
     role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id'),nullable=True)
     role = db.relationship('Role', cascade='all,delete', backref="userrole")
+    area_id = db.Column(db.Integer, db.ForeignKey('bds_area.id', ondelete="SET NULL"), nullable=True)
+    area = db.relationship('Area',backref="messengers")
 
     def __init__(self):
         Base.__init__(self)
