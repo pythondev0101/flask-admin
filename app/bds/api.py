@@ -53,6 +53,8 @@ def process_image():
 
 
 @bp_bds.route('/api/deliveries', methods=['GET'])
+@csrf.exempt
+@cross_origin()
 def get_deliveries():
     _query = request.args.get('query')
     
@@ -69,6 +71,7 @@ def get_deliveries():
             'id': delivery.id,
             'subscriber_id': delivery.subscriber.id,
             'subscriber_fname': delivery.subscriber.fname,
+            'subscriber_lname': delivery.subscriber.lname,
             'delivery_date': delivery.delivery_date,
             'status': delivery.status,
             'longitude': delivery.subscriber.longitude,
@@ -80,6 +83,8 @@ def get_deliveries():
 
 
 @bp_bds.route('/api/subscribers', methods=['GET'])
+@csrf.exempt
+@cross_origin()
 def get_subscribers():
     subscribers = Subscriber.query.all()
 
@@ -100,6 +105,25 @@ def get_subscribers():
         })
     
     return jsonify({'subscribers': _list})
+
+
+@bp_bds.route('/api/subscribers/<int:subscriber_id>', methods=['GET'])
+@csrf.exempt
+@cross_origin()
+def get_subscriber(subscriber_id):
+    subscriber = Subscriber.query.get_or_404(subscriber_id)
+
+    if subscriber is None:
+        abort(404)
+    
+    res = {
+        'id': subscriber.id,
+        'fname': subscriber.fname,
+        'lname': subscriber.lname,
+        'address': subscriber.address
+    }
+
+    return jsonify(res)
 
 
 @bp_bds.route('/api/get-area-subscribers', methods=['GET'])
