@@ -1,7 +1,8 @@
 """ THIS IS FOR ADMIN MODELS """
 
 from app.auth.models import User,Role
-from app.core.core import CoreModule
+from app.core import CoreModule
+
 
 class AdminModule(CoreModule):
     module_name = 'admin'
