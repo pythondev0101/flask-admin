@@ -22,37 +22,26 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="main-card mb-3 card">
-                <div class="card-body">
-                    <table id="index_table" class="mb-0 table table-hover table-bordered table-striped">
+                    <div class="table-responsive">
+                    <table id="index_table" class="align-middle mb-0 table table-bordered table-striped table-hover">
                         <thead>
                         <tr>
                             {% for field in table_fields %}
-                            <th style="text-align: center;">{{ field.upper() }}</th>
+                            <th class="text-center">{{ field.upper() }}</th>
                             {% endfor %}
                         </tr>
                         </thead>
-                        <tbody>
-
-                        {% for model in models %}
-                        {% if view_modal %}
-                        <tr class='item row_object' id="{{ model[0] }}"  data-toggle="modal" data-target="#viewModal">
+                        <tbody>{% for model in models %}{% if view_modal %}<tr class="item row_object" id="{{ model[0] }}"  data-toggle="modal" data-target="#viewModal">
                             <param id="param_{{ model[0] }}" name="param_{{ model[0] }}" {% if edit_url %} value="{{ url_for(edit_url,oid=model[0]) }}" {% endif %}>
-                        {% else %}
-                        <tr class='item row_object' id="{{ model[0] }}">
+                            {% else %}
+                        <tr class="item row_object" id="{{ model[0] }}">
                         {% endif %}
+                            <!-- TEMPORARY conversion ng boolean word 'true' to 'YES' and 'false' to 'NO' -->
                             {% for values in model %}
                             {% if loop.index > 1 %}
-                            <!-- TEMPORARY conversion ng boolean word 'true' to 'YES' and 'false' to 'NO' -->
-                            <td style="font-weight: bold; text-align:center">
-                                {% if values|string == 'True' %}
-                                YES
-                                {% elif values|string == 'False' %}
-                                NO
-                                {% elif values == none %}
-                                {% else %} {{ values }} 
-                                {% endif %}</td>
+                            <td class="text-center">{% if values|string == 'True' %}YES{% elif values|string == 'False' %}NO{% elif values == none %}{% else %}{{values}}{% endif %}</td>
                             {% endif %}
                             {% endfor %}
                         </tr>
