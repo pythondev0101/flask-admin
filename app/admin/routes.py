@@ -168,7 +168,7 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
 
 def admin_index(*model, fields, form=None, url='', action="admin/admin_actions.html",
                 create_modal="admin/admin_create_modal.html", view_modal="admin/admin_view_modal.html",
-                create_url="", edit_url="", template="admin/admin_index.html",kwargs=None):
+                create_url="", edit_url="", template="admin/admin_table.html",kwargs=None):
     
     model_name = model[0].__amname__
     if _check_read(model_name):

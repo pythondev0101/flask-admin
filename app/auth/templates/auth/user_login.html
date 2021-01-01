@@ -5,80 +5,25 @@
     <meta name="description" content="A HomeBest Project">
     <meta name="author" content="HomeBest">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{{ url_for('static', filename='css/homebest.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"> -->
     {% if title %}
     <title>{{ title }} Login</title>
     {% else %}
-    <title>HomeBest Login</title>
+    <title>LIKES Login</title>
     {% endif %}
 </head>
 <body>
-<div class="limiter">
-    <div class="container-login100" style="background-image: url('/static/img/bg-01.jpg');">
-        <div class="wrap-login100 p-t-30 p-b-50">
-            <form action="{{ url_for('bp_auth.login') }}" method="POST" class="login100-form p-b-33 p-t-5 needs-validation" novalidate="">
-                {{ form.csrf_token }}
-                <div class="form-row" style="margin-left: 20px !important; padding-top: 10px !important;">
-                    <div class="col-md-11 mb-3">
-                        <label for="username">Username</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                            </div>
-                            <input id="username" name="username" type="text" class="form-control"  placeholder="Username"
-                                   aria-describedby="inputGroupPrepend" required="">
-                            <div class="invalid-feedback">
-                                Please enter your username.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row" style="margin-left: 20px !important; padding-top: 10px !important;">
-                    <div class="col-md-11 mb-3">
-                        <label for="password">Password</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupPrepend01">#</span>
-                            </div>
-                            <input id="password" name="password" type="password" class="form-control" placeholder="Password"
-                                   aria-describedby="inputGroupPrepend01" required="">
-                            <div class="invalid-feedback">
-                                Please enter your password.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-login100-form-btn m-t-32">
-                    <button class="mb-2 mr-2 btn-transition btn btn-outline-info">Login
-                    </button>
-                </div>
-            </form>
-        </div>
+    <div class="login">
+        <h1>LIKES</h1>
+        <form action="{{url_for('bp_auth.login')}}" method="post">
+            {{ form.csrf_token }}
+            <input type="text" name="username" placeholder="Username" required="required" />
+            <input type="password" name="password" placeholder="Password" required="required" />
+            <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
+        </form>
     </div>
-    <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-    form.addEventListener('submit', function(event) {
-    if (form.checkValidity() === false) {
-    event.preventDefault();
-    event.stopPropagation();
-    }
-    form.classList.add('was-validated');
-    }, false);
-    });
-    }, false);
-    })();
-    </script>
-</div>
-<script type="text/javascript" src="{{ url_for('static', filename='js/lib/main.js') }}"></script>
 
 {% with messages = get_flashed_messages() %}
 {% if messages %}
