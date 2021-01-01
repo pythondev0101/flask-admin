@@ -1,8 +1,17 @@
+import platform
+import os
 import click
+import csv
+from shutil import copyfile
+from config import basedir
+from app.core.models import HomeBestModel,HomeBestModule
+from app import CONTEXT, MODULES, SYSTEM_MODULES
+from app import db
 from . import bp_core
+from .models import CoreCity,CoreProvince
+from app.auth.models import User, Role
 
 
-# Create Superuser command
 @bp_core.cli.command('create_superuser')
 def create_superuser():
     _create_superuser()
@@ -12,10 +21,6 @@ def create_superuser():
 @click.argument("module_name")
 def create_module(module_name):
     try:
-        import os
-        from config import basedir
-        from shutil import copyfile
-        import platform
 
         if platform.system() == "Windows":
             module_path = basedir + "\\app" + "\\" + module_name
@@ -50,16 +55,18 @@ def create_module(module_name):
 
 @bp_core.cli.command("install")
 def install():
-    from sqlalchemy import text
-    import csv
-    from config import basedir
-    import platform
-    from app import db
-    from .models import CoreCity,CoreProvince
-    from app.auth.models import User, Role, RolePermission
+    """
+    Tatanggap to ng list ng modules tapos iinsert nya sa database yung mga models o tables nila, \
+        para malaman ng system kung ano yung mga models(eg. Users,Customers)
+    Parameters
+    ----------
+    modules
+        Listahan ng mga modules na iinstall sa system
+    """
 
-    db.create_all()
-    
+
+
+
     print("Installing...")
 
     if platform.system() == "Windows":
@@ -69,7 +76,61 @@ def install():
         provinces_path = basedir + "/app/core/csv/provinces.csv"
         cities_path = basedir + "/app/core/csv/cities.csv"
     else:
-        raise Exception
+        raise Exception("Platform not supported yet.")
+
+    db.create_all()
+    db.session.commit()
+    
+    module_count = 0
+
+    for module in MODULES:
+        SYSTEM_MODULES.append({'name':module.module_name,'short_description': module.module_short_description,
+        'long_description':module.module_long_description,'link': module.module_link,
+        'icon': module.module_icon, 'models': []})
+        
+        # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
+        homebest_module = HomeBestModule.query.filter_by(name=module.module_name).first()
+        last_id = 0
+        if not homebest_module:
+            new_module = HomeBestModule(module.module_name,module.module_short_description,module.version)
+            new_module.long_description = module.module_long_description
+            new_module.status = 'installed'
+            db.session.add(new_module)
+            db.session.commit()
+            print("MODULE - {}: SUCCESS".format(new_module.name))
+            last_id = new_module.id
+
+        model_count = 0
+
+        for model in module.models:
+            homebestmodel = HomeBestModel.query.filter_by(name=model.__amname__).first()
+            if not homebestmodel:
+                new_model = HomeBestModel(model.__amname__, last_id, model.__amdescription__)
+                db.session.add(new_model)
+                db.session.commit()
+                print("MODEL - {}: SUCCESS".format(new_model.name))
+            SYSTEM_MODULES[module_count]['models'].append({'name':model.__amname__,'description':model.__amdescription__,\
+                'icon': model.__amicon__, 'functions': []})
+            
+            for function in model.__amfunctions__:
+                for function_name, function_link in function.items():
+                    SYSTEM_MODULES[module_count]['models'][model_count]['functions'].append({
+                        function_name:function_link
+                    })
+        
+            model_count = model_count + 1
+
+        if len(module.no_admin_models) > 0 :
+
+            for xmodel in module.no_admin_models:
+                homebestmodel = HomeBestModel.query.filter_by(name=xmodel.__amname__).first()
+                if not homebestmodel:
+                    new_model = HomeBestModel(xmodel.__amname__, last_id, xmodel.__amdescription__,False)
+                    db.session.add(new_model)
+                    db.session.commit()
+                    print("MODEL - {}: SUCCESS".format(new_model.name))
+
+        module_count = module_count + 1
 
     print("Inserting provinces to database...")
     if CoreProvince.query.count() < 88:
@@ -120,17 +181,18 @@ def install():
 
 
 def _create_superuser():
-    from app.auth.models import User
-    from app import db
-    user = User()
-    user.fname = input("Enter First name: ")
-    user.lname = input("Enter Last name: ")
-    user.username = input("Enter Username: ")
-    user.email = input("Enter Email: ")
-    user.set_password(input("Enter password: "))
-    user.is_superuser = 1
-    user.role_id = 1
-    user.created_by = "System"	
-    db.session.add(user)
-    db.session.commit()
-    print("SuperUser Created!")
+    try:
+        user = User()
+        user.fname = "Administrator"
+        user.lname = "Administrator"
+        user.username = input("Enter Username: ")
+        user.email = None
+        user.set_password(input("Enter password: "))
+        user.is_superuser = 1
+        user.role_id = 1
+        user.created_by = "System"	
+        db.session.add(user)
+        db.session.commit()
+        print("SuperUser Created!")
+    except Exception as exc:
+        print(str(exc))

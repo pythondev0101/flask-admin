@@ -13,7 +13,7 @@ from app.admin import bp_admin
 from . import admin_templates
 """--------------END--------------"""
 
-from app import context
+from app import CONTEXT
 from app.core.models import HomeBestModel,HomeBestModule
 from sqlalchemy import text
 from flask_cors import cross_origin
@@ -31,11 +31,11 @@ def dashboard():
 
 @bp_admin.route('/apps')
 def apps():
-    context['active'] = 'apps'
+    CONTEXT['active'] = 'apps'
 
     modules = HomeBestModule.query.all()
 
-    return render_template('admin/admin_apps.html',context=context,title='Apps',modules=modules)
+    return render_template('admin/admin_apps.html',context=CONTEXT,title='Apps',modules=modules)
 
 
 @bp_admin.route('/delete/<string:delete_table>/<int:oid>',methods=['POST'])
@@ -133,34 +133,34 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
             field_sizes.append(4)
 
         row_count = row_count + 1
-    context['edit_model'] = {
+    CONTEXT['edit_model'] = {
         'fields': fields,
         'fields_sizes':field_sizes,
     }
 
     if model:
         model_name = model.__amname__
-        context['create_modal']['title'] = model_name
-        context['active'] = model_name
+        CONTEXT['create_modal']['title'] = model_name
+        CONTEXT['active'] = model_name
         delete_table = model.__tablename__
 
     query1 = HomeBestModel.query.filter_by(name=model_name).first()
 
     if query1:
         check_module = HomeBestModule.query.get(query1.module_id)
-        context['module'] = check_module.name
+        CONTEXT['module'] = check_module.name
 
     if kwargs is not None:
         if 'template' in kwargs:
             template = kwargs.get('template')
 
         if 'active' in kwargs:
-            context['active'] = kwargs.get('active')
+            CONTEXT['active'] = kwargs.get('active')
         
         if 'update_url' in kwargs:
             update_url = kwargs.get('update_url')
     
-    return render_template(template, context=context, form=form, update_url=update_url,
+    return render_template(template, context=CONTEXT, form=form, update_url=update_url,
                            oid=oid,modal_form=modal_form,edit_title=form.edit_title,delete_table=delete_table,
                            action=action,extra_modal=extra_modal,index_url=index_url,title=form.edit_title,rendered_model=model)
 
@@ -186,13 +186,13 @@ def admin_index(*model, fields, form=None, url='', action="admin/admin_actions.h
         # TODO: check if Admin.model_name is implemented in the model
         # Raise error if not
 
-        context['create_modal']['title'] = model_name
-        context['active'] = model_name
-        context['model'] = model_name
+        CONTEXT['create_modal']['title'] = model_name
+        CONTEXT['active'] = model_name
+        CONTEXT['model'] = model_name
         query1 = HomeBestModel.query.filter_by(name=model_name).first()
         if query1:
             check_module = HomeBestModule.query.get(query1.module_id)
-            context['module'] = check_module.name
+            CONTEXT['module'] = check_module.name
 
         table = model[0].__tablename__
 
@@ -204,7 +204,7 @@ def admin_index(*model, fields, form=None, url='', action="admin/admin_actions.h
                 template = kwargs.get('template')
             
             if 'active' in kwargs:
-                context['active'] = kwargs.get('active')
+                CONTEXT['active'] = kwargs.get('active')
             
             if 'edit_url' in kwargs:
                 edit_url = kwargs.get('edit_url')
@@ -248,13 +248,13 @@ def admin_index(*model, fields, form=None, url='', action="admin/admin_actions.h
             else:
                 index_message = kwargs.get('index_message')
 
-        return render_template(template, context=context,
+        return render_template(template, context=CONTEXT,
                             models=models, table_fields=table_fields,
                             index_title=index_title, index_message=index_message,
                             title=title, action=action, create_modal=create_modal,
                             view_modal=view_modal, edit_url=edit_url,table=table,rendered_model=model[0])
     else:
-        return render_template('auth/authorization_error.html',context=context)
+        return render_template('auth/authorization_error.html',context=CONTEXT)
 
 
 def _check_read(model_name):
@@ -305,7 +305,7 @@ def _set_modal(url, form):
         elif field_count >= 3:
             field_sizes.append(4)
         row_count = row_count + 1
-    context['create_modal'] = {
+    CONTEXT['create_modal'] = {
         'create_url': url,
         'create_form': form,
         'fields': fields,
@@ -325,9 +325,9 @@ def admin_dashboard(box1=None,box2=None,box3=None,box4=None):
     if not box3:
         box3 = DashboardBox("Users","Total users",User.query.count())
     
-    context['active'] = 'main_dashboard'
-    context['module'] = 'admin'
-    return render_template("admin/admin_dashboard.html", context=context,title='Admin Dashboard', \
+    CONTEXT['active'] = 'main_dashboard'
+    CONTEXT['module'] = 'admin'
+    return render_template("admin/admin_dashboard.html", context=CONTEXT,title='Admin Dashboard', \
         box1=box1,box2=box2,box3=box3)
 
 

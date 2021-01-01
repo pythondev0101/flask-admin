@@ -11,7 +11,7 @@ import base64
 
 """ APP IMPORTS  """
 from app.auth import bp_auth
-from app import db, context
+from app import db, CONTEXT
 """--------------END--------------"""
 
 """ MODULE: AUTH,ADMIN IMPORTS """
@@ -36,7 +36,7 @@ from datetime import datetime
 from flask_cors import cross_origin
 from app.admin.routes import admin_index, admin_edit
 
-context['module'] = 'admin'
+CONTEXT['module'] = 'admin'
 
 def _log_create(description,data):
     from app.core.models import CoreLog
@@ -387,7 +387,7 @@ def login():
     if request.method == "GET":
         if current_user.is_authenticated:
             return redirect(url_for(admin_urls['admin']))
-        return render_template(auth_templates['login'], title=context['app_name'], form=form)
+        return render_template(auth_templates['login'], title=CONTEXT['app_name'], form=form)
     elif request.method == "POST":
         if form.validate_on_submit():
             user = User.query.filter_by(username=form.username.data).first()
@@ -406,7 +406,7 @@ def login():
 def load_permissions(user_id):
     user = User.query.get(user_id)
     if not user and not current_user.is_authenticated:
-        context['system_modules'].pop('admin',None)
+        CONTEXT['system_modules'].pop('admin',None)
     else:
         session.pop('permissions', None)
         if "permissions" not in session:
