@@ -16,13 +16,14 @@ from app.core.models import Base
 """--------------END--------------"""
 
 
+
 # AUTH.MODEL.USER
 class User(UserMixin, Base, Admin):
     __tablename__ = 'auth_user'
     __amname__ = 'user'	
     __amicon__ = 'pe-7s-users'	
     __amdescription__ = "Users"	
-    __amfunctions__ = [{'View users': 'bp_auth.index'},{'View roles': 'bp_auth.roles'}]	
+    __amfunctions__ = [{'View users': 'bp_auth.users'},{'View roles': 'bp_auth.roles'}]	
 
     """ COLUMNS """
     username = db.Column(db.String(64), nullable=False, index=True, unique=True)
@@ -52,7 +53,7 @@ class User(UserMixin, Base, Admin):
     model_name = 'Users'
     model_icon = 'pe-7s-users'
     model_description = "USERS"
-    functions = [{'View users': 'bp_auth.index'},{'View roles': 'bp_auth.roles'}]
+    functions = [{'View users': 'bp_auth.users'},{'View roles': 'bp_auth.roles'}]
 
 
 class UserPermission(db.Model):
@@ -60,7 +61,7 @@ class UserPermission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id', ondelete='CASCADE'))
     model_id = db.Column(db.Integer, db.ForeignKey('core_model.id'))
-    model = db.relationship('HomeBestModel', backref="userpermission")
+    model = db.relationship('CoreModel', backref="userpermission")
     read = db.Column(db.Boolean, nullable=False, default="1")
     create = db.Column(db.Boolean, nullable=False, default="0")
     write = db.Column(db.Boolean, nullable=False, default="0")
@@ -83,7 +84,7 @@ class RolePermission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id',ondelete='CASCADE'))
     model_id = db.Column(db.Integer, db.ForeignKey('core_model.id'))
-    model = db.relationship('HomeBestModel', cascade='all,delete', backref="rolepermission")
+    model = db.relationship('CoreModel', cascade='all,delete', backref="rolepermission")
     read = db.Column(db.Boolean, nullable=False, default="1")
     create = db.Column(db.Boolean, nullable=False, default="0")
     write = db.Column(db.Boolean, nullable=False, default="0")

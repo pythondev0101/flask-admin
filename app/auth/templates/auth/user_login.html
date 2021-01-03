@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="A HomeBest Project">
-    <meta name="author" content="HomeBest">
+    <meta name="description" content="A LIKES Project">
+    <meta name="author" content="LIKES">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-    <link href="{{ url_for('static', filename='css/lib/main.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('bp_auth.static', filename='css/login.css') }}">
+    <!-- <link href="{{ url_for('bp_auth.static', filename='css/lib/main.css') }}" rel="stylesheet"> -->
     <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"> -->
     {% if title %}
-    <title>{{ title }} Login</title>
+    <title>{{ title }} Sign In</title>
     {% else %}
-    <title>LIKES Login</title>
+    <title>LIKES Sign In</title>
     {% endif %}
 </head>
 <body>
     <div class="login">
-        <h1>LIKES</h1>
+        <h1>SIGN IN</h1>
         <form action="{{url_for('bp_auth.login')}}" method="post">
             {{ form.csrf_token }}
             <input type="text" name="username" placeholder="Username" required="required" />
