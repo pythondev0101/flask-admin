@@ -4,8 +4,8 @@ import click
 import csv
 from shutil import copyfile
 from config import basedir
-from app.core.models import HomeBestModel,HomeBestModule
-from app import CONTEXT, MODULES, SYSTEM_MODULES
+from app.core.models import CoreModel, CoreModule
+from app import MODULES, SYSTEM_MODULES
 from app import db
 from . import bp_core
 from .models import CoreCity,CoreProvince
@@ -64,9 +64,6 @@ def install():
         Listahan ng mga modules na iinstall sa system
     """
 
-
-
-
     print("Installing...")
 
     if platform.system() == "Windows":
@@ -89,10 +86,10 @@ def install():
         'icon': module.module_icon, 'models': []})
         
         # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
-        homebest_module = HomeBestModule.query.filter_by(name=module.module_name).first()
+        homebest_module = CoreModule.query.filter_by(name=module.module_name).first()
         last_id = 0
         if not homebest_module:
-            new_module = HomeBestModule(module.module_name,module.module_short_description,module.version)
+            new_module = CoreModule(module.module_name,module.module_short_description,module.version)
             new_module.long_description = module.module_long_description
             new_module.status = 'installed'
             db.session.add(new_module)
@@ -103,9 +100,9 @@ def install():
         model_count = 0
 
         for model in module.models:
-            homebestmodel = HomeBestModel.query.filter_by(name=model.__amname__).first()
+            homebestmodel = CoreModel.query.filter_by(name=model.__amname__).first()
             if not homebestmodel:
-                new_model = HomeBestModel(model.__amname__, last_id, model.__amdescription__)
+                new_model = CoreModel(model.__amname__, last_id, model.__amdescription__)
                 db.session.add(new_model)
                 db.session.commit()
                 print("MODEL - {}: SUCCESS".format(new_model.name))
@@ -123,9 +120,9 @@ def install():
         if len(module.no_admin_models) > 0 :
 
             for xmodel in module.no_admin_models:
-                homebestmodel = HomeBestModel.query.filter_by(name=xmodel.__amname__).first()
+                homebestmodel = CoreModel.query.filter_by(name=xmodel.__amname__).first()
                 if not homebestmodel:
-                    new_model = HomeBestModel(xmodel.__amname__, last_id, xmodel.__amdescription__,False)
+                    new_model = CoreModel(xmodel.__amname__, last_id, xmodel.__amdescription__,False)
                     db.session.add(new_model)
                     db.session.commit()
                     print("MODEL - {}: SUCCESS".format(new_model.name))

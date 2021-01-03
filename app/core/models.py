@@ -25,7 +25,7 @@ class Base(db.Model):
         self.active = 1
 
 
-class HomeBestModel(Base):
+class CoreModel(Base):
     __tablename__ = 'core_model'
     name = db.Column(db.String(64), nullable=False, server_default="")
     module_id = db.Column(db.Integer, db.ForeignKey('core_module.id'))
@@ -45,14 +45,14 @@ class ModuleStatus(enum.Enum):
     uninstalled = "Not Installed"
 
 
-class HomeBestModule(Base):
+class CoreModule(Base):
     __tablename__ = 'core_module'
     name = db.Column(db.String(64), nullable=False, server_default="")
     short_description = db.Column(db.String(64), nullable=False, server_default="")
     long_description = db.Column(db.String(255), nullable=False, server_default="")
     status = db.Column(db.Enum(ModuleStatus),default=ModuleStatus.uninstalled,nullable=False)
     version = db.Column(db.String(64), nullable=False, server_default="")
-    models = db.relationship('HomeBestModel', cascade='all,delete', backref="homebestmodule")
+    models = db.relationship('CoreModel', cascade='all,delete', backref="core_module")
 
     def __init__(self,name,short_description,version):
         Base.__init__(self)
