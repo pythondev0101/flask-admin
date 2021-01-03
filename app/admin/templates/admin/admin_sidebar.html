@@ -55,6 +55,7 @@
                             {% for model in module['models'] %}
                                 {% if model['name'] in session['permissions'] %}
                                     {% if session['permissions'][model['name']]['read'] %}
+                                    {% if model['functions'] %}
                                         <li>
                                             <a href="#" class="{% if context['active']==model['name'] %} mm-active {% endif %}">
                                                 <i class="metismenu-icon {{ model['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
@@ -74,6 +75,14 @@
                                                 {% endfor %}
                                             </ul>
                                         </li>
+                                    {% else %}
+                                        <li>
+                                        <a href="{{ url_for(model['list_view_url'])}}" class="{% if context['active']==model['name'] %} mm-active {% endif %}">
+                                            <i class="metismenu-icon {{model['icon']}} icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                            {{model['description']}}
+                                        </a>
+                                        </li>
+                                    {% endif %}
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}

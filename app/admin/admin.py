@@ -9,7 +9,7 @@ class AdminModule(CoreModule):
     module_icon = 'fa-home'
     module_link = 'bp_admin.dashboard'
     module_short_description = 'Administration'
-    module_long_description = "Administrator Dashboard and pages"
+    module_long_description = "Administration Dashboard and pages"
     models = [User]
     no_admin_models = [Role]
     version = '1.0'

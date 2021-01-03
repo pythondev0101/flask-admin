@@ -155,7 +155,8 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
 
 def admin_table(*model, fields, form=None, url='', action="admin/admin_actions.html",
                 create_modal="admin/admin_create_modal.html", view_modal="admin/admin_view_modal.html",
-                create_url="", edit_url="", template="admin/admin_table.html",kwargs=None):
+                create_url="", edit_url="", template="admin/admin_table.html",kwargs=None,
+                extra_modal=None):
     
     model_name = model[0].__amname__
     
@@ -202,6 +203,9 @@ def admin_table(*model, fields, form=None, url='', action="admin/admin_actions.h
         
         if 'create_url' in kwargs:
             create_url = kwargs.get('create_url')
+
+        if 'module' in kwargs:
+            CONTEXT['module'] = kwargs.get('module')
 
     if form is not None:
         table_fields = form.index_headers
@@ -263,11 +267,11 @@ def admin_table(*model, fields, form=None, url='', action="admin/admin_actions.h
             raise NotImplementedError("Must implement index_message")
         else:
             index_message = kwargs.get('index_message')
-    print(CONTEXT)
+
     return render_template(template, context=CONTEXT, form=form, create_fields=fields,
                         models=models, table_fields=table_fields,
                         index_title=index_title, index_message=index_message,
-                        title=title, action=action, create_modal=create_modal,
+                        title=title, action=action, create_modal=create_modal, extra_modal=extra_modal,
                         view_modal=view_modal, edit_url=edit_url,table=table,rendered_model=model[0])
 
 
