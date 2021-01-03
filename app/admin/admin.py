@@ -10,6 +10,5 @@ class AdminModule(CoreModule):
     module_link = 'bp_admin.dashboard'
     module_short_description = 'Administration'
     module_long_description = "Administration Dashboard and pages"
-    models = [User]
-    no_admin_models = [Role]
+    models = [User, Role]
     version = '1.0'

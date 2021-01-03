@@ -23,7 +23,8 @@ class User(UserMixin, Base, Admin):
     __amname__ = 'user'	
     __amicon__ = 'pe-7s-users'	
     __amdescription__ = "Users"	
-    __amfunctions__ = [{'View users': 'bp_auth.users'},{'View roles': 'bp_auth.roles'}]	
+    # __amfunctions__ = [{'View users': 'bp_auth.users'},{'View roles': 'bp_auth.roles'}]
+    __list_view_url__ = 'bp_auth.users'
 
     """ COLUMNS """
     username = db.Column(db.String(64), nullable=False, index=True, unique=True)
@@ -69,11 +70,12 @@ class UserPermission(db.Model):
     delete = db.Column(db.Boolean, nullable=False, default="0")
 
 
-class Role(Base):
+class Role(Base, Admin):
     __tablename__ = 'auth_role'
     __amname__ = 'role'
     __amicon__ = 'pe-7s-users'
     __amdescription__ = "Roles"
+    __list_view_url__ = 'bp_auth.roles'
 
     """ COLUMNS """
     name = db.Column(db.String(64), nullable=False)
