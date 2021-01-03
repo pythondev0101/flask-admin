@@ -33,9 +33,10 @@ class User(UserMixin, Base, Admin):
     password_hash = db.Column(db.String(128), nullable=False)
     image_path = db.Column(db.String(64), nullable=False)
     permissions = db.relationship('UserPermission', cascade='all,delete', backref="user")
-    is_superuser = db.Column(db.Boolean,nullable=False, default="0")
+    is_superuser = db.Column(db.Boolean,nullable=False, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id'),nullable=True)
     role = db.relationship('Role', cascade='all,delete', backref="userrole")
+    is_admin = db.Column(db.Boolean, default=False)
 
     def __init__(self):
         Base.__init__(self)
