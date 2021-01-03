@@ -5,7 +5,7 @@
         <div class="modal-content">
             <form id="form_create" action="{{ url_for(modal['create_url']) }}" class="needs-validation" method="POST"
                   novalidate>
-                {{ modal['create_form'].csrf_token }}
+                {{ form.csrf_token }}
                 <div class="modal-header">
                     <h5 class="modal-title">Add new {{ modal['title'] }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -15,7 +15,7 @@
                 <div class="modal-body">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            {% for row in modal['fields'] %}
+                            {% for row in create_fields %}
                             {% set row_counter = loop %}
                             <div class="form-row">
                                 {% for field in row %}
