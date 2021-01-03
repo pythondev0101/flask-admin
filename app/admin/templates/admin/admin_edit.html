@@ -182,7 +182,11 @@
 {% endwith %}
 {% endblock %}
 
+
 {% block scripts %}
+
+{% if rendered_model.__amname__ == 'user' %}
+
 <script>
     $(document).ready(function(){
         var table = $('.inline_table').DataTable({
@@ -321,4 +325,28 @@
     }, 100);
   })();
 </script>
+
+{% else %}
+
+<script>
+    $(document).ready(function(){
+        var table = $('.inline_table').DataTable({
+            "dom": 'rtip',
+            "scrollY": "200px",
+            "scrollCollapse": true,
+            "paging": false,
+        });
+
+    });
+
+  (function() {
+    var fixed_footer = document.getElementById('chkbox_fixed_footer');
+    setTimeout(function() {
+      fixed_footer.click();
+    }, 100);
+  })();
+</script>
+
+{% endif %}
+
 {% endblock %}
