@@ -4,14 +4,14 @@ app/__init__.py
 Create our application
 """
 
-from flask import Flask,g
+from flask import Flask, session, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
-# LOCAL IMPORTS
 from config import app_config
+
 
 # INITIALIZE FLASK IMPORTS
 db = SQLAlchemy()
@@ -23,10 +23,7 @@ MODULES = []
 
 SYSTEM_MODULES = []
 
-CONTEXT = {'system_modules': SYSTEM_MODULES, 'module': '', 'active': '', 'errors': {}, 
-        'create_modal': {}, 'header_color': "header_color15", 'sidebar_color': "sidebar_color15",
-        'app_name':"HomeBest"}
-
+CONTEXT = session
 
 def internal_server_error(e):
     from flask import render_template
@@ -67,14 +64,22 @@ def create_app(config_name):
         app.register_blueprint(bp_admin, url_prefix='/admin')
         # --------------END--------------
 
-        # db.create_all()
-        # db.session.commit()
-
         # EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
         from app.admin.admin import AdminModule
 
         MODULES.append(AdminModule)
         # --------------END--------------
-        
+
+        @app.before_first_request
+        def setup_context():
+            CONTEXT['system_modules'] = SYSTEM_MODULES
+            CONTEXT['module']: str
+            CONTEXT['active']: str
+            CONTEXT['errors']: dict
+            CONTEXT['create_modal']: dict
+            CONTEXT['header_color'] = 'header_color15' # Default color
+            CONTEXT['sidebar_color'] = "sidebar_color15" # Default color
+            CONTEXT['app_name'] = "Likes" # TODO
+
     return app
 

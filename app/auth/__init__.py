@@ -1,6 +1,9 @@
 from flask import Blueprint
 
-bp_auth = Blueprint('bp_auth',__name__,template_folder='templates')
+
+
+bp_auth = Blueprint('bp_auth',__name__,template_folder='templates',\
+    static_folder='static', static_url_path='/auth/static')
 
 blueprint_name = "bp_auth"  # The name of the module's blueprint
 module_name = "auth"  # The name of the module
@@ -8,7 +11,7 @@ module_name = "auth"  # The name of the module
 # URLS DICTIONARY
 auth_urls = {
     'login': 'bp_auth.login',
-    'index': 'bp_auth.index',
+    'index': 'bp_auth.users',
     'create': 'bp_auth.user_create',
     'edit': 'bp_auth.user_edit',
     'delete': 'bp_auth.user_delete',
@@ -26,7 +29,7 @@ auth_templates = {
 }
 
 
-from . import routes
+from . import views
 from . import models
 
 
