@@ -1,4 +1,4 @@
-# HomeBest Framework - Version 1
+# LIKES Framework - Version 1
 
 ## Features
 
