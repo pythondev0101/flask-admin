@@ -7,7 +7,7 @@
                 <div class="page-title-icon">
                     {% if rendered_model.__amname__ == 'user' %}
                     <img width="42" class="rounded-circle"
-                    src="{{url_for('static', filename=current_user.image_path)}}" alt="">
+                    src="{{url_for('bp_auth.static', filename=current_user.image_path)}}" alt="">
                     {% else %}
                     <i class="{{ rendered_model.__amicon__ }} icon-gradient bg-happy-itmeo"></i>
                     {% endif %}
@@ -30,7 +30,7 @@
         <div class="main-card mb-3 card">
             <div class="card-body">
                 {% with edit = context['edit_model'] %}
-                {% for row in edit.fields %}
+                {% for row in edit_fields %}
                 {% set row_counter = loop %}
                 <div class="form-row">
                     {% for field in row %}

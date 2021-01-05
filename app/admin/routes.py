@@ -121,8 +121,8 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
             field_sizes.append(4)
 
         row_count = row_count + 1
+
     CONTEXT['edit_model'] = {
-        'fields': fields,
         'fields_sizes':field_sizes,
     }
 
@@ -148,7 +148,7 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
         if 'update_url' in kwargs:
             update_url = kwargs.get('update_url')
     
-    return render_template(template, context=CONTEXT, form=form, update_url=update_url,
+    return render_template(template, context=CONTEXT, form=form, update_url=update_url, edit_fields=fields,
                            oid=oid,modal_form=modal_form,edit_title=form.edit_title,delete_table=delete_table,
                            action=action,extra_modal=extra_modal,index_url=index_url,title=form.edit_title,rendered_model=model)
 

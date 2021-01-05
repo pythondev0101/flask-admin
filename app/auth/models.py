@@ -73,7 +73,7 @@ class UserPermission(db.Model):
 class Role(Base, Admin):
     __tablename__ = 'auth_role'
     __amname__ = 'role'
-    __amicon__ = 'pe-7s-users'
+    __amicon__ = 'pe-7s-id'
     __amdescription__ = "Roles"
     __list_view_url__ = 'bp_auth.roles'
 
