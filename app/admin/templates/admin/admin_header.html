@@ -43,12 +43,14 @@
             <!-- NAVIGATION FOR MODULES -->
             <ul class="header-menu nav">
             {% for module in context['system_modules'] %}
+                {% if not module['background_app'] %}          
                 <li class="nav-item">
                     <a href="{{ url_for(module['link']) }}" class="nav-link">
                         <i class="nav-link-icon fa {{ module['icon'] }} {% if module['name'] == context['module'] %}icon-gradient bg-malibu-beach{% endif %}"> </i>
                         {{ module['short_description'] }}
                     </a>
                 </li>
+                {% endif %}
             {% endfor %}
             </ul>
         </div>

@@ -30,6 +30,8 @@ from . import cli
 class CoreModule:
 
     no_admin_models = []
+    
+    backgroud_app = False
 
     @property
     def module_name(self):

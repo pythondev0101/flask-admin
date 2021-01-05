@@ -29,7 +29,7 @@ def load_permissions(user_id):
     for module in MODULES:
         system_modules.append({'name':module.module_name,'short_description': module.module_short_description,
         'long_description':module.module_long_description,'link': module.module_link,
-        'icon': module.module_icon, 'models': []})
+        'icon': module.module_icon, 'models': [], 'background_app': module.backgroud_app})
 
         model_count = 0
 

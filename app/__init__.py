@@ -66,8 +66,10 @@ def create_app(config_name):
 
         # EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
         from app.admin.admin import AdminModule
+        from app.auth.auth import AuthModule
 
         MODULES.append(AdminModule)
+        MODULES.append(AuthModule)
         # --------------END--------------
 
         @app.before_first_request
