@@ -248,7 +248,7 @@ def admin_table(*model, fields, form=None, url='', action="admin/admin_actions.h
                 row_count = row_count + 1
 
             CONTEXT['create_modal'] = {
-                'create_url': url,
+                'create_url': create_url,
                 'fields_sizes':field_sizes,
                 'js_fields':js_fields
             }
