@@ -91,7 +91,7 @@ def get_view_modal_data():
 
 
 def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit_actions.html", \
-    model=None,extra_modal=None , template="admin/admin_edit.html", kwargs=None):
+    model=None,extra_modal=None, scripts=None, template="admin/admin_edit.html", kwargs=None):
     fields = []
     row_count = 0
     field_sizes = []
@@ -149,7 +149,7 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
             update_url = kwargs.get('update_url')
     
     return render_template(template, context=CONTEXT, form=form, update_url=update_url, edit_fields=fields,
-                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,delete_table=delete_table,
+                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,delete_table=delete_table, scripts=scripts,
                            action=action,extra_modal=extra_modal,index_url=index_url,title=form.edit_title,rendered_model=model)
 
 
