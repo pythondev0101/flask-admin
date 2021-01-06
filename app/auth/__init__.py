@@ -11,9 +11,9 @@ module_name = "auth"  # The name of the module
 # URLS DICTIONARY
 auth_urls = {
     'login': 'bp_auth.login',
-    'index': 'bp_auth.users',
-    'create': 'bp_auth.user_create',
-    'edit': 'bp_auth.user_edit',
+    'users': 'bp_auth.users',
+    'create': 'bp_auth.create_user',
+    'edit': 'bp_auth.edit_user',
     'delete': 'bp_auth.user_delete',
     'user_add_permission': 'bp_auth.user_add_permission',
     'user_permission_index': 'bp_auth.user_permission_index',
