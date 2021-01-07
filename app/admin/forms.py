@@ -5,6 +5,9 @@ from wtforms import widgets
 
 
 class AdminIndexForm(FlaskForm):
+    
+    index_message = 'List of models'
+
     @property
     def index_headers(self):
         raise NotImplementedError('Must implement index_headers')
@@ -20,7 +23,6 @@ class AdminIndexForm(FlaskForm):
     def __init__(self,*args,**kwargs):
         super(AdminIndexForm,self).__init__(*args,**kwargs)
         self.title = self.index_title
-        self.index_message = 'List of models'
 
 
 class AdminEditForm(FlaskForm):
