@@ -49,9 +49,9 @@ class UserForm(AdminIndexForm):
     def create_fields(self):
         return [[self.fname, self.lname],[self.username,self.email],[self.role_id]]
 
-    index_headers = ['Username', 'First name', 'last name', 'email']
+    index_headers = ['Username', 'First name', 'last name', 'role', 'email']
     index_title = "Users"
-    index_message = "Message"
+    index_message = "List of users"
 
 
 class UserPermissionForm(AdminIndexForm):
@@ -66,7 +66,7 @@ class RoleModelInlineForm(AdminInlineForm):
 
 
 class RoleCreateForm(AdminIndexForm):
-    index_headers = ['Role Name','Active']
+    index_headers = ['Name', 'created at', 'updated at']
     index_title = "User Roles"
     index_message = "Groups of permissions"
 

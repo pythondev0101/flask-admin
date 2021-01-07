@@ -15,7 +15,7 @@
                 <div class="modal-body">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            {% for row in modal['fields'] %}
+                            {% for row in create_fields %}
                             {% set row_counter = loop %}
                             <div class="form-row">
                                 {% for field in row %}
