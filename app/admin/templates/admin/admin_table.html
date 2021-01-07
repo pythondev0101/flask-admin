@@ -8,17 +8,21 @@
                     <i class="{{ rendered_model.__amicon__ }} icon-gradient bg-happy-itmeo"></i>
                 </div>
                 <div>
-                    {{ index_title }}
+                    {{ heading }}
                     <div class="page-title-subheading">
-                        {{ index_message }}
+                        {{ sub_heading }}
                     </div>
                 </div>
             </div>
+            
             {% block actions %}
-            {% if action %}
-            {% include action %}
-            {% endif %}
+
+                {% if action %}
+                    {% include action %}
+                {% endif %}
+
             {% endblock %}
+            
         </div>
     </div>
     <div class="row">
@@ -35,16 +39,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                            {% for model in models %}
+                            {% for i in model_data %}
                                 {% if view_modal %}
-                                    <tr class="item row_object" id="{{ model[0] }}"  data-toggle="modal" data-target="#viewModal">
-                                    <param id="param_{{ model[0] }}" name="param_{{ model[0] }}" {% if edit_url %} value="{{ url_for(edit_url,oid=model[0]) }}" {% endif %}>
+                                    <tr class="item row_object" id="{{i[0]}}"  data-toggle="modal" data-target="#viewModal">
+                                    <param id="param_{{i[0]}}" name="param_{{i[0]}}" {% if edit_url %} value="{{url_for(edit_url,oid=i[0])}}" {% endif %}>
                                 {% else %}
-                                <tr class="item row_object" id="{{ model[0] }}">
+                                <tr class="item row_object" id="{{i[0]}}">
                                 {% endif %}
                                     <!-- TEMPORARY conversion ng boolean word 'true' to 'YES' and 'false' to 'NO' -->
                                     <td class="text-center"></td>
-                                    {% for values in model %}
+                                    {% for values in i %}
                                     {% if loop.index > 1 %}
                                     <td class="text-center">{% if values|string == 'True' %}YES{% elif values|string == 'False' %}NO{% elif values == none %}{% else %}{{values}}{% endif %}</td>
                                     {% endif %}
@@ -63,6 +67,17 @@
 {% block scripts %}
 <script type="text/javascript">
     $(document).ready(function(){
+
+        var CSRF_TOKEN = "{{ csrf_token() }}";
+        
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", CSRF_TOKEN);
+                }
+            }
+        });
+
         var dtbl_table = $('#index_table').DataTable({
             "dom": 'rtip',
             "pageLength": 20,
@@ -87,7 +102,6 @@
                 $("tr").find("th:last").after('<th>DELETE</th>');
                 $("tr").find("td:last").after("<td><input class='chkbox' type='checkbox'></td>");
                 var ids = [];
-                var csrf_token = "{{ csrf_token() }}";
                 $("#btn_confirm_delete").click(function(){
                     $("tr.item").each(function() {
                         var check = $(this).find("input.chkbox").is(':checked');
@@ -96,15 +110,9 @@
                         }
                     });
                     var table = '{{ table }}';
-                    $.ajaxSetup({
-                        beforeSend: function(xhr, settings) {
-                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                                xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                            }
-                        }
-                    });
+                    
                     $.ajax({
-                        url: "/admin/_delete_data",
+                        url: "/admin/delete-data",
                         type: "POST",
                         dataType: "json",
                         data: JSON.stringify({'ids': ids,'table':table}),
@@ -138,15 +146,8 @@
                     var ctr;
                     var field;
                     var field_id = $(this).attr('id');
-                    var csrf_token = "{{ csrf_token() }}";
                     var table = '{{ table }}';
-                    $.ajaxSetup({
-                        beforeSend: function(xhr, settings) {
-                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                                xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                            }
-                        }
-                    });
+                    
                     for (ctr=0; ctr < fields.length; ctr++){
                         $.ajax({
                             url: "/admin/_get_view_modal_data",
@@ -177,15 +178,8 @@
                     var ctr;
                     var field;
                     var field_id = $(this).attr('id');
-                    var csrf_token = "{{ csrf_token() }}";
                     var table = '{{ table }}';
-                    $.ajaxSetup({
-                        beforeSend: function(xhr, settings) {
-                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                                xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                            }
-                        }
-                    });
+                   
                     for (ctr=0; ctr < fields.length; ctr++){
                         $.ajax({
                             url: "/admin/_get_view_modal_data",
@@ -216,15 +210,8 @@
         });
 
         $("#username").change(function(){
-            var csrf_token = "{{ csrf_token() }}";
             var username = document.getElementById("username").value;
-            $.ajaxSetup({
-                beforeSend: function(xhr, settings) {
-                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                    }
-                }
-            });
+           
             $.ajax({
                 url: "/auth/username_check",
                 type: "POST",
@@ -245,15 +232,8 @@
             });
         });
         $("#email").change(function(){
-            var csrf_token = "{{ csrf_token() }}";
             var email = document.getElementById("email").value;
-            $.ajaxSetup({
-                beforeSend: function(xhr, settings) {
-                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                    }
-                }
-            });
+
             $.ajax({
                 url: "/auth/_email_check",
                 type: "POST",

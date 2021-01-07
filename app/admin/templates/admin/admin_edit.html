@@ -1,4 +1,11 @@
 {% extends "admin/admin_base.html" %}
+
+{% block extra_head %}
+<script>
+    var CSRF_TOKEN = "{{ csrf_token() }}";
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="app-main__inner">
     <div class="app-page-title">
@@ -203,6 +210,10 @@
         {% endfor %}
 
     {% endif %}
+
+<script type="text/javascript">
+    CSRF_TOKEN = "{{csrf_token()}}";
+</script> 
 
 <script>
     $(document).ready(function(){
