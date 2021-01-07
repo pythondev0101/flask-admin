@@ -1,26 +1,12 @@
 from flask_login import current_user
 from app import CONTEXT, MODULES
-from app.auth.models import User, UserPermission, RolePermission
 from app.core.models import CoreModel
 
 
 
-def check_create(model_name):
-    if current_user.is_superuser:
-        return True
-        
-    user = User.query.get(current_user.id)
-    for perm in user.permissions:
-        if model_name == perm.model.name:
-            if perm.create:
-                return True
-            else:
-                return False
-
-    return False
-
-
 def load_permissions(user_id):
+    from app.auth.models import User, UserPermission, RolePermission
+
     user = User.query.get(user_id)
     module_count = 0
 
@@ -73,3 +59,43 @@ def load_permissions(user_id):
             for role_permission in role_permissions:
                 CONTEXT['permissions'][role_permission.model.name] = {"read": role_permission.read, "create": role_permission.create, \
                     "write": role_permission.write, "delete": role_permission.delete}
+
+
+def check_create(model_name):
+    from app.auth.models import User
+
+    if current_user.is_superuser:
+        return True
+        
+    user = User.query.get(current_user.id)
+    
+    for perm in user.permissions:
+    
+        if model_name == perm.model.name:
+    
+            if perm.create:
+                return True
+            else:
+                return False
+
+    return False
+
+
+def check_read(model_name):
+    from app.auth.models import User
+
+    if current_user.is_superuser:
+        return True
+    
+    user = User.query.get(current_user.id)
+    
+    for perm in user.permissions:
+        
+        if model_name == perm.model.name:
+        
+            if perm.read:
+                return True
+            else:
+                return False
+
+    return False
