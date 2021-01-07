@@ -15,10 +15,10 @@ from app.auth.permissions import load_permissions
 @bp_auth.route('/roles')
 @login_required
 def roles(**kwargs):
-    fields = [Role.id,Role.name,Role.active]
+    fields = [Role.id,Role.name,Role.created_at, Role.updated_at]
     form = RoleCreateForm()
     form.inline.models = CoreModel.query.all()
-    return admin_table(Role,fields=fields,form=form,url='', create_modal="auth/role_create_modal.html", \
+    return admin_table(Role,fields=fields,form=form, create_modal="auth/role_create_modal.html", \
         create_url='bp_auth.role_create',edit_url='bp_auth.role_edit', \
             view_modal="auth/role_view_modal.html",kwargs=kwargs)
 

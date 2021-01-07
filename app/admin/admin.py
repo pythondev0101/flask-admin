@@ -1,7 +1,6 @@
-""" THIS IS FOR ADMIN MODELS """
-
 from app.auth.models import User,Role
 from app.core import CoreModule
+
 
 
 class AdminModule(CoreModule):
@@ -9,7 +8,6 @@ class AdminModule(CoreModule):
     module_icon = 'fa-home'
     module_link = 'bp_admin.dashboard'
     module_short_description = 'Administration'
-    module_long_description = "Administrator Dashboard and pages"
-    models = [User]
-    no_admin_models = [Role]
+    module_long_description = "Administration Dashboard and pages"
+    models = [User, Role]
     version = '1.0'

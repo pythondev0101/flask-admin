@@ -10,7 +10,7 @@ class Base(db.Model):
     __abstract__ = True
 
     id = db.Column(db.Integer, primary_key=True)
-    active = db.Column(db.Boolean, nullable=False, default="1")
+    active = db.Column(db.Boolean, nullable=False, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

@@ -43,12 +43,14 @@
             <!-- NAVIGATION FOR MODULES -->
             <ul class="header-menu nav">
             {% for module in context['system_modules'] %}
+                {% if not module['background_app'] %}          
                 <li class="nav-item">
                     <a href="{{ url_for(module['link']) }}" class="nav-link">
                         <i class="nav-link-icon fa {{ module['icon'] }} {% if module['name'] == context['module'] %}icon-gradient bg-malibu-beach{% endif %}"> </i>
                         {{ module['short_description'] }}
                     </a>
                 </li>
+                {% endif %}
             {% endfor %}
             </ul>
         </div>
@@ -66,7 +68,7 @@
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true"
                                      class="dropdown-menu dropdown-menu-right">
-                                    <a href="{{ url_for('bp_auth.user_edit',oid=current_user.id) }}"
+                                    <a href="{{ url_for('bp_auth.edit_user',oid=current_user.id) }}"
                                        class="dropdown-item">User Account</a>
                                     <a href="{{ url_for('bp_auth.logout') }}" class="dropdown-item">Log out</a>
                                 </div>

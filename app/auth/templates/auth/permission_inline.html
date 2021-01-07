@@ -1,19 +1,19 @@
 {% if inline.models | length > 0 %}
 {% for imodel in inline.models %}
 <tr>
-<form action="{{url_for('bp_auth.user_delete_permission',oid=imodel.id)}}" method="POST">
-<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 <td scope="row"><strong>{{ imodel.model.description }}</strong></td>
-<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.read %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_read_{{ imodel.id }}" name="edit_chk_read_{{ imodel.id }}" class="form-check-input"/></label></div></td>
-<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.create %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_create_{{ imodel.id }}" name="edit_chk_create_{{ imodel.id }}" class="form-check-input"/></label></div></td>
-<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.write %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_write_{{ imodel.id }}" name="edit_chk_write_{{ imodel.id }}" class="form-check-input"/></label></div></td>
-<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.delete %} checked {% endif %} onclick="edit_chk({{ imodel.id }})" type="checkbox" id="edit_chk_delete_{{ imodel.id }}" name="edit_chk_delete_{{ imodel.id }}" class="form-check-input"/></label></div></td>
-<td><button type="submit" class="mb-2 mr-2 btn-transition btn btn-outline-danger">This permission</button></td>
-</form>
+<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.read %} checked {% endif %} type="checkbox" value="{{imodel.id}}" name="edit_chk_read_{{ imodel.id }}" class="permission-read form-check-input"/></label></div></td>
+<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.create %} checked {% endif %} type="checkbox" value="{{imodel.id}}" name="edit_chk_create_{{ imodel.id }}" class="permission-create form-check-input"/></label></div></td>
+<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.write %} checked {% endif %} type="checkbox" value="{{imodel.id}}" name="edit_chk_write_{{ imodel.id }}" class="permission-write form-check-input"/></label></div></td>
+<td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.delete %} checked {% endif %} type="checkbox" value="{{imodel.id}}" name="edit_chk_delete_{{ imodel.id }}" class="permission-delete form-check-input"/></label></div></td>
 </tr>
 {% endfor %}
 {% else %}
 <tr>
-    <td colspan="6" style="text-align: center;">No permissions (Add permission below)</td>
+    {% if current_user.is_superuser %}
+    <td colspan="6" style="text-align: center;">Full permissions</td>
+    {% else %}
+    <td colspan="6" style="text-align: center;">No permissions</td>
+    {% endif %}
 </tr>
 {% endif %}

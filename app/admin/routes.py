@@ -6,14 +6,221 @@ from sqlalchemy import text
 from app import CONTEXT, db
 from app.core.models import CoreModel, CoreModule
 from app.admin import bp_admin
+from app.auth.permissions import check_read
 
 
 
-# TODO: Para ito sa pag delete dito mag sstore index_url ng kung anong dinelete, 
-# issue to kapag rekta inopen yung edit page sa url address
-index_url = ""
+def admin_table(*models, fields, form=None, list_view_url='', create_url=None,\
+    edit_url=None, extra_modal=None, kwargs=None, create_modal="admin/admin_create_modal.html",\
+    view_modal="admin/admin_view_modal.html", action="admin/admin_actions.html",\
+    template="admin/admin_table.html"):
+    """
+    Available kwargs:
 
-@bp_admin.route('/')
+    """
+
+    model_name = models[0].__amname__
+    table_name = models[0].__tablename__
+    
+    if not check_read(model_name):
+        return render_template('auth/authorization_error.html',context=CONTEXT)
+
+
+    query_module_name = CoreModel.query.filter_by(name=model_name).first()
+
+    if query_module_name:
+        check_module = CoreModule.query.get(query_module_name.module_id)
+        CONTEXT['module'] = check_module.name
+
+    CONTEXT['create_modal'] = {'title': model_name}
+    CONTEXT['active'] = model_name
+    CONTEXT['model'] = model_name
+
+    if kwargs is not None:
+        
+        if 'model_data' in kwargs:
+            model_data = kwargs.get('model_data')
+
+        if 'template' in kwargs:
+            template = kwargs.get('template')
+        
+        if 'active' in kwargs:
+            CONTEXT['active'] = kwargs.get('active')
+        
+        if 'edit_url' in kwargs:
+            edit_url = kwargs.get('edit_url')
+        
+        if 'create_url' in kwargs:
+            create_url = kwargs.get('create_url')
+
+        if 'module' in kwargs:
+            CONTEXT['module'] = kwargs.get('module')
+
+    if 'model_data' not in kwargs:
+
+        if len(models) == 1:
+            model_data = models[0].query.with_entities(*fields).all()
+
+        elif len(models) == 2:
+            model_data = models[0].query.outerjoin(models[1]).with_entities(*fields).all()
+
+        elif len(models) == 3:
+            query1 = db.session.query(models[0],models[1],models[2])
+            model_data = query1.outerjoin(models[1]).outerjoin(models[2]).with_entities(*fields).all()
+
+    if form is not None:
+        table_fields = form.index_headers
+        title = form.title
+        index_title = form.index_title
+        index_message = form.index_message
+
+        if create_url and create_modal:
+            fields = []
+            row_count = 0
+            field_sizes = []
+            js_fields = []
+
+            for row in form.create_fields():
+                fields.append([])
+                field_count = 0
+                for field in row:
+                    if field.input_type == 'select':
+                        data = field.model.query.all()
+                        # TODO: Dapat rektang AdminField nalang iaappend sa fields hindi na dictionary
+                        fields[row_count].append(
+                            {
+                                'name': field.name, 'label': field.label, 'type': field.input_type, 
+                                'data': data,'placeholder':field.placeholder,'required':field.required,'readonly':field.readonly,
+                                'auto_generated': field.auto_generated
+                                })
+                    else:
+                        fields[row_count].append(
+                            {
+                                'name': field.name, 'label': field.label, 'type': field.input_type,
+                                'placeholder':field.placeholder,'required':field.required,'readonly':field.readonly,
+                                'auto_generated': field.auto_generated
+                                })
+                    field_count = field_count + 1
+                    js_fields.append(field.name)
+                if field_count <= 2:
+                    field_sizes.append(6)
+                elif field_count >= 3:
+                    field_sizes.append(4)
+                row_count = row_count + 1
+
+            CONTEXT['create_modal'] = {
+                'create_url': create_url,
+                'fields_sizes':field_sizes,
+                'js_fields':js_fields
+            }
+
+    else:
+        if 'index_headers' not in kwargs:
+            raise NotImplementedError('Must implement index_headers')
+        else:
+            table_fields = kwargs.get('index_headers')
+        if 'index_title' not in kwargs:
+            raise NotImplementedError("Must implement index_title")
+        else:
+            index_title = kwargs.get('index_title')
+            title = index_title
+        if 'index_message' not in kwargs:
+            raise NotImplementedError("Must implement index_message")
+        else:
+            index_message = kwargs.get('index_message')
+    
+    CONTEXT['current_list_view_url'] = list_view_url
+
+    print(model_data)
+    return render_template(template, context=CONTEXT, form=form, create_fields=fields,
+                        model_data=model_data, table_fields=table_fields,
+                        heading=index_title, sub_heading=index_message,
+                        title=title, action=action, create_modal=create_modal, extra_modal=extra_modal,
+                        view_modal=view_modal, edit_url=edit_url,table=table_name,rendered_model=models[0])
+
+
+def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit_actions.html", \
+    model=None,extra_modal=None, scripts=None, template="admin/admin_edit.html", kwargs=None):
+    fields = []
+    row_count = 0
+    field_sizes = []
+
+    for row in form.edit_fields():
+        fields.append([])
+        field_count = 0
+
+        for field in row:
+
+            if field.input_type == 'select':
+                data = field.model.query.all()
+                # TODO: Dapat rektang AdminField nalang iaappend sa fields hindi na dictionary
+                fields[row_count].append(
+                    {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data,
+                     'value': field.data,'placeholder':field.placeholder,'required':field.required})
+            else:
+                fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type,
+                                          'value': field.data,'placeholder':field.placeholder,'required':field.required,
+                                          'readonly': field.readonly
+                                          })
+            field_count = field_count + 1
+
+        if field_count <= 2:
+            field_sizes.append(6)
+        elif field_count >= 3:
+            field_sizes.append(4)
+
+        row_count = row_count + 1
+
+    CONTEXT['edit_model'] = {
+        'fields_sizes':field_sizes,
+    }
+
+    if model:
+        model_name = model.__amname__
+        CONTEXT['create_modal']['title'] = model_name
+        CONTEXT['active'] = model_name
+        delete_table = model.__tablename__
+
+    query1 = CoreModel.query.filter_by(name=model_name).first()
+
+    if query1:
+        check_module = CoreModule.query.get(query1.module_id)
+        CONTEXT['module'] = check_module.name
+
+    if kwargs is not None:
+        if 'template' in kwargs:
+            template = kwargs.get('template')
+
+        if 'active' in kwargs:
+            CONTEXT['active'] = kwargs.get('active')
+        
+        if 'update_url' in kwargs:
+            update_url = kwargs.get('update_url')
+    
+    return render_template(template, context=CONTEXT, form=form, update_url=update_url, edit_fields=fields,
+                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,delete_table=delete_table, scripts=scripts,
+                           action=action,extra_modal=extra_modal, title=form.edit_title,rendered_model=model)
+
+
+def admin_dashboard(box1=None,box2=None,box3=None,box4=None):
+    from app.auth.models import User
+    if not box1:
+        box1 = DashboardBox("Total Modules","Installed",CoreModule.query.count())
+
+    if not box2:
+        box2 = DashboardBox("System Models","Total models",CoreModel.query.count())
+
+    if not box3:
+        box3 = DashboardBox("Users","Total users",User.query.count())
+    
+    CONTEXT['active'] = 'main_dashboard'
+    CONTEXT['module'] = 'admin'
+
+    return render_template("admin/admin_dashboard.html", context=CONTEXT,title='Admin Dashboard', \
+        box1=box1,box2=box2,box3=box3)
+
+
+@bp_admin.route('/') # move to views
 @login_required
 def dashboard():
     return admin_dashboard()
@@ -40,11 +247,12 @@ def delete(delete_table,oid):
         return redirect(request.referrer)
 
 
-@bp_admin.route('/_delete_data',methods=["POST"])
+@bp_admin.route('/delete-data',methods=["POST"])
 @cross_origin()
 def delete_data():
     table = request.json['table']
     data = request.json['ids']
+    
     try:
         if not data:
             resp = jsonify(result=2)
@@ -88,221 +296,6 @@ def get_view_modal_data():
         resp.headers.add('Access-Control-Allow-Origin', '*')
         resp.status_code = 200
         return resp
-
-
-def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit_actions.html", \
-    model=None,extra_modal=None , template="admin/admin_edit.html", kwargs=None):
-    fields = []
-    row_count = 0
-    field_sizes = []
-
-    for row in form.edit_fields():
-        fields.append([])
-        field_count = 0
-
-        for field in row:
-
-            if field.input_type == 'select':
-                data = field.model.query.all()
-                # TODO: Dapat rektang AdminField nalang iaappend sa fields hindi na dictionary
-                fields[row_count].append(
-                    {'name': field.name, 'label': field.label, 'type': field.input_type, 'data': data,
-                     'value': field.data,'placeholder':field.placeholder,'required':field.required})
-            else:
-                fields[row_count].append({'name': field.name, 'label': field.label, 'type': field.input_type,
-                                          'value': field.data,'placeholder':field.placeholder,'required':field.required,
-                                          'readonly': field.readonly
-                                          })
-            field_count = field_count + 1
-
-        if field_count <= 2:
-            field_sizes.append(6)
-        elif field_count >= 3:
-            field_sizes.append(4)
-
-        row_count = row_count + 1
-    CONTEXT['edit_model'] = {
-        'fields': fields,
-        'fields_sizes':field_sizes,
-    }
-
-    if model:
-        model_name = model.__amname__
-        CONTEXT['create_modal']['title'] = model_name
-        CONTEXT['active'] = model_name
-        delete_table = model.__tablename__
-
-    query1 = CoreModel.query.filter_by(name=model_name).first()
-
-    if query1:
-        check_module = CoreModule.query.get(query1.module_id)
-        CONTEXT['module'] = check_module.name
-
-    if kwargs is not None:
-        if 'template' in kwargs:
-            template = kwargs.get('template')
-
-        if 'active' in kwargs:
-            CONTEXT['active'] = kwargs.get('active')
-        
-        if 'update_url' in kwargs:
-            update_url = kwargs.get('update_url')
-    
-    return render_template(template, context=CONTEXT, form=form, update_url=update_url,
-                           oid=oid,modal_form=modal_form,edit_title=form.edit_title,delete_table=delete_table,
-                           action=action,extra_modal=extra_modal,index_url=index_url,title=form.edit_title,rendered_model=model)
-
-
-def admin_table(*model, fields, form=None, url='', action="admin/admin_actions.html",
-                create_modal="admin/admin_create_modal.html", view_modal="admin/admin_view_modal.html",
-                create_url="", edit_url="", template="admin/admin_table.html",kwargs=None):
-    
-    model_name = model[0].__amname__
-    
-    if not _check_read(model_name):
-        return render_template('auth/authorization_error.html',context=CONTEXT)
-
-    if kwargs is not None and 'models' in kwargs:
-        models = kwargs.get('models')
-    else:
-        if len(model) == 1:
-            models = model[0].query.with_entities(*fields).all()
-        elif len(model) == 2:
-            models = model[0].query.outerjoin(model[1]).with_entities(*fields).all()
-        elif len(model) == 3:
-            query1 = db.session.query(model[0],model[1],model[2])
-            models = query1.outerjoin(model[1]).outerjoin(model[2]).with_entities(*fields).all()
-
-    # TODO: check if Admin.model_name is implemented in the model
-    # Raise error if not
-
-    CONTEXT['create_modal'] = {'title': model_name}
-    CONTEXT['active'] = model_name
-    CONTEXT['model'] = model_name
-
-    query1 = CoreModel.query.filter_by(name=model_name).first()
-    if query1:
-        check_module = CoreModule.query.get(query1.module_id)
-        CONTEXT['module'] = check_module.name
-
-    table = model[0].__tablename__
-
-    global index_url
-    index_url = url
-
-    if kwargs is not None:
-        if 'template' in kwargs:
-            template = kwargs.get('template')
-        
-        if 'active' in kwargs:
-            CONTEXT['active'] = kwargs.get('active')
-        
-        if 'edit_url' in kwargs:
-            edit_url = kwargs.get('edit_url')
-        
-        if 'create_url' in kwargs:
-            create_url = kwargs.get('create_url')
-
-    if form is not None:
-        table_fields = form.index_headers
-        title = form.title
-        index_title = form.index_title
-        index_message = form.index_message
-
-        if create_url and create_modal:
-            fields = []
-            row_count = 0
-            field_sizes = []
-            js_fields = []
-
-            for row in form.create_fields():
-                fields.append([])
-                field_count = 0
-                for field in row:
-                    if field.input_type == 'select':
-                        data = field.model.query.all()
-                        # TODO: Dapat rektang AdminField nalang iaappend sa fields hindi na dictionary
-                        fields[row_count].append(
-                            {
-                                'name': field.name, 'label': field.label, 'type': field.input_type, 
-                                'data': data,'placeholder':field.placeholder,'required':field.required,'readonly':field.readonly,
-                                'auto_generated': field.auto_generated
-                                })
-                    else:
-                        fields[row_count].append(
-                            {
-                                'name': field.name, 'label': field.label, 'type': field.input_type,
-                                'placeholder':field.placeholder,'required':field.required,'readonly':field.readonly,
-                                'auto_generated': field.auto_generated
-                                })
-                    field_count = field_count + 1
-                    js_fields.append(field.name)
-                if field_count <= 2:
-                    field_sizes.append(6)
-                elif field_count >= 3:
-                    field_sizes.append(4)
-                row_count = row_count + 1
-
-            CONTEXT['create_modal'] = {
-                'create_url': url,
-                'fields_sizes':field_sizes,
-                'js_fields':js_fields
-            }
-
-    else:
-        if 'index_headers' not in kwargs:
-            raise NotImplementedError('Must implement index_headers')
-        else:
-            table_fields = kwargs.get('index_headers')
-        if 'index_title' not in kwargs:
-            raise NotImplementedError("Must implement index_title")
-        else:
-            index_title = kwargs.get('index_title')
-            title = index_title
-        if 'index_message' not in kwargs:
-            raise NotImplementedError("Must implement index_message")
-        else:
-            index_message = kwargs.get('index_message')
-    print(CONTEXT)
-    return render_template(template, context=CONTEXT, form=form, create_fields=fields,
-                        models=models, table_fields=table_fields,
-                        index_title=index_title, index_message=index_message,
-                        title=title, action=action, create_modal=create_modal,
-                        view_modal=view_modal, edit_url=edit_url,table=table,rendered_model=model[0])
-
-
-def _check_read(model_name):
-    from app.auth.models import User
-
-    if current_user.is_superuser:
-        return True
-    else:
-        user = User.query.get(current_user.id)
-        for perm in user.permissions:
-            if model_name == perm.model.name:
-                if perm.read:
-                    return True
-                else:
-                    return False
-        return False
-
-
-def admin_dashboard(box1=None,box2=None,box3=None,box4=None):
-    from app.auth.models import User
-    if not box1:
-        box1 = DashboardBox("Total Modules","Installed",CoreModule.query.count())
-
-    if not box2:
-        box2 = DashboardBox("System Models","Total models",CoreModel.query.count())
-
-    if not box3:
-        box3 = DashboardBox("Users","Total users",User.query.count())
-    
-    CONTEXT['active'] = 'main_dashboard'
-    CONTEXT['module'] = 'admin'
-
-    return render_template("admin/admin_dashboard.html", context=CONTEXT,title='Admin Dashboard', \
-        box1=box1,box2=box2,box3=box3)
 
 
 class DashboardBox:

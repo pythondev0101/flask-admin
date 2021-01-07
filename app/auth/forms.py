@@ -11,8 +11,8 @@ from .models import Role
 
 
 class PermissionInlineForm(AdminInlineForm):
-    headers =['Model','Read','create','write','delete','Remove']
-    title = "Edit Rights"
+    headers =['Model','Read','create','write','delete']
+    title = "Access Rights"
     html = 'auth/permission_inline.html'
 
 class ModelInlineForm(AdminInlineForm):
@@ -23,21 +23,20 @@ class ModelInlineForm(AdminInlineForm):
 
 # TODO: FOR FUTURE VERSION CHANGE THIS TO CLASS INHERITANCE
 class UserEditForm(AdminEditForm):
+    edit_title = "Edit User"
+    edit_message = "message"
+
     username = AdminField(label='Username', validators=[DataRequired()])
     email = AdminField(label='Email', input_type='email',required=False)
     fname = AdminField(label='First Name', validators=[DataRequired()])
     lname = AdminField(label='Last Name', validators=[DataRequired()])
     role_id = AdminField(label='Role',validators=[DataRequired()],input_type='number',model=Role)
 
+    permission_inline = PermissionInlineForm()
+    inlines = [permission_inline]
+
     def edit_fields(self):
         return [[self.fname, self.lname],[self.username,self.email],[self.role_id]]
-
-    edit_title = "Edit User"
-    edit_message = "message"
-
-    permission_inline = PermissionInlineForm()
-    model_inline = ModelInlineForm()
-    inlines = [permission_inline,model_inline]
 
 
 class UserForm(AdminIndexForm):
@@ -50,9 +49,9 @@ class UserForm(AdminIndexForm):
     def create_fields(self):
         return [[self.fname, self.lname],[self.username,self.email],[self.role_id]]
 
-    index_headers = ['Username', 'First name', 'last name', 'email']
+    index_headers = ['Username', 'First name', 'last name', 'role', 'email']
     index_title = "Users"
-    index_message = "Message"
+    index_message = "List of users"
 
 
 class UserPermissionForm(AdminIndexForm):
@@ -67,7 +66,7 @@ class RoleModelInlineForm(AdminInlineForm):
 
 
 class RoleCreateForm(AdminIndexForm):
-    index_headers = ['Role Name','Active']
+    index_headers = ['Name', 'created at', 'updated at']
     index_title = "User Roles"
     index_message = "Groups of permissions"
 

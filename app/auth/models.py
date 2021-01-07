@@ -23,7 +23,8 @@ class User(UserMixin, Base, Admin):
     __amname__ = 'user'	
     __amicon__ = 'pe-7s-users'	
     __amdescription__ = "Users"	
-    __amfunctions__ = [{'View users': 'bp_auth.users'},{'View roles': 'bp_auth.roles'}]	
+    # __amfunctions__ = [{'View users': 'bp_auth.users'},{'View roles': 'bp_auth.roles'}]
+    __list_view_url__ = 'bp_auth.users'
 
     """ COLUMNS """
     username = db.Column(db.String(64), nullable=False, index=True, unique=True)
@@ -33,9 +34,10 @@ class User(UserMixin, Base, Admin):
     password_hash = db.Column(db.String(128), nullable=False)
     image_path = db.Column(db.String(64), nullable=False)
     permissions = db.relationship('UserPermission', cascade='all,delete', backref="user")
-    is_superuser = db.Column(db.Boolean,nullable=False, default="0")
+    is_superuser = db.Column(db.Boolean,nullable=False, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id'),nullable=True)
     role = db.relationship('Role', cascade='all,delete', backref="userrole")
+    is_admin = db.Column(db.Boolean, default=False)
 
     def __init__(self):
         Base.__init__(self)
@@ -68,11 +70,12 @@ class UserPermission(db.Model):
     delete = db.Column(db.Boolean, nullable=False, default="0")
 
 
-class Role(Base):
+class Role(Base, Admin):
     __tablename__ = 'auth_role'
     __amname__ = 'role'
-    __amicon__ = 'pe-7s-users'
+    __amicon__ = 'pe-7s-id'
     __amdescription__ = "Roles"
+    __list_view_url__ = 'bp_auth.roles'
 
     """ COLUMNS """
     name = db.Column(db.String(64), nullable=False)
