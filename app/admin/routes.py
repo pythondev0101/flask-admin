@@ -10,7 +10,7 @@ from app.auth.permissions import check_read
 
 
 
-def admin_table(*models, fields, form=None, list_view_url='', create_url=None,\
+def admin_table(*models, fields, form=None, list_view_url='', create_url=None, create_button=False,\
     edit_url=None, extra_modal=None, kwargs=None, create_modal="admin/admin_create_modal.html",\
     view_modal="admin/admin_view_modal.html", action="admin/admin_actions.html",\
     template="admin/admin_table.html"):
@@ -74,7 +74,7 @@ def admin_table(*models, fields, form=None, list_view_url='', create_url=None,\
         index_title = form.index_title
         index_message = form.index_message
 
-        if create_url and create_modal:
+        if view_modal or create_modal:
             fields = []
             row_count = 0
             field_sizes = []
@@ -132,7 +132,7 @@ def admin_table(*models, fields, form=None, list_view_url='', create_url=None,\
     CONTEXT['current_list_view_url'] = list_view_url
 
     print(model_data)
-    return render_template(template, context=CONTEXT, form=form, create_fields=fields,
+    return render_template(template, context=CONTEXT, form=form, create_fields=fields, create_button=create_button,
                         model_data=model_data, table_fields=table_fields,
                         heading=index_title, sub_heading=index_message,
                         title=title, action=action, create_modal=create_modal, extra_modal=extra_modal,
