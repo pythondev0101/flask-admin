@@ -35,7 +35,7 @@ def admin_table(*models, fields, form=None, list_view_url='', create_url=None,\
     CONTEXT['create_modal'] = {'title': model_name}
     CONTEXT['active'] = model_name
     CONTEXT['model'] = model_name
-
+    
     if kwargs is not None:
         
         if 'model_data' in kwargs:
@@ -56,7 +56,7 @@ def admin_table(*models, fields, form=None, list_view_url='', create_url=None,\
         if 'module' in kwargs:
             CONTEXT['module'] = kwargs.get('module')
 
-    if 'model_data' not in kwargs:
+    if kwargs is None or 'model_data' not in kwargs:
 
         if len(models) == 1:
             model_data = models[0].query.with_entities(*fields).all()
