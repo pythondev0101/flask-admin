@@ -5,24 +5,30 @@ from app.auth.models import User
 from app import csrf
 
 
+
 @bp_auth.route('/api/users/login',methods=['POST'])
 @csrf.exempt
-@cross_origin()
 def api_login():
     username = request.json['username']
     password = request.json['password']
 
     print(username,password)
+
     user = User.query.filter_by(username=username).first()
 
     if user is None or not user.check_password(password):
         abort(401)
 
-    return jsonify({'userData':{
+    response = jsonify({'userData':{
         'id': user.id,
         'fname': user.fname,
         'lname': user.lname,
-        'email': user.email}})
+        'email': user.email,
+        'is_admin': user.is_admin}})
+        
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
 
 
 @bp_auth.route('/api/users', methods=['GET'])
@@ -52,4 +58,4 @@ def get_user(user_id):
         'fname': user.fname,
         'lname': user.lname,
         'email': user.email,
-    }) 
+    })

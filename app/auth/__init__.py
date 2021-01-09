@@ -31,6 +31,6 @@ auth_templates = {
 
 from . import views
 from . import models
-
+from . import api
 
 
