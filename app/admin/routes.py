@@ -129,11 +129,14 @@ def admin_table(*models, fields, form=None, list_view_url='', create_url=None, c
         else:
             index_message = kwargs.get('index_message')
     
+    parent_model = None
+    if models[0].__parent_model__ is not None:
+        parent_model = models[0].__parent_model__
+    
     CONTEXT['current_list_view_url'] = list_view_url
 
-    print(model_data)
     return render_template(template, context=CONTEXT, form=form, create_fields=fields, create_button=create_button,
-                        model_data=model_data, table_fields=table_fields,
+                        model_data=model_data, table_fields=table_fields,parent_model= parent_model,
                         heading=index_title, sub_heading=index_message,
                         title=title, action=action, create_modal=create_modal, extra_modal=extra_modal,
                         view_modal=view_modal, edit_url=edit_url,table=table_name,rendered_model=models[0])
@@ -175,11 +178,15 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
         'fields_sizes':field_sizes,
     }
 
+    parent_model = None
     if model:
         model_name = model.__amname__
         CONTEXT['create_modal']['title'] = model_name
         CONTEXT['active'] = model_name
         delete_table = model.__tablename__
+
+        if model.__parent_model__ is not None:
+            parent_model = model.__parent_model__
 
     query1 = CoreModel.query.filter_by(name=model_name).first()
 
@@ -199,7 +206,7 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
     
     return render_template(template, context=CONTEXT, form=form, update_url=update_url, edit_fields=fields,
                            oid=oid,modal_form=modal_form,edit_title=form.edit_title,delete_table=delete_table, scripts=scripts,
-                           action=action,extra_modal=extra_modal, title=form.edit_title,rendered_model=model)
+                           action=action,extra_modal=extra_modal, title=form.edit_title,rendered_model=model,parent_model=parent_model)
 
 
 def admin_dashboard(box1=None,box2=None,box3=None,box4=None):

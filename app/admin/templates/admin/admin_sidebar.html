@@ -57,7 +57,7 @@
                                     {% if session['permissions'][model['name']]['read'] %}
                                         {% if model['functions'] %}
                                             <li>
-                                                <a href="#" class="{% if context['active']==model['name'] %} mm-active {% endif %}">
+                                                <a href="#" class="{% if (context['active'] == model['name'] or parent_model == model['name']) %} mm-active {% endif %}">
                                                     <i class="metismenu-icon {{ model['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
                                                     {{ model['description'] }}
                                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
