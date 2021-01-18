@@ -55,34 +55,34 @@
                             {% for model in module['models'] %}
                                 {% if model['name'] in session['permissions'] %}
                                     {% if session['permissions'][model['name']]['read'] %}
-                                    {% if model['functions'] %}
-                                        <li>
-                                            <a href="#" class="{% if context['active']==model['name'] %} mm-active {% endif %}">
-                                                <i class="metismenu-icon {{ model['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
-                                                {{ model['description'] }}
-                                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        {% if model['functions'] %}
+                                            <li>
+                                                <a href="#" class="{% if (context['active'] == model['name'] or parent_model == model['name']) %} mm-active {% endif %}">
+                                                    <i class="metismenu-icon {{ model['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                                    {{ model['description'] }}
+                                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                                </a>
+                                                <ul>
+                                                    {% for function in model['functions'] %}
+                                                    {% for name,link in function.items() %}
+                                                    <li>
+                                                        <a href="{{ url_for(link) }}" class="model-function">
+                                                            <i class="metismenu-icon">
+                                                            </i>{{ name }}
+                                                        </a>
+                                                    </li>
+                                                    {% endfor %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {% else %}
+                                            <li>
+                                            <a href="{{ url_for(model['list_view_url'])}}" class="{% if context['active']==model['name'] %} mm-active {% endif %}">
+                                                <i class="metismenu-icon {{model['icon']}} icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                                {{model['description']}}
                                             </a>
-                                            <ul>
-                                                {% for function in model['functions'] %}
-                                                {% for name,link in function.items() %}
-                                                <li>
-                                                    <a href="{{ url_for(link) }}">
-                                                        <i class="metismenu-icon">
-                                                        </i>{{ name }}
-                                                    </a>
-                                                </li>
-                                                {% endfor %}
-                                                {% endfor %}
-                                            </ul>
-                                        </li>
-                                    {% else %}
-                                        <li>
-                                        <a href="{{ url_for(model['list_view_url'])}}" class="{% if context['active']==model['name'] %} mm-active {% endif %}">
-                                            <i class="metismenu-icon {{model['icon']}} icon-gradient bg-premium-dark" aria-hidden="true"></i>
-                                            {{model['description']}}
-                                        </a>
-                                        </li>
-                                    {% endif %}
+                                            </li>
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}

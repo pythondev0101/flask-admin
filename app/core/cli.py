@@ -12,6 +12,135 @@ from .models import CoreCity,CoreProvince
 from app.auth.models import User, Role
 
 
+
+def core_install():
+    """
+    Tatanggap to ng list ng modules tapos iinsert nya sa database yung mga models o tables nila, \
+        para malaman ng system kung ano yung mga models(eg. Users,Customers)
+    Parameters
+    ----------
+    modules
+        Listahan ng mga modules na iinstall sa system
+    """
+
+    print("Installing...")
+
+    try:
+
+        if platform.system() == "Windows":
+            provinces_path = basedir + "\\app" + "\\core" + "\\csv" + "\\provinces.csv"
+            cities_path = basedir + "\\app" + "\\core" + "\\csv" + "\\cities.csv"
+        elif platform.system() == "Linux":
+            provinces_path = basedir + "/app/core/csv/provinces.csv"
+            cities_path = basedir + "/app/core/csv/cities.csv"
+        else:
+            raise Exception("Platform not supported yet.")
+
+        db.create_all()
+        db.session.commit()
+        
+        module_count = 0
+
+        for module in MODULES:
+            SYSTEM_MODULES.append({'name':module.module_name,'short_description': module.module_short_description,
+            'long_description':module.module_long_description,'link': module.module_link,
+            'icon': module.module_icon, 'models': []})
+            
+            # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
+            homebest_module = CoreModule.query.filter_by(name=module.module_name).first()
+            last_id = 0
+            if not homebest_module:
+                new_module = CoreModule(module.module_name,module.module_short_description,module.version)
+                new_module.long_description = module.module_long_description
+                new_module.status = 'installed'
+                db.session.add(new_module)
+                db.session.commit()
+                print("MODULE - {}: SUCCESS".format(new_module.name))
+                last_id = new_module.id
+
+            model_count = 0
+
+            for model in module.models:
+                homebestmodel = CoreModel.query.filter_by(name=model.__amname__).first()
+                if not homebestmodel:
+                    new_model = CoreModel(model.__amname__, last_id, model.__amdescription__)
+                    db.session.add(new_model)
+                    db.session.commit()
+                    print("MODEL - {}: SUCCESS".format(new_model.name))
+                SYSTEM_MODULES[module_count]['models'].append({'name':model.__amname__,'description':model.__amdescription__,\
+                    'icon': model.__amicon__, 'functions': []})
+                
+                for function in model.__amfunctions__:
+                    for function_name, function_link in function.items():
+                        SYSTEM_MODULES[module_count]['models'][model_count]['functions'].append({
+                            function_name:function_link
+                        })
+            
+                model_count = model_count + 1
+
+            if len(module.no_admin_models) > 0 :
+
+                for xmodel in module.no_admin_models:
+                    homebestmodel = CoreModel.query.filter_by(name=xmodel.__amname__).first()
+                    if not homebestmodel:
+                        new_model = CoreModel(xmodel.__amname__, last_id, xmodel.__amdescription__,False)
+                        db.session.add(new_model)
+                        db.session.commit()
+                        print("MODEL - {}: SUCCESS".format(new_model.name))
+
+            module_count = module_count + 1
+
+        print("Inserting provinces to database...")
+        if CoreProvince.query.count() < 88:
+            with open(provinces_path) as f:
+                csv_file = csv.reader(f)
+                for id, row in enumerate(csv_file):
+                    if not id == 0:
+                        province = CoreProvince()
+                        province.id = int(row[0])
+                        province.name = row[2]
+                        db.session.add(province)
+                db.session.commit()
+            print("Provinces done!")
+        else:
+            print("Provinces exists!")
+        print("")
+        print("Inserting cities to database...")
+        if CoreCity.query.count() < 1647:
+            with open(cities_path) as f:
+                csv_file = csv.reader(f)
+                for id,row in enumerate(csv_file):
+                    if not id == 0:
+                        city = CoreCity()
+                        city.id = int(row[0])
+                        city.name = row[2]
+                        city.province_id = None
+                        db.session.add(city)
+                db.session.commit()
+            print("Cities done!")
+        else:
+            print("Cities exists!")
+
+        print("Inserting system roles...")
+        if Role.query.count() > 0:
+            print("Role already inserted!")
+        else:
+            role = Role()
+            role.name = "Individual"
+            db.session.add(role)
+            db.session.commit()
+            print("Individual role inserted!")
+
+        if not User.query.count() > 0:
+            print("Creating a SuperUser/owner...")
+            _create_superuser()
+
+    except Exception as exc:
+        return False
+
+    return True
+
+
 @bp_core.cli.command('create_superuser')
 def create_superuser():
     _create_superuser()
@@ -55,126 +184,12 @@ def create_module(module_name):
 
 @bp_core.cli.command("install")
 def install():
-    """
-    Tatanggap to ng list ng modules tapos iinsert nya sa database yung mga models o tables nila, \
-        para malaman ng system kung ano yung mga models(eg. Users,Customers)
-    Parameters
-    ----------
-    modules
-        Listahan ng mga modules na iinstall sa system
-    """
 
-    print("Installing...")
+    if core_install():
+        print("Installation complete!")
 
-    if platform.system() == "Windows":
-        provinces_path = basedir + "\\app" + "\\core" + "\\csv" + "\\provinces.csv"
-        cities_path = basedir + "\\app" + "\\core" + "\\csv" + "\\cities.csv"
-    elif platform.system() == "Linux":
-        provinces_path = basedir + "/app/core/csv/provinces.csv"
-        cities_path = basedir + "/app/core/csv/cities.csv"
     else:
-        raise Exception("Platform not supported yet.")
-
-    db.create_all()
-    db.session.commit()
-    
-    module_count = 0
-
-    for module in MODULES:
-        SYSTEM_MODULES.append({'name':module.module_name,'short_description': module.module_short_description,
-        'long_description':module.module_long_description,'link': module.module_link,
-        'icon': module.module_icon, 'models': []})
-        
-        # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
-        homebest_module = CoreModule.query.filter_by(name=module.module_name).first()
-        last_id = 0
-        if not homebest_module:
-            new_module = CoreModule(module.module_name,module.module_short_description,module.version)
-            new_module.long_description = module.module_long_description
-            new_module.status = 'installed'
-            db.session.add(new_module)
-            db.session.commit()
-            print("MODULE - {}: SUCCESS".format(new_module.name))
-            last_id = new_module.id
-
-        model_count = 0
-
-        for model in module.models:
-            homebestmodel = CoreModel.query.filter_by(name=model.__amname__).first()
-            if not homebestmodel:
-                new_model = CoreModel(model.__amname__, last_id, model.__amdescription__)
-                db.session.add(new_model)
-                db.session.commit()
-                print("MODEL - {}: SUCCESS".format(new_model.name))
-            SYSTEM_MODULES[module_count]['models'].append({'name':model.__amname__,'description':model.__amdescription__,\
-                'icon': model.__amicon__, 'functions': []})
-            
-            for function in model.__amfunctions__:
-                for function_name, function_link in function.items():
-                    SYSTEM_MODULES[module_count]['models'][model_count]['functions'].append({
-                        function_name:function_link
-                    })
-        
-            model_count = model_count + 1
-
-        if len(module.no_admin_models) > 0 :
-
-            for xmodel in module.no_admin_models:
-                homebestmodel = CoreModel.query.filter_by(name=xmodel.__amname__).first()
-                if not homebestmodel:
-                    new_model = CoreModel(xmodel.__amname__, last_id, xmodel.__amdescription__,False)
-                    db.session.add(new_model)
-                    db.session.commit()
-                    print("MODEL - {}: SUCCESS".format(new_model.name))
-
-        module_count = module_count + 1
-
-    print("Inserting provinces to database...")
-    if CoreProvince.query.count() < 88:
-        with open(provinces_path) as f:
-            csv_file = csv.reader(f)
-            for id, row in enumerate(csv_file):
-                if not id == 0:
-                    province = CoreProvince()
-                    province.id = int(row[0])
-                    province.name = row[2]
-                    db.session.add(province)
-            db.session.commit()
-        print("Provinces done!")
-    else:
-        print("Provinces exists!")
-    print("")
-    print("Inserting cities to database...")
-    if CoreCity.query.count() < 1647:
-        with open(cities_path) as f:
-            csv_file = csv.reader(f)
-            for id,row in enumerate(csv_file):
-                if not id == 0:
-                    city = CoreCity()
-                    city.id = int(row[0])
-                    city.name = row[2]
-                    city.province_id = None
-                    db.session.add(city)
-            db.session.commit()
-        print("Cities done!")
-    else:
-        print("Cities exists!")
-
-    print("Inserting system roles...")
-    if Role.query.count() > 0:
-        print("Role already inserted!")
-    else:
-        role = Role()
-        role.name = "Individual"
-        db.session.add(role)
-        db.session.commit()
-        print("Individual role inserted!")
-
-    if not User.query.count() > 0:
-        print("Creating a SuperUser/owner...")
-        _create_superuser()
-
-    print("Installation complete!")
+        print("Installation failed!")
 
 
 def _create_superuser():

@@ -1,17 +1,30 @@
 <div class="page-title-actions">
     
-    {% if create_modal and session['permissions'][context['model']] is defined %}
-    {% if session['permissions'][context['model']]['create'] or current_user.is_superuser %}
+    {% if session['permissions'][context['model']] is defined %}
 
-    <button type="button" data-toggle="modal" data-target="#create_modal" title="Create new" data-placement="bottom"
-            class="btn-shadow mr-3 btn btn-primary">
-        {% if rendered_model.__amname__ == 'user' %}
-        <i class="fa fa-user-plus"></i>
-        {% else %}
-        <i class="fa fa-plus"></i>
+        {% if session['permissions'][context['model']]['create'] or current_user.is_superuser %}
+
+            {% if create_modal %}
+                <button type="button" data-toggle="modal" data-target="#create_modal" title="Create new" data-placement="bottom"
+                        class="btn-shadow mr-3 btn btn-primary">
+                    {% if rendered_model.__amname__ == 'user' %}
+                    <i class="fa fa-user-plus"></i>
+                    {% else %}
+                    <i class="fa fa-plus"></i>
+                    {% endif %}
+                </button>
+            
+            {% elif create_button and context['create_modal']['create_url'] is not none %}
+                <a href="{{ url_for(context['create_modal']['create_url']) }}" type="button" class="btn-shadow mr-3 btn btn-primary">
+                    <i class="fa fa-plus"></i>
+                </a>
+
+            {% else %}
+                TesT    
+
+            {% endif %}
+
         {% endif %}
-    </button>
-    {% endif %}
     {% endif %}
 
     <div class="d-inline-block dropdown">
