@@ -12,13 +12,20 @@ from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
 from config import app_config
 
+# -INCLUDE YOUR IMPORTS HERE-
 
-# INITIALIZE FLASK IMPORTS
+#         -END-
+
 db = SQLAlchemy()
 migrate = Migrate()
 csrf = CSRFProtect()
 cors = CORS()
 login_manager = LoginManager()
+
+# -INITIALIZE YOUR IMPORTS HERE-
+
+#           -END-
+
 
 MODULES = []
 
@@ -53,25 +60,29 @@ def create_app(config_name):
 
     with app.app_context():
 
-        # EDITABLE: IMPORT HERE THE SYSTEM MODULES
+        # -IMPORT HERE THE SYSTEM MODULES-
         from app.core import bp_core
         from app.auth import bp_auth
         from app.admin import bp_admin
-        # --------------END--------------
+        # Add here
+        #           -END-
 
-        # EDITABLE: REGISTER HERE THE MODULE BLUEPRINTS
+        # -REGISTER HERE THE MODULE BLUEPRINTS-
         app.register_blueprint(bp_core, url_prefix='/')
         app.register_blueprint(bp_auth, url_prefix='/auth')
         app.register_blueprint(bp_admin, url_prefix='/admin')
-        # --------------END--------------
+        # Add here
+        #               -END-
 
-        # EDITABLE: INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE"""
+        # -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
         from app.admin.admin import AdminModule
         from app.auth.auth import AuthModule
+        # Add here
 
         MODULES.append(AdminModule)
         MODULES.append(AuthModule)
-        # --------------END--------------
+        # Add here
+        #         -END-
 
         @app.before_first_request
         def setup_context():
