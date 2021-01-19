@@ -27,8 +27,9 @@ class Config(object):
     """ PAGINATION """
     DATA_PER_PAGE = 7
 
-    # Add your configurations here
-
+    # DEVELOPER-NOTE: -ADD YOUR CONFIGURATIONS HERE-
+    
+    #                 -END-
 
 class DevelopmentConfig(Config):
     """

@@ -12,9 +12,9 @@ from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
 from config import app_config
 
-# -INCLUDE YOUR IMPORTS HERE-
+# DEVELOPER-NOTE: -INCLUDE YOUR IMPORTS HERE-
 
-#         -END-
+#                  -END-
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -22,9 +22,9 @@ csrf = CSRFProtect()
 cors = CORS()
 login_manager = LoginManager()
 
-# -INITIALIZE YOUR IMPORTS HERE-
+# DEVELOPER-NOTE: -INITIATE YOUR IMPORTS HERE-
 
-#           -END-
+#                   -END-
 
 
 MODULES = []
@@ -55,34 +55,40 @@ def create_app(config_name):
     cors.init_app(app)
     csrf.init_app(app)
 
+    # DEVELOPER-NOTE: -INITIALIZE YOUR IMPORTS HERE-
+
+    #                    -END-
+
     login_manager.login_view = 'bp_auth.login'
     login_manager.login_message = "You must be logged in to access this page."
 
     with app.app_context():
 
-        # -IMPORT HERE THE SYSTEM MODULES-
+        # DEVELOPER-NOTE: -IMPORT HERE THE SYSTEM MODULES-
         from app.core import bp_core
         from app.auth import bp_auth
         from app.admin import bp_admin
-        # Add here
-        #           -END-
+        # -Add here-
+        #                   -END-
 
-        # -REGISTER HERE THE MODULE BLUEPRINTS-
+        # DEVELOPER-NOTE: -REGISTER HERE THE MODULE BLUEPRINTS-
         app.register_blueprint(bp_core, url_prefix='/')
         app.register_blueprint(bp_auth, url_prefix='/auth')
         app.register_blueprint(bp_admin, url_prefix='/admin')
-        # Add here
+        # -Add here-
         #               -END-
 
-        # -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
+        # DEVELOPER-NOTE: -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
         from app.admin.admin import AdminModule
         from app.auth.auth import AuthModule
-        # Add here
-
+        # -Add here-
+        #                  -END-
+        
+        # DEVELOPER-NOTE: -APPEND YOUR MODULE HERE-
         MODULES.append(AdminModule)
         MODULES.append(AuthModule)
-        # Add here
-        #         -END-
+        # -Add here-
+        #                  -END-
 
         @app.before_first_request
         def setup_context():
