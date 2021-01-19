@@ -140,20 +140,18 @@
             if (view_modal != 'False'){
                 var id = '#param_' + $(this).attr('id');
                 if(document.body.contains(document.getElementById('view_edit_button'))){
-                    var url = $(id).attr('value');
-                    document.getElementById("view_edit_button").setAttribute("href", url);
+                    const view_url = $(id).attr('value');
+                    document.getElementById("view_edit_button").setAttribute("href", view_url);
                     var fields = {% if context['create_modal']['js_fields'] %} {{ context['create_modal']['js_fields'] | tojson }} {% else %} '' {% endif %};
                     var ctr;
                     var field;
                     var field_id = $(this).attr('id');
                     var table = '{{ table }}';
-                    
+
                     for (ctr=0; ctr < fields.length; ctr++){
                         $.ajax({
-                            url: "/admin/_get_view_modal_data",
-                            type: "POST",
-                            dataType: "json",
-                            data: JSON.stringify({'table': table,'column': fields[ctr],'id':field_id}),
+                            url: `/admin/_get_view_modal_data?table=${table}&column=${fields[ctr]}&id=${field_id}`,
+                            type: "GET",
                             contentType: "application/json; charset=utf-8",
                             success: function(data) {
                                 if (data.result){
