@@ -16,7 +16,7 @@ class Config(object):
     # DEVELOPER-NOTE: ADMIN PAGE CONFIGURATIONS HERE
     ADMIN = {
         'DATA_PER_PAGE': 25,
-        'URL': 'bp_admin.dashboard',
+        'DASHBOARD_URL': 'bp_admin.dashboard',
     }
     #                 -END-
 
