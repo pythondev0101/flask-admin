@@ -21,6 +21,12 @@ class Config(object):
     }
     #                 -END-
 
+    # DEVELOPER-NOTE: AUTH CONFIGURATIONS HERE
+    AUTH = {
+        'LOGIN_REDIRECT_URL': 'bp_admin.dashboard',
+    }
+    #                 -END-
+
     # DEVELOPER-NOTE: -ADD YOUR CONFIGURATIONS HERE-
     
     #                 -END-
