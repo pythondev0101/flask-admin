@@ -37,7 +37,7 @@
                 {% if context['module'] == 'admin' %}
                 <li class="app-sidebar__heading">Administration</li>
                 <li>
-                    <a href="{{ url_for('bp_admin.dashboard')}}" class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}">
+                    <a href="{{ url_for(config['ADMIN']['URL'])}}" class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}">
                         <i class="metismenu-icon pe-7s-graph1 icon-gradient bg-premium-dark" aria-hidden="true"></i>
                         Dashboard
                     </a>

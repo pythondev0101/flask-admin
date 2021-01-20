@@ -1,7 +1,29 @@
 import os
 from dotenv import load_dotenv
 
+
+
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+class Config(object):
+    load_dotenv()
+
+    SECRET_KEY = os.environ.get('SECRET_KEY') # Key
+
+    CORS_HEADERS = 'Content-Type' # Flask Cors
+
+    # DEVELOPER-NOTE: ADMIN PAGE CONFIGURATIONS HERE
+    ADMIN = {
+        'DATA_PER_PAGE': 25,
+        'URL': 'bp_admin.dashboard',
+    }
+    #                 -END-
+
+    # DEVELOPER-NOTE: -ADD YOUR CONFIGURATIONS HERE-
+    
+    #                 -END-
+
 
 def _get_database(server):
     load_dotenv()
@@ -15,21 +37,6 @@ def _get_database(server):
     else:
         return "mysql+pymysql://{}:{}@{}/{}".format(user,password,host,database)
 
-
-class Config(object):
-    load_dotenv()
-
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-
-    """ FLASK-CORS """
-    CORS_HEADERS = 'Content-Type'
-
-    """ PAGINATION """
-    DATA_PER_PAGE = 7
-
-    # DEVELOPER-NOTE: -ADD YOUR CONFIGURATIONS HERE-
-    
-    #                 -END-
 
 class DevelopmentConfig(Config):
     """
