@@ -209,28 +209,40 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
                            action=action,extra_modal=extra_modal, title=form.edit_title,rendered_model=model,parent_model=parent_model)
 
 
-def admin_dashboard(box1=None,box2=None,box3=None,box4=None):
+def admin_dashboard(template, **kwargs):
     from app.auth.models import User
-    if not box1:
-        box1 = DashboardBox("Total Modules","Installed",CoreModule.query.count())
 
-    if not box2:
-        box2 = DashboardBox("System Models","Total models",CoreModel.query.count())
+    options = {
+        'box1': None,
+        'box2': None,
+        'box3': None,
+        'box4': None,
+        'data': None,
+        'title': 'Admin Dashboard'
+    }
 
-    if not box3:
-        box3 = DashboardBox("Users","Total users",User.query.count())
+    options.update(kwargs)
+
+    if options['box1'] is None:
+        options['box1'] = DashboardBox("Total Modules","Installed",CoreModule.query.count())
+
+    if options['box2'] is None:
+        options['box2'] = DashboardBox("System Models","Total models",CoreModel.query.count())
+
+    if options['box3'] is None:
+        options['box3'] = DashboardBox("Users","Total users",User.query.count())
     
     CONTEXT['active'] = 'main_dashboard'
     CONTEXT['module'] = 'admin'
 
-    return render_template("admin/admin_dashboard.html", context=CONTEXT,title='Admin Dashboard', \
-        box1=box1,box2=box2,box3=box3)
+    return render_template(template, context=CONTEXT,title=options['title'], \
+        options=options,data=options['data'])
 
 
 @bp_admin.route('/') # move to views
 @login_required
 def dashboard():
-    return admin_dashboard()
+    return admin_dashboard("admin/admin_dashboard.html")
 
 
 @bp_admin.route('/apps')
