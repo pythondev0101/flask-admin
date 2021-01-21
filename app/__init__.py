@@ -93,7 +93,6 @@ def create_app(config_name):
         @app.before_first_request
         def setup_context():
             CONTEXT['system_modules'] = SYSTEM_MODULES
-            CONTEXT['module']: str
             CONTEXT['active']: str
             CONTEXT['errors']: dict
             CONTEXT['create_modal']: dict

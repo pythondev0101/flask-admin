@@ -33,69 +33,116 @@
     <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
-                {% block first_sidebar_navigation %}
-                {% if context['module'] == 'admin' %}
-                <li class="app-sidebar__heading">Administration</li>
-                <li>
-                    <a href="{{ url_for(config['ADMIN']['DASHBOARD_URL'])}}" class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}">
-                        <i class="metismenu-icon pe-7s-graph1 icon-gradient bg-premium-dark" aria-hidden="true"></i>
-                        Dashboard
-                    </a>
-                    <a href="{{ url_for('bp_admin.apps')}}" class="{% if context['active']=='apps' %} mm-active {% endif %}">
-                        <i class="metismenu-icon pe-7s-plugin icon-gradient bg-premium-dark" aria-hidden="true"></i>
-                        Apps
-                    </a>
-                </li>
-                {% endif %}
-                {% endblock %}
-                {% block second_sidebar_navigation %}
-                <li class="app-sidebar__heading">APP Models</li>
-                    {% for module in context['system_modules'] %}
-                        {% if module['name'] == context['module'] %}
-                            {% for model in module['models'] %}
-                                {% if model['name'] in session['permissions'] %}
-                                    {% if session['permissions'][model['name']]['read'] %}
-                                        {% if model['functions'] %}
+
+                {% if vdata['sidebar'] is not none %}
+                
+                    {% for header, models in vdata['sidebar'].items() %}
+                        <li class="app-sidebar__heading">{{header}}</li>
+                        {% for model in models %}
+                            {% if model.__amname__ in session['permissions'] %}
+                            {% if session['permissions'][model.__amname__]['read'] %}
+                                {% if model.__amfunctions___ %}
+                                    <li>
+                                        <a href="#" class="{% if (context['active'] == model.__amname__ or parent_model == model.__amname__) %} mm-active {% endif %}">
+                                            <i class="metismenu-icon {{ model.__amicon__ }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                            {{ model.__amdescription__ }}
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            {% for function in model.__amfunctions__ %}
+                                            {% for name,link in function.items() %}
                                             <li>
-                                                <a href="#" class="{% if (context['active'] == model['name'] or parent_model == model['name']) %} mm-active {% endif %}">
-                                                    <i class="metismenu-icon {{ model['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
-                                                    {{ model['description'] }}
-                                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                                <a href="{{ url_for(link) }}" class="model-function">
+                                                    <i class="metismenu-icon">
+                                                    </i>{{ name }}
                                                 </a>
-                                                <ul>
-                                                    {% for function in model['functions'] %}
-                                                    {% for name,link in function.items() %}
+                                            </li>
+                                            {% endfor %}
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                    <a href="{{ url_for(model.__list_view_url__)}}" class="{% if context['active']==model.__amname__ %} mm-active {% endif %}">
+                                        <i class="metismenu-icon {{model.__amicon__}} icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                        {{model.__amdescription__}}
+                                    </a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+
+                {% else %}
+
+                    {% block first_sidebar_navigation %}
+                    
+                        {% if vdata['module'].module_name == 'admin' %}
+                        <li class="app-sidebar__heading">Administration</li>
+                        <li>
+                            <a href="{{ url_for(config['ADMIN']['DASHBOARD_URL'])}}" class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}">
+                                <i class="metismenu-icon pe-7s-graph1 icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                Dashboard
+                            </a>
+                            <a href="{{ url_for('bp_admin.apps')}}" class="{% if context['active']=='apps' %} mm-active {% endif %}">
+                                <i class="metismenu-icon pe-7s-plugin icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                Apps
+                            </a>
+                        </li>
+                        {% endif %}
+
+                    {% endblock %}
+
+                    {% block second_sidebar_navigation %}
+                        <li class="app-sidebar__heading">APP Models</li>
+                            {% for module in context['system_modules'] %}
+                                {% if module['name'] == vdata['module'].module_name %}
+                                    {% for model in module['models'] %}
+                                        {% if model['name'] in session['permissions'] %}
+                                            {% if session['permissions'][model['name']]['read'] %}
+                                                {% if model['functions'] %}
                                                     <li>
-                                                        <a href="{{ url_for(link) }}" class="model-function">
-                                                            <i class="metismenu-icon">
-                                                            </i>{{ name }}
+                                                        <a href="#" class="{% if (context['active'] == model['name'] or parent_model == model['name']) %} mm-active {% endif %}">
+                                                            <i class="metismenu-icon {{ model['icon'] }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                                            {{ model['description'] }}
+                                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                                         </a>
+                                                        <ul>
+                                                            {% for function in model['functions'] %}
+                                                            {% for name,link in function.items() %}
+                                                            <li>
+                                                                <a href="{{ url_for(link) }}" class="model-function">
+                                                                    <i class="metismenu-icon">
+                                                                    </i>{{ name }}
+                                                                </a>
+                                                            </li>
+                                                            {% endfor %}
+                                                            {% endfor %}
+                                                        </ul>
                                                     </li>
-                                                    {% endfor %}
-                                                    {% endfor %}
-                                                </ul>
-                                            </li>
-                                        {% else %}
-                                            <li>
-                                            <a href="{{ url_for(model['list_view_url'])}}" class="{% if context['active']==model['name'] %} mm-active {% endif %}">
-                                                <i class="metismenu-icon {{model['icon']}} icon-gradient bg-premium-dark" aria-hidden="true"></i>
-                                                {{model['description']}}
-                                            </a>
-                                            </li>
+                                                {% else %}
+                                                    <li>
+                                                    <a href="{{ url_for(model['list_view_url'])}}" class="{% if context['active']==model['name'] %} mm-active {% endif %}">
+                                                        <i class="metismenu-icon {{model['icon']}} icon-gradient bg-premium-dark" aria-hidden="true"></i>
+                                                        {{model['description']}}
+                                                    </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endif %}
                                         {% endif %}
-                                    {% endif %}
+                                    {% endfor %}
                                 {% endif %}
                             {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                {% endblock %}
+                    {% endblock %}
                 
-                {% block configuration_sidebar_navigation %}
-                {% endblock %}
+                    {% block configuration_sidebar_navigation %}
+                    {% endblock %}
 
-                {% block third_sidebar_navigation %}
-                {% endblock %}
+                    {% block third_sidebar_navigation %}
+                    {% endblock %}
 
+                {% endif %}
             </ul>
         </div>
     </div>

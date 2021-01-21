@@ -33,6 +33,8 @@ class CoreModule:
     
     backgroud_app = False
 
+    sidebar = None
+
     @property
     def module_name(self):
         raise NotImplementedError('Must implement module_name')
