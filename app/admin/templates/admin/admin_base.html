@@ -129,3 +129,14 @@
         {% include extra_modal %}
     {% endif %}
 {% endblock %}
+
+
+{% if modals %} 
+    
+    {% for modal_file in modals %}
+    
+        {% include modal_file %}
+    
+    {% endfor %}
+
+{% endif %}

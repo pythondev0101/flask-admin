@@ -3,7 +3,7 @@ from flask import render_template
 
 
 
-def admin_render_template(template_name_or_list, module_name, scripts=None, **context):
+def admin_render_template(template_name_or_list, module_name, scripts=None, modals=None,**context):
     vdata = {
         'sidebar': None,
         'module': None
@@ -22,6 +22,7 @@ def admin_render_template(template_name_or_list, module_name, scripts=None, **co
 
     context['vdata'] = vdata
     context['scripts'] = scripts
+    context['modals'] = modals
     context['context'] = CONTEXT
     
     return render_template(template_name_or_list, **context)
