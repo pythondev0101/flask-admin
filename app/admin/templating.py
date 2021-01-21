@@ -1,9 +1,9 @@
-from app import MODULES
+from app import MODULES, CONTEXT
 from flask import render_template
 
 
 
-def admin_render_template(template_name_or_list, module_name, **context):
+def admin_render_template(template_name_or_list, module_name, scripts=None, **context):
     vdata = {
         'sidebar': None,
         'module': None
@@ -19,7 +19,9 @@ def admin_render_template(template_name_or_list, module_name, **context):
     
     if module.sidebar is not None:
         vdata['sidebar'] = module.sidebar
-    
-    context['vdata'] = vdata
 
+    context['vdata'] = vdata
+    context['scripts'] = scripts
+    context['context'] = CONTEXT
+    
     return render_template(template_name_or_list, **context)

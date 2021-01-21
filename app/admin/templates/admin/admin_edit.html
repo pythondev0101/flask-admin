@@ -197,24 +197,6 @@
 
 {% block scripts %}
 
-    {% if scripts %}
-        
-        {% for script in scripts %}
-        
-            {% for blueprint, file in script.items() %}
-
-                <script src="{{ url_for(blueprint, filename=file) }}"></script>
-            
-            {% endfor %}
-        
-        {% endfor %}
-
-    {% endif %}
-
-<script type="text/javascript">
-    CSRF_TOKEN = "{{csrf_token()}}";
-</script> 
-
 <script>
     $(document).ready(function(){
         var table = $('.inline_table').DataTable({

@@ -136,7 +136,7 @@ def admin_table(*models, fields, form=None, list_view_url='', create_url=None, c
     
     CONTEXT['current_list_view_url'] = list_view_url
 
-    return admin_render_template(template, check_module.name, context=CONTEXT, form=form, create_fields=fields, create_button=create_button,
+    return admin_render_template(template, check_module.name, form=form, create_fields=fields, create_button=create_button,
                         model_data=model_data, table_fields=table_fields,parent_model= parent_model,
                         heading=index_title, sub_heading=index_message,
                         title=title, action=action, create_modal=create_modal, extra_modal=extra_modal,
@@ -205,7 +205,7 @@ def admin_edit(form, update_url, oid, modal_form=False, action="admin/admin_edit
         if 'update_url' in kwargs:
             update_url = kwargs.get('update_url')
     
-    return admin_render_template(template, check_module.name, context=CONTEXT, form=form, update_url=update_url, edit_fields=fields,
+    return admin_render_template(template, check_module.name, form=form, update_url=update_url, edit_fields=fields,
                            oid=oid,modal_form=modal_form,edit_title=form.edit_title,delete_table=delete_table, scripts=scripts,
                            action=action,extra_modal=extra_modal, title=form.edit_title,rendered_model=model,parent_model=parent_model)
 

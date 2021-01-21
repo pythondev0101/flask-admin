@@ -82,11 +82,36 @@
         //sidebar_color.click();
       //}, 100);
     })();
-    </script>
-    
-    {% block scripts %}{% endblock %}
+</script>
 
-    {% block toast %}{% endblock %}
+<script type="text/javascript">
+    CSRF_TOKEN = "{{csrf_token()}}";
+</script> 
+
+{% block scripts %}
+    <!-- Scripts -->
+{% endblock %}
+
+
+{% if scripts %} 
+    
+    {% for script in scripts %}
+    
+        {% for blueprint, file in script.items() %}
+
+            <script src="{{ url_for(blueprint, filename=file) }}"></script>
+        
+        {% endfor %}
+    
+    {% endfor %}
+
+{% endif %}
+
+
+{% block toast %}
+    <!-- Toasts -->
+{% endblock %}
+
 
 </body>
 </html>
