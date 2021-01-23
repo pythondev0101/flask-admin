@@ -180,10 +180,8 @@
                    
                     for (ctr=0; ctr < fields.length; ctr++){
                         $.ajax({
-                            url: "/admin/_get_view_modal_data",
-                            type: "POST",
-                            dataType: "json",
-                            data: JSON.stringify({'table': table,'column': fields[ctr],'id':field_id}),
+                            url: `/admin/_get_view_modal_data?table=${table}&column=${fields[ctr]}&id=${field_id}`,
+                            type: "GET",
                             contentType: "application/json; charset=utf-8",
                             success: function(data) {
                                 if (data.result){
