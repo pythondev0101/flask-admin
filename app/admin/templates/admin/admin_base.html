@@ -21,11 +21,14 @@
     =========================================================
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
+    
+    {% block default_head %}
     <link href="{{ url_for('bp_admin.static', filename='css/lib/main.css') }}" rel="stylesheet">
     <link href="{{ url_for('bp_admin.static', filename='css/homebest.css') }}" rel="stylesheet">
     <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"> -->
     <link href="{{ url_for('bp_admin.static', filename='DataTables/datatables.css') }}" rel="stylesheet">
-    
+    {% endblock %}
+
     {% block extra_head %}
     <!-- For extra service declaration -->
     {% endblock %}
@@ -65,13 +68,13 @@
             </div>
         </div>
     </div>
+
+{% block default_scripts %}
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/lib/main.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/homebest.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/lib/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='DataTables/datatables.js') }}"></script>
-
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/sidebar.js') }}"></script>
-
 <script>
     (function() {
       var header_color = document.getElementById("{{ context['header_color'] }}");
@@ -83,6 +86,7 @@
       //}, 100);
     })();
 </script>
+{% endblock %}
 
 <script type="text/javascript">
     CSRF_TOKEN = "{{csrf_token()}}";
