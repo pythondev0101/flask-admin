@@ -79,7 +79,7 @@
                     {% block first_sidebar_navigation %}
                     
                         {% if vdata['module'].module_name == 'admin' %}
-                        <li class="app-sidebar__heading">Administration</li>
+                        <li class="app-sidebar__heading">{{ config['ADMIN']['FIRST_SIDEBAR_HEADER'] }}</li>
                         <li>
                             <a href="{{ url_for(config['ADMIN']['DASHBOARD_URL'])}}" class="{% if context['active']=='main_dashboard' %} mm-active {% endif %}">
                                 <i class="metismenu-icon pe-7s-graph1 icon-gradient bg-premium-dark" aria-hidden="true"></i>
@@ -95,7 +95,7 @@
                     {% endblock %}
 
                     {% block second_sidebar_navigation %}
-                        <li class="app-sidebar__heading">APP Models</li>
+                        <li class="app-sidebar__heading">{{ config['ADMIN']['SECOND_SIDEBAR_HEADER']}}</li>
                             {% for module in context['system_modules'] %}
                                 {% if module['name'] == vdata['module'].module_name %}
                                     {% for model in module['models'] %}

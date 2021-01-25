@@ -4,7 +4,6 @@ from app.core import CoreModule
 
 
 
-
 class AdminModule(CoreModule):
     module_name = 'admin'
     module_icon = 'fa-home'
