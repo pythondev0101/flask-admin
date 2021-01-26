@@ -1,10 +1,9 @@
 """ MODULE: ADMIN.ROUTES """
 from flask import render_template, flash, redirect, url_for, request, jsonify
-from flask_login import login_required, current_user
+from flask_login import login_required
 from flask_cors import cross_origin
 from sqlalchemy import text
-from app import CONTEXT, SYSTEM_MODULES, db
-from app import admin
+from app import CONTEXT, db
 from app.core.models import CoreModel, CoreModule
 from app.admin import bp_admin, admin_render_template
 from app.auth.permissions import check_read
@@ -214,12 +213,10 @@ def admin_dashboard(template, **kwargs):
     from app.auth.models import User
 
     options = {
-        'box1': None,
-        'box2': None,
-        'box3': None,
-        'box4': None,
+        'box1': None,'box2': None,'box3': None,'box4': None,
         'data': None,
-        'title': 'Admin Dashboard'
+        'title': 'Admin Dashboard',
+        'module': 'admin'
     }
 
     options.update(kwargs)
@@ -235,8 +232,8 @@ def admin_dashboard(template, **kwargs):
     
     CONTEXT['active'] = 'main_dashboard'
 
-    return admin_render_template(template, 'admin', context=CONTEXT,title=options['title'], \
-        options=options,data=options['data'])
+    return admin_render_template(template, options['module'], context=CONTEXT, title=options['title'], \
+        options=options, data=options['data'])
 
 
 @bp_admin.route('/') # move to views

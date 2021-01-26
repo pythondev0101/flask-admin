@@ -17,7 +17,7 @@ def admin_render_template(template_name_or_list, module_name, scripts=None, moda
             vdata['module'] = _module
             break
     
-    if module.sidebar is not None:
+    if module is not None and module.sidebar is not None:
         vdata['sidebar'] = module.sidebar
 
     context['vdata'] = vdata
