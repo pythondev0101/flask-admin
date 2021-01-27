@@ -41,7 +41,7 @@
                         {% for model in models %}
                             {% if model.__amname__ in session['permissions'] %}
                             {% if session['permissions'][model.__amname__]['read'] %}
-                                {% if model.__amfunctions___ %}
+                                {% if model.__amfunctions__ is not none %}
                                     <li>
                                         <a href="#" class="{% if (context['active'] == model.__amname__ or parent_model == model.__amname__) %} mm-active {% endif %}">
                                             <i class="metismenu-icon {{ model.__amicon__ }} icon-gradient bg-premium-dark" aria-hidden="true"></i>

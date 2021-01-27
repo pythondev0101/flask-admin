@@ -5,7 +5,7 @@ from app import db
 class Admin(object):
     """ Ito yung mga functions sa dropdown ng model sa admin page sidebar (eg. Create new, View all)
     """
-    __amfunctions__ = [{}]
+    __amfunctions__ = None
     
     """ Ito yung icon sa admin page (eg. pe-7s-users).
     Refer sa dashboardpack.com sa mga available icons
