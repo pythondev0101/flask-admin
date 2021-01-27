@@ -230,8 +230,6 @@ def admin_dashboard(template, **kwargs):
     if options['box3'] is None:
         options['box3'] = DashboardBox("Users","Total users",User.query.count())
     
-    CONTEXT['active'] = 'main_dashboard'
-
     return admin_render_template(template, options['module'], context=CONTEXT, title=options['title'], \
         options=options, data=options['data'])
 
@@ -239,6 +237,7 @@ def admin_dashboard(template, **kwargs):
 @bp_admin.route('/') # move to views
 @login_required
 def dashboard():
+    CONTEXT['active'] = 'main_dashboard'
     return admin_dashboard("admin/admin_dashboard.html")
 
 
