@@ -24,11 +24,12 @@ def load_permissions(user_id):
             system_modules[module_count]['models'].append({'name':model.__amname__,'description':model.__amdescription__,\
                 'icon': model.__amicon__, 'functions': [], 'list_view_url':model.__list_view_url__})
             
-            for function in model.__amfunctions__:
-                for function_name, function_link in function.items():
-                    system_modules[module_count]['models'][model_count]['functions'].append({
-                        function_name:function_link
-                    })
+            if model.__amfunctions__:
+                for function in model.__amfunctions__:
+                    for function_name, function_link in function.items():
+                        system_modules[module_count]['models'][model_count]['functions'].append({
+                            function_name:function_link
+                        })
         
             model_count = model_count + 1
 
