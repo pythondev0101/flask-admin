@@ -33,6 +33,10 @@
     <!-- For extra service declaration -->
     {% endblock %}
     
+    <script type="text/javascript">
+        CSRF_TOKEN = "{{csrf_token()}}";
+    </script> 
+    
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -88,9 +92,6 @@
 </script>
 {% endblock %}
 
-<script type="text/javascript">
-    CSRF_TOKEN = "{{csrf_token()}}";
-</script> 
 
 {% block scripts %}
     <!-- Scripts -->
@@ -100,20 +101,40 @@
 {% if scripts %} 
     
     {% for script in scripts %}
-    
         {% for blueprint, file in script.items() %}
-
             <script src="{{ url_for(blueprint, filename=file) }}"></script>
-        
         {% endfor %}
-    
     {% endfor %}
 
 {% endif %}
 
 
 {% block toast %}
-    <!-- Toasts -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div id="toast-container" class="toast-top-center">
+    {% for category, message in messages %}
+        {% if category == 'success' %}
+        <div class="toast toast-success" aria-live="polite">
+            <div class="toast-progress" style="width: 0%;"></div>
+            <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+            <div class="toast-title">Success!</div>
+            <div class="toast-message">{{ message }}</div>
+        </div>
+        {% elif category == 'error' %}
+        <div class="toast toast-error" aria-live="polite">
+            <div class="toast-progress" style="width: 0%;"></div>
+            <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+            <div class="toast-title">Error!</div>
+            <div class="toast-message">{{ message }}</div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
 {% endblock %}
 
 

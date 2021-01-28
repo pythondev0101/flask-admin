@@ -1,4 +1,5 @@
 {% extends "admin/admin_base.html" %}
+
 {% block content %}
 <div class="app-main__inner">
     <div class="app-page-title">
@@ -67,8 +68,6 @@
 {% block scripts %}
 <script type="text/javascript">
     $(document).ready(function(){
-
-        var CSRF_TOKEN = "{{ csrf_token() }}";
         
         $.ajaxSetup({
             beforeSend: function(xhr, settings) {
@@ -252,30 +251,4 @@
     });
 
 </script>
-{% endblock %}
-
-{% block toast %}
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-<div id="toast-container" class="toast-top-center">
-    {% for category, message in messages %}
-        {% if category == 'success' %}
-        <div class="toast toast-success" aria-live="polite">
-            <div class="toast-progress" style="width: 0%;"></div>
-            <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
-            <div class="toast-title">Success!</div>
-            <div class="toast-message">{{ message }}</div>
-        </div>
-        {% elif category == 'error' %}
-        <div class="toast toast-error" aria-live="polite">
-            <div class="toast-progress" style="width: 0%;"></div>
-            <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
-            <div class="toast-title">Error!</div>
-            <div class="toast-message">{{ message }}</div>
-        </div>
-        {% endif %}
-    {% endfor %}
-</div>
-{% endif %}
-{% endwith %}
 {% endblock %}
