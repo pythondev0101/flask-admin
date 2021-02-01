@@ -50,3 +50,5 @@ class AdminApp(Admin):
     __amname__ = 'admin_app'
     __amdescription__ = 'Apps'
     __amicon__ = 'pe-7s-graph1'
+    __view_url__ = 'bp_admin.apps'
+

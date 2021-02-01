@@ -1,6 +1,8 @@
 from app import CONTEXT
 from app.core.models import CoreModule
-from app.admin import bp_admin, admin_render_template
+from app.admin import bp_admin
+from app.admin.templating import admin_render_template
+from app.admin.models import AdminApp
 
 
 
@@ -8,6 +10,4 @@ from app.admin import bp_admin, admin_render_template
 def apps():
     modules = CoreModule.query.all()
 
-    CONTEXT['active'] = 'apps'
-
-    return admin_render_template('admin/admin_apps.html', 'admin', title='Apps',modules=modules)
+    return admin_render_template(AdminApp, 'admin/admin_apps.html', 'admin', title='Apps',modules=modules)
