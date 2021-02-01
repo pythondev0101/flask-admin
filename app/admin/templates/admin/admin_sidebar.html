@@ -42,7 +42,7 @@
                             {% if session['permissions'][model.__amname__]['read'] or current_user.is_superuser %}
                                 {% if model.__amfunctions__ is not none %}
                                     <li>
-                                        <a href="#" class="{% if (RENDERED_MODEL.__amname__ == model.__amname__ or parent_model == model.__amname__) %} mm-active {% endif %}">
+                                        <a href="#" class="{% if (RENDERED_MODEL.__amname__ == model.__amname__ or RENDERED_MODEL.__parent_model__ == model.__amname__) %} mm-active {% endif %}">
                                             <i class="metismenu-icon {{ model.__amicon__ }} icon-gradient bg-premium-dark" aria-hidden="true"></i>
                                             {{ model.__amdescription__ }}
                                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
