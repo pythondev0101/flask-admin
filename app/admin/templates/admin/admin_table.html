@@ -1,25 +1,36 @@
 {% extends "admin/admin_base.html" %}
 
+
+{% block extra_head %}
+<script type="text/javascript">
+    TABLE_NAME = "{{TABLE_OPTIONS['table_name']}}";
+    VIEW_MODAL = "{{TABLE_OPTIONS['view_modal']}}";
+    JS_FIELDS = `{{MODAL_DATA['js_fields'] | tojson}}`;
+
+</script>
+{% endblock %}
+
+
 {% block content %}
 <div class="app-main__inner">
     <div class="app-page-title">
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    <i class="{{ rendered_model.__amicon__ }} icon-gradient bg-happy-itmeo"></i>
+                    <i class="{{ RENDERED_MODEL.__amicon__ }} icon-gradient bg-happy-itmeo"></i>
                 </div>
                 <div>
-                    {{ heading }}
+                    {{ TABLE_OPTIONS['heading'] }}
                     <div class="page-title-subheading">
-                        {{ sub_heading }}
+                        {{ TABLE_OPTIONS['subheading'] }}
                     </div>
                 </div>
             </div>
             
             {% block actions %}
 
-                {% if action %}
-                    {% include action %}
+                {% if TABLE_OPTIONS['actions'] %}
+                    {% include TABLE_OPTIONS['action_template'] %}
                 {% endif %}
 
             {% endblock %}
@@ -34,28 +45,41 @@
                         <thead>
                         <tr>
                             <th class="text-center"></th>
-                            {% for field in table_fields %}
-                            <th class="text-center">{{ field.upper() }}</th>
+                            {% for column in TABLE_OPTIONS['table_columns'] %}
+                            <th class="text-center">{{ column.upper() }}</th>
                             {% endfor %}
                         </tr>
                         </thead>
                         <tbody>
-                            {% for i in model_data %}
-                                {% if view_modal %}
-                                    <tr class="item row_object" id="{{i[0]}}"  data-toggle="modal" data-target="#viewModal">
-                                    <param id="param_{{i[0]}}" name="param_{{i[0]}}" {% if edit_url %} value="{{url_for(edit_url,oid=i[0])}}" {% endif %}>
+                            
+                            {% for row_data in TABLE_OPTIONS['table_data'] %}
+
+                                {% if TABLE_OPTIONS['view_modal'] %}
+                                    <tr class="item row_object" id="{{row_data[0]}}"  data-toggle="modal" data-target="#viewModal">
+                                    <param id="param_{{row_data[0]}}" name="param_{{row_data[0]}}" {% if TABLE_OPTIONS['edit_url'] %} value="{{url_for(TABLE_OPTIONS['edit_url'],oid=row_data[0])}}" {% endif %}>
                                 {% else %}
-                                <tr class="item row_object" id="{{i[0]}}">
+                                    <tr class="item row_object" id="{{row_data[0]}}">
                                 {% endif %}
+
                                     <!-- TEMPORARY conversion ng boolean word 'true' to 'YES' and 'false' to 'NO' -->
                                     <td class="text-center"></td>
-                                    {% for values in i %}
-                                    {% if loop.index > 1 %}
-                                    <td class="text-center">{% if values|string == 'True' %}YES{% elif values|string == 'False' %}NO{% elif values == none %}{% else %}{{values}}{% endif %}</td>
-                                    {% endif %}
+
+                                    {% for value in row_data %}
+                                        {% if loop.index > 1 %}
+
+                                            <td class="text-center">
+                                                {% if value == none %}
+                                                <!-- pass -->
+                                                {% else %}
+                                                    {{value}}
+                                                {% endif %}
+                                            </td>
+
+                                        {% endif %}
                                     {% endfor %}
                                 </tr>
                             {% endfor %}
+
                         </tbody>
                     </table>
                 </div>
@@ -65,190 +89,15 @@
 </div>
 {% endblock %}
 
-{% block scripts %}
-<script type="text/javascript">
-    $(document).ready(function(){
-        
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", CSRF_TOKEN);
-                }
-            }
-        });
 
-        var dtbl_table = $('#index_table').DataTable({
-            "dom": 'rtip',
-            "pageLength": 20,
-            "order": [[ 1, 'asc' ]]
-        });
+{% block modals %}
+    
+    {% if TABLE_OPTIONS['create_modal'] and TABLE_OPTIONS['create_url'] %}
+        {% include TABLE_OPTIONS['create_modal_template'] %}
+    {% endif %}
 
-        dtbl_table.on( 'order.dt search.dt', function () {
-            dtbl_table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                cell.innerHTML = i+1;
-            } );
-        } ).draw();
+    {% if TABLE_OPTIONS['view_modal'] %}
+        {% include TABLE_OPTIONS['view_modal_template'] %}
+    {% endif %}
 
-        $('.search-input').on('keyup', function () {
-            dtbl_table.search(this.value).draw();
-        } );
-
-        $("#btndelete").click(function(){
-            if($('#btndelete').text()=='Delete'){
-                $('#nav_action_btns').after("<button id='btn_confirm_delete' type='button' tabindex='1' class='dropdown-item'>Confirm Delete</button>");
-                $('#btndelete').html("Cancel");
-                $("tr").removeAttr("data-toggle");
-                $("tr").find("th:last").after('<th>DELETE</th>');
-                $("tr").find("td:last").after("<td><input class='chkbox' type='checkbox'></td>");
-                var ids = [];
-                $("#btn_confirm_delete").click(function(){
-                    $("tr.item").each(function() {
-                        var check = $(this).find("input.chkbox").is(':checked');
-                        if(check){
-                            ids.push(this.id)
-                        }
-                    });
-                    var table = '{{ table }}';
-                    
-                    $.ajax({
-                        url: "/admin/delete-data",
-                        type: "POST",
-                        dataType: "json",
-                        data: JSON.stringify({'ids': ids,'table':table}),
-                        contentType: "application/json; charset=utf-8",
-                        success: function(data) {
-                            if(data.result == 2){
-                                alert("Must check some row!");
-                            }else{
-                                location.reload();
-                            }
-                        }
-                    });
-                });
-            }else{
-                $("#btn_confirm_delete").remove();
-                $('#btndelete').html("Delete");
-                $("tr").attr("data-toggle","modal");
-                $("tr").find("th:last").remove();
-                $("tr").find("td:last").remove();
-            }
-        });
-
-        $("#index_table tbody").on('click','.row_object',function(){
-            var view_modal = '{{ view_modal }}';
-            if (view_modal != 'False'){
-                var id = '#param_' + $(this).attr('id');
-                if(document.body.contains(document.getElementById('view_edit_button'))){
-                    const view_url = $(id).attr('value');
-                    document.getElementById("view_edit_button").setAttribute("href", view_url);
-                    var fields = {% if context['create_modal']['js_fields'] %} {{ context['create_modal']['js_fields'] | tojson }} {% else %} '' {% endif %};
-                    var ctr;
-                    var field;
-                    var field_id = $(this).attr('id');
-                    var table = '{{ table }}';
-
-                    for (ctr=0; ctr < fields.length; ctr++){
-                        $.ajax({
-                            url: `/admin/_get_view_modal_data?table=${table}&column=${fields[ctr]}&id=${field_id}`,
-                            type: "GET",
-                            contentType: "application/json; charset=utf-8",
-                            success: function(data) {
-                                if (data.result){
-                                    field = "#view_" + data.column;
-                                    var input_type = $(field).attr('type');
-                                    if (input_type == 'checkbox'){
-                                        if (data.result == '1'){
-                                            $(field).attr('checked',true);
-                                        }else{
-                                            $(field).attr('checked', false);
-                                        }
-                                    }else{
-                                        $(field).val(data.result);
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-                else{
-                    var fields = {% if context['create_modal']['js_fields'] %} {{ context['create_modal']['js_fields'] | tojson }} {% else %} '' {% endif %};
-                    var ctr;
-                    var field;
-                    var field_id = $(this).attr('id');
-                    var table = '{{ table }}';
-                   
-                    for (ctr=0; ctr < fields.length; ctr++){
-                        $.ajax({
-                            url: `/admin/_get_view_modal_data?table=${table}&column=${fields[ctr]}&id=${field_id}`,
-                            type: "GET",
-                            contentType: "application/json; charset=utf-8",
-                            success: function(data) {
-                                if (data.result){
-                                    field = "#view_" + data.column;
-                                    var input_type = $(field).attr('type');
-                                    if (input_type == 'checkbox'){
-                                        if (data.result == '1'){
-                                            $(field).attr('checked',true);
-                                        }else{
-                                            $(field).attr('checked', false);
-                                        }
-                                    }else{
-                                        $(field).val(data.result);
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-            
-        });
-
-        $("#username").change(function(){
-            var username = document.getElementById("username").value;
-           
-            $.ajax({
-                url: "/auth/username_check",
-                type: "POST",
-                dataType: "json",
-                data: JSON.stringify({'username': username}),
-                contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    if(data.result == 1){
-                        $("#username-invalid-feedback").text("Please provide a valid Username");
-                        document.getElementById("username-invalid-feedback").style.display = "none";
-                        document.getElementById("username-valid-feedback").style.display = "block";
-                    }else{
-                        $("#username-invalid-feedback").text("Username is already taken.");
-                        document.getElementById("username-valid-feedback").style.display = "none";
-                        document.getElementById("username-invalid-feedback").style.display = "block";
-                    }
-                }
-            });
-        });
-        $("#email").change(function(){
-            var email = document.getElementById("email").value;
-
-            $.ajax({
-                url: "/auth/_email_check",
-                type: "POST",
-                dataType: "json",
-                data: JSON.stringify({'email': email}),
-                contentType: "application/json; charset=utf-8",
-                success: function(data) {
-                    if(data.result == 1){
-                        $("#email-invalid-feedback").text("Please provide a valid Email");
-                        document.getElementById("email-invalid-feedback").style.display = "none";
-                        document.getElementById("email-valid-feedback").style.display = "block";
-                    }else{
-                        $("#email-invalid-feedback").text("Email is already taken.");
-                        document.getElementById("email-valid-feedback").style.display = "none";
-                        document.getElementById("email-invalid-feedback").style.display = "block";
-                    }
-                }
-            });
-        });
-    });
-
-</script>
 {% endblock %}
