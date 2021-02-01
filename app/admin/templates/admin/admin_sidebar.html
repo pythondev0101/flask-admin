@@ -49,14 +49,13 @@
                                         </a>
                                         <ul>
                                             {% for function in model.__amfunctions__ %}
-                                            {% for name,link in function.items() %}
                                             <li>
-                                                <a href="{{ url_for(link) }}" class="model-function">
+                                                <a href="{{ url_for(function[1]) }}" 
+                                                class="model-function {% if RENDERED_MODEL.__amname__ == function[2] %} mm-active {% endif %}">
                                                     <i class="metismenu-icon">
-                                                    </i>{{ name }}
+                                                    </i>{{ function[0] }}
                                                 </a>
                                             </li>
-                                            {% endfor %}
                                             {% endfor %}
                                         </ul>
                                     </li>
@@ -91,14 +90,13 @@
                                                         </a>
                                                         <ul>
                                                             {% for function in model.__amfunctions__ %}
-                                                                {% for name,link in function.items() %}
                                                                 <li>
-                                                                    <a href="{{ url_for(link) }}" class="model-function">
+                                                                    <a href="{{ url_for(function[1]) }}" 
+                                                                    class="model-function {% if RENDERED_MODEL.__amname__ == function[2] %} mm-active {% endif %}">
                                                                         <i class="metismenu-icon">
-                                                                        </i>{{ name }}
+                                                                        </i>{{ function[0] }}
                                                                     </a>
                                                                 </li>
-                                                                {% endfor %}
                                                             {% endfor %}
                                                         </ul>
                                                     </li>
