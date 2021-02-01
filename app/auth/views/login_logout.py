@@ -19,7 +19,8 @@ def login():
     if request.method == "GET":
         if current_user.is_authenticated:
             return redirect(url_for(admin_urls['admin']))
-        return render_template(auth_templates['login'], title=CONTEXT.get('app_name'), form=form)
+        return render_template(auth_templates['login'], \
+            title=current_app.config['ADMIN']['APPLICATION_NAME'], form=form)
     
     if not form.validate_on_submit():
         for key, value in form.errors.items():

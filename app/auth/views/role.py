@@ -7,20 +7,21 @@ from app import db
 from app.auth.models import Role, RolePermission
 from app.auth.forms import RoleCreateForm, RoleEditForm
 from app.core.models import CoreModel
-from app.admin.routes import admin_table, admin_edit
+from app.admin.templating import admin_table, admin_edit
 from app.auth.permissions import load_permissions
 
 
 
 @bp_auth.route('/roles')
 @login_required
-def roles(**kwargs):
+def roles(**options):
     fields = [Role.id,Role.name,Role.created_at, Role.updated_at]
     form = RoleCreateForm()
     form.inline.models = CoreModel.query.all()
-    return admin_table(Role,fields=fields,form=form, create_modal="auth/role_create_modal.html", \
+
+    return admin_table(Role, fields=fields, form=form, create_modal_template="auth/role_create_modal.html", \
         create_url='bp_auth.role_create',edit_url='bp_auth.role_edit', \
-            view_modal="auth/role_view_modal.html",kwargs=kwargs)
+            view_modal_template="auth/role_view_modal.html", **options)
 
 
 @bp_auth.route('/role_create',methods=['GET','POST'])
@@ -59,7 +60,7 @@ def role_create():
 
 @bp_auth.route('/role_edit/<int:oid>',methods=['GET','POST'])
 @login_required
-def role_edit(oid,**kwargs):
+def role_edit(oid,**options):
     role = Role.query.get_or_404(oid)
     form = RoleEditForm(obj=role)
 
@@ -69,18 +70,23 @@ def role_edit(oid,**kwargs):
         models = db.session.query(CoreModel).filter(~CoreModel.id.in_(query1))
         form.model_inline.models = models
         form.permission_inline.models = role_permissions
-        return admin_edit(form,"bp_auth.role_edit",oid,model=Role,kwargs=kwargs)
-    elif request.method == "POST":
-        if form.validate_on_submit():
-            role.name = form.name.data
-            role.updated_at = datetime.now()
-            db.session.commit()
-            flash('Role update Successfully!','success')
-            return redirect(url_for('bp_auth.roles'))
-        else:    
-            for key, value in form.errors.items():
-                flash(str(key) + str(value), 'error')
-            return redirect(url_for('bp_auth.roles'))
+        
+        return admin_edit(Role, form, "bp_auth.role_edit", oid, 'bp_auth.roles', **options)
+
+    if not form.validate_on_submit():
+        for key, value in form.errors.items():
+            flash(str(key) + str(value), 'error')
+        return redirect(url_for('bp_auth.roles'))
+
+    try:
+        role.name = form.name.data
+        role.updated_at = datetime.now()
+        db.session.commit()
+        flash('Role update Successfully!','success')
+    except Exception as e:
+        flash(str(e),'error')
+
+    return redirect(url_for('bp_auth.roles'))
 
 
 @bp_auth.route('/role_add_permission/<int:oid>/', methods=['POST'])

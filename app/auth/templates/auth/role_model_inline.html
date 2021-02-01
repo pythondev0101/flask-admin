@@ -1,6 +1,6 @@
 {% for model in inline.models %}
 <tr>
-<form action="{{ url_for('bp_auth.role_add_permission',oid=oid,model_id=model.id) }}" method="POST">
+<form action="{{ url_for('bp_auth.role_add_permission',oid=OID,model_id=model.id) }}" method="POST">
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 <td scope="row"><strong>{{ model.name }}</strong></td>
 <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input type="checkbox" id="chk_read" name="chk_read" class="form-check-input"/></label></div></td>

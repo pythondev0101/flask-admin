@@ -24,7 +24,7 @@ class User(UserMixin, Base, Admin):
     __amicon__ = 'pe-7s-users'	
     __amdescription__ = "Users"	
     # __amfunctions__ = [{'View users': 'bp_auth.users'},{'View roles': 'bp_auth.roles'}]
-    __list_view_url__ = 'bp_auth.users'
+    __view_url__ = 'bp_auth.users'
 
     """ COLUMNS """
     username = db.Column(db.String(64), nullable=False, index=True, unique=True)
@@ -75,7 +75,7 @@ class Role(Base, Admin):
     __amname__ = 'role'
     __amicon__ = 'pe-7s-id'
     __amdescription__ = "Roles"
-    __list_view_url__ = 'bp_auth.roles'
+    __view_url__ = 'bp_auth.roles'
 
     """ COLUMNS """
     name = db.Column(db.String(64), nullable=False)
