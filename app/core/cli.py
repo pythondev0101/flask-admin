@@ -5,7 +5,7 @@ import csv
 from shutil import copyfile
 from config import basedir
 from app.core.models import CoreModel, CoreModule
-from app import MODULES, SYSTEM_MODULES
+from app import MODULES
 from app import db
 from . import bp_core
 from .models import CoreCity,CoreProvince
@@ -167,7 +167,7 @@ def create_module(module_name):
                 file_name = os.path.basename(file_path)
                 copyfile(file_path, os.path.join(module_path, file_name))
     except OSError as e:
-        print("Creation of the directory %s failed" % module_path)
+        print("Creation of the directory failed")
         print(e)
     else:
         print("Successfully created the directory %s " % module_path)

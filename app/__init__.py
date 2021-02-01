@@ -3,8 +3,7 @@ app/__init__.py
 ====================================
 Create our application
 """
-
-from flask import Flask, session, g
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -12,7 +11,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
 from config import app_config
 
-# DEVELOPER-NOTE: -INCLUDE YOUR IMPORTS HERE-
+# DEVELOPERS-NOTE: -INCLUDE YOUR IMPORTS HERE-
 
 #                  -END-
 
@@ -22,16 +21,17 @@ csrf = CSRFProtect()
 cors = CORS()
 login_manager = LoginManager()
 
-# DEVELOPER-NOTE: -INITIATE YOUR IMPORTS HERE-
+# DEVELOPERS-NOTE: -INITIATE YOUR IMPORTS HERE-
 
 #                   -END-
 
 
 MODULES = []
 
-SYSTEM_MODULES = []
+CONTEXT = {
+    'system_modules': []
+}
 
-CONTEXT = session
 
 def internal_server_error(e):
     from flask import render_template
@@ -55,7 +55,7 @@ def create_app(config_name):
     cors.init_app(app)
     csrf.init_app(app)
 
-    # DEVELOPER-NOTE: -INITIALIZE YOUR IMPORTS HERE-
+    # DEVELOPERS-NOTE: -INITIALIZE YOUR IMPORTS HERE-
 
     #                    -END-
 
@@ -64,40 +64,34 @@ def create_app(config_name):
 
     with app.app_context():
 
-        # DEVELOPER-NOTE: -IMPORT HERE THE SYSTEM MODULES-
+        # DEVELOPERS-NOTE: -IMPORT HERE THE SYSTEM MODULES-
         from app.core import bp_core
         from app.auth import bp_auth
         from app.admin import bp_admin
         # -Add here-
         #                   -END-
 
-        # DEVELOPER-NOTE: -REGISTER HERE THE MODULE BLUEPRINTS-
+        # DEVELOPERS-NOTE: -REGISTER HERE THE MODULE BLUEPRINTS-
         app.register_blueprint(bp_core, url_prefix='/')
         app.register_blueprint(bp_auth, url_prefix='/auth')
         app.register_blueprint(bp_admin, url_prefix='/admin')
         # -Add here-
         #               -END-
 
-        # DEVELOPER-NOTE: -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
+        # DEVELOPERS-NOTE: -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
         from app.admin.admin import AdminModule
         from app.auth.auth import AuthModule
         # -Add here-
         #                  -END-
         
-        # DEVELOPER-NOTE: -APPEND YOUR MODULE HERE-
+        # DEVELOPERS-NOTE: -APPEND YOUR MODULE HERE-
         MODULES.append(AdminModule)
         MODULES.append(AuthModule)
         # -Add here-
         #                  -END-
 
-        @app.before_first_request
-        def setup_context():
-            CONTEXT['system_modules'] = SYSTEM_MODULES
-            CONTEXT['active']: str
-            CONTEXT['errors']: dict
-            CONTEXT['create_modal']: dict
-            CONTEXT['header_color'] = 'header_color15' # Default color
-            CONTEXT['sidebar_color'] = "sidebar_color15" # Default color
-            CONTEXT['app_name'] = "Likes" # TODO
+        # Load CONTEXT data
+        CONTEXT['header_color'] = 'header_color15' # Default color
+        CONTEXT['sidebar_color'] = "sidebar_color15" # Default color
 
     return app
