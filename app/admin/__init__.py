@@ -21,5 +21,8 @@ admin_templates = {
     'index': 'admin/admin_dashboard.html',
 }
 
+from . import templating
 from . import routes
 from . import models
+from . import views
+from . import notifications

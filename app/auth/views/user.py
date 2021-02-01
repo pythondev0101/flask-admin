@@ -10,17 +10,18 @@ from app.auth.models import User, UserPermission, Role
 from app.auth.forms import UserForm, UserEditForm, UserPermissionForm
 from app.auth import auth_urls
 from app.auth.permissions import load_permissions, check_create
-from app.admin.routes import admin_table, admin_edit
+from app.admin.templating import admin_table, admin_edit
 
 
 
 @bp_auth.route('/users')
 @login_required
-def users(**kwargs):
+def users(**options):
     form = UserForm()
     fields = [User.id, User.username, User.fname, User.lname, Role.name, User.email]
     models = [User, Role]
-    return admin_table(*models, fields=fields, list_view_url=auth_urls['users'], create_url='bp_auth.create_user', edit_url="bp_auth.edit_user", form=form,kwargs=kwargs)
+
+    return admin_table(*models, fields=fields, form=form, create_url='bp_auth.create_user', edit_url="bp_auth.edit_user", **options)
 
 
 @bp_auth.route('/users/create', methods=['POST'])
@@ -86,9 +87,12 @@ def edit_user(oid,**kwargs):
         user_permissions = UserPermission.query.filter_by(user_id=oid).all()
         form.permission_inline.models = user_permissions
 
-        return admin_edit(form=form, update_url=auth_urls['edit'], action="auth/user_edit_action.html", \
-            oid=oid, modal_form=True,extra_modal='auth/user_change_password_modal.html', scripts=[{'bp_auth.static':'js/auth.js'},],
-            model=User,kwargs=kwargs)
+        _scripts = [
+            {'bp_auth.static': 'js/auth.js'},
+            {'bp_admin.static': 'js/admin_edit.js'}
+        ]
+        return admin_edit(User, form, auth_urls['edit'], oid, auth_urls['users'],action_template="auth/user_edit_action.html", \
+            modals=['auth/user_change_password_modal.html'], scripts=_scripts, **kwargs)
     
     if not form.validate_on_submit():
         for key, value in form.errors.items():

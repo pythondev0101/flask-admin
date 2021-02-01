@@ -42,12 +42,12 @@
             </div>
             <!-- NAVIGATION FOR MODULES -->
             <ul class="header-menu nav">
-            {% for module in context['system_modules'] %}
-                {% if not module['background_app'] %}          
+            {% for module in MODULES %}
+                {% if not module.background_app %}
                 <li class="nav-item">
-                    <a href="{{ url_for(module['link']) }}" class="nav-link">
-                        <i class="nav-link-icon fa {{ module['icon'] }} {% if module['name'] == context['module'] %}icon-gradient bg-malibu-beach{% endif %}"> </i>
-                        {{ module['short_description'] }}
+                    <a href="{{ url_for(module.module_link) }}" class="nav-link">
+                        <i class="nav-link-icon fa {{ module.module_icon }} {% if module.module_name == VDATA['module'].module_name %}icon-gradient bg-malibu-beach{% endif %}"> </i>
+                        {{ module.module_short_description }}
                     </a>
                 </li>
                 {% endif %}

@@ -1,13 +1,23 @@
-from app.auth.models import User,Role
+from flask import current_app
 from app.core import CoreModule
+from .models import AdminDashboard, AdminApp
+from app.auth.models import User,Role
 
 
 
 class AdminModule(CoreModule):
     module_name = 'admin'
     module_icon = 'fa-home'
-    module_link = 'bp_admin.dashboard'
+    module_link = current_app.config['ADMIN']['HOME_URL']
     module_short_description = 'Administration'
     module_long_description = "Administration Dashboard and pages"
-    models = [User, Role]
+    models = [AdminDashboard, AdminApp, User, Role]
     version = '1.0'
+    sidebar = {
+        'DASHBOARDS': [
+            AdminDashboard, AdminApp
+        ],
+        'SYSTEM MODELS': [
+            User, Role
+        ]
+    }

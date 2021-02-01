@@ -3,7 +3,7 @@ from app.core import CoreModule
 
 
 class AuthModule(CoreModule):
-    backgroud_app = True
+    background_app = True
     module_name = 'auth'
     module_icon = None
     module_link = None

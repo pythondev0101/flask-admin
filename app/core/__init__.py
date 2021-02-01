@@ -4,10 +4,10 @@ from flask import Blueprint, request, redirect, url_for, render_template
 from flask_login import current_user
 
 
+
 core_urls = {
     'index': 'core.index',
 }
-
 
 bp_core = Blueprint('core', __name__)
 
@@ -31,7 +31,9 @@ class CoreModule:
 
     no_admin_models = []
     
-    backgroud_app = False
+    background_app = False
+
+    sidebar = None
 
     @property
     def module_name(self):

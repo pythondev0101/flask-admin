@@ -5,7 +5,7 @@ import csv
 from shutil import copyfile
 from config import basedir
 from app.core.models import CoreModel, CoreModule
-from app import MODULES, SYSTEM_MODULES
+from app import MODULES
 from app import db
 from . import bp_core
 from .models import CoreCity,CoreProvince
@@ -42,10 +42,6 @@ def core_install():
         module_count = 0
 
         for module in MODULES:
-            SYSTEM_MODULES.append({'name':module.module_name,'short_description': module.module_short_description,
-            'long_description':module.module_long_description,'link': module.module_link,
-            'icon': module.module_icon, 'models': []})
-            
             # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
             homebest_module = CoreModule.query.filter_by(name=module.module_name).first()
             last_id = 0
@@ -67,15 +63,7 @@ def core_install():
                     db.session.add(new_model)
                     db.session.commit()
                     print("MODEL - {}: SUCCESS".format(new_model.name))
-                SYSTEM_MODULES[module_count]['models'].append({'name':model.__amname__,'description':model.__amdescription__,\
-                    'icon': model.__amicon__, 'functions': []})
-                
-                for function in model.__amfunctions__:
-                    for function_name, function_link in function.items():
-                        SYSTEM_MODULES[module_count]['models'][model_count]['functions'].append({
-                            function_name:function_link
-                        })
-            
+
                 model_count = model_count + 1
 
             if len(module.no_admin_models) > 0 :
@@ -136,6 +124,7 @@ def core_install():
             _create_superuser()
 
     except Exception as exc:
+        print(str(exc))
         return False
 
     return True
@@ -166,7 +155,9 @@ def create_module(module_name):
             core_init_path = basedir + "/app" + "/core" + "/module_template" + "/__init__.py"
             core_models_path = basedir + "/app" + "/core" + "/module_template" + "/models.py"
             core_routes_path = basedir + "/app" + "/core" + "/module_template" + "/routes.py"
-
+        else:
+            raise Exception
+        
         core_file_list = [core_init_path, core_models_path, core_routes_path]
 
         if not os.path.exists(module_path):
@@ -176,7 +167,7 @@ def create_module(module_name):
                 file_name = os.path.basename(file_path)
                 copyfile(file_path, os.path.join(module_path, file_name))
     except OSError as e:
-        print("Creation of the directory %s failed" % module_path)
+        print("Creation of the directory failed")
         print(e)
     else:
         print("Successfully created the directory %s " % module_path)

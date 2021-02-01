@@ -1,26 +1,24 @@
 <div class="page-title-actions">
-    
-    {% if session['permissions'][context['model']] is defined %}
+    {% if session['permissions'][RENDERED_MODEL.__amname__] is defined %}
 
-        {% if session['permissions'][context['model']]['create'] or current_user.is_superuser %}
+        {% if session['permissions'][RENDERED_MODEL.__amname__]['create'] or current_user.is_superuser %}
 
-            {% if create_modal %}
+            {% if TABLE_OPTIONS['create_modal'] %}
                 <button type="button" data-toggle="modal" data-target="#create_modal" title="Create new" data-placement="bottom"
                         class="btn-shadow mr-3 btn btn-primary">
-                    {% if rendered_model.__amname__ == 'user' %}
+                    {% if RENDERED_MODEL.__amname__ == 'user' %}
                     <i class="fa fa-user-plus"></i>
                     {% else %}
                     <i class="fa fa-plus"></i>
                     {% endif %}
                 </button>
             
-            {% elif create_button and context['create_modal']['create_url'] is not none %}
-                <a href="{{ url_for(context['create_modal']['create_url']) }}" type="button" class="btn-shadow mr-3 btn btn-primary">
+            {% elif TABLE_OPTIONS['create_button'] and MODAL_DATA['create_url'] is not none %}
+                <a href="{{ url_for(MODAL_DATA['create_url']) }}" type="button" class="btn-shadow mr-3 btn btn-primary">
                     <i class="fa fa-plus"></i>
                 </a>
 
             {% else %}
-                TesT    
 
             {% endif %}
 
@@ -37,8 +35,8 @@
         </button>
         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
             <ul class="nav flex-column">
-                {% if session['permissions'][context['model']] is defined %}
-                {% if session['permissions'][context['model']]['delete'] or current_user.is_superuser %}
+                {% if session['permissions'][RENDERED_MODEL.__amname__] is defined %}
+                {% if session['permissions'][RENDERED_MODEL.__amname__]['delete'] or current_user.is_superuser %}
                 <li id="nav_action_btns" class="nav-item">
                     {% block dropdown_buttons %}
                     <button id="btndelete" type="button" tabindex="0" class="dropdown-item">Delete</button>

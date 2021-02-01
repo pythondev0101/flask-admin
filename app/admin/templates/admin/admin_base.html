@@ -21,14 +21,21 @@
     =========================================================
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
+    
+    {% block default_head %}
     <link href="{{ url_for('bp_admin.static', filename='css/lib/main.css') }}" rel="stylesheet">
     <link href="{{ url_for('bp_admin.static', filename='css/homebest.css') }}" rel="stylesheet">
     <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"> -->
     <link href="{{ url_for('bp_admin.static', filename='DataTables/datatables.css') }}" rel="stylesheet">
-    
+    {% endblock %}
+
     {% block extra_head %}
     <!-- For extra service declaration -->
     {% endblock %}
+    
+    <script type="text/javascript">
+        CSRF_TOKEN = "{{csrf_token()}}";
+    </script> 
     
 </head>
 <body>
@@ -65,42 +72,87 @@
             </div>
         </div>
     </div>
+
+{% block default_scripts %}
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/lib/main.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/homebest.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/lib/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='DataTables/datatables.js') }}"></script>
-
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/sidebar.js') }}"></script>
-
 <script>
     (function() {
-      var header_color = document.getElementById("{{ context['header_color'] }}");
-      var sidebar_color = document.getElementById("{{ context['sidebar_color'] }}");
+      var header_color = document.getElementById("{{ CONTEXT['header_color'] }}");
+      var sidebar_color = document.getElementById("{{ CONTEXT['sidebar_color'] }}");
       var fixed_footer = document.getElementById("chkbox_fixed_footer");
       //setTimeout(function() {
         //header_color.click();
         //sidebar_color.click();
       //}, 100);
     })();
-    </script>
-    
-    {% block scripts %}{% endblock %}
+</script>
+{% endblock %}
 
-    {% block toast %}{% endblock %}
+
+{% block scripts %}
+    <!-- Scripts -->
+{% endblock %}
+
+
+{% if SCRIPTS %} 
+    
+    {% for script in SCRIPTS %}
+        {% for blueprint, file in script.items() %}
+            <script src="{{ url_for(blueprint, filename=file) }}"></script>
+        {% endfor %}
+    {% endfor %}
+
+{% endif %}
+
+
+{% block toast %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div id="toast-container" class="toast-top-center">
+    {% for category, message in messages %}
+        {% if category == 'success' %}
+        <div class="toast toast-success" aria-live="polite">
+            <div class="toast-progress" style="width: 0%;"></div>
+            <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+            <div class="toast-title">Success!</div>
+            <div class="toast-message">{{ message }}</div>
+        </div>
+        {% elif category == 'error' %}
+        <div class="toast toast-error" aria-live="polite">
+            <div class="toast-progress" style="width: 0%;"></div>
+            <button type="button" class="toast-close-button" role="button" onclick="close_toast()">×</button>
+            <div class="toast-title">Error!</div>
+            <div class="toast-message">{{ message }}</div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+{% endblock %}
+
 
 </body>
 </html>
 
-<!--INCLUDE HERE: MODALS-->
+<!-- MODALS -->
 {% block modals %}
-    {% if create_modal and context['create_modal']['create_url'] %}
-        {% include create_modal %}
-    {% endif %}
-    {% if view_modal %}
-        {% include view_modal %}
-    {% endif %}
 
-    {% if extra_modal %}
-        {% include extra_modal %}
-    {% endif %}
 {% endblock %}
+
+
+{% if MODALS %} 
+    
+    {% for modal_file in MODALS %}
+    
+        {% include modal_file %}
+    
+    {% endfor %}
+
+{% endif %}

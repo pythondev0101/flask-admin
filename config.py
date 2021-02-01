@@ -1,7 +1,38 @@
 import os
 from dotenv import load_dotenv
 
+
+
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+class Config(object):
+    load_dotenv()
+
+    SECRET_KEY = os.environ.get('SECRET_KEY') # Key
+
+    CORS_HEADERS = 'Content-Type' # Flask Cors
+
+    # DEVELOPERS-NOTE: ADMIN PAGE CONFIGURATIONS HERE
+    ADMIN = {
+        'APPLICATION_NAME': 'Likes',
+        'DATA_PER_PAGE': 25,
+        'HOME_URL': 'bp_admin.dashboard',
+        'DASHBOARD_URL': 'bp_admin.dashboard',
+        'MODELS_SIDEBAR_HEADER': 'SYSTEM MODELS'
+    }
+    #                 -END-
+
+    # DEVELOPERS-NOTE: AUTH CONFIGURATIONS HERE
+    AUTH = {
+        'LOGIN_REDIRECT_URL': 'bp_admin.dashboard',
+    }
+    #                 -END-
+
+    # DEVELOPERS-NOTE: -ADD YOUR CONFIGURATIONS HERE-
+    
+    #                 -END-
+
 
 def _get_database(server):
     load_dotenv()
@@ -14,20 +45,6 @@ def _get_database(server):
         return "mysql://{}:{}@{}/{}".format(user,password,host,database)
     else:
         return "mysql+pymysql://{}:{}@{}/{}".format(user,password,host,database)
-
-
-class Config(object):
-    load_dotenv()
-
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-
-    """ FLASK-CORS """
-    CORS_HEADERS = 'Content-Type'
-
-    """ PAGINATION """
-    DATA_PER_PAGE = 7
-
-    # Add your configurations here
 
 
 class DevelopmentConfig(Config):
