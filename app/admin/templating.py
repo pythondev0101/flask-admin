@@ -161,6 +161,7 @@ def admin_edit(model, form, update_url, oid, table_url, **options):
     module_name = CoreModule.query.get(_query1.module_id).name
 
     edit_options = {
+        'module_name': module_name,
         'update_url': update_url,
         'edit_template': "admin/admin_edit.html",
         'action_template': "admin/admin_edit_actions.html",
@@ -194,7 +195,7 @@ def admin_edit(model, form, update_url, oid, table_url, **options):
         elif _field_count >= 3:
             edit_options['fields_sizes'].append(4)
 
-    return admin_render_template(model, edit_options['edit_template'], module_name, FORM=form,\
+    return admin_render_template(model, edit_options['edit_template'], edit_options['module_name'], FORM=form,\
         EDIT_OPTIONS=edit_options, OID=oid, scripts=edit_options['scripts'], modals=edit_options['modals'],\
             title=edit_options['title'])
 
