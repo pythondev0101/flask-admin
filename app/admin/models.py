@@ -12,7 +12,7 @@ class Admin(object):
     """
     __amicon__ = ""
     
-    __list_view_url__ = ''
+    __view_url__ = 'bp_admin.no_view_url'
 
     __parent_model__ = None
 
@@ -37,3 +37,16 @@ class AdminOptions(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
     header_color = db.Column(db.String(64))
     sidebar_color = db.Column(db.String(64))
+
+
+class AdminDashboard(Admin):
+    __amname__ = 'admin_dashboard'
+    __amdescription__ = 'Admin Dashboard'
+    __amicon__ = 'pe-7s-graph1'
+    __view_url__ = 'bp_admin.dashboard'
+
+
+class AdminApp(Admin):
+    __amname__ = 'admin_app'
+    __amdescription__ = 'Apps'
+    __amicon__ = 'pe-7s-graph1'
