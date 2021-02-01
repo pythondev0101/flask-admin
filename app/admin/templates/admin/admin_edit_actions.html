@@ -10,11 +10,11 @@
         </button>
         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
             <ul class="nav flex-column">
-                {% if session['permissions'][context['active']] is defined %}
-                {% if session['permissions'][context['active']]['delete'] or current_user.is_superuser %}
+                {% if session['permissions'][RENDERED_MODEL.__amname__] is defined %}
+                {% if session['permissions'][RENDERED_MODEL.__amname__]['delete'] or current_user.is_superuser %}
                 <li id="nav_action_btns" class="nav-item">
                     {% block dropdown_buttons %}
-                    <form action="{{url_for('bp_admin.delete',delete_table=delete_table,oid=oid,list_view_url=context['current_list_view_url'])}}" method="POST">
+                    <form action="{{url_for('bp_admin.delete',table_name=EDIT_OPTIONS['table_name'],oid=OID,table_url=EDIT_OPTIONS['table_url'])}}" method="POST">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <button type='submit' tabindex="0" class="dropdown-item">Delete</button>
                     </form>
