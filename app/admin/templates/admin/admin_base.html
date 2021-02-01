@@ -81,8 +81,8 @@
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/sidebar.js') }}"></script>
 <script>
     (function() {
-      var header_color = document.getElementById("{{ context['header_color'] }}");
-      var sidebar_color = document.getElementById("{{ context['sidebar_color'] }}");
+      var header_color = document.getElementById("{{ CONTEXT['header_color'] }}");
+      var sidebar_color = document.getElementById("{{ CONTEXT['sidebar_color'] }}");
       var fixed_footer = document.getElementById("chkbox_fixed_footer");
       //setTimeout(function() {
         //header_color.click();
@@ -98,9 +98,9 @@
 {% endblock %}
 
 
-{% if scripts %} 
+{% if SCRIPTS %} 
     
-    {% for script in scripts %}
+    {% for script in SCRIPTS %}
         {% for blueprint, file in script.items() %}
             <script src="{{ url_for(blueprint, filename=file) }}"></script>
         {% endfor %}
@@ -141,24 +141,15 @@
 </body>
 </html>
 
-<!--INCLUDE HERE: MODALS-->
+<!-- MODALS -->
 {% block modals %}
-    {% if create_modal and context['create_modal']['create_url'] %}
-        {% include create_modal %}
-    {% endif %}
-    {% if view_modal %}
-        {% include view_modal %}
-    {% endif %}
 
-    {% if extra_modal %}
-        {% include extra_modal %}
-    {% endif %}
 {% endblock %}
 
 
-{% if modals %} 
+{% if MODALS %} 
     
-    {% for modal_file in modals %}
+    {% for modal_file in MODALS %}
     
         {% include modal_file %}
     
