@@ -79,9 +79,9 @@ def admin_table(*models, fields, form=None, **options):
         'actions': True,
         'create_modal': None, # Form is needed to enable
         'view_modal': None, # Form is needed
-        'extra_modal_template': None,
         'parent_model': None,
         'table_name': table_name,
+        'modals': [],
         'scripts': [
             {'bp_admin.static': 'js/admin_table.js'}
             ]
@@ -151,7 +151,7 @@ def admin_table(*models, fields, form=None, **options):
 
     return admin_render_template(models[0], table_options['table_template'], table_options['module_name'],\
         FORM=form, TABLE_OPTIONS=table_options, MODAL_DATA=modal_data, scripts=table_options['scripts'], \
-            title=table_options['title'])
+            modals=table_options['modals'], title=table_options['title'])
 
 
 def admin_edit(model, form, update_url, oid, table_url, **options):
