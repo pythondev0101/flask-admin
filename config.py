@@ -80,11 +80,3 @@ app_config = {
     'production': ProductionConfig,
     'testing': TestingConfig
 }
-
-
-class HomeBestConfig:
-    load_dotenv()
-    HOST = os.environ.get('DATABASE_HOST')
-    USER = os.environ.get('DATABASE_USER')
-    PASSWORD = os.environ.get('DATABASE_PASSWORD')
-    DATABASE = os.environ.get('DATABASE_NAME')
