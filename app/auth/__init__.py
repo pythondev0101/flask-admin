@@ -15,7 +15,6 @@ auth_urls = {
     'create': 'bp_auth.create_user',
     'edit': 'bp_auth.edit_user',
     'delete': 'bp_auth.user_delete',
-    'user_add_permission': 'bp_auth.user_add_permission',
     'user_permission_index': 'bp_auth.user_permission_index',
     'role_index': 'bp_auth.role_index',
 }

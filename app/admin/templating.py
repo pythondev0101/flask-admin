@@ -1,5 +1,4 @@
 from flask import render_template
-from sqlalchemy.sql.expression import table
 from app import MODULES, CONTEXT, db
 from app.core.models import CoreModel, CoreModule
 from app.auth.permissions import check_read
@@ -35,8 +34,6 @@ def admin_render_template(rendered_model, template_name_or_list, module_name, sc
 
 
 def admin_dashboard(model, **kwargs):
-    from app.auth.models import User
-
     options = {
         'dashboard_template': "admin/admin_dashboard.html",
         'box1': None,'box2': None,'box3': None,'box4': None,

@@ -107,17 +107,17 @@
                     {% for inline in FORM.inlines %}
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <h5 class="card-title">{{ inline.title.upper() }}</h5>
+                            <h5 class="card-title">{{ inline.__title__.upper() }}</h5>
                             <table class="mb-0 table table-hover inline_table">
                                 <thead>
                                 <tr>
-                                    {% for header in inline.headers %}
+                                    {% for header in inline.__table_columns__ %}
                                     <th>{{ header.upper() }}</th>
                                     {% endfor %}
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {% for model in inline.models %}
+                                    {% for model in inline.data %}
                                     <tr>
                                     <td scope="row"><strong>{{ model.name }}</strong></td>
                                     <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input type="checkbox" id="chk_read_{{model.id}}" name="chk_read_{{model.id}}" class="form-check-input"/></label></div></td>

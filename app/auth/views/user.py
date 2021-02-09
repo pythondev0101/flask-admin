@@ -85,7 +85,7 @@ def edit_user(oid,**kwargs):
 
     if request.method == "GET":
         user_permissions = UserPermission.query.filter_by(user_id=oid).all()
-        form.permission_inline.models = user_permissions
+        form.permission_inline.data = user_permissions
 
         _scripts = [
             {'bp_auth.static': 'js/auth.js'},
@@ -116,7 +116,6 @@ def edit_user(oid,**kwargs):
         flash(str(e),'error')
     
     return redirect(url_for(auth_urls['users']))
-
 
 
 @bp_auth.route('/permissions')
@@ -182,6 +181,7 @@ def edit_permission(oid1, oid2):
         resp = jsonify(0)
         resp.headers.add('Access-Control-Allow-Origin', '*')
         resp.status_code = 200
+        
         return resp
 
     if permission_type == 'read':
@@ -197,47 +197,11 @@ def edit_permission(oid1, oid2):
         permission.delete = value
 
     db.session.commit()
+
     load_permissions(current_user.id)
+
     resp = jsonify(1)
     resp.headers.add('Access-Control-Allow-Origin', '*')
     resp.status_code = 200
+
     return resp
-
-
-@bp_auth.route('/user_add_permission/<int:oid>/', methods=['POST'])
-@login_required
-def user_add_permission(oid):
-    if request.method == "POST":
-        user = User.query.get_or_404(oid)
-        model = CoreModel.query.filter_by(id=request.args.get('model_id')).first()
-        read, create, write, delete = request.form.get('chk_read', 0), request.form.get('chk_create', 0), \
-            request.form.get('chk_write', 0), request.form.get('chk_delete', 0)
-
-        if read == 'on':
-            read = 1
-        if create == 'on':
-            create = 1
-        if write == 'on':
-            write = 1
-        if delete == 'on':
-            delete = 1
-
-        permission = UserPermission(user_id=user.id, model=model, read=read, create=create, write=write, delete=delete)
-        user.permissions.append(permission)
-        db.session.commit()
-        load_permissions(current_user.id)
-        return redirect(url_for(auth_urls['edit'], oid=oid))
-
-
-@bp_auth.route('/user_delete_permission/<int:oid>/', methods=['POST'])
-@login_required
-def user_delete_permission(oid):
-    if request.method == "POST":
-        try:
-            permission = UserPermission.query.get(oid)
-            db.session.delete(permission)
-            db.session.commit()
-            load_permissions(current_user.id)
-            return redirect(request.referrer)
-        except Exception as e:
-            db.session.rollback()
