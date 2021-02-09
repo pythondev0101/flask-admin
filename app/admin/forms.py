@@ -49,18 +49,18 @@ class AdminEditForm(FlaskForm):
 
 
 class AdminInlineForm(object):
-    models = None
+    data = None
 
     @property
-    def headers(self):
-        raise NotImplementedError('Must implement headers')
+    def __table_columns__(self):
+        raise NotImplementedError('Must implement table_columns')
 
     @property
-    def title(self):
+    def __title__(self):
         raise NotImplementedError('Must implement title')
 
     @property
-    def html(self):
+    def __html__(self):
         raise NotImplementedError('Must implement html')
 
 
