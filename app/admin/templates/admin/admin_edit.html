@@ -167,6 +167,15 @@
                     </table>
 
                 </div>
+                
+                {% if inline.buttons %}
+                    <div class="d-block text-center card-footer">
+                        {% for button in inline.buttons %}
+                            {{button | safe}}
+                        {% endfor %}
+                    </div> 
+                {% endif %}
+
             </div>
         {% endfor %}
 

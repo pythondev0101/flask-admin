@@ -63,6 +63,10 @@ class AdminInlineForm(object):
     def __html__(self):
         raise NotImplementedError('Must implement html')
 
+    @property
+    def buttons(self):
+        pass
+
 
 class AdminField(Field):
 
