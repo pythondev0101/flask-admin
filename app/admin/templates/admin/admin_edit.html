@@ -1,5 +1,11 @@
 {% extends "admin/admin_base.html" %}
 
+{% block extra_head %}
+<script type="text/javascript">
+    OID = "{{OID}}";
+</script>
+{% endblock %}
+
 
 {% block content %}
 <div class="app-main__inner">
