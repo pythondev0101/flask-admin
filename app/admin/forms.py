@@ -52,6 +52,10 @@ class AdminInlineForm(object):
     data = None
 
     @property
+    def __table_id__(self):
+        raise NotImplementedError('Must implement table_id')
+
+    @property
     def __table_columns__(self):
         raise NotImplementedError('Must implement table_columns')
 

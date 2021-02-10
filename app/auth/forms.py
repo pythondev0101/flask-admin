@@ -22,6 +22,7 @@ class UserForm(AdminTableForm):
 
 
 class PermissionInlineForm(AdminInlineForm):
+    __table_columns__ = 'tbl_inline_permissions'
     __table_columns__ =['Model','Read','create','write','delete']
     __title__ = "Access Rights"
     __html__ = 'auth/permission_inline.html'
@@ -54,6 +55,7 @@ class UserPermissionForm(AdminTableForm):
 
 
 class RoleModelInlineForm(AdminInlineForm):
+    __table_id__ = 'tbl_inline_permissions'
     __table_columns__ = ['Model','Read','create','write','delete']
     __title__ = "Add role permissions"
 
