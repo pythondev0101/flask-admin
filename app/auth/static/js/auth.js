@@ -8,13 +8,6 @@ $(document).ready(function () {
         }
     });
 
-    var dtbl_inline = $('.inline-table').DataTable({
-        "dom": 'rtip',
-        "bInfo": false,
-        "scrollY": "200px",
-        "scrollCollapse": true,
-        "paging": false,
-    });
 
     if (!($('#role_id').val() == 1)) {
         $('.inlines-card').hide();

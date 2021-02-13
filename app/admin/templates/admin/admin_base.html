@@ -27,6 +27,7 @@
     <link href="{{ url_for('bp_admin.static', filename='css/homebest.css') }}" rel="stylesheet">
     <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}"> -->
     <link href="{{ url_for('bp_admin.static', filename='DataTables/datatables.css') }}" rel="stylesheet">
+    <link href="{{ url_for('bp_admin.static', filename='DataTables/dataTables.checkboxes.css') }}" rel="stylesheet">
     {% endblock %}
 
     {% block extra_head %}
@@ -78,6 +79,7 @@
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/homebest.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/lib/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='DataTables/datatables.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('bp_admin.static', filename='DataTables/dataTables.checkboxes.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('bp_admin.static', filename='js/sidebar.js') }}"></script>
 <script>
     (function() {
