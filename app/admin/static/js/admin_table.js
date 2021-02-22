@@ -1,3 +1,6 @@
+var dtbl_table;
+
+
 $(document).ready(function(){
 
     var js_fields_array = JS_FIELDS.split(",");
@@ -20,7 +23,7 @@ $(document).ready(function(){
     });
 
 
-    var dtbl_table = $('#index_table').DataTable({
+    dtbl_table = $('#index_table').DataTable({
         "dom": 'rtip',
         "pageLength": 20,
         "order": [[ 1, 'asc' ]]
