@@ -91,7 +91,7 @@ class AdminField(Field):
 
         if self.model:
             self.type = 'select'
-            self.select_data = model.query.all()
+            self.select_data = model.objects
         else:
             self.type = type
 

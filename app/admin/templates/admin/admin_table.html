@@ -6,7 +6,7 @@
     TABLE_NAME = "{{TABLE_OPTIONS['table_name']}}";
     VIEW_MODAL = "{{TABLE_OPTIONS['view_modal']}}";
     JS_FIELDS = `{{MODAL_DATA['js_fields'] | tojson}}`;
-
+    VIEW_MODAL_URL = "{{TABLE_OPTIONS['view_modal_url']}}";
 </script>
 {% endblock %}
 
@@ -56,7 +56,7 @@
 
                                 {% if TABLE_OPTIONS['view_modal'] %}
                                     <tr class="item row_object" id="{{row_data[0]}}"  data-toggle="modal" data-target="#viewModal">
-                                    <param id="param_{{row_data[0]}}" name="param_{{row_data[0]}}" {% if TABLE_OPTIONS['edit_url'] %} value="{{url_for(TABLE_OPTIONS['edit_url'],oid=row_data[0])}}" {% endif %}>
+                                    <param id="param_{{row_data[0]}}" name="param_{{row_data[0]}}" {% if TABLE_OPTIONS['edit_url'] %} value="{{url_for(TABLE_OPTIONS['edit_url'],oid=row_data[0] | string)}}" {% endif %}>
                                 {% else %}
                                     <tr class="item row_object" id="{{row_data[0]}}">
                                 {% endif %}

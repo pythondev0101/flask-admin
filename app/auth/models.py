@@ -1,5 +1,6 @@
 """ MODULE: AUTH.MODELS """
 """ FLASK IMPORTS """
+from enum import unique
 from flask_login import UserMixin
 
 """--------------END--------------"""
@@ -14,34 +15,32 @@ from app import login_manager,db
 from app.admin.models import Admin
 from app.core.models import Base
 """--------------END--------------"""
+from mongoengine.document import Document
 
 
 
 # AUTH.MODEL.USER
 class User(UserMixin, Base, Admin):
-    __tablename__ = 'auth_user'
+    meta = {
+        'collection': 'auth_users'
+    }
+    __tablename__ = 'auth_users'
     __amname__ = 'user'	
     __amicon__ = 'pe-7s-users'	
     __amdescription__ = "Users"	
-    # __amfunctions__ = [{'View users': 'bp_auth.users'},{'View roles': 'bp_auth.roles'}]
     __view_url__ = 'bp_auth.users'
 
     """ COLUMNS """
-    username = db.Column(db.String(64), nullable=False, index=True, unique=True)
-    fname = db.Column(db.String(64), nullable=False, server_default="")
-    lname = db.Column(db.String(64), nullable=False, server_default="")
-    email = db.Column(db.String(64), nullable=True, unique=True)
-    password_hash = db.Column(db.String(128), nullable=False)
-    image_path = db.Column(db.String(64), nullable=False)
-    permissions = db.relationship('UserPermission', cascade='all,delete', backref="user")
-    is_superuser = db.Column(db.Boolean,nullable=False, default=False)
-    role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id'),nullable=True)
-    role = db.relationship('Role', cascade='all,delete', backref="userrole")
-    is_admin = db.Column(db.Boolean, default=False)
-
-    def __init__(self):
-        Base.__init__(self)
-        self.image_path = "img/user_default_image.png"
+    username = db.StringField(unique=True)
+    fname = db.StringField()
+    lname = db.StringField()
+    email = db.EmailField()
+    password_hash = db.StringField()
+    image_path = db.StringField(default="img/user_default_image.png")
+    permissions = db.ListField(db.ReferenceField('UserPermission'))
+    is_superuser = db.BooleanField(default=False)
+    role = db.ReferenceField('Role')
+    is_admin = db.BooleanField(default=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -52,48 +51,48 @@ class User(UserMixin, Base, Admin):
     def __repr__(self):
         return "<User {}>".format(self.username)
 
-    model_name = 'Users'
-    model_icon = 'pe-7s-users'
-    model_description = "USERS"
-    functions = [{'View users': 'bp_auth.users'},{'View roles': 'bp_auth.roles'}]
 
+class UserPermission(db.Document):
+    meta = {
+        'collection': 'auth_user_permissions'
+    }
 
-class UserPermission(db.Model):
-    __tablename__ = 'auth_user_permission'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id', ondelete='CASCADE'))
-    model_id = db.Column(db.Integer, db.ForeignKey('core_model.id'))
-    model = db.relationship('CoreModel', backref="userpermission")
-    read = db.Column(db.Boolean, nullable=False, default="1")
-    create = db.Column(db.Boolean, nullable=False, default="0")
-    write = db.Column(db.Boolean, nullable=False, default="0")
-    delete = db.Column(db.Boolean, nullable=False, default="0")
+    model = db.ReferenceField('CoreModel')
+    read = db.BooleanField(default=True)
+    create = db.BooleanField(default=False)
+    write = db.BooleanField(default=False)
+    doc_delete = db.BooleanField(default=False)
 
 
 class Role(Base, Admin):
-    __tablename__ = 'auth_role'
+    meta = {
+        'collection': 'auth_user_roles'
+    }
+
+    __tablename__ = 'auth_user_roles'
     __amname__ = 'role'
     __amicon__ = 'pe-7s-id'
     __amdescription__ = "Roles"
     __view_url__ = 'bp_auth.roles'
 
     """ COLUMNS """
-    name = db.Column(db.String(64), nullable=False)
-    role_permissions = db.relationship('RolePermission', cascade='all,delete', backref="role")
+    name = db.StringField()
+    # permissions = db.ListField()
 
 
-class RolePermission(db.Model):
-    __tablename__ = 'auth_role_permission'
-    id = db.Column(db.Integer, primary_key=True)
-    role_id = db.Column(db.Integer, db.ForeignKey('auth_role.id',ondelete='CASCADE'))
-    model_id = db.Column(db.Integer, db.ForeignKey('core_model.id'))
-    model = db.relationship('CoreModel', cascade='all,delete', backref="rolepermission")
-    read = db.Column(db.Boolean, nullable=False, default="1")
-    create = db.Column(db.Boolean, nullable=False, default="0")
-    write = db.Column(db.Boolean, nullable=False, default="0")
-    delete = db.Column(db.Boolean, nullable=False, default="0")
+class RolePermission(db.Document):
+    meta = {
+        'collection': 'auth_role_permissions'
+    }
+
+    role = db.ReferenceField('Role')
+    model = db.ReferenceField('CoreModel')
+    read = db.BooleanField(default=True)
+    create = db.BooleanField(default=False)
+    write = db.BooleanField(default=False)
+    doc_delete = db.BooleanField(default=False)
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(user_id)
+    return User.objects.get(id=user_id)
