@@ -1,4 +1,5 @@
 from flask import render_template
+from flask_login import current_user
 from app import MODULES, CONTEXT, db
 from app.core.models import CoreModel, CoreModule
 from app.auth.permissions import check_read
@@ -47,11 +48,13 @@ def admin_dashboard(model, **kwargs):
     active_model = model.__amname__
     
     return admin_render_template(model, options['dashboard_template'], options['module'], title=options['title'], \
-        options=options, data=options['data'], active_model=active_model)
+        options=options, data=options['data'], active_model=active_model, UID=str(current_user.id))
 
 
 def admin_table(*models, fields, form=None, **options):
- 
+    if 'table_data' not in options:
+        raise NotImplementedError('Must implement table_data')
+
     model_name = models[0].__amname__
     table_name = models[0].__tablename__
 
@@ -63,6 +66,7 @@ def admin_table(*models, fields, form=None, **options):
         'table_template': "admin/admin_table.html",
         'create_modal_template': "admin/admin_create_modal.html",
         'view_modal_template': "admin/admin_view_modal.html",
+        'view_modal_url': None,
         'action_template': "admin/admin_actions.html",
         'table_data': None,
         'table_url': None,
@@ -87,15 +91,15 @@ def admin_table(*models, fields, form=None, **options):
     table_options.update(options)
 
     if table_options['module_name'] is None:
-        _query_module_name = CoreModel.query.filter_by(name=model_name).first()
-        table_options['module_name'] = CoreModule.query.get(_query_module_name.module_id).name
+        _query_module_name = CoreModel.objects(name=model_name).first()
+        table_options['module_name'] = CoreModule.objects.get(id=_query_module_name.module.id).name
     
     if models[0].__parent_model__ is not None:
         table_options['parent_model'] = models[0].__parent_model__
     
     if table_options['table_data'] is None:
         if len(models) == 1:
-            table_options['table_data'] = models[0].query.with_entities(*fields).all()
+            table_options['table_data'] = models[0].objects.scalar(*fields)
 
         elif len(models) == 2:
             table_options['table_data'] = models[0].query.outerjoin(models[1]).with_entities(*fields).all()
@@ -154,8 +158,8 @@ def admin_table(*models, fields, form=None, **options):
 def admin_edit(model, form, update_url, oid, table_url, **options):
     
     model_name = model.__amname__
-    _query1 = CoreModel.query.filter_by(name=model_name).first()
-    module_name = CoreModule.query.get(_query1.module_id).name
+    _query1 = CoreModel.objects(name=model_name).first()
+    module_name = CoreModule.objects.get(id=_query1.module.id).name
 
     edit_options = {
         'module_name': module_name,

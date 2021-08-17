@@ -61,7 +61,7 @@ $(document).ready(function(){
         
         for (ctr=0; ctr < js_fields_array.length; ctr++){
             $.ajax({
-                url: `/admin/_get_view_modal_data?table=${TABLE_NAME}&column=${js_fields_array[ctr]}&id=${field_id}`,
+                url: `${VIEW_MODAL_URL}?table=${TABLE_NAME}&column=${js_fields_array[ctr]}&id=${field_id}`,
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {

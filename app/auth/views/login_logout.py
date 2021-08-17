@@ -27,14 +27,17 @@ def login():
             flash(str(key) + str(value), 'error')
         return redirect(url_for(current_app.config['AUTH']['LOGIN_REDIRECT_URL']))
 
-    user = User.query.filter_by(username=form.username.data).first()
+    user = User.objects(username=form.username.data).first()
     if user is None or not user.check_password(form.password.data):
         flash('Invalid username or password','success')
         return redirect(url_for(auth_urls['login']))
 
     login_user(user, remember=form.remember_me.data)
+    
     load_permissions(user.id)
+    
     next_page = request.args.get('next')
+    
     if not next_page or url_parse(next_page).netloc != '':
         next_page = url_for(current_app.config['AUTH']['LOGIN_REDIRECT_URL'])
     return redirect(next_page)

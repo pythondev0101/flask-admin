@@ -18,10 +18,43 @@ from app.admin.templating import admin_table, admin_edit
 @login_required
 def users(**options):
     form = UserForm()
-    fields = [User.id, User.username, User.fname, User.lname, Role.name, User.email]
-    models = [User, Role]
+    # fields = [User.id, User.username, User.fname, User.lname, Role.name, User.email]
+    fields = ['id', 'username', 'fname', 'lname', 'role', 'email']
+    models = [User]
 
-    return admin_table(*models, fields=fields, form=form, create_url='bp_auth.create_user', edit_url="bp_auth.edit_user", **options)
+    _users = User.objects
+
+    _table_data = []
+
+    for user in _users:
+        _table_data.append((
+            user.id,
+            user.username,
+            user.fname,
+            user.lname,
+            user.role.name,
+            user.email
+        ))
+    
+    return admin_table(*models, fields=fields, form=form, create_url='bp_auth.create_user',\
+        edit_url="bp_auth.edit_user", table_data=_table_data, view_modal_url='/auth/get-view-user-data', **options)
+
+
+@bp_auth.route('/get-view-user-data', methods=['GET'])
+@login_required
+def get_view_user_data():
+    _column, _id = request.args.get('column'), request.args.get('id')
+
+    _data = User.objects(id=_id).values_list(_column)
+
+    response = jsonify(result=str(_data[0]),column=_column)
+
+    if _column == "role":
+        response = jsonify(result=str(_data[0].id),column=_column)
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.status_code = 200
+    return response
 
 
 @bp_auth.route('/users/create', methods=['POST'])
@@ -45,11 +78,18 @@ def create_user(**kwargs):
 
     try:
         user = User()
-        models = CoreModel.query.all()
+        # models = CoreModel.objects
 
-        for model in models:
-            permission = UserPermission(model=model, read=1,create=0, write=0, delete=0)
-            user.permissions.append(permission)
+        # for model in models:
+        #     permission = UserPermission(
+        #         model=model, 
+        #         read=True,
+        #         create=False,
+        #         write=False,
+        #         doc_delete=False
+        #         )
+        #     user.permissions.append(permission)
+
         user.username = form.username.data
         user.fname = form.fname.data
         user.lname = form.lname.data
@@ -58,14 +98,17 @@ def create_user(**kwargs):
             user.email = None
         else:
             user.email = form.email.data
-            
-        user.role_id = form.role_id.data
+        
+        print(form.role.data)
+        user.role = Role.objects.get(id=form.role.data)
+
         #TODO: add default password in settings
         user.set_password("password")
-        user.is_superuser = 0
+        user.is_superuser = False
         user.created_by = "{} {}".format(current_user.fname,current_user.lname)
-        db.session.add(user)
-        db.session.commit()
+        
+        user.save()
+
         flash('New User Added Successfully!','success')
         create_log("New user added","UserID={}".format(user.id))
 
@@ -76,21 +119,22 @@ def create_user(**kwargs):
         return redirect(url_for(url))
 
 
-@bp_auth.route('/users/<int:oid>/edit', methods=['GET', 'POST'])
+@bp_auth.route('/users/<string:oid>/edit', methods=['GET', 'POST'])
 @login_required
 @cross_origin()
 def edit_user(oid,**kwargs):
-    user = User.query.get_or_404(oid)
+    user = User.objects.get_or_404(id=oid)
     form = UserEditForm(obj=user)
 
     if request.method == "GET":
-        user_permissions = UserPermission.query.filter_by(user_id=oid).all()
-        form.permission_inline.data = user_permissions
+        # user_permissions = UserPermission.query.filter_by(user_id=oid).all()
+        # form.permission_inline.data = user_permissions
 
         _scripts = [
             {'bp_auth.static': 'js/auth.js'},
             {'bp_admin.static': 'js/admin_edit.js'}
         ]
+
         return admin_edit(User, form, auth_urls['edit'], oid, auth_urls['users'],action_template="auth/user_edit_action.html", \
             modals=['auth/user_change_password_modal.html'], scripts=_scripts, **kwargs)
     
@@ -105,10 +149,11 @@ def edit_user(oid,**kwargs):
         user.fname = form.fname.data
         user.lname = form.lname.data
         user.email = form.email.data if not form.email.data == '' else None
-        user.role_id = form.role_id.data
+        user.role = Role.objects.get(id=form.role.data)
         user.updated_at = datetime.now()
         user.updated_by = "{} {}".format(current_user.fname,current_user.lname)
-        db.session.commit()
+        
+        user.save()
         flash('User update Successfully!','success')
         create_log('User update',"UserID={}".format(oid))
 
@@ -133,7 +178,7 @@ def user_permission_index():
 def username_check():
     if request.method == 'POST':
         username = request.json['username']
-        user = User.query.filter_by(username=username).first()
+        user = User.objects(username=username).first()
         if user:
             resp = jsonify(result=0)
             resp.status_code = 200
@@ -148,7 +193,7 @@ def username_check():
 def email_check():
     if request.method == 'POST':
         email = request.json['email']
-        user = User.query.filter_by(email=email).first()
+        user = User.objects(email=email).first()
         if user:
             resp = jsonify(result=0)
             resp.status_code = 200
@@ -159,7 +204,7 @@ def email_check():
             return resp
 
 
-@bp_auth.route('/change_password/<int:oid>',methods=['POST'])
+@bp_auth.route('/change_password/<string:oid>',methods=['POST'])
 def change_password(oid):
     user = User.query.get_or_404(oid)
     user.set_password(request.form.get('password'))
