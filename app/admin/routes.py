@@ -8,7 +8,7 @@ from app.admin import bp_admin
 
 
 
-@bp_admin.route('/delete/<string:table_name>/<int:oid>',methods=['POST'])
+@bp_admin.route('/delete/<string:table_name>/<string:oid>',methods=['POST'])
 @login_required
 def delete(table_name,oid):
     try:
