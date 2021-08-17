@@ -14,11 +14,11 @@ class UserForm(AdminTableForm):
     email = AdminField(label='Email', type='email',required=False)
     fname = AdminField(label='First Name', validators=[DataRequired()])
     lname = AdminField(label='Last Name', validators=[DataRequired()])
-    role_id = AdminField(label='Role',validators=[DataRequired()],type='number',model=Role)
+    role = AdminField(label='Role',validators=[DataRequired()],type='number',model=Role)
 
     @property
     def fields(self):
-        return [[self.fname, self.lname],[self.username,self.email],[self.role_id]]
+        return [[self.fname, self.lname],[self.username,self.email],[self.role]]
 
 
 class PermissionInlineForm(AdminInlineForm):
@@ -35,17 +35,17 @@ class UserEditForm(AdminEditForm):
     email = AdminField(label='Email', type='email',required=False)
     fname = AdminField(label='First Name', validators=[DataRequired()])
     lname = AdminField(label='Last Name', validators=[DataRequired()])
-    role_id = AdminField(label='Role',validators=[DataRequired()],type='number',model=Role)
+    role = AdminField(label='Role',validators=[DataRequired()],type='number',model=Role)
 
-    permission_inline = PermissionInlineForm()
+    # permission_inline = PermissionInlineForm()
 
     @property
     def fields(self):
-        return [[self.fname, self.lname],[self.username,self.email],[self.role_id]]
+        return [[self.fname, self.lname],[self.username,self.email],[self.role]]
 
-    @property
-    def inlines(self):
-        return [self.permission_inline]
+    # @property
+    # def inlines(self):
+    #     return [self.permission_inline]
 
 
 class UserPermissionForm(AdminTableForm):

@@ -11,14 +11,13 @@ from app.admin.templating import admin_dashboard, DashboardBox
 def dashboard():
     from app.auth.models import User
 
-
     if AdminDashboard.__view_url__ == 'bp_admin.no_view_url':
         return redirect(url_for('bp_admin.no_view_url'))
     
     options = {
-        'box1': DashboardBox("Total Modules","Installed",CoreModule.query.count()),
-        'box2': DashboardBox("System Models","Total models",CoreModel.query.count()),
-        'box3': DashboardBox("Users","Total users",User.query.count())
+        'box1': DashboardBox("Total Modules","Installed",CoreModule.objects.count()),
+        'box2': DashboardBox("System Models","Total models",CoreModel.objects.count()),
+        'box3': DashboardBox("Users","Total users",User.objects.count())
     }
 
     return admin_dashboard(AdminDashboard, **options)

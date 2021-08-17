@@ -35,33 +35,41 @@ def core_install():
             cities_path = basedir + "/app/core/csv/cities.csv"
         else:
             raise Exception("Platform not supported yet.")
-
-        db.create_all()
-        db.session.commit()
         
         module_count = 0
 
+        homebest_module = None
+
         for module in MODULES:
             # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
-            homebest_module = CoreModule.query.filter_by(name=module.module_name).first()
-            last_id = 0
+            homebest_module = CoreModule.objects(name=module.module_name).first()
+            # last_id = 0
             if not homebest_module:
-                new_module = CoreModule(module.module_name,module.module_short_description,module.version)
-                new_module.long_description = module.module_long_description
-                new_module.status = 'installed'
-                db.session.add(new_module)
-                db.session.commit()
+                new_module = CoreModule(
+                    name=module.module_name,
+                    short_description=module.module_short_description,
+                    long_description=module.module_long_description,
+                    status='installed',
+                    version=module.version
+                    ).save()
+
+                homebest_module = new_module
+                    
                 print("MODULE - {}: SUCCESS".format(new_module.name))
-                last_id = new_module.id
+                # last_id = new_module.id
 
             model_count = 0
 
             for model in module.models:
-                homebestmodel = CoreModel.query.filter_by(name=model.__amname__).first()
+                homebestmodel = CoreModel.objects(name=model.__amname__).first()
+
                 if not homebestmodel:
-                    new_model = CoreModel(model.__amname__, last_id, model.__amdescription__)
-                    db.session.add(new_model)
-                    db.session.commit()
+                    new_model = CoreModel(
+                        name=model.__amname__,
+                        module=homebest_module,
+                        description=model.__amdescription__,
+                        ).save()
+
                     print("MODEL - {}: SUCCESS".format(new_model.name))
 
                 model_count = model_count + 1
@@ -69,57 +77,64 @@ def core_install():
             if len(module.no_admin_models) > 0 :
 
                 for xmodel in module.no_admin_models:
-                    homebestmodel = CoreModel.query.filter_by(name=xmodel.__amname__).first()
+                    homebestmodel = CoreModel.objects(name=xmodel.__amname__).first()
+                    
                     if not homebestmodel:
-                        new_model = CoreModel(xmodel.__amname__, last_id, xmodel.__amdescription__,False)
-                        db.session.add(new_model)
-                        db.session.commit()
+                        new_model = CoreModel(
+                            name=xmodel.__amname__, 
+                            module=homebest_module,
+                            description=xmodel.__amdescription__,
+                            admin_included=False
+                        ).save()
+
                         print("MODEL - {}: SUCCESS".format(new_model.name))
 
             module_count = module_count + 1
 
         print("Inserting provinces to database...")
-        if CoreProvince.query.count() < 88:
+        if CoreProvince.objects.count() < 88:
             with open(provinces_path) as f:
                 csv_file = csv.reader(f)
+
                 for id, row in enumerate(csv_file):
                     if not id == 0:
-                        province = CoreProvince()
-                        province.id = int(row[0])
-                        province.name = row[2]
-                        db.session.add(province)
-                db.session.commit()
+                        CoreProvince(
+                            name=row[2]
+                        ).save()
+
             print("Provinces done!")
+
         else:
             print("Provinces exists!")
         print("")
         print("Inserting cities to database...")
-        if CoreCity.query.count() < 1647:
+        
+        if CoreCity.objects.count() < 1647:
             with open(cities_path) as f:
                 csv_file = csv.reader(f)
+
                 for id,row in enumerate(csv_file):
                     if not id == 0:
-                        city = CoreCity()
-                        city.id = int(row[0])
-                        city.name = row[2]
-                        city.province_id = None
-                        db.session.add(city)
-                db.session.commit()
+                        
+                        CoreCity(
+                            name=row[2]
+                        ).save()
+
             print("Cities done!")
         else:
             print("Cities exists!")
 
         print("Inserting system roles...")
-        if Role.query.count() > 0:
+        if Role.objects.count() > 0:
             print("Role already inserted!")
         else:
-            role = Role()
-            role.name = "Individual"
-            db.session.add(role)
-            db.session.commit()
+            Role(
+                name="Individual",
+            ).save()
+            
             print("Individual role inserted!")
 
-        if not User.query.count() > 0:
+        if not User.objects.count() > 0:
             print("Creating a SuperUser/owner...")
             _create_superuser()
 
@@ -185,17 +200,19 @@ def install():
 
 def _create_superuser():
     try:
-        user = User()
-        user.fname = "Administrator"
-        user.lname = "Administrator"
-        user.username = input("Enter Username: ")
-        user.email = None
+        role = Role.objects(name="Individual").first()
+
+        user = User(
+            fname="Administrator",
+            lname="Administrator",
+            username = input("Enter Username: "),
+            email = None,
+            is_superuser = 1,
+            role=role,
+            created_by = "System",
+        )
         user.set_password(input("Enter password: "))
-        user.is_superuser = 1
-        user.role_id = 1
-        user.created_by = "System"	
-        db.session.add(user)
-        db.session.commit()
+        user.save()
         print("SuperUser Created!")
     except Exception as exc:
         print(str(exc))

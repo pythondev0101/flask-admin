@@ -7,8 +7,7 @@ from app.core.models import CoreModel
 
 def load_permissions(user_id):
     from app.auth.models import User, UserPermission, RolePermission
-
-    user = User.query.get(user_id)
+    user = User.objects.get_or_404(id=user_id)
 
     if not user and not current_user.is_authenticated:
         CONTEXT['system_modules'].pop('admin',None)
@@ -18,11 +17,15 @@ def load_permissions(user_id):
     if "permissions" not in session:
         session['permissions'] = {}
 
+    print(user.role)
+
     if user.is_superuser:
-        all_permissions = CoreModel.query.all()
+        all_permissions = CoreModel.objects
+
         for permission in all_permissions:
             session['permissions'][permission.name] = {"read": True, "create": True, \
                 "write": True, "delete": True}  
+    
     elif user.role.name == "Individual" or user.role_id == 1:
         # TODO: GAMITIN ANG user.permissions kaysa mag query pa ulit
         user_permissions = UserPermission.query.filter_by(user_id=user_id)

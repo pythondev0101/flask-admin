@@ -9,13 +9,16 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
+from flask_mongoengine import MongoEngine
+from flask_pymongo import PyMongo
 from config import app_config
 
 # DEVELOPERS-NOTE: -INCLUDE YOUR IMPORTS HERE-
 
 #                  -END-
 
-db = SQLAlchemy()
+db = MongoEngine()
+mongo = PyMongo()
 migrate = Migrate()
 csrf = CSRFProtect()
 cors = CORS()
@@ -50,6 +53,7 @@ def create_app(config_name):
     app.register_error_handler(500, internal_server_error)
 
     db.init_app(app)
+    mongo.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
     cors.init_app(app)

@@ -15,13 +15,40 @@ from app.auth.permissions import load_permissions
 @bp_auth.route('/roles')
 @login_required
 def roles(**options):
-    fields = [Role.id,Role.name,Role.created_at, Role.updated_at]
+    fields = ['id', 'name', 'created_at', 'updated_at']
     form = RoleCreateForm()
-    form.inline.data = CoreModel.query.all()
+    form.inline.data = CoreModel.objects
+
+    _roles = Role.objects
+
+    _table_data = []
+
+    for role in _roles:
+        _table_data.append((
+            role.id,
+            role.name,
+            role.created_at,
+            role.updated_at
+        ))
 
     return admin_table(Role, fields=fields, form=form, create_modal_template="auth/role_create_modal.html", \
         create_url='bp_auth.create_role',edit_url='bp_auth.edit_role', \
-            view_modal_template="auth/role_view_modal.html", **options)
+            view_modal_template="auth/role_view_modal.html", table_data=_table_data,\
+                view_modal_url='/auth/get-view-role-data' ,**options)
+
+
+@bp_auth.route('/get-view-role-data', methods=['GET'])
+@login_required
+def get_view_role_data():
+    _column, _id = request.args.get('column'), request.args.get('id')
+
+    data = Role.objects(id=_id).values_list(_column)
+
+    response = jsonify(result=str(data[0]),column=_column)
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.status_code = 200
+    return response
 
 
 @bp_auth.route('/roles/create',methods=['GET','POST'])
@@ -58,7 +85,7 @@ def create_role():
         return redirect(url_for('bp_auth.roles'))
 
 
-@bp_auth.route('/roles/<int:oid>/edit',methods=['GET','POST'])
+@bp_auth.route('/roles/<string:oid>/edit',methods=['GET','POST'])
 @login_required
 def edit_role(oid,**options):
     role = Role.query.get_or_404(oid)

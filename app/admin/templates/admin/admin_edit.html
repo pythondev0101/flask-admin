@@ -55,7 +55,7 @@
                                 {% if field.required %}required{% endif %}>
                                     <option value="">Choose...</option>
                                     {% for odata in field.select_data %}
-                                    <option value="{{ odata.id }}" {% if field.data==odata.id %}selected{% endif %}>
+                                    <option value="{{ odata.id }}" {% if field.data.id==odata.id %}selected{% endif %}>
                                         {{ odata.name }}
                                     </option>
                                     {% endfor %}

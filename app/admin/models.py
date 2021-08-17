@@ -1,5 +1,7 @@
 """ ADMIN MODELS"""
 from app import db
+from mongoengine.document import Document
+
 
 
 class Admin(object):
@@ -31,12 +33,14 @@ class Admin(object):
         raise NotImplementedError('Must implement admin-model description')
 
 
-class AdminOptions(db.Model):
-    __tablename__ = 'admin_options'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
-    header_color = db.Column(db.String(64))
-    sidebar_color = db.Column(db.String(64))
+class AdminUserOptions(db.Document):
+    meta = {
+        'collection': 'admin_user_options'
+    }
+
+    user = db.ReferenceField('User')
+    header_color = db.StringField()
+    sidebar_color = db.StringField()
 
 
 class AdminDashboard(Admin):
