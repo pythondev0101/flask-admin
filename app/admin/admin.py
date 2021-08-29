@@ -21,3 +21,11 @@ class AdminModule(CoreModule):
             User, Role
         ]
     }
+    
+    def to_dict(self):
+        return dict(
+            name=self.module_name,
+            icon=self.module_icon,
+            short_description=self.module_short_description,
+            long_description=self.module_long_description,
+        )
