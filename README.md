@@ -1,5 +1,8 @@
 # ez2ERP Application Framework
-It's similar to Django-Admin but with a ready to use modules and many more!
+It's similar to Django-Admin but with a ready-to-use/customable modules and can easily create one and many more!
+
+Django-Admin + small ODOO = ez2ERP!
+
 
 ## Features
 
