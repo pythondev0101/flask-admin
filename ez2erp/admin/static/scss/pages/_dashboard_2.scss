@@ -1,0 +1,1561 @@
+/**=====================
+      67. Dashboard 2 CSS Start
+==========================**/
+.perform-overview-sec{    
+  .media{
+    align-items:center;
+    margin-bottom:0;
+  }
+  .widget-card{   
+    img{
+      @include square(15px,15px);
+      stroke:$primary-color;
+    }
+    li{
+      @include flex(flex,$align-items:center);
+      .media{
+        align-items:center;
+        margin-bottom:15px;
+      }
+      h4{
+        margin-bottom:0;
+      }
+    }
+  .star-main{
+    margin-bottom: 0 !important;
+    p{
+      margin-bottom:0;
+    }
+    .rating-cionlist{
+      margin-left: 10px;
+      li{
+        margin-bottom:0 !important;
+      }
+    }
+  } 
+  }
+  h5{
+    margin-bottom:0px !important;
+  }
+  h4{
+    color: $theme-body-font-color;
+  }  
+  .card{
+    margin: 0 15px;
+    .card-body{
+      padding:20px;
+      background-color: $body-bg-color;
+      .media{
+        .media-body{
+            ul{
+              >li{
+                margin-bottom:10px;
+              }                
+            }
+            p{
+              font-size:12px;
+              font-weight:500;
+              text-transform:capitalize;
+            }
+        }
+      }
+    }
+    }
+    &:last-child{
+      margin-right:0px;
+    }
+    .slick-prev{
+      right:40px;
+    
+      &:before{
+        content:"\f104";
+      }       
+  }
+  .slick-next{
+    right:0;
+    &:before{
+      content:"\f105";
+    }
+  }
+  .slick-prev,.slick-next{
+    left: unset;
+    top: -40px;     
+    width: 28px;
+    height: 28px;          
+    background-color:rgba($primary-color,0.2);
+    transition:all 0.3s ease;
+    &:before{
+      color: $primary-color;
+      font-family: $font-awesome;
+      transition: all 0.3s ease;
+    }
+    &:hover{
+      background-color: $primary-color;
+      &:before{
+        color: $white;
+      }
+    }
+  } 
+}
+.media{
+    .badge-groups{
+      @include flex (flex,$content:space-between);
+      // @include justify-content(space-between)
+      padding:20px;
+      .badge{
+        &:last-child{
+          background: linear-gradient(90deg, rgba($white,0.1) 20%, rgba(0,0,0,0) 100%);
+          border-radius: 5px;
+          width: 56px;
+          text-align: left;
+          color: $white !important;
+          padding: 10px 14px !important;
+        }
+      }
+    }
+  }
+.new-box {
+    padding: 3px 5px;
+    background-color: $secondary-color;
+    font-size: 10px !important;
+    color: $white !important;
+    margin-left: 10px;
+    font-weight:unset !important;
+}
+.top-sell-sec{
+  .top-sell-table{
+    table{
+      margin-bottom:0px;
+      tr{
+        td,th{
+          vertical-align: baseline;
+        }                
+      }
+      thead{
+        tr{
+          th{
+            font-size: 14px;
+            font-weight: 700;
+            padding-top: unset;
+            &:first-child{
+              padding-left: 0;
+            }
+          }
+        }
+      }
+      tbody{
+        tr{
+          td{
+            &:first-child{             
+              display: flex;
+              align-items:center;
+              padding-left: unset;
+              .t-title{
+                display:flex;
+                align-items:center;
+              }
+            }
+            &:last-child{             
+              padding-right:unset;
+            }
+          }
+        }
+      }
+      td{
+          padding: 15px 10px ;
+      }
+      td{
+        img{
+            &:first-child{
+            margin-left:10px;
+            margin-right:10px;
+        }
+      }
+    }
+    tr{
+      &:hover{
+          span{
+            color:$primary-color;
+          }
+          td{
+            color:$primary-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+// services contact section
+.service-contact-table{
+  table{
+    tr{
+      transition:all 0.5s ease;          
+      td{
+        padding: 17px 0.75rem;
+        vertical-align: middle;
+        span{
+          font-weight:600;
+        }
+        p{
+          color:$light-text;
+        }
+        .gradient-round {
+          position: relative;
+          background-color:rgba($primary-color,0.2);
+          width:35px;
+          height:35px;
+          border-radius:10px;   
+          display:flex;
+          align-items:center;
+          justify-content:center;      
+          i{
+            color:$primary-color;
+            margin:auto;
+            font-size:20px;
+          }         
+        }
+        &:first-child{
+          padding-left:unset;
+          min-width:220px;
+        }
+        &:nth-child(2){
+          min-width:125px;
+        }
+        &:last-child{
+          padding-right:unset;
+          .gradient-round{
+            margin-left:auto;
+          }
+        }
+      }
+      &:hover{
+        td{
+          .gradient-round{
+            background-color:$primary-color;
+            i{
+              color:$white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.service-contact-sec{
+  tr{
+    td{
+      .t-title{
+        display:flex !important;
+        align-items:center;
+      }
+    }
+  }
+}
+
+
+// connect section css 
+.connect-sec{
+   @include flex(flex,$content:center);
+    table{
+      width: 100%;
+      tr{
+        td{
+          padding:10px 40px;
+          text-align:center;
+          &:nth-child(n+2){
+            border-left:1px solid $light-semi-gray;
+          }
+        .name-user{
+          margin-top:15px;
+          span{
+            font-size: 14px;
+            font-weight:700;
+          }
+          p{
+            font-size:12px;
+            color: $light-text;
+          }
+        }
+      }
+    }
+  }   
+}
+.round-light {
+    background-color: $white;
+    margin-right: 15px;
+    @include square(42px,42px,100%);
+    @include flex (flex,$content:center,$align-items:center);
+    font-size:18px;
+}
+.icon-primary{
+ background-color: rgba($primary-color,0.2);
+ color:$primary-color;
+ i{
+  color:$primary-color;
+ }
+}
+.icon-secondary{
+  background-color: rgba($secondary-color,0.2);
+  color:$secondary-color;
+  i{
+    color:$secondary-color;
+  }
+}
+.icon-success{
+  background-color: rgba($success-color,0.2);
+  color:$success-color;
+  i{
+    color:$success-color;
+  }
+}
+.icon-warning{
+  background-color: rgba($warning-color,0.2);
+  color:$warning-color;
+  i{
+    color:$warning-color;
+  }
+}
+// payment-section css
+.payment-sec-main{
+  @include back-img (url("../images/dashboard-2/help.jpg"));
+  color: $white; 
+    #sync1 {
+      margin-bottom:35px;
+      .item {
+        background:$white;
+        padding:40px;   
+        color: $primary-color;
+        border-radius:3px;
+        position:relative;
+        overflow:hidden;
+        .payment-center{
+          width:100%;     
+          padding:30px 0px;              
+          table{
+            tr{
+              td{
+                font-size:18px;
+                font-weight:bold;
+                background-color:rgba($primary-color,0.1);
+                display: inline-block;
+                padding:5px 10px;
+                color:$primary-color;
+                &:nth-child(n+2){
+                  margin-left:15px;
+                }
+              }
+            }
+          }
+        }
+        .payment-footer{     
+          @include flex(flex,$content:space-between);
+          p{
+            font-size:12px;              
+            font-weight:600; 
+            &.font-secondary{
+              color:$secondary-color !important;
+            }   
+            &.date{
+              color: $theme-body-font-color;
+            }        
+          }
+        }
+        .master-right-sec{
+          position:absolute;
+          right:-39%;
+          top:-22%;
+          width:75%;
+          img{
+            width:60%;
+          }
+        }
+      }
+    }
+    #sync2 {
+      .item {
+        // padding: 10px 0px;   
+        color: $white;
+        border-radius: 3px;
+        text-align: center;
+        cursor: pointer;
+        img {
+          text-align:center;
+          width:80%;
+        }
+        .check-circle{
+          position:absolute;
+          opacity:0;
+          color:$white;
+          background-color:$success-color;
+          transition:0.5s;
+          right:16px;
+          top:2px;
+          width:18px;
+          height:18px;     
+          border:2px solid $white;
+          border-radius:50%;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          i{
+            font-size:60%;
+          }
+        }
+
+
+      }
+      .current .item{
+        .check-circle{
+          opacity:9;
+        }
+      }
+    }
+
+    .owl-theme {
+      .owl-nav {
+        [class*='owl-'] {
+          transition: all .3s ease;
+          &.disabled:hover {
+          background-color: $primary-color;
+          }   
+        }
+        
+      }
+      
+    }
+
+  //arrows on first carousel
+    #sync1.owl-theme {
+      position: relative;
+      .owl-next, .owl-prev {
+        // width: 22px;
+        // height: 40px;
+        @include square(40px,22px);
+        margin-top: -20px;
+        position: absolute;
+        top: 50%;
+      }
+      .owl-prev {
+        left: 10px;
+        display:none;
+      }
+      .owl-next {
+        right: 10px;
+        display:none;
+      }
+    }
+    .payment-main{
+      h5{
+        margin-bottom: 20px;
+      }
+      .master-sec{
+        .media{
+          @include flex(flex,$content:center,$align-items:center);
+        }
+      }
+    }
+
+
+    // visa card css
+    .visa-card{
+      background-color:$white;
+      padding:30px;
+      .card-logo{
+        margin-bottom:30px;
+        img{
+          width:auto;
+          height:70px;
+        }
+      }
+      ul.card-number{
+        margin-bottom:20px;
+        li{
+          padding:5px 15px;
+          background-color:rgba($primary-color,0.1);
+          color: $primary-color;
+          display: inline-block;
+          &:nth-child(n+2){
+            margin-left:10px;
+          }
+        }
+      }
+      h6{
+        text-transform: uppercase;
+        color:$black;
+        font-size:18px;
+        font-weight:600;
+        margin-bottom:10px;
+      }
+      .valid-thru { 
+       span{
+        color:$light-text;
+         &.vdate{
+           font-size:16px;
+           margin-left:15px;
+         }
+       } 
+      }
+      .card-btn{
+        text-transform:capitalize;
+      }     
+    }
+}
+
+
+//redial block
+.redial-block{ 
+  .meeting-details{
+    h4{
+      font-weight:600;
+    }
+    p{      
+      color: $light-text;
+      margin-bottom:0;
+      transition:all 0.5s ease;
+    }
+    .meeting-rate{     
+      display: inline-flex;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-top: 25px;
+      font-weight: 700;
+      cursor: pointer;
+      span{
+        margin-right: 5px;
+        transition: all 0.5s ease;
+        color: $light-text;
+      }      
+      &:hover{
+        transition:all 0.5s ease;
+      }
+      &.primary-rate{
+        background-color:rgba($primary-color,0.05);
+        &:hover{
+          background-color:$primary-color;
+          span{
+            color:$white !important;
+          }
+          p{
+            color:$white !important;
+          }
+        }
+      }
+      &.secondary-rate{
+        background-color:rgba($secondary-color,0.05);
+        &:hover{
+          background-color:$secondary-color;
+          span{
+            color:$white !important;
+          }
+          p{
+            color:$white !important;
+          }
+        }
+      }
+      &.success-rate{
+        background-color:rgba($success-color,0.05);
+        &:hover{
+          background-color:$success-color;
+          span{
+            color:$white !important;
+          }
+          p{
+            color:$white !important;
+          }
+        }
+      }
+    }
+  } 
+}
+
+
+// product section
+.slid-wrapper{
+    position: absolute;
+    top: 20px;
+    right: 35px;
+  .plus-circle{
+    position:relative;
+    background-color:$primary-color;
+    @include square(18px,18px,5px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    i{
+      font-size:70%;
+      color:$white;
+      font-weight:700;
+    }
+    .fa-plus{
+      position:absolute;
+      top:14%;
+      right:18%;
+      color:$white;  
+    }
+  }
+}
+
+// product market value section
+.github-chart {
+  height:280px;
+}
+.flot-chart-placeholder {
+    @include square(100%,100%);
+    font-size: 14px;
+    line-height: 1.2em;
+    text-align: center;
+}
+//performance overview section
+.ct-chart1,.ct-chart2,.ct-chart3,.ct-chart4,.ct-chart5,.ct-chart6,.ct-chart7,.ct-chart8{
+  .ct-labels{
+    display:none;
+  }
+  .ct-series{
+    &.ct-series-a{
+      .ct-area{
+        fill: url(#gradient-a);
+        fill-opacity: 0.3 !important;
+      }
+      .ct-line{
+        stroke-linecap: round;
+        stroke-width: 5px;
+        stroke: $primary-color;
+      }
+
+      line{
+         &.ct-point{
+        &:nth-child(-n+4){
+          display:none;
+        }
+       }
+       
+      }
+      
+    }
+  }
+  .ct-grids{
+    .ct-grid{
+        &.ct-vertical{
+          display:none;
+        }
+       }
+  }
+  
+}
+
+// chart-02
+.ct-chart2,.ct-chart6{
+.ct-series{
+    &.ct-series-a{
+      .ct-area{
+        fill: url(#gradient-b);
+        fill-opacity: 0.3;
+
+      }
+      .ct-line{
+        stroke: $secondary-color;
+      }
+      .ct-point{
+        stroke: $secondary-color;
+      }
+    }
+  }
+}
+// chart-03
+.ct-chart3,.ct-chart7{
+.ct-series{
+    &.ct-series-a{
+      .ct-area{
+        fill: url(#gradient-c);
+        fill-opacity: 0.3;
+      }
+      .ct-line{
+        stroke: $success-color;
+      }
+      .ct-point{
+        stroke: $success-color;
+      }
+    }
+  }
+}
+// chart-04
+.ct-chart4,.ct-chart8{
+.ct-series{
+    &.ct-series-a{
+      .ct-area{
+        fill: url(#gradient-d);
+        fill-opacity: 0.3;
+      }
+      .ct-line{
+        stroke: $warning-color;
+      }
+      .ct-point{
+        stroke: $warning-color;
+      }
+    }
+  }
+}
+.new-product-main{
+  .slick-dots{
+      bottom:-35px;      
+      li {
+        button{
+          &:before{
+            color: rgba($primary-color,0.2);
+            opacity: 1;
+          }
+        }
+        &.slick-active {
+          button{
+            &:before{
+              color:$primary-color;
+            }
+          }
+        }
+      }
+  }
+  .slider{
+    text-align:center;
+    .slick-slide{
+      img{
+        display: inline;
+        margin-bottom:10px;
+        width: auto;
+        height: 60px;
+      }
+    }
+    .slick-prev,.slick-next{
+      z-index:2;
+      &:before{
+        font-family:$font-awesome;
+        z-index:2;
+        color:$light-text;         
+      }
+      &:hover,&:focus{
+        &:before{
+          color:$theme-body-font-color;
+          opacity:1;
+        }
+      }
+    } 
+    .slick-prev{
+      left:15px;
+      &:before{
+        content:"\f104";
+      }
+    }
+    .slick-next {
+      right:15px;
+      &:before{
+        content:"\f105";
+      }
+    }
+  }     
+  
+  .product-box{
+    background-color:rgba($primary-color,0.1);
+    padding:30px 25px;   
+    outline: none;
+    span{
+      font-weight: 600;
+      color: $theme-body-font-color;
+    }
+    p{
+      color:$light-text;
+      font-size:12px;
+    }
+  } 
+  .pro-block{
+      >div{
+        &:nth-child(n+3){
+        margin-top:25px;
+      }
+    }
+  }
+}
+
+//our activity card
+.our-activity-table{
+  .table th, .table td{   
+    padding: 16px 0.75rem;
+    min-width:100px;   
+    &:first-child{
+      padding-left:unset;
+      min-width:330px;
+    }
+    &:last-child{
+      padding-right: unset;
+      text-align: right;
+    }
+    p{
+      color:$light-text;
+    }    
+  }
+  tr{
+    .round-light{
+      font-size:14px;
+    }
+    .icon-primary,.icon-secondary,.icon-success,.icon-warning{
+      transition:all 0.5s ease;
+      i{       
+        transition:all 0.5s ease;
+      }
+    }
+    &:hover{     
+      .icon-primary{
+        background-color:$primary-color;
+        i{
+          color:$white;         
+        }
+      }
+      .icon-secondary{
+        background-color: $secondary-color;
+        i{
+          color:$white;         
+        }
+      }
+      .icon-success{
+        background-color: $success-color;
+        i{
+          color:$white;         
+        }
+      }
+      .icon-warning{
+        background-color:$warning-color;
+        i{
+          color:$white;         
+        }
+      }
+    }
+  } 
+}
+// Responsive CSS Start
+
+@media only screen and (max-width: 1785px){
+.our-activity-table{
+  table{
+    tbody{
+      tr{
+        td{
+          padding:11px;
+        }
+      }
+    }
+  }
+}
+}
+
+@media only screen and (max-width: 1660px){
+  .top-sell-sec {
+    .top-sell-table {
+      table {        
+        tr {
+          td,th{
+            min-width:120px;
+            &:first-child{
+              min-width: 320px;               
+            }
+            &:nth-child(5){
+              min-width:130px;
+            }
+          }
+        }       
+      }
+    }
+  }
+  .payment-sec-main{
+    .visa-card{
+      padding:20px;
+      ul.card-number {
+        li{
+          padding:5px 10px;          
+        }
+      }
+      .card-logo {
+        img{
+          margin: unset;
+        }
+      }
+    }
+  }
+  .redial-block {
+    .meeting-details {
+      .meeting-rate{
+        padding: 10px 15px;
+        font-size: 12px;
+        p{
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1499px){
+  .perform-overview-sec{   
+    .slick-next,.slick-prev{
+      width:30px;
+      height:30px;
+    }     
+  }
+}
+
+@media screen and (max-width:1500px) and (min-width: 1366px){
+  .ecommerce-dash{
+    .card{
+      .card-header,.card-body,.card-footer{
+        padding:20px;
+      }
+    }
+    .perform-overview-sec{     
+      .slick-next,.slick-prev{
+        width:25px;
+        height:25px;
+        top:-30px;
+      }         
+    }
+    .top-sell-sec{
+      .top-sell-table{
+        table{
+          td{
+            padding:10px;
+          }
+        }
+      }
+    }
+    .redial-block {
+      .meeting-details {
+        h4{
+          font-size:22px;
+        }
+        p{
+          font-size:12px;
+        }
+      }
+    }
+    .our-activity-table {
+      tr{
+        .round-light{
+          width:30px;
+          height:30px;
+          i{
+            font-size:12px;
+          }
+        }
+        td{
+          min-width:100px;
+          padding-top:6px;
+          padding-bottom:6px;
+          &:first-child{             
+            min-width:330px;
+          }
+        }
+      }              
+    }   
+    .meeting-sec{
+      .redial-block{       
+        .meeting-details{
+          .meeting-rate{
+            padding:7px;   
+            font-size:12px;    
+          }
+        }
+        }
+      .card {
+        .setting-option {
+          width:25px;
+          height:25px;
+          top:15px;
+          right:15px;
+          .setting-badge {
+            width:25px;
+            height:25px;
+            i{
+              font-size:12px;
+            }
+          }
+        }
+      }
+    }   
+    .connect-sec {
+      table {
+        tr {
+          td{
+            padding:0 30px;
+            img{
+              width:auto !important;
+              height:35px;
+            }
+          }
+        }
+      }
+    }
+    .payment-sec-main{
+      .visa-card{
+         padding:15px;
+         h6{
+           font-size:16px;
+         }
+         .valid-thru {
+            span.vdate{
+              font-size:14px;
+            }
+         }
+        .card-logo{
+          margin-bottom:20px;
+          img{
+            margin-right:auto;
+            margin-left:unset;
+            height: 60px;
+          }
+        }
+        ul{
+          &.card-number {
+            margin-bottom:10px;
+            li{
+              padding:5px 10px;
+              &:nth-child(n+2){
+              margin-left:5px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .new-product-section{
+      .card-body{
+        padding:15px;
+      }
+    }
+    .new-product-main {
+      .pro-block{
+        >div{
+          padding-left:5px;
+          padding-right:5px;
+          &:nth-child(n+3){
+            margin-top:10px;
+          }
+        }
+      }
+      .product-box{
+        padding:10px 10px;           
+        span{
+          font-size:12px;
+        }
+        p{
+          font-size:10px;
+        }
+      }     
+    }
+    .slid-wrapper{
+      top:15px;
+      right:15px;
+    }
+    
+  }
+}
+
+@media screen and (max-width:1366px){
+  .top-sell-sec,.our-activity-table{
+    .btn-more{
+      display: block;
+      margin-top:10px;
+    }
+  }  
+}
+
+@media screen and (max-width:1365px) and (min-width: 1200px){
+  .ecommerce-dash{
+    .des-xl-50{
+      max-width: 50%;
+      flex:0 0 50%;
+    }
+    .des-xl-100{
+      max-width: 100%;
+      flex:0 0 100%;
+    }
+  }  
+}
+
+@media screen and (max-width:1365px){
+  .service-contact-table {
+    table {
+      tr {
+        td{
+          padding-top: 12px;
+          padding-bottom: 12px;
+        }
+      }
+    }
+  }
+  .connect-sec{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    table {
+      tr {
+        td{
+          padding:10px 30px;
+        }
+      }
+    }
+  }
+  .our-activity-table{
+    .table{
+      td,th{
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+    tr{
+      .round-light{
+        width:30px;
+        height:30px;    
+        i{
+          font-size:14px;
+        }   
+      }
+    }
+  }
+
+  .ecommerce-dash{
+    .business-growth-sec{
+      .card{
+        .card-header{
+          display:block;
+          h5{
+            margin-bottom: 5px !important;
+          }
+        }
+      }
+    }
+  }
+  .new-product-main{
+    .product-box{
+      padding:22px 18px;
+    }
+  }  
+  .payment-sec-main {
+    .visa-card {
+      ul{
+        &.card-number {
+          li{
+            padding:5px 10px;
+            &:nth-child(n+2){
+              margin-left:5px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+
+  .top-sell-sec {
+    .top-sell-table {
+      table {
+        td{
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+      }
+    }
+  }
+
+
+
+}
+@media only screen and (max-width: 1299px){
+  .new-product-section{
+    .card{
+      .card-header{
+        .content-center{
+          top:unset;
+          right:unset;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 1199px){ 
+ .payment-sec-main {
+    #sync2 {
+      // width:80%;
+      .item{
+        margin-right:15px;
+        img{
+          width:100%;
+        }
+      }
+    }
+    #sync1{
+      margin-bottom:40px;  
+      .item{
+        .master-right-sec{
+          right: -48%;
+          img{
+            width: 45%;
+          }
+        }
+      }
+    }    
+ }
+ 
+ .new-product-main {
+  .product-box{
+    padding: 22px 15px;
+  }
+ }
+
+
+}
+
+@media only screen and (max-width: 991px){  
+  .payment-sec-main{
+   #sync2{
+     .item {
+       .check-circle{
+         right: 30px;
+       }
+     }
+   }
+  }
+  .ecommerce-dash,.default-sec{
+   .card{
+     .card-header{
+       .content-center{
+         top: 18px;
+       }
+     }
+   }
+  }
+  .pro-market-sec{
+   .card{
+     .card-header{
+       .content-center{
+         top:unset;
+         right:unset;
+       }
+     }
+   }
+  }
+  .perform-overview-sec {
+    .card{     
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-bottom: 0 !important;
+     }
+     .slick-next,.slick-prev{
+       width: 25px;
+       height: 25px;
+       top: -30px;
+     }   
+     .widget-card {
+       .star-main{
+         display:block;
+         .rating-cionlist{
+           margin-left: 0;
+         }
+       }
+     }
+  } 
+  .connect-sec {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    table {
+      tr {
+        td{
+          padding: 10px 25px;
+        }
+      }
+    }
+  }
+  .new-product-section{
+   .card{
+     .card-header{      
+       display: block !important;
+     }
+   }
+   .product-box{
+     padding:20px 12px;
+     span{
+       font-size:12px;
+     }
+   }
+  }
+
+ }
+
+@media only screen and (max-width: 767px){
+  .redial-block {
+    .meeting-details {
+      .meeting-rate{
+        margin-top:18px;
+      }
+    }
+  }  
+  .our-activity-table {
+    table {
+      tbody {
+        tr {
+          td{
+            padding:11px  0.75rem;
+          }
+        }
+      }
+    }
+  }
+  .pro-market-sec{
+    .card{
+      .card-header{
+        display: block;
+      }
+    }
+  }
+  .round-light{
+    i{
+      font-size:16px;
+    }
+  }
+  .connect-sec {
+    table {
+      tr {
+        td{
+          padding: 10px 15px;
+        }
+      }
+    }
+  }
+
+  
+
+  .perform-overview-sec {
+    .card{
+      margin-left: 0;
+      margin-right: 0;
+    }
+    
+  }
+  .payment-sec-main {
+    #sync1{
+      margin-bottom:25px;
+    }
+    #sync2{
+      width:70%;
+    }
+  } 
+  .redial-block {
+    .meeting-details {
+      .meeting-rate{
+        padding:10px 14px;
+      }
+      p{
+        font-size: 12px;
+      }
+    }
+  }
+  
+
+
+}
+
+@media only screen and (max-width: 650px){
+  .ecommerce-dash{
+    .des-sm-100{
+      max-width: 100%;
+      flex:0 0 100%;     
+    }
+  }
+  .connect-sec {
+    padding-top: 0;
+    padding-bottom: 0;
+    table {
+      tr {
+        td{
+          padding:0 30px;
+        }
+      }
+    }
+  }
+}
+ @media only screen and (max-width: 575px){
+  .business-growth-sec{
+   .card{
+     .card-header{
+       .content-center{
+         top:unset;
+         right:unset;
+       }
+     }
+   }
+  }
+  .new-product-main {
+   .pro-block {
+     > div{
+       &:nth-child(n+2){
+         margin-top:20px;
+       }
+     }
+   }
+  }
+  .payment-main {
+   #sync2{
+     width:100%;
+   }
+  }
+
+  .new-product-main{
+    .single-item-small{
+      .product-box{
+        margin-right: 5px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  
+ }
+ @media only screen and (max-width: 480px){ 
+  .ecommerce-dash{
+    .payment-sec-main {   
+      .visa-card{
+        padding:15px;
+         h6{
+           margin-bottom:10px;
+         }
+        .card-logo{
+          margin-bottom:20px;
+          img{
+            height:50px;
+          }
+        }
+        ul.card-number {
+          li{
+            padding:5px 7px;
+            &:nth-child(n+2){
+              margin-left:5px;
+            }
+          }
+        }
+      }
+      #sync1{
+        margin-bottom:20px;
+      }   
+      .card-body{
+        padding:15px !important;
+      }   
+    }
+  }
+  .payment-sec-main{
+    #sync1{
+      .item{
+        .master-right-sec{
+          top: -14%;
+          img{
+            width: 47%;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 420px){  
+  .connect-sec {
+    table {
+      tr {
+        td{
+          padding:10px 15px;
+          img{
+            width: auto !important;
+            height: 30px ;
+          }
+        }
+      }
+    }
+  }
+  .payment-sec-main{
+    #sync2{
+      .item{
+        .check-circle{
+          padding: 0px;
+        }
+      }
+    }
+  }
+  .perform-overview-sec{
+    .media{
+      display:block;
+    }
+    .slick-next,.slick-prev{
+      display: none !important;
+    }
+  }
+
+  .new-product-section {
+    .product-box {
+      span{
+         font-size: 10px;
+      }
+      p{
+          font-size: 10px;
+      }
+    }
+    .slid-wrapper{
+      top: 10px;
+      right: 25px;
+      .plus-circle{
+        width: 15px;
+        height: 15px;
+      }   
+    }
+  }
+
+}
+
+@media only screen and (max-width: 369px){
+   .payment-sec-main{
+      #sync1{
+        .item{
+          padding: 20px;
+        }
+      }
+      #sync2{
+        .item{
+          .check-circle{
+            right: 8px;
+          }
+        }
+      }
+   }
+   .pro-market-sec{
+     .right-content{
+       display:none !important;
+     }
+  }
+}
+@media only screen and (max-width: 349px){
+ .payment-sec-main{
+  #sync1{
+    .item{
+      padding: 10px;
+    }
+  }
+ }
+}
+@media only screen and (max-width: 329px){
+ .payment-sec-main{
+  #sync1{
+    .item{
+      padding: 5px;
+    }
+  }
+ }
+}
+
+
+
+/**=====================
+     67. Dashboard 2  CSS End
+==========================**/

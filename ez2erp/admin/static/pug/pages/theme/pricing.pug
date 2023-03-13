@@ -1,0 +1,181 @@
+- var theme_customizer      = true;
+
+- var counter               = true;
+
+doctype html
+html(lang='en')
+    include ../../components/header-files
+    body
+        include ../../components/loader
+        // page-wrapper Start
+        #pageWrapper.page-wrapper.compact-wrapper
+            include ../../components/header
+            // Page Body Start
+            .page-body-wrapper.sidebar-icon
+                include ../../components/sidebar
+                .page-body
+                    .container-fluid
+                        .page-header
+                            .row
+                                .col-sm-6
+                                    h3
+                                      | Pricing
+                                    ol.breadcrumb
+                                      li.breadcrumb-item
+                                        a(href='index.html')
+                                         i(data-feather="home")
+                                      li.breadcrumb-item Ecommerce   
+                                      li.breadcrumb-item.active Pricing
+                                .col-sm-6
+                                  include ../../components/bookmark
+                    // Container-fluid starts
+                    .container-fluid
+                      .row
+                        .col-sm-12
+                          .card
+                            .card-header.pb-0 
+                              h5 Become member
+                            .card-body.row.pricing-block
+                              .col-lg-3.col-md-6.box-col-6
+                                .pricingtable
+                                  .pricing-header
+                                    h3 Standard
+                                  .pricing-content
+                                    .price-value
+                                      div                                   
+                                        h4 $10
+                                          span /month                                 
+                                    ul.pricing-list
+                                      li                                     
+                                        span 50GB
+                                        | Disk Space
+                                      li                                     
+                                        span 50
+                                        | Email Accounts
+                                      li                                     
+                                        span 50GB
+                                        | Bandwidth
+                                      li                                     
+                                        span 10
+                                        | Subdomains
+                                      li                                     
+                                        span 15
+                                        | Domains
+                                    .pricingtable-signup
+                                      a.btn.btn-primary.btn-lg(href='javascript:void(0)') Sign Up
+                              .col-lg-3.col-md-6.box-col-6
+                                .pricingtable
+                                  .pricing-header
+                                    h3.title Premium
+                                  .pricing-content
+                                    .price-value
+                                      div                                   
+                                        h4 $20
+                                          span /month
+                                    ul.pricing-list
+                                      li                                     
+                                        span 60GB
+                                        | Disk Space
+                                      li                                     
+                                        span 60
+                                        | Email Accounts
+                                      li                                     
+                                        span 60GB
+                                        | Bandwidth
+                                      li                                     
+                                        span 20
+                                        | Subdomains
+                                      li                                     
+                                        span 20
+                                        | Domains
+                                    .pricingtable-signup
+                                      a.btn.btn-primary.btn-lg(href='javascript:void(0)') Sign Up
+                              .col-lg-3.col-md-6.box-col-6
+                                .pricingtable
+                                  .pricing-header
+                                    h3.title Auther pack
+                                  .pricing-content
+                                    .price-value
+                                      div                                   
+                                        h4 $30
+                                          span /month
+                                    ul.pricing-list
+                                      li                                     
+                                        span 70GB
+                                        | Disk Space
+                                      li                                     
+                                        span 70
+                                        | Email Accounts
+                                      li                                     
+                                        span 70GB
+                                        | Bandwidth
+                                      li                                     
+                                        span 25
+                                        | Subdomains
+                                      li                                     
+                                        span 25
+                                        | Domains
+                                    .pricingtable-signup
+                                      a.btn.btn-primary.btn-lg(href='javascript:void(0)') Sign Up
+                              .col-lg-3.col-md-6.box-col-6
+                                .pricingtable
+                                  .pricing-header
+                                    h3.title business
+                                  .pricing-content
+                                    .price-value
+                                      div                                   
+                                        h4 $40
+                                          span /month
+                                    ul.pricing-list
+                                      li                                     
+                                        span 55GB
+                                        | Disk Space
+                                      li                                     
+                                        span 102
+                                        | Email Accounts
+                                      li                                     
+                                        span 65GB
+                                        | Bandwidth
+                                      li                                     
+                                        span 30
+                                        | Subdomains
+                                      li                                     
+                                        span 25
+                                        | Domains
+                                    .pricingtable-signup
+                                      a.btn.btn-primary.btn-lg(href='javascript:void(0)') Sign Up
+                          .card
+                            .card-header.pb-0 
+                              h5 Simple Pricing Card
+                            .card-body.row.pricing-block
+                              .col-xl-3.col-sm-6.xl-50.box-col-6
+                                .pricing-simple
+                                  .pricing-content
+                                    h3 Standard
+                                    h1 $15
+                                    h6.mb-0 Lorum Ipsum
+                                  a.btn.btn-primary(href='javascript:void(0)') Purchase
+                              .col-xl-3.col-sm-6.xl-50.box-col-6
+                                .pricing-simple
+                                  .pricing-content
+                                    h3 Business
+                                    h1 $25
+                                    h6.mb-0 Lorum Ipsum
+                                  a.btn.btn-primary(href='javascript:void(0)')   Purchase
+                              .col-xl-3.col-sm-6.xl-50.box-col-6
+                                .pricing-simple
+                                  .pricing-content
+                                    h3 Premium
+                                    h1 $35
+                                    h6.mb-0 Lorum Ipsum
+                                  a.btn.btn-primary(href='javascript:void(0)')   Purchase
+                              .col-xl-3.col-sm-6.xl-50.box-col-6
+                                .pricing-simple
+                                  .pricing-content
+                                    h3 Extra
+                                    h1 $45
+                                    h6.mb-0 Lorum Ipsum
+                                  a.btn.btn-primary(href='javascript:void(0)')   Purchase
+                    // Container-fluid end
+                include ../../components/footer
+        include ../../components/footer-files

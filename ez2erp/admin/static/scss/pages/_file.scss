@@ -1,0 +1,298 @@
+/**=====================
+    File Manager
+==========================**/
+
+.file-sidebar,.file-content{
+    .card {
+        .card-body,.card-header{
+            padding: 20px !important;
+        }
+        .file-manager{
+            padding-top: unset !important;
+        }
+    }
+   
+}
+.file-sidebar{
+    ul{
+        li{
+            &+li{
+                margin-top: 8px;
+            }
+        }
+    }
+    .btn{
+        display: flex;
+        align-items: center;
+        &.btn-light{
+            &:hover{
+                color: $primary-color !important;
+                svg{
+                    stroke: $primary-color;
+                }
+            }            
+        }
+        svg{
+            width: 15px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+    }
+    .pricing-plan{
+        border: 1px solid $light-gray;
+        border-radius: 5px;
+        margin-top: 10px;
+        padding: 15px;
+        position: relative;
+        overflow: hidden;
+        h6{
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom:5px;
+            color: $dark-gray;
+        }
+        h5{
+            font-weight:600;           
+        }
+        p{
+            margin-bottom:10px;
+            color: $dark-gray;
+            line-height: 1;
+        }
+        .btn{
+            display: inline-block;            
+            padding: 3px 8px;
+            font-size: 10px;
+        }
+        .bg-img{
+            position: absolute;
+            top: 40px;
+            opacity: 0.1;
+            transform: rotate(-45deg);
+            right: -40px;
+        }
+    }
+    .btn.btn-light{
+        background-color: rgba($primary-color,0.05) !important;
+        border: none !important;
+        color: $primary-color ;
+        &:hover{
+            background-color:$primary-color !important;
+            color:$white !important;
+            svg{
+                stroke: $white;
+            }
+        }
+    }
+    h6{
+        color: $light-text;
+    }
+}
+.file-manager{
+    > h6{       
+        font-weight:400 !important;
+        font-size:15px;
+        margin-bottom:20px;
+        color: $light-text;
+    }
+    h5{
+        font-size:18px;
+        margin-bottom:15px;
+    }
+    .files{
+        h6{
+            margin-top: 10px;
+            margin-bottom: 0;
+        }    
+    }    
+    p{        
+        font-size: 12px;
+        color: $light-text;
+    }
+}
+.files,.folder{
+    h6{
+        opacity: 0.9;
+        font-weight: 500 !important;
+        font-size: 14px;
+    }
+}
+.file-content{
+    .ellips {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        opacity: 0.7;
+    }
+    .form-inline{
+        border: 1px solid $light-gray;
+        border-radius: 5px;
+        padding: 0 20px;
+        i{
+            padding-right: 10px;           
+            color: $dark-gray;
+            line-height: 3;
+        }
+        input{
+            &::-webkit-input-placeholder { 
+              color: $dark-gray;
+          }
+          &:focus{
+            outline: none !important;
+        }           
+    }
+}
+.search-form{
+    input{
+        padding: 5px 10px 5px 70px;
+        border-radius: 5px;
+    }
+    .form-group{
+        &:before {
+            left: 82px;
+            top: 37px;
+        }
+        &:after {
+            top: 39px;
+            left: 53px;
+        }
+    }
+}
+.btn{
+    padding:5px 15px;
+    svg{
+        height: 15px;
+        margin-right: 2px;
+        vertical-align: middle;
+    }
+}
+h4{
+    font-weight:600;
+    margin-bottom:5px;
+    line-height:1;
+}
+.folder{
+    .folder-box{
+        border: 1px solid $light-gray;
+        border-radius: 5px;
+        padding: 15px;
+        background-color:rgba($primary-color,0.05);
+        width: calc(25% - 15px);
+        display: inline-block;
+    }
+}
+.files{
+    .file-box{
+       border: 1px solid $light-gray;
+       border-radius: 5px;
+       padding: 15px;
+       background-color: rgba($primary-color,0.05);
+       width: calc(25% - 15px);
+       display: inline-block;
+       position: relative;
+       .file-top{
+        height: 100px;
+        background-color: #fff;
+        border: 1px solid #ececec;
+        border-radius: 5px;
+        font-size: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+}
+}
+.md-sidebar{
+    .md-sidebar-toggle{
+        display:none;
+        width:fit-content;
+        margin-bottom:20px;
+        font-weight:600;
+        text-transform:capitalize;
+    }   
+}
+
+
+
+@media screen and (max-width: 1440px) {
+  .file-content .folder .folder-box .media {
+    display: block;
+    text-align:center;
+    .media-body{
+        margin-left: 0 !important;
+        margin-top: 5px;
+    }
+}  
+}
+@media screen and (max-width: 1366px) {
+  .file-content .files{
+    margin-bottom: -10px;
+        .file-box{
+            width: calc(50% - 15px);
+            margin-bottom: 10px;
+            margin-right: 8px;
+        }
+    }
+.file-sidebar {
+    .btn{
+        padding:8px 15px;
+    }
+}
+.file-content {
+    .folder {
+        .folder-box{
+            padding: 13px;
+            width: calc(50% - 15px);
+            margin-bottom: 10px;
+        }
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .file-content {
+    .folder{
+        margin-bottom: -10px;
+        .folder-box{
+          width:calc(50% - 15px);  
+          margin-bottom:10px;         
+      }
+  }
+  .media{
+   display: block;
+   text-align: center;
+   .media-body{
+    margin-top:15px;
+    text-align:center !important;
+    }
+   }
+ }
+}
+
+@media screen and (max-width: 575px){
+    .file-content .folder .folder-box ,.file-content .files .file-box{
+        width:calc(100%);
+    }    
+    .file-content {
+        .media {
+            .media-body{
+                margin-top:15px;
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 420px){
+    .file-content {
+        .btn{
+            padding:5px 12px;
+        }
+    }
+}
+
+
+
+/**=====================
+     File Manager
+==========================**/

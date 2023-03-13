@@ -1,0 +1,840 @@
+- var apex                  = true;
+- var theme_customizer      = true;
+- var vector_map            = true;
+- var page_vector_map       = true;
+- var animate               = true;
+- var dashboard_3           = true;
+- var customcard            = true;
+- var clipboard             = true;
+- var prism                 = true;
+- var date_picker           = true;
+
+doctype html
+html(lang='en')
+  include ../../components/header-files
+  body
+    include ../../components/loader
+    // page-wrapper Start
+    #pageWrapper.page-wrapper.compact-wrapper
+      include ../../components/header
+      // Page Body Start
+      .page-body-wrapper.sidebar-icon
+        include ../../components/sidebar
+        .page-body.porject-dash
+          .container-fluid
+            .page-header.dash-breadcrumb
+              .row
+                .col-6                               
+                  h3.f-w-600 default
+                .col-6
+                  .breadcrumb-sec
+                    ul.breadcrumb
+                      li.breadcrumb-item
+                        a(href='index.html')
+                          i(data-feather="home")
+                      li.breadcrumb-item Dashboard
+                      li.breadcrumb-item.active Project
+          // Container-fluid starts
+          .container-fluid.project-dash
+            .row.size-column
+              .col-xl-8.des-xl-100.congrats-sec-main.box-col-12
+                .row
+                  .col-md-12
+                    .card
+                      .card-body.p-0
+                        .congrats-sec
+                          .card-header-right
+                            ul.setting-option.bg-transparent
+                              li
+                                .setting-badge.light-badge
+                                  i.fa.fa-cog
+                              li
+                                i.view-html.fa.fa-code
+                              li
+                                i.icofont.icofont-maximize.full-card
+                              li
+                                i.icofont.icofont-minus.minimize-card
+                              li
+                                i.icofont.icofont-refresh.reload-card
+                              li
+                                i.icofont.icofont-error.close-card
+                          .congrats-content
+                            h3 Congratulations mark jecno 
+                            p Lorem ipsum is simply dummy text of the printing and typesetting printing and typesetting industry.
+                            a.btn.btn-light.learn-btn(href="blog-single.html") Learn More
+                             i.fa.fa-arrow-right.font-primary.ms-2
+                  .col-md-6.box-col-12.box-col-6
+                    .card.today-task-sec
+                      .card-header.justify-content-between
+                        h5 Today Task
+                        .center-content
+                           p 5 Task
+                           span Completed
+                        .card-header-right
+                          ul.setting-option
+                            li
+                              .setting-badge
+                                i.fa.fa-spin.fa-cog.font-primary
+                            li
+                              i.view-html.fa.fa-code.font-primary
+                            li
+                              i.icofont.icofont-maximize.full-card.font-primary
+                            li
+                              i.icofont.icofont-minus.minimize-card.font-primary
+                            li
+                              i.icofont.icofont-refresh.reload-card.font-primary
+                            li
+                              i.icofont.icofont-error.close-card.font-primary
+                      .card-body.p-t-0
+                        .table-responsive.task-details
+                          table.table.table-bordernone
+                            tbody
+                              tr
+                                td
+                                  span Google Project Apply Review
+                                  p Completed in 3 Hours
+                                td.progress-showcase
+                                    .progress.sm-progress-bar
+                                      .progress-bar.bg-primary(role='progressbar' style='width: 75%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                                    p 75% Percentage
+                                td 
+                                  a.btn.light-primary(href="javascript:void(0)") Edit
+                              tr
+                                td
+                                  span Business Logo Create
+                                  p Completed in 5 Hours
+                                td.progress-showcase
+                                    .progress.sm-progress-bar
+                                      .progress-bar.bg-secondary(role='progressbar' style='width: 100%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                                    p Completed
+                                td
+                                  a.btn.light-secondary(href="javascript:void(0)") Edit
+                              tr
+                                td
+                                    span Business Project Research
+                                    p Completed in 2 Hours
+                                td.progress-showcase
+                                    .progress.sm-progress-bar
+                                      .progress-bar.bg-success(role='progressbar' style='width: 65%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                                    p 65% Percentage
+                                td
+                                  a.btn.light-success(href="javascript:void(0)") Edit
+                              tr
+                                td
+                                    span Recruitment in IT Department
+                                    p Completed in 4 Days
+                                td.progress-showcase
+                                    .progress.sm-progress-bar
+                                      .progress-bar.bg-warning(role='progressbar' style='width: 90%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                                    p 90% Percentage
+                                
+                                td
+                                  a.btn.light-warning(href="javascript:void(0)") Edit
+                              tr
+                                td
+                                    span Submit Riverfront Project
+                                    p Completed in 2 Days
+                               
+                                td
+                                  .progress-showcase
+                                    .progress.sm-progress-bar
+                                      .progress-bar.bg-info(role='progressbar' style='width: 30%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                                    p 30% Percentage
+                                td
+                                  a.btn.light-info(href="javascript:void(0)") Edit
+                        div.text-center
+                          a.f-w-700(href="javascript:void(0)") More...
+                        .code-box-copy
+                              button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#today-task', title='Copy')
+                                i.icofont.icofont-copy-alt
+                              pre
+                                code.language-html#today-task
+                                  |&lt;div class="card today-task-sec"&gt;
+                                  |  &lt;div class="card-header justify-content-between"&gt;
+                                  |    &lt;h5&gt;Today Task&lt;/h5&gt;
+                                  |  &lt;div class="center-content"&gt;
+                                  |    &lt;p&gt;5 Task&lt;/p&gt;
+                                  |    &lt;span&gt;Completed&lt;/span&gt;
+                                  |  &lt;/div&gt;
+                                  |  &lt;div class="card-header-right"&gt;
+                                  |    &lt;ul class="setting-option"&gt;
+                                  |      &lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                                  |      &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                  |      &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                  |      &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                  |      &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                  |      &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                  |    &lt;/ul&gt;
+                                  |  &lt;/div&gt;
+                                  |&lt;/div&gt;
+                                  |&lt;div class="card-body p-t-0"&gt;
+                                  |  &lt;div class="table-responsive task-details"&gt;
+                                  |    &lt;table class="table table-bordernone"&gt;
+                                  |      &lt;tbody&gt;
+                                  |        &lt;tr&gt;
+                                  |          &lt;td&gt;
+                                  |            &lt;span&gt;Google Project Apply Review&lt;/span&gt;
+                                  |            &lt;p&gt;Completed in 3 Hours&lt;/p&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td class="progress-showcase"&gt;
+                                  |            &lt;div class="progress sm-progress-bar"&gt;
+                                  |              &lt;div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                  |            &lt;/div&gt;
+                                  |            &lt;p&gt;75% Percentage&lt;/p&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td&gt; 
+                                  |            &lt;a class="btn light-primary" href="javascript:void(0)"&gt;Edit&lt;/a&gt;
+                                  |          &lt;/td&gt;
+                                  |        &lt;/tr&gt;
+                                  |        &lt;tr&gt;
+                                  |          &lt;td&gt;
+                                  |            &lt;span&gt;Business Logo Create&lt;/span&gt;
+                                  |            &lt;p&gt;Completed in 5 Hours&lt;/p&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td class="progress-showcase"&gt;
+                                  |            &lt;div class="progress sm-progress-bar"&gt;
+                                  |              &lt;div class="progress-bar bg-secondary" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                  |            &lt;/div&gt;
+                                  |            &lt;p&gt;Completed&lt;/p&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td&gt;
+                                  |            &lt;a class="btn light-secondary" href="javascript:void(0)"&gt;Edit&lt;/a&gt;
+                                  |          &lt;/td&gt;
+                                  |        &lt;/tr&gt;
+                                  |        &lt;tr&gt;
+                                  |          &lt;td&gt;
+                                  |            &lt;span&gt;Business Project Research&lt;/span&gt;
+                                  |            &lt;p&gt;Completed in 2 Hours&lt;/p&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td class="progress-showcase"&gt;
+                                  |            &lt;div class="progress sm-progress-bar"&gt;
+                                  |              &lt;div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                  |            &lt;/div&gt;
+                                  |            &lt;p&gt;65% Percentage&lt;/p&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td&gt;
+                                  |            &lt;a class="btn light-success" href="javascript:void(0)"&gt;Edit&lt;/a&gt;&lt;/td&gt;
+                                  |        &lt;/tr&gt;
+                                  |        &lt;tr&gt;
+                                  |          &lt;td&gt;
+                                  |            &lt;span&gt;Recruitment in IT Department&lt;/span&gt;
+                                  |            &lt;p&gt;Completed in 4 Days&lt;/p&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td class="progress-showcase"&gt;
+                                  |            &lt;div class="progress sm-progress-bar"&gt;
+                                  |              &lt;div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                  |            &lt;/div&gt;
+                                  |            &lt;p&gt;90% Percentage&lt;/p&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td&gt;&lt;a class="btn light-warning" href="javascript:void(0)"&gt;Edit&lt;/a&gt;&lt;/td&gt;
+                                  |        &lt;/tr&gt;
+                                  |        &lt;tr&gt;
+                                  |          &lt;td&gt;
+                                  |            &lt;span&gt;Submit Riverfront Project&lt;/span&gt;
+                                  |            &lt;p&gt;Completed in 2 Days&lt;/p&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td&gt;
+                                  |            &lt;div class="progress-showcase"&gt;
+                                  |              &lt;div class="progress sm-progress-bar"&gt;
+                                  |                &lt;div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                  |              &lt;/div&gt;
+                                  |              &lt;p&gt;30% Percentage&lt;/p&gt;
+                                  |            &lt;/div&gt;
+                                  |          &lt;/td&gt;
+                                  |          &lt;td&gt;
+                                  |            &lt;a class="btn light-info" href="javascript:void(0)"&gt;Edit&lt;/a&gt;
+                                  |          &lt;/td&gt;
+                                  |        &lt;/tr&gt;
+                                  |        &lt;/tbody&gt;
+                                  |      &lt;/table&gt;
+                                  |    &lt;/div&gt;
+                                  |    &lt;div class="text-center"&gt;
+                                  |     &lt;a class="f-w-700" href="javascript:void(0)"&gt;More...&lt;/a&gt;
+                                  |   &lt;/div&gt;
+                                  | &lt;/div&gt;
+                                  | &lt;/div&gt;
+                  .col-md-6.box-col-12.box-col-6
+                    .card.project-goal-sec
+                      .card-header.justify-content-between
+                        h5 Project Goal
+                        .center-content
+                           p Archive
+                           span $658429
+                        .card-header-right
+                          ul.setting-option
+                            li
+                              .setting-badge
+                                i.fa.fa-spin.fa-cog.font-primary
+                            li
+                              i.view-html.fa.fa-code.font-primary
+                            li
+                              i.icofont.icofont-maximize.full-card.font-primary
+                            li
+                              i.icofont.icofont-minus.minimize-card.font-primary
+                            li
+                              i.icofont.icofont-refresh.reload-card.font-primary
+                            li
+                              i.icofont.icofont-error.close-card.font-primary
+                      .card-body.p-0
+                        #radar-chart
+                        .code-box-copy
+                            button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#project-goal', title='Copy')
+                                i.icofont.icofont-copy-alt
+                            pre
+                              code.language-html#project-goal
+                                |&lt;div class="card project-goal-sec"&gt;
+                                |  &lt;div class="card-header justify-content-between"&gt;
+                                |    &lt;h5&gt;Project Goal&lt;/h5&gt;
+                                |    &lt;div class="center-content"&gt;
+                                |      &lt;p&gt;Archive&lt;/p&gt;
+                                |      &lt;span&gt;$658429&lt;/span&gt;
+                                |    &lt;/div&gt;
+                                |    &lt;div class="card-header-right"&gt;
+                                |      &lt;ul class="setting-option"&gt;
+                                |        &lt;li&gt;
+                                |          &lt;div class="setting-badge"&gt;
+                                |            &lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;
+                                |          &lt;/div&gt;
+                                |        &lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |      &lt;/ul&gt;
+                                |    &lt;/div&gt;
+                                |  &lt;/div&gt;
+                                |  &lt;div class="card-body p-0"&gt;
+                                |    &lt;div id="radar-chart"&gt;&lt;/div&gt;
+                                |  &lt;/div&gt;
+                                |&lt;/div&gt;
+              .col-xl-4.des-xl-100.box-col-12
+                .row
+                  .col-xl-12.col-md-6.des-xl-50.box-col-6
+                    .card.project-calendar(data-intro='This is Date picker')
+                      .card-header
+                        h5 calendar
+                        .card-header-right
+                          ul.setting-option
+                            li
+                              .setting-badge
+                                i.fa.fa-spin.fa-cog.font-primary
+                            li
+                              i.view-html.fa.fa-code.font-primary
+                            li
+                              i.icofont.icofont-maximize.full-card.font-primary
+                            li
+                              i.icofont.icofont-minus.minimize-card.font-primary
+                            li
+                              i.icofont.icofont-refresh.reload-card.font-primary
+                            li
+                              i.icofont.icofont-error.close-card.font-primary
+                      .card-body
+                        .datepicker-here.date-picker-university(data-language='en')
+                        .code-box-copy
+                            button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#calender-sec', title='Copy')
+                              i.icofont.icofont-copy-alt
+                            pre
+                              code.language-html#calender-sec
+                                |&lt;div class="card project-calendar" data-intro="This is Date picker"&gt;
+                                |  &lt;div class="card-header"&gt;
+                                |    &lt;h5&gt;calendar&lt;/h5&gt;
+                                |    &lt;div class="card-header-right"&gt;
+                                |      &lt;ul class="setting-option"&gt;
+                                |        &lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |       &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |     &lt;/ul&gt;
+                                |   &lt;/div&gt;
+                                | &lt;/div&gt;
+                                | &lt;div class="card-body"&gt;
+                                |   &lt;div class="datepicker-here date-picker-university" data-language="en"&gt;&lt;/div&gt;
+                                |  &lt;/div&gt;
+                                | &lt;/div&gt;
+                  .col-xl-12.col-md-6.des-xl-50.box-col-6
+                      .card.employee-sec
+                        .card-body
+                          .table-responsive.groups-table.emp-details-table
+                            table.table.table-bordernone
+                              tbody
+                                tr
+                                  td
+                                    .media
+                                      .round-light.icon-secondary
+                                        i.fa.fa-user
+                                      .media-body
+                                        span All Employe Distribute Work
+                                        p Company,SanFrancisco
+                                  td
+                                    p 9:00 to 10:00
+                                tr
+                                  td
+                                    .media
+                                      .round-light.icon-primary
+                                        i.fa.fa-check-circle
+                                      .media-body
+                                        span Business Plan is Approved
+                                        p Elisse Joson,San Francisco
+                                  td
+                                    p 10:00 to 1:00
+                                tr
+                                  td
+                                    .media
+                                      .round-light.icon-success
+                                        i.fa.fa-graduation-cap
+                                      .media-body
+                                          span Our Education Project Presentation
+                                          p Company,San Francisco
+                                  td
+                                    p 1:10 to 3:15
+                                tr
+                                  td
+                                    .media
+                                      .round-light.icon-warning
+                                        i.fa.fa-coffee
+                                      .media-body
+                                          span Coffe Break
+                                          p Our Company All Team Member
+                                  td
+                                    p 3:15 to 3:30
+              .col-xl-8.des-xl-100.box-col-6
+                .card.annual-earning-sec
+                  .card-header.justify-content-between
+                    h5 Annually Earnings
+                    .center-content
+                      .center-content-left
+                        .round.bg-primary.d-inline-block
+                        p Archive
+                      .center-content-right
+                        p Expected
+                    .card-header-right
+                      ul.setting-option
+                            li
+                              .setting-badge
+                                i.fa.fa-spin.fa-cog.font-primary
+                            li
+                              i.view-html.fa.fa-code.font-primary
+                            li
+                              i.icofont.icofont-maximize.full-card.font-primary
+                            li
+                              i.icofont.icofont-minus.minimize-card.font-primary
+                            li
+                              i.icofont.icofont-refresh.reload-card.font-primary
+                            li
+                              i.icofont.icofont-error.close-card.font-primary
+                  .card-body.py-0.p-0                    
+                    #earnings-chart
+                    .code-box-copy
+                      button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#annually-earnings', title='Copy')
+                        i.icofont.icofont-copy-alt
+                      pre
+                        code.language-html#annually-earnings
+                          |&lt;div class="card annual-earning-sec"&gt;
+                          |  &lt;div class="card-header justify-content-between"&gt;
+                          |    &lt;h5&gt;Annually Earnings&lt;/h5&gt;
+                          |    &lt;div class="center-content"&gt;
+                          |      &lt;div class="center-content-left"&gt;
+                          |        &lt;div class="round bg-primary d-inline-block"&gt;&lt;/div&gt;
+                          |        &lt;p&gt;Archive&lt;/p&gt;
+                          |      &lt;/div&gt;
+                          |      &lt;div class="center-content-right"&gt;
+                          |        &lt;p&gt;Expected&lt;/p&gt;
+                          |      &lt;/div&gt;
+                          |    &lt;/div&gt;
+                          |    &lt;div class="card-header-right"&gt;
+                          |      &lt;ul class="setting-option"&gt;
+                          |        &lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |      &lt;/ul&gt;
+                          |    &lt;/div&gt;
+                          |  &lt;/div&gt;
+                          |  &lt;div class="card-body py-0 p-0"&gt;
+                          |    &lt;div id="earnings-chart"&gt;&lt;/div&gt;
+                          |  &lt;/div&gt;
+                          |&lt;/div&gt;
+              .col-xl-4.des-xl-100.box-col-6
+                .card.visitor-sec
+                  .card-header.justify-content-between
+                    h5 Visitors Countries
+                    .center-content
+                      p Country
+                      span 195
+                    .card-header-right
+                      ul.setting-option
+                            li
+                              .setting-badge
+                                i.fa.fa-spin.fa-cog.font-primary
+                            li
+                              i.view-html.fa.fa-code.font-primary
+                            li
+                              i.icofont.icofont-maximize.full-card.font-primary
+                            li
+                              i.icofont.icofont-minus.minimize-card.font-primary
+                            li
+                              i.icofont.icofont-refresh.reload-card.font-primary
+                            li
+                              i.icofont.icofont-error.close-card.font-primary
+                  .card-body.p-0
+                    #world-map2.jvector-map-height
+                    .show-value-top.d-flex
+                        .counry-data.d-inline-block
+                          .round.bg-primary.d-inline-block
+                          span South America
+                        .counry-data.d-inline-block
+                          .round.bg-secondary.d-inline-block
+                          span Europe
+                        .counry-data.d-inline-block
+                          .round.bg-warning.d-inline-block
+                          span London
+                        .counry-data.d-inline-block
+                          .round.bg-success.d-inline-block
+                          span Australia
+                    .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#visitor-countris', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#visitor-countris
+                              |&lt;div class="card visitor-sec"&gt;
+                              |    &lt;div class="card-header justify-content-between"&gt;
+                              |      &lt;h5&gt;Visitors Countries&lt;/h5&gt;
+                              |      &lt;div class="center-content"&gt;
+                              |        &lt;p&gt;Country&lt;/p&gt;&lt;span&gt;195&lt;/span&gt;
+                              |      &lt;/div&gt;
+                              |      &lt;div class="card-header-right"&gt;
+                              |        &lt;ul class="setting-option"&gt;
+                              |          &lt;li&gt;
+                              |            &lt;div class="setting-badge"&gt;
+                              |              &lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;/ul&gt;
+                              |      &lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |    &lt;div class="card-body p-0"&gt;
+                              |      &lt;div class="jvector-map-height" id="world-map2"&gt;&lt;/div&gt;
+                              |    &lt;div class="show-value-top d-flex"&gt;
+                              |          &lt;div class="counry-data d-inline-block"&gt;
+                              |            &lt;div class="round bg-primary d-inline-block"&gt;&lt;/div&gt;
+                              |            &lt;span&gt;South America&lt;/span&gt;
+                              |          &lt;/div&gt;
+                              |          &lt;div class="counry-data d-inline-block"&gt;
+                              |            &lt;div class="round bg-secondary d-inline-block"&gt;&lt;/div&gt;
+                              |            &lt;span&gt;Europe&lt;/span&gt;
+                              |          &lt;/div&gt;
+                              |          &lt;div class="counry-data d-inline-block"&gt;
+                              |            &lt;div class="round bg-warning d-inline-block"&gt;&lt;/div&gt;
+                              |            &lt;span&gt;London&lt;/span&gt;
+                              |          &lt;/div&gt;
+                              |         &lt;div class="counry-data d-inline-block"&gt;
+                              |            &lt;div class="round bg-success d-inline-block"&gt;&lt;/div&gt;
+                              |            &lt;span&gt;Australia&lt;/span&gt;
+                              |          &lt;/div&gt;
+                              |      &lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |&lt;/div&gt;
+              .col-xl-12.box-col-12
+                .card.manage-invoice-sec
+                  .card-header.pb-0
+                    h5 Manage Invoice
+                    .card-header-right
+                        ul.setting-option
+                          li
+                            .setting-badge
+                              i.fa.fa-spin.fa-cog.font-primary
+                          li
+                            i.view-html.fa.fa-code.font-primary
+                          li
+                            i.icofont.icofont-maximize.full-card.font-primary
+                          li
+                            i.icofont.icofont-minus.minimize-card.font-primary
+                          li
+                            i.icofont.icofont-refresh.reload-card.font-primary
+                          li
+                            i.icofont.icofont-error.close-card.font-primary
+                  .card-body
+                    .manage-invoice-table
+                      .item
+                        .table-responsive.manage-invoice
+                          table.table.table-bordernone
+                            thead
+                              tr
+                                th Name 
+                                th Date
+                                th Project
+                                th Contact Number
+                                th Country
+                                th Amount
+                                th Status
+                                th
+                                  ul.setting-option
+                                    li
+                                      .setting-badge
+                                        i.fa.fa-spin.fa-cog.font-primary
+                                    li
+                                      i.view-html.fa.fa-code.font-primary
+                                    li
+                                      i.icofont.icofont-maximize.full-card.font-primary
+                                    li
+                                      i.icofont.icofont-minus.minimize-card.font-primary
+                                    li
+                                      i.icofont.icofont-refresh.reload-card.font-primary
+                                    li
+                                      i.icofont.icofont-error.close-card.font-primary
+                            tbody
+                              tr
+                                td 
+                                  span 01
+                                  .t-title
+                                    img.img-40.rounded-circle.align-top(src='../assets/images/dashboard-3/1_1.png' alt='' data-original-title='' title='')
+                                    .d-inline-block.align-middle
+                                      a(href="user-profile.html")
+                                        span.f-w-500 Smith johson Lorn
+                                td 
+                                 p 16 August,2019 5:10am
+                                td 
+                                 span Business Logo Create
+                                td 
+                                 p +1(555) 4585 6859
+                                td 
+                                 p United Kingdom
+                                td
+                                  p $8435.00
+                                td 
+                                 p Past Due
+                                td
+                                  .progress-showcase
+                                    .progress.sm-progress-bar
+                                      .progress-bar.bg-primary(role='progressbar' style='width: 50%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                              tr
+                                td 
+                                  span 02
+                                  .t-title
+                                    img.img-40.rounded-circle.align-top(src='../assets/images/dashboard-3/2_2.png' alt='' data-original-title='' title='')
+                                    .d-inline-block.align-middle
+                                      a(href="user-profile.html")
+                                        span.f-w-500 Brown Taylor Jeron
+                                td 
+                                 p 26 Mar,2019 2:10pm
+                                td 
+                                 span Apply Google Review
+                                td 
+                                 p +880 8759 0013
+                                td 
+                                 p Bangladesh
+                                td
+                                  p $4542.00
+                                td 
+                                 p Paid
+                                td
+                                  .progress-showcase
+                                    .progress.sm-progress-bar
+                                      .progress-bar.bg-success(role='progressbar' style='width: 70%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                              tr
+                                td 
+                                  span 03
+                                  .t-title
+                                    img.img-40.rounded-circle.align-top(src='../assets/images/dashboard-3/3_3.png' alt='' data-original-title='' title='')
+                                    .d-inline-block.align-middle
+                                      a(href="user-profile.html")
+                                        span.f-w-500 Admas Lopez Perry
+                                td 
+                                 p 06 Aug,2019 3:10am
+                                td 
+                                 span Recruitment Refrances
+                                td 
+                                 p +613201 2546
+                                td 
+                                 p Australia
+                                td
+                                  p $6140.00
+                                td 
+                                 p Past Due
+                                td
+                                  .progress-showcase
+                                    .progress.sm-progress-bar
+                                      .progress-bar.bg-primary(role='progressbar' style='width: 90%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                              tr
+                                td 
+                                  span 04
+                                  .t-title
+                                    img.img-40.rounded-circle.align-top(src='../assets/images/dashboard-3/4_4.png' alt='' data-original-title='' title='')
+                                    .d-inline-block.align-middle
+                                      a(href="user-profile.html")
+                                        span.f-w-500 Barker Cartor Ward
+                                td 
+                                 p 22 Sept,2019 2:10pm
+                                td 
+                                 span Project Research
+                                td 
+                                 p +1-684 8759 0013
+                                td 
+                                 p American Samoa
+                                td
+                                  p $1526.00
+                                td 
+                                 p Paid
+                                td
+                                  .progress-showcase
+                                    .progress.sm-progress-bar
+                                      .progress-bar.bg-success(role='progressbar' style='width: 80%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100')
+                    .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#manage-invoice', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#manage-invoice
+                                |&lt;div class="card manage-invoice-sec"&gt;
+                                |  &lt;div class="card-header pb-0"&gt;
+                                |    &lt;h5&gt;Manage Invoice&lt;/h5&gt;
+                                |    &lt;div class="card-header-right"&gt;
+                                |      &lt;ul class="setting-option"&gt;
+                                |        &lt;li&gt;
+                                |          &lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                                |        &lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |      &lt;/ul&gt;
+                                |    &lt;/div&gt;
+                                |  &lt;/div&gt;
+                                |  &lt;div class="card-body"&gt;
+                                |    &lt;div class="manage-invoice-table"&gt;
+                                |      &lt;div class="item"&gt;
+                                |        &lt;div class="table-responsive manage-invoice"&gt;
+                                |          &lt;table class="table table-bordernone"&gt;
+                                |           &lt;thead&gt;
+                                |            &lt;tr&gt;
+                                |              &lt;th&gt;Name &lt;/th&gt;
+                                |              &lt;th&gt;Date&lt;/th&gt;
+                                |              &lt;th&gt;Project&lt;/th&gt;
+                                |              &lt;th&gt;Contact Number&lt;/th&gt;
+                                |              &lt;th&gt;Country&lt;/th&gt;
+                                |              &lt;th&gt;Amount&lt;/th&gt;
+                                |              &lt;th&gt;Status&lt;/th&gt;
+                                |              &lt;th&gt;
+                                |                &lt;ul class="setting-option"&gt;
+                                |                  &lt;li&gt;
+                                |                    &lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                                |                  &lt;/li&gt;
+                                |                  &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |                  &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |                  &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |                  &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |                  &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                |                &lt;/ul&gt;
+                                |              &lt;/th&gt;
+                                |            &lt;/tr&gt;
+                                |              &lt;/thead&gt;
+                                |                &lt;tbody&gt;
+                                |                    &lt;tr&gt;
+                                |                      &lt;td&gt; 
+                                |                        &lt;span&gt;01&lt;/span&gt;
+                                |                        &lt;div class="t-title"&gt;&lt;img class="img-40 rounded-circle align-top" src="../assets/images/dashboard-3/1_1.png" alt="" data-original-title="" title=""/&gt;
+                                |                          &lt;div class="d-inline-block align-middle"&gt;&lt;a href="user-profile.html"&gt;&lt;span class="f-w-500"&gt;Smith johson Lorn&lt;/span&gt;&lt;/a&gt;&lt;/div&gt;
+                                |                        &lt;/div&gt;
+                                |                      &lt;/td&gt;
+                                |                      &lt;td&gt;&lt;p&gt;16 August,2019 5:10am&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;span&gt;Business Logo Create&lt;/span&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;+1(555) 4585 6859&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;United Kingdom&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt;&lt;p&gt;$8435.00&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt;&lt;p&gt;Past Due&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt;&lt;div class="progress-showcase"&gt;
+                                |                        &lt;div class="progress sm-progress-bar"&gt;
+                                |                          &lt;div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                |                          &lt;/div&gt;
+                                |                        &lt;/div&gt;
+                                |                      &lt;/td&gt;
+                                |                    &lt;/tr&gt;
+                                |                    &lt;tr&gt;
+                                |                      &lt;td&gt; 
+                                |                        &lt;span&gt;02&lt;/span&gt;
+                                |                        &lt;div class="t-title"&gt;
+                                |                          &lt;img class="img-40 rounded-circle align-top" src="../assets/images/dashboard-3/2_2.png" alt="" data-original-title="" title=""/&gt;
+                                |                          &lt;div class="d-inline-block align-middle"&gt;
+                                |                            &lt;a href="user-profile.html"&gt;&lt;span class="f-w-500"&gt;Brown Taylor Jeron&lt;/span&gt;&lt;/a&gt;&lt;/div&gt;
+                                |                        &lt;/div&gt;
+                                |                      &lt;/td&gt;
+                                |                      &lt;td&gt; 
+                                |                        &lt;p&gt;26 Mar,2019 2:10pm&lt;/p&gt;
+                                |                      &lt;/td&gt;
+                                |                      &lt;td&gt; &lt;span&gt;Apply Google Review&lt;/span&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;+880 8759 0013&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;Bangladesh&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;$4542.00&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;Paid&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;div class="progress-showcase"&gt;
+                                |                        &lt;div class="progress sm-progress-bar"&gt;
+                                |                          &lt;div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                |                        &lt;/div&gt;
+                                |                        &lt;/div&gt;
+                                |                      &lt;/td&gt;
+                                |                    &lt;/tr&gt;
+                                |                    &lt;tr&gt;
+                                |                      &lt;td&gt; 
+                                |                          &lt;span&gt;03&lt;/span&gt;
+                                |                          &lt;div class="t-title"&gt;
+                                |                            &lt;img class="img-40 rounded-circle align-top" src="../assets/images/dashboard-3/3_3.png" alt="" data-original-title="" title=""/&gt;
+                                |                          &lt;div class="d-inline-block align-middle"&gt;
+                                |                            &lt;a href="user-profile.html"&gt;&lt;span class="f-w-500"&gt;Admas Lopez Perry&lt;/span&gt;&lt;/a&gt;&lt;/div&gt;
+                                |                          &lt;/div&gt;
+                                |                      &lt;/td&gt;
+                                |                      &lt;td&gt; 
+                                |                        &lt;p&gt;06 Aug,2019 3:10am&lt;/p&gt;
+                                |                      &lt;/td&gt;
+                                |                      &lt;td&gt; &lt;span&gt;Recruitment Refrances&lt;/span&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;+613201 2546&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;Australia&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;$6140.00&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;Past Due&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt;
+                                |                        &lt;div class="progress-showcase"&gt;
+                                |                          &lt;div class="progress sm-progress-bar"&gt;
+                                |                            &lt;div class="progress-bar bg-primary" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                |                          &lt;/div&gt;
+                                |                        &lt;/div&gt;
+                                |                      &lt;/td&gt;
+                                |                    &lt;/tr&gt;
+                                |                    &lt;tr&gt;
+                                |                      &lt;td&gt; &lt;span&gt;04&lt;/span&gt;
+                                |                        &lt;div class="t-title"&gt;&lt;img class="img-40 rounded-circle align-top" src="../assets/images/dashboard-3/4_4.png" alt="" data-original-title="" title=""/&gt;
+                                |                          &lt;div class="d-inline-block align-middle"&gt;&lt;a href="user-profile.html"&gt;&lt;span class="f-w-500"&gt;Barker Cartor Ward&lt;/span&gt;&lt;/a&gt;&lt;/div&gt;
+                                |                        &lt;/div&gt;
+                                |                      &lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;22 Sept,2019 2:10pm&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;span&gt;Project Research&lt;/span&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;+1-684 8759 0013&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;American Samoa&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;$1526.00&lt;/p&gt; &lt;/td&gt;
+                                |                      &lt;td&gt; &lt;p&gt;Paid&lt;/p&gt;&lt;/td&gt;
+                                |                      &lt;td&gt; 
+                                |                        &lt;div class="progress-showcase"&gt;&lt;div class="progress sm-progress-bar"&gt;
+                                |                            &lt;div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                |                          &lt;/div&gt;
+                                |                        &lt;/div&gt;
+                                |                      &lt;/td&gt;
+                                |                    &lt;/tr&gt;
+                                |                  &lt;/tbody&gt;
+                                |                &lt;/table&gt;
+                                |                &lt;/div&gt;
+                                |              &lt;/div&gt;
+                                |            &lt;/div&gt;
+                                |            &lt;/div&gt;
+                                |          &lt;/div&gt;
+          // Container-fluid Ends
+        include ../../components/taptop
+        include ../../components/footer
+    include ../../components/footer-files

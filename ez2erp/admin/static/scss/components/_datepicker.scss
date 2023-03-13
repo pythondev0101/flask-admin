@@ -1,0 +1,248 @@
+/**=====================
+    52. Datepicker CSS Start
+==========================**/
+//colors
+.clockpicker-canvas {
+  line {
+    stroke: $primary-color;
+  }
+}
+.clockpicker-canvas-fg, .clockpicker-canvas-bearing {
+  fill: $primary-color;
+}
+.daterangepicker {
+  border: none;
+  box-shadow: $card-box-shadow;
+  td, th {
+    &.available {
+      &:hover {
+          background-color: $primary-color;
+      }
+    }
+  }
+
+  select{
+    &.monthselect,&.yearselect{
+      padding:5px;
+      background-color:transparent;
+      border:1px solid $light-semi-gray ;
+    }
+  }
+}
+.datepicker{
+  z-index: 99;
+}
+.datepicker--day-name {
+  color: $black;
+  font-weight: bold;
+}
+.datepicker--cell {
+  &.-current- {
+    color: $black;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 5px;
+    font-weight: bold;
+    border: 2px solid $primary-color;
+  }
+  &.-focus- {
+    background: $primary-color;
+    color: $white;
+  }
+  &.-selected- {
+    background: $primary-color !important;
+  }
+}
+.daterangepicker.ltr {
+  color: $dark-gray;
+  z-index: 8;
+  tr {
+    font-size: 13px;
+    td {
+      height: 34px;
+      width: 34px;
+      &.in-range {
+        background-color: $auth-bg-color;
+      }
+      &.active {
+        background-color: $primary-color;
+      }
+    }
+  }
+  .ranges {
+    float: none;
+    li {
+      color: $primary-color;
+      &:hover {
+        background-color: $primary-color;
+        border: 1px solid $primary-color;
+        color: $white;
+      }
+      &.active {
+        background-color: $primary-color;
+        border: 1px solid $primary-color;
+        color: $white;
+      }
+    }
+  }
+  .calendar-time select {
+    color: $dark-gray;
+  }
+}
+.datepickers-container, .bootstrap-datetimepicker-widget {
+  z-index: 7;
+}
+.datetime-picker {
+  .bootstrap-datetimepicker-widget.dropdown-menu {
+    width: auto;
+  }
+}
+.date-range-picker{
+  .theme-form{
+    margin-bottom: 30px;
+  }
+  > div{
+    &:last-child{
+      .theme-form{
+        margin-bottom: 0px;
+      }
+    }
+  }
+}
+.daterangepicker{
+  &:before {
+    border-bottom: 7px solid $light-semi-gray;
+  }
+  .daterangepicker_input {
+    i {
+      font-size: 14px;
+      color: $semi-dark;
+    }
+  }
+
+ .input-mini{
+   border-color: $light-semi-gray !important;
+   font-size: 14px;
+   color: $semi-dark;
+ }
+  th,td{
+    height: 34px;
+    width: 34px;
+    &:hover{
+      color: $dark-color;
+    }
+    &.prev,&.next{
+      color: $white;
+      height: 34px;
+      width: 34px;
+      background-color: $primary-color;
+    }
+    &.month{
+      color: $primary-color;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+// timepicker css
+.clockpicker-popover {
+  border: none;
+  box-shadow: $card-box-shadow;
+  z-index: 7;
+  .popover-content {
+    background-color: rgba($primary-color, 0.05);
+  }
+}
+.clockpicker-canvas-bg {
+  fill: lighten($primary-color, 38%);
+}
+.clockpicker-tick {
+  &:hover {
+    color: inherit;
+    background-color: lighten($primary-color, 38%);
+  }
+}
+
+
+// typeahead page
+.twitter-typeahead {
+  display: block !important;
+}
+span.twitter-typeahead {
+  .league-name {
+    font-size: 16px;
+    padding: 6px 10px 0;
+  }
+  .tt-menu {
+    float: left;
+    width: 100%;
+    min-width: 10rem;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: $white;
+    background-clip: padding-box;
+    border-radius: 0.25rem;
+    -webkit-box-shadow: 0 0 20px rgba(89,102,122,0.1);
+    box-shadow: 0 0 20px rgba(89,102,122,0.1);
+    border: none;
+    padding: 0;
+  }
+
+  .tt-suggestion {
+    color: $dark-editor-document;
+    opacity: 0.6;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-top: 1px solid $light-semi-gray;
+    background: $white;
+    cursor: pointer;
+    &:hover,
+    &:focus {     
+      background-color:$primary-color;
+      color:$white;
+    }
+    &.active,
+    &:active {
+      color:$white;
+      background-color:$primary-color;
+    }
+  }
+}
+
+#scrollable-dropdown-menu {
+  .twitter-typeahead {
+    .tt-menu {
+      .tt-dataset {
+        max-height: 100px;
+        overflow-y: auto;
+      }
+    }
+  }
+}
+
+.current-sale-container {
+  .apexcharts-xaxistooltip {
+    color: var(--theme-deafult);
+    background: rgba($primary-color, 0.1);
+    border: 1px solid var(--theme-deafult);
+  }
+
+  .apexcharts-xaxistooltip-bottom:before {
+    border-bottom-color: var(--theme-deafult);
+  }
+
+  .apexcharts-tooltip.light .apexcharts-tooltip-title {
+    background: rgba($primary-color, 0.1);
+    color: var(--theme-deafult);
+  }
+}
+
+
+
+
+/**=====================
+   52. Datepicker CSS End
+==========================**/

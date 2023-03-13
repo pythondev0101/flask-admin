@@ -1,0 +1,816 @@
+/**=====================
+  38. Landing CSS Start
+==========================**/
+
+
+
+@media (max-width:1660px){
+  .landing-page{
+    .custom-container{
+      max-width:1440px;
+    }
+
+    // landing home
+    .landing-home {
+      .animat-block {
+          .animat1{
+            height:280px;
+          }
+          .animat2{
+            height:200px;
+          }
+          .animat3{
+            height:260px;
+          }
+          .animat4{
+            height:260px;
+          }
+          .animat5{
+            height:270px;
+          }
+          .animat6{
+            height:180px;
+          }
+          .animat7{
+            height: 280px;
+          }
+        }
+      }
+    }
+}
+
+@media(max-width:1470px) {
+  .landing-page{
+    .custom-container{
+      max-width:100%;
+      padding-left:30px;
+      padding-right:30px;
+    }
+  }
+}
+
+@media (max-width:1366px){
+  .landing-page{
+  // framework 
+	.framework {
+		.nav {
+			margin-bottom:40px;
+			.nav-link {
+				padding-bottom:15px;
+				img{
+					height:40px;
+				}	
+				h5{
+					font-size:18px;
+				}
+				p{
+					font-size:12px;
+				}
+			}
+		}
+		ul.framworks-list {
+			li{
+				height:175px;
+				width:175px;
+				img{
+					width:auto;
+					height:60px;
+				}
+			}
+		}
+    }
+  
+
+  // landing home
+  .landing-home {
+    .landing-home-contain{
+      h6{
+        font-size:18px;
+      }
+      h2{
+        font-size:35px;
+        span{
+          font-size:35px;
+        }
+      }
+      p{
+        font-size:18px;
+      }
+    }
+
+
+    .animat-block {
+      .animat1{
+        height:240px;
+      }
+      .animat2{
+        height:175px;
+      }
+      .animat3{
+        height:230px;
+        
+      }
+      .animat4{
+        bottom:22%;
+        right:17%;
+        height:233px;
+      }
+      .animat5{
+        height:220px;
+      }
+      .animat6{
+        right:6%;
+      }
+      .animat7{
+        height:250px;
+        bottom: 22%;
+        right: -6%;
+      }
+    }
+  }
+}
+
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1366px){
+  .landing-page{
+  // Demo section
+  .demo-section {
+    .demo-box{      
+      .demo-title{
+        padding-top:10px;
+        h3{
+          font-size:18px;
+        }
+      }
+    }
+  }
+}
+
+
+
+}
+
+
+@media (max-width:1199px){
+
+  .landing-page .landing-home .landing-home-contain {   
+    width: 33%;
+  }
+  .landing-page{
+  .section-py-space{
+    padding-top:60px;
+    padding-bottom:60px;
+  }
+  .section-pt-space{
+    padding-top:60px;
+  }
+  .section-pb-space{
+    padding-bottom:60px;
+  }
+
+  .landing-header {
+    ul{
+      &.landing-menu {
+        li.nav-item {
+          a.nav-link{
+            padding:5px 13px;
+          }
+        }
+      }
+    }
+ }
+
+  .title {
+    .logo-wrraper{
+      width:35px;
+      height:35px;
+    }
+    h2{
+      font-size:26px;
+    }
+  }
+
+  // landing home 
+  .landing-home {
+    .animat-block {
+      .animat8,.animat9,.animat10,.animat11{
+        width: auto;
+        height:50px;
+      }
+      .animat1{
+        height:220px;
+        top:22%;
+      } 
+      .animat3{
+        height: 200px;
+        bottom: 15%;
+        right: 42%;
+      }
+      .animat4{
+        height:210px;
+      }     
+      .animat5{
+        top:27%;
+        height:192px;
+      }
+      .animat7{
+        height:215px;
+      }
+    }
+    .landing-home-contain {
+      h2{
+        font-size:26px;
+      }
+    }
+  }
+
+ // framework //
+ .framework {
+  .nav{
+    margin-bottom:30px;
+  }
+  ul.framworks-list {
+    li{
+      width:150px;
+      height:150px;
+      img{
+        height:40px;
+      }
+    }
+  }
+}
+}
+}
+
+@media(max-width:991px){
+  .landing-page{
+    .section-py-space{
+      padding-top:50px;
+      padding-bottom:50px;
+    }
+    .section-pt-space{
+      padding-top:50px;
+    }
+    .section-pb-space{
+      padding-bottom:50px;
+    }
+
+
+
+
+    //landing header//
+    .landing-header {
+      padding-top:15px;
+      padding-bottom:15px;
+      ul.landing-menu {
+        position:fixed;
+        top:0;
+        right:-320px;
+        width:320px;
+        height:100vh;
+        background-color: $white;
+        display:block;
+        transition: all 0.5s ease;
+        &.open{
+          right:0;
+        }
+        li.nav-item{
+          display: block;
+          background-color:$white;
+          text-align: left;
+          &.menu-back{
+            display:block;
+          }
+        }				
+      }
+      .buy-block{
+        .toggle-menu{
+          display: block;
+        }
+      }
+    }
+    .btn-landing{
+      padding:10px 25px;
+    }
+
+
+
+   // landing-home
+   .landing-home {
+     position: relative;
+     z-index:1;
+     .landing-home-contain{
+        text-align:center;     
+        height:600px;
+        width:auto;
+        margin:auto;
+        >div{
+          background-color: rgba(255, 255, 255, 0.7);
+          z-index: 99;
+          padding: 50px;
+        }
+      .btn-landing{
+        margin-right:auto;
+        margin-left:auto ;
+      }
+      h6{
+        letter-spacing: 0.05em;
+        margin-bottom:5px;
+      }
+      h2{
+        font-size:28px;
+        span{
+          font-size:28px;
+        }
+      }
+      p{
+        font-size: 14px;   
+        margin-bottom:20px;    
+      }
+     }
+     .animat-block{
+        img{
+          transform:rotate(0);
+        }
+        .animat1{
+          left: -1%;
+          right: unset;         
+          top: 15%;
+          height: 160px;
+        }           
+        .animat2{
+          right: 10%;
+          top: 90px;
+        }
+        .animat3{ 
+          right: unset;
+          left: 10%;
+          bottom: 5%;
+          height:170px;
+        }
+        .animat4{
+          bottom: unset;
+          top:5%;
+          left:0;
+          right:0;
+          margin:0 auto;
+          height:132px;
+        }
+        .animat5{
+          top:unset;
+          bottom: 50px;
+          right: 10%;
+          height:170px;
+        }
+        .animat6{
+          left:0;
+          right:0;
+          margin: auto;  
+          height:150px;        
+        }
+        .animat7{
+          bottom: -90px;
+        }
+     }
+  }
+
+  
+
+  @keyframes move2{
+    0%{
+      transform:rotate(0deg) translateY(0);
+    }
+    100%{
+      transform:rotate(0deg) translateY(-3px);
+    }
+  }
+
+ 
+
+
+  // framework
+   .framework {
+    .nav {
+      .nav-link {
+        img{
+          height:35px;
+          width:auto;
+        }
+      }
+      .nav-item{
+        &:nth-child(n+2){
+          margin-left:10px;
+        }
+      }
+    }
+   }
+
+   
+
+   // footer
+   .landing-footer {
+    .footer-contain {
+      .star-rate{
+        margin-bottom:40px;
+      }
+    }
+   }
+
+  }
+  
+}
+
+
+
+@media(max-width:767px){
+  .landing-page{
+  .title {
+    h2{
+      font-size:24px;
+    }
+  }
+  .section-py-space{
+    padding-top:40px;
+    padding-bottom:40px;
+  }
+  .section-pt-space{
+    padding-top:40px;
+  }
+  .section-pb-space{
+    padding-bottom:40px;
+  }
+
+  // landing home 
+    .landing-home {
+      .animat-block{
+        .animat1,.animat2,.animat3,.animat4,.animat5,.animat6,.animat7{
+          display:none;
+        }
+        .animat9{
+          left:90%;
+        }
+        .animat11{
+          left:90%;
+        }
+        .animat12{
+          left:60%;
+        }
+      }
+      .landing-home-contain{
+        height: auto;
+        margin-top: 115px;
+        margin-bottom: 40px;
+      }
+    }
+  
+
+
+ 
+
+  //demo section
+  .demo-section {
+    .demo-box{
+      width:fit-content;
+      margin:auto;     
+      .img-wrraper {
+        ul.demo-link {
+          li{
+            &:nth-child(n+2){
+              margin-left:5px;
+            }
+            a{
+              font-size:10px;
+            }
+          }
+        }
+      }
+      .demo-title {
+        h3{
+          font-size:18px;
+        }
+      }
+    }
+  }
+
+
+
+
+  
+
+
+  
+  // framework
+  .framework {
+    .nav {
+      .nav-link {
+        img{
+          height:35px;
+        }
+        h5{
+          font-size:16px;
+        }
+      }
+    }
+    ul.framworks-list {
+      li{
+        width:145px;
+        height:145px;
+        img{
+          height:40px;
+        }
+      }
+    }
+  }
+
+
+  // footer 
+  .landing-footer{
+    .footer-contain {
+      h2{
+        margin-bottom:5px;
+      }
+      p{
+        margin-bottom:10px;
+      }
+      .star-rate{
+        margin-bottom:25px;
+      }
+      .btn-footer{
+        .btn{
+          padding:10px 15px;
+          font-size: 16px;         
+          line-height:1;
+        }
+      }
+    }
+  }
+}
+
+}
+
+@media screen and (max-width: 575px) and (min-width: 380px){ 
+  .lan-col-50{
+    max-width: 50%;
+    flex: 0 0 auto;
+  } 
+}
+@media(max-width:575px){
+  .landing-page{
+    .framework{
+      .nav{
+        .nav-link{
+          padding: 12px 26px;
+        }
+      }
+    }
+    .demo-section{
+      .demo-box{
+        .img-wrraper{
+          ul.demo-link{
+            li{
+              a{
+                padding: 10px 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+.landing-page{
+  .custom-container{
+    padding-left:15px;
+    padding-right:15px;
+  }
+  .btn-landing{
+    padding: 10px 10px;
+    &:first-child{
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+  // landing home
+  .landing-home {
+    .landing-home-contain {
+      h6{
+        font-size:16px;
+      }
+      h2{
+        font-size:22px;
+        margin-bottom:10px;
+        span{
+          font-size:22px;
+        }
+      }
+      .animat-block {
+        .animat12{
+          height:15px;
+        }
+        .animat13{
+          height:50px;
+        }
+      }
+    }
+  }
+
+
+  // demo-section
+  .demo-section {
+    .demo-box{      
+      .demo-title {
+        h3{
+          font-size:16px;
+        }
+      }
+    }
+  }
+
+
+
+  // framework
+  .framework {
+    .nav{
+      display:flex;
+    }
+  }
+
+  // core feature //
+  .core-feature {
+    .feature-box{
+      padding:30px 10px;
+      .icon-wrraper{
+        width:50px;
+        height:50px;
+      }
+    }
+    .feature-block {
+      margin-bottom: -15px;
+      > div{
+        padding-left:5px;
+        padding-right:5px;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+
+  // footer 
+  .landing-footer {
+    .footer-contain {
+      .btn-footer {
+        .btn{
+          padding:7px 10px;
+          font-size:14px;
+        }
+      }
+    }
+  }
+
+}
+
+
+}
+
+
+
+@media(max-width:480px){  
+  .landing-page{
+    .landing-home .landing-home-contain {   
+      margin-top: 95px;    
+    }
+   .landing-header {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  .title {
+    display:block;
+    margin-bottom:25px;
+    .logo-wrraper{
+      margin-left:auto;
+      margin-right:auto;
+      margin-bottom:5px;
+    }
+    h2{
+      font-size:20px;
+    }
+  }
+
+  // header 
+  .landing-header {
+    .navbar-brand{
+      width: 80px;
+    }
+    .buy-block {
+      .toggle-menu{
+        margin-left:10px;
+      }
+    }
+  }
+
+  // landing home
+  .landing-home {
+    .landing-home-contain {
+      > div{
+        padding: 30px;
+      }
+      h6{
+        font-size:14px;
+        letter-spacing:0.05em;
+      }
+      h2{
+        font-size:16px;
+      }
+      p{
+        font-size:14px;
+        margin-bottom:15px;
+      }
+    }
+  }
+
+  // framework 
+  .framework {
+    .nav {
+      .nav-item{
+        width:auto;
+      }
+      .nav-link{       
+        display:block !important;
+        img{
+          height:25px;
+          margin-right: 0;
+        }
+        .text-start{
+          display: none;
+        }        
+      } 
+    }
+    ul.framworks-list {
+      li{
+        width:110px;
+        height:110px;
+        padding:25px 0;	
+        margin:5px;	
+        img{
+          height:30px;
+        }						
+      }
+    }
+  }
+
+  // core feature 
+  .core-feature {
+    .feature-box {
+      .icon-wrraper{
+        width:45px;
+        height:45px;
+      }
+      
+    }
+  }
+
+}
+  
+}
+@media (max-width:420px){
+  .landing-button{
+    .btn-landing{
+      margin: 0 auto 6px !important;
+      &:first-child{
+        margin: 0 auto 6px !important;
+      }
+    }
+  }
+}
+@media(max-width:360px){
+  .landing-page{
+  .landing-footer {
+    .footer-contain {
+      .btn-footer {
+        .btn{
+          &:last-child{
+            margin-top:10px;
+          }
+        }
+      }
+    }
+  }
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**=====================
+     38. Landing CSS Ends
+==========================**/

@@ -1,0 +1,218 @@
+// Page Header Start
+.page-main-header
+  .main-header-right.row.m-0
+      .main-header-left
+          .logo-wrapper
+              a(href='index.html')
+                  img.img-fluid(src='../assets/images/logo/logo.png', alt='')
+      .toggle-sidebar
+        i.status_toggle.middle(data-feather='align-center')#sidebar-toggle
+      //- .d-lg-none.mobile-vertical-sidebar.pull-right.toggle-nav
+      //-     i(data-feather='align-justify')
+      .left-menu-header.col
+        ul
+          li
+            form.form-inline.search-form
+              .search-bg
+                i.fa.fa-search
+              input.form-control-plaintext(placeholder='Search here.....')
+            span.d-sm-none.mobile-search.search-bg
+              i.fa.fa-search
+      .nav-right.col.pull-right.right-menu
+          ul.nav-menus
+              //- cart dropdown
+              li.onhover-dropdown
+                  .notification-box
+                    i(data-feather='shopping-bag')
+                    span.badge.badge-pill.badge-secondary 4
+                  .notification-dropdown.cart.onhover-show-div
+                      .m-3
+                        .row
+                          .col
+                            p 
+                              b 5 
+                              | Items in Cart
+                          .col.text-end
+                            p.m-0 Cart Subtotal
+                            h5.txt-primary.f-w-700 5000$
+                        a.btn.btn-dark.w-100.mt-1(href="checkout.html") Process To Checkout
+                      ul.border-top.custom-scrollbar  
+                        li
+                          .media
+                            img(src="../assets/images/product/small/tshirt.png" alt="")
+                            .media-body
+                              a(href="product.html") Woman T-shirt - yellow
+                              h6.price 200$
+                              .row
+                                .col-9
+                                  h6.qty Qty
+                                    input(type="number" class="form-control" placeholder="1")
+                                .col-3.text-end.d-flex
+                                  i.me-1(data-feather="edit")
+                                  i(data-feather="trash-2")
+
+                        li
+                          .media
+                            img(src="../assets/images/product/small/bag.png" alt="")
+                            .media-body
+                              a(href="product.html") Woman bag - purple
+                              h6.price 100$
+                              .row
+                                .col-9
+                                  h6.qty Qty
+                                    input(type="number" class="form-control" placeholder="1")
+                                .col-3.text-end.d-flex
+                                  i.me-1(data-feather="edit")
+                                  i(data-feather="trash-2")
+
+                        li
+                          .media
+                            img(src="../assets/images/product/small/headphone.png" alt="")
+                            .media-body
+                              a(href="product.html") Unisex headphone - Red
+                              h6.price 2000$
+                              .row
+                                .col-9
+                                  h6.qty Qty
+                                    input(type="number" class="form-control" placeholder="1")
+                                .col-3.text-end.d-flex
+                                  i.me-1(data-feather="edit")
+                                  i(data-feather="trash-2")
+                        li
+                          .media
+                            img(src="../assets/images/product/small/chair.png" alt="")
+                            .media-body
+                              a(href="product.html") Ergonomic Chair
+                              h6.price 920$
+                              .row
+                                .col-9
+                                  h6.qty Qty
+                                    input(type="number" class="form-control" placeholder="1")
+                                .col-3.text-end.d-flex
+                                  i.me-1(data-feather="edit")
+                                  i(data-feather="trash-2")
+                      .m-3.mt-1
+                        a.btn.btn-light.w-100.mt-3(href="cart.html") View cart
+
+              //- notification dropdown  
+              li.onhover-dropdown
+                  .notification-box
+                    i(data-feather='bell')
+                    span.badge.badge-pill.badge-primary 4
+                  .notification-dropdown.onhover-show-div
+                      .m-3
+                        a.btn.btn-dark.w-100(href="email_inbox.html") You have 4 notifications
+                      ul.border-top
+                        li
+                          p.mb-0.ps-4.p-relative
+                            a(href="to-do.html")
+                              i.fa.fa-circle.me-3.font-primary 
+                              | Delivery processing 
+                              span.pull-right 10 min.
+                        li
+                          p.mb-0.ps-4.p-relative
+                            a(href="to-do.html")
+                              i.fa.fa-circle.me-3.font-success
+                              | Order Complete
+                              span.pull-right 1 hr
+                        li
+                          p.mb-0.ps-4.p-relative
+                            a(href="to-do.html")
+                              i.fa.fa-circle.me-3.font-info
+                              | Tickets Generated
+                              span.pull-right 3 hr
+                        li
+                          p.mb-0.ps-4.p-relative
+                            a(href="to-do.html")
+                              i.fa.fa-circle.me-3.font-warning
+                              | Delivery Complete
+                              span.pull-right 6 hr  
+                      .m-3.mt-1
+                        a.btn.btn-light.w-100(href="email_inbox.html") View all
+
+              //- messages dropdown
+              li.onhover-dropdown
+                  i(data-feather='message-square')
+                  .chat-dropdown.onhover-show-div                    
+                    .m-3
+                      a.btn.btn-dark.w-100(href="chat.html") You have 3 message
+                    ul.border-top.custom-scrollbar  
+                      li
+                        .media
+                          img.img-fluid.rounded-circle.me-3(src='../assets/images/avtar/emoji/7.png', alt='')
+                          .status-circle.online
+                          .media-body
+                            a(href="chat.html")
+                              span Erica Hughes
+                            p.f-12.light-font okay, trying now.
+                          p.badge.badge-primary 32 min
+                      li
+                        .media
+                          img.img-fluid.rounded-circle.me-3(src='../assets/images/avtar/emoji/8.png', alt='')
+                          .status-circle.away
+                          .media-body
+                            a(href="chat.html")
+                              span Kori Thomas
+                            p.f-12.light-font i could help in some of bug?
+                          p.badge.badge-success 58 min
+                      li
+                        .media
+                          img.img-fluid.rounded-circle.me-3(src='../assets/images/avtar/emoji/4.png', alt='')
+                          .status-circle.offline
+                          .media-body
+                            a(href="chat.html")
+                              span Ain Chavez
+                            p.f-12.light-font It's working awesome :)
+                          p.badge.badge-danger 1 hr
+                      li
+                        .media
+                          img.img-fluid.rounded-circle.me-3(src='../assets/images/avtar/emoji/1.png', alt='')
+                          .status-circle.offline
+                          .media-body
+                            a(href="chat.html")
+                              span Johan deo
+                            p.f-12.light-font Great Thanks you !!
+                          p.badge.badge-danger 2 hr
+                    .m-3
+                      a.btn.btn-light.w-100(href="chat.html") View all
+              
+              //-Dark mode
+              li
+                .mode
+                  i.fa.fa-moon-o
+
+              //- fullscreen dropdown
+              li
+                  a.text-dark(href='#!', onclick='javascript:toggleFullScreen()')
+                      i(data-feather='maximize')
+              
+              //- profile dropdown
+              li.onhover-dropdown
+                  .media.profile-media
+                    img.rounded-circle(src='../assets/images/avtar/emoji/9.png', alt='')                    
+                  ul.profile-dropdown.onhover-show-div
+                    li
+                      a(href="user-profile.html")
+                        i(data-feather='user')
+                        span Account 
+                    li
+                      a(href="user-profile.html")
+                        i(data-feather='mail')
+                        span Inbox
+                    li
+                      a(href="kanban.html")
+                        i(data-feather='file-text')
+                        span Taskboard
+                    li
+                      a(href="edit-profile.html")
+                        i(data-feather='settings')
+                        span Settings
+                    li
+                      a.btn.btn-light.w-100(href="login.html")
+                        i(data-feather='log-in')
+                        | Log out
+                       
+                      
+      .d-lg-none.col.mobile-toggle.pull-right
+          i(data-feather='more-horizontal')
+// Page Header Ends                              

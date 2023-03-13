@@ -1,0 +1,789 @@
+.congrats-sec{
+     @include back-img (url("../images/dashboard-3/Welcome.png"));
+      padding: 50px;
+    .congrats-content{
+        width: 50%;
+            h3{
+                font-size: 22px;
+                color: $white;
+                font-weight: bold;               
+            }
+            p{
+                font-size:14px;
+                color: rgba($white,0.5)!important;
+                font-weight:400;
+                font-family:$font-roboto;
+                margin-bottom:20px;
+            }
+            .btn-light{
+                color:$primary-color !important;
+                font-weight:700;
+                padding:10px 20px;                
+            }
+    }
+    .badge{
+        position:absolute;
+        right:5%;
+        top:12%;
+        color:$white;
+        background: #6a99f3;
+        padding:11px;
+    }
+    
+}
+
+.date-picker-university{
+    .datepicker-inline{
+        .datepicker{
+            width: auto;
+            padding:0;
+            .datepicker--nav{
+                border-bottom:none;
+                padding-left:30px;
+                padding-right:30px;
+                padding-top:25px;
+                .datepicker--nav-action{
+                // background: transparent;
+                }
+                .datepicker--nav-title{
+                    // color: #313131;
+                    font-size: 15px;
+                }
+            }
+            .datepicker--content{
+              .datepicker--days{
+                .datepicker--cells{
+                    .datepicker--cell-day,.datepicker--cell-year{
+                        height: 45px;
+                        &.-other-month-,.-other-decade-{
+                            color: #dedede;
+                        }
+                    }
+                }
+              }
+            }
+        }
+    }
+}
+.datepicker--nav {
+    color: $primary-color;
+}
+.datepicker--day-name {
+    color: $primary-color;
+    font-weight: bold;
+}
+.datepicker--cell.-current- {
+    color:$white;
+    background-color:$primary-color;
+}
+.datepicker--nav {
+    text-transform: capitalize;
+}
+.datepicker--day-name{
+    text-transform: capitalize;
+}
+.ct-golden-section {
+    &:before{
+    padding-bottom: 32.8047%;
+   
+    }
+}
+.ct-chart-earning{
+	.ct-series-b{
+		.ct-bar{
+            stroke:rgb(166, 196, 255);
+		}
+	}
+}
+.manage-invoice-table{
+    .manage-invoice{
+        table{
+            tbody{
+                tr{
+                    td{
+                        vertical-align: middle;
+                        img{
+                            margin-left: 15px;
+                            margin-right: 15px;
+                        }
+                        &:first-child{                           
+                            display: flex;
+                            align-items: center;
+                                                       
+                            .t-title{
+                                display:flex;
+                                align-items:center;
+                            }
+                        }
+                        
+                    }
+                    &:hover{
+                        td{
+                            color:$primary-color;
+                            span{
+                                color:$primary-color;
+                            }
+                            p{
+                                color:$primary-color !important;
+                            }
+                        }
+                    }
+                }
+            }           
+            tr{
+                th,td{
+                    min-width:165px;
+                    &:first-child{
+                        padding-left:0;
+                        min-width: 255px;
+                    }
+                    &:last-child{
+                        padding-right:0;
+                    }
+                    &:nth-child(6),&:nth-child(7){
+                        min-width:100px;
+                    }
+                }
+                &:last-child{
+                    td{
+                        padding-bottom: 0;
+                    }
+                }
+                
+            }
+        }
+    }
+}
+.manage-invoice{
+    table{       
+        tbody{
+            tr{
+                td{
+                    span{
+                        font-size: 14px;
+                        color: $theme-body-font-color;                       
+                    }
+                    p{                       
+                        color: $theme-body-font-color;                       
+                    }
+                    &:last-child{
+                        min-width: 100px;
+                    }
+                }
+            }
+        }
+        thead{
+            tr{
+                th{
+                    padding-top: 0;
+                    font-size: 14px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+// calender 
+.project-calendar{
+    &.card{
+        margin-bottom:0;
+        .card-header{
+            border-bottom:1px solid $light-semi-gray;
+        }
+        .card-body{
+            padding:0;
+        }
+    }
+    .datepicker{
+        box-shadow:none;
+        .datepicker--content{
+            padding-top:16px;
+            padding-bottom:16px;
+            
+        }
+    }   
+    .datepicker--nav-action {
+        path{
+            // stroke: $theme-body-font-color;
+        }
+    }
+    .date-picker-university {
+        .datepicker-inline {
+            .datepicker{
+                border-radius:0;
+            }
+        }
+    }   
+}
+
+.datepicker--nav-action{
+    background-color:$primary-color;
+    &:hover{
+        background-color:$primary-color;
+    }
+}
+
+.datepicker--nav-title {
+    i{
+        color:$primary-color;
+    }
+}
+
+// employee sec
+.employee-sec{
+    .table {
+        td{
+            padding-left:0;
+            padding-right:0;
+            p{
+                color:$light-text;
+                font-size:12px;
+            }
+        }
+        tbody{
+            tr{
+                td{
+                    padding-top:16px;
+                    padding-bottom:16px;
+                    &:first-child{
+                        min-width: 330px;
+                    }
+                    &:last-child{
+                        text-align: right;
+                        min-width: 85px;
+                    }
+                }               
+            }
+        }
+    }
+    tr{
+        .round-light{
+            transition: all 0.5s ease;
+            i{           
+            transition: all 0.5s ease;
+            }
+        }
+        &:hover{     
+            .icon-primary{
+            background-color:$primary-color;
+            i{
+                color:$white;         
+            }
+            }
+            .icon-secondary{
+            background-color: $secondary-color;
+            i{
+                color:$white;         
+            }
+            }
+            .icon-success{
+            background-color: $success-color;
+            i{
+                color:$white;         
+            }
+            }
+            .icon-warning{
+            background-color:$warning-color;
+            i{
+                color:$white;         
+            }
+            }
+        }
+    }
+}
+
+// Today task section
+.project-goal-sec{
+    .card{
+      .card-body{
+        #radar-chart{
+        .apexcharts-radar-series{
+                line{
+                    display:none;
+                }
+        }
+     }
+   }
+  }
+}
+.today-task-sec{
+    .btn{
+        padding:5px 10px;
+        display:flex;
+        width:fit-content;
+        margin-left:auto;
+        &.light-primary{
+            background-color:rgba($primary-color,0.1);
+            color:$primary-color;
+        }
+        &.light-secondary{
+            background-color:rgba($secondary-color,0.1);
+            color:$secondary-color;
+        }
+        &.light-success{
+            background-color:rgba($success-color,0.1);
+            color:$success-color;
+        }
+        &.light-warning{
+            background-color:rgba($warning-color,0.1);
+            color:$warning-color;
+        }
+        &.light-info{
+            background-color:rgba($info-color,0.1);
+            color:$info-color;
+        }       
+    }
+    tr{
+        &:hover{
+            .btn{
+                &.light-primary{                               
+                    background-color: $primary-color;
+                    color:$white;
+                }
+                &.light-secondary{                               
+                    background-color: $secondary-color;
+                    color: $white;
+                }
+                &.light-success{                               
+                    background-color: $success-color;
+                    color: $white;
+                }
+                &.light-warning{                               
+                    background-color: $warning-color;
+                    color: $white;
+                }
+                &.light-info{                
+                    background-color: $info-color;
+                    color: $white;
+                }    
+            }
+        }
+        td{
+            p{
+                color: $light-text;
+                font-size: 12px;
+            }
+        }   
+    }
+}
+
+.visitor-sec{
+    .jvector-map-height{
+        height:320px;
+    }
+    .jvectormap-zoomin,.jvectormap-zoomout{
+        display: none;
+    }
+}
+
+
+
+
+
+// box layout Today task section,Project Goal Section css start
+[main-theme-layout= "box-layout"] {
+    .page-wrapper{
+        &.compact-wrapper {
+            .page-body-wrapper  {
+                .page-body{
+                    .today-task-sec, .project-goal-sec {
+                       margin-top: 0px;
+                    }
+               }
+            }
+        }
+    }
+
+}
+.task-details{
+    table{
+        tbody{
+            tr{
+                td{
+                    padding:17px 10px;
+                    width:90px;
+                    &:first-child{
+                     min-width: 245px;
+                     padding-left: 0;
+                    }
+                    &:nth-child(2){
+                        min-width: 120px;
+                    }
+                    &:last-child{
+                        padding-right: 0;
+                    }
+                }
+            }
+        }
+    }    
+}
+
+
+
+// Map sectiom
+.show-value-top{
+    margin-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 10px;
+    justify-content: center;
+    .counry-data{       
+        display:flex;
+        align-items:center;   
+        font-size:12px;
+        &:nth-child(n+2){
+            margin-left:20px;
+        }
+    }
+}
+.round{   
+    margin-right: 10px;   
+    @include square (9px,9px,100%);
+}
+@media only screen and (max-width: 1750px){
+    .today-task-sec,.project-goal-sec{
+        margin-top: unset;
+    }
+    .task-details{
+        table{
+            tbody{
+                tr{
+                    td{
+                        padding: 12px 10px;
+                    }
+                }
+            }
+        }
+    }
+    #myRadarGraph-1{
+        height: 290px;
+    }      
+    .show-value-top {
+        .counry-data{
+            &:nth-child(n+2){
+                margin-left:10px;
+            }
+        }
+    } 
+}
+@media only screen and (max-width: 1660px){
+    .show-value-top {
+        .counry-data{
+            font-size:10px;
+            .round{
+                margin-right:5px;
+            }
+        }
+    }
+    .visitor-sec{
+        .jvector-map-height{
+            height: 260px;
+        }
+    }
+    .employee-sec {
+        .table {
+            tbody {
+                tr {
+                    td{
+                        padding-top: 15px;
+                        padding-bottom: 15px;
+                    }
+                    .round-light{
+                        width: 35px;
+                        height: 35px; 
+                        i{
+                            font-size:14px;
+                        }
+                    }
+                }
+            }
+        }
+        .card{
+            .card-body{
+                padding: 23px;
+            }
+        }
+    }
+}
+@media screen and (max-width: 1500px) and (min-width:1366px){    
+    .congrats-sec{
+        padding:25px;
+    }
+    .ecommerce-dash,.project-dash{
+        .card {
+            .card-header{
+                display:block !important; 
+            }
+        }
+        .show-value-top{
+            padding-left:15px;
+            padding-right:15px;
+        }
+        .date-picker-university {
+            .datepicker-inline {
+                .datepicker {
+                    .datepicker--nav{
+                        position:unset;
+                    }
+                }
+            }
+        }
+    }
+    .employee-sec {
+        .table {
+            tbody {
+                tr {
+                    td{
+                        // padding-top:15px;
+                        // padding-bottom:15px;
+                        min-width:105px;
+                        &:first-child{
+                            min-width:330px;                           
+                        }                        
+                    }
+                    .round-light{
+                        width:35px;
+                        height:35px; 
+                        i{
+                            font-size:14px;
+                        }
+                    }
+                }
+            }
+        }
+    }   
+    .annual-earning-sec{
+        .ct-golden-section{
+            height:385px;
+        }
+    }
+}
+@media only screen and (max-width: 1366px){
+    .product-sales{
+        table{
+            tr{
+                td{
+                    &:first-child{
+                        min-width: 175px !important;
+                    }
+                }
+            }
+        }
+    }       
+    .congrats-sec{
+        padding:30px;
+    }
+}
+
+@media screen and (max-width: 1365px) and (min-width:1200px){
+        
+}
+@media only screen and (max-width: 1365px){
+    .project-calendar {
+        &.card{
+            margin-bottom:30px;
+        }
+    }
+    .date-picker-university {
+        .datepicker-inline {
+            .datepicker {
+                .datepicker--nav{                    
+                    padding-top:15px;                   
+                }
+                .datepicker--content{
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    .datepicker--days {
+                        .datepicker--cells {
+                            .datepicker--cell-day,.datepicker--cell-year{
+                                height:36px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }    
+}
+@media only screen and (max-width: 1199px){
+ .congrats-sec{
+    .congrats-content {
+       width:45%;
+  }
+ }
+ .employee-sec {
+    .table {
+        tbody {
+            tr {
+                td{
+                    padding-top:15px;
+                    padding-bottom:15px;
+                }
+            }
+        }
+    }
+ }
+}
+@media only screen and (max-width: 991px){
+ .date-picker-university{
+    .datepicker-inline{
+        .datepicker{
+            .datepicker--nav{
+                top: 2%;
+            }
+        }
+    }
+ }
+ .project-calendar {
+    &.card {
+        .card-body{
+            padding: 0 !important;
+        }
+    }
+ }
+ .project-dash {
+    .today-task-sec,.project-goal-sec{
+        .card{
+           .card-header{
+               display: block;
+           }
+        }
+    }
+ }
+
+
+}
+@media only screen and (max-width: 767px){
+ .congrats-sec{
+    padding:20px;
+    background-image:unset;       
+    .congrats-content{
+        margin:0 auto;
+        text-align:center;
+        width:70%;
+        h3{
+            color:$theme-body-font-color;
+        }
+        p{
+            color:$light-text !important;
+        }
+        .btn-light{
+            background-color: $primary-color !important;
+            border-color: $primary-color !important;
+            color:$white !important;
+            padding: 7px 15px;
+            i{
+                color:$white!important;
+            }
+        }
+    } 
+    .setting-option {
+        &.bg-transparent{
+            background-color:$white !important;
+            i{
+                color:$primary-color;
+            }
+        }
+        .setting-badge{   
+            &.light-badge{
+                background-color:rgba($primary-color,0.2);
+                i{
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+ }
+ .show-value-top {
+    .counry-data{
+        &:nth-child(n+2){
+            margin-left:15px;
+        }
+    }
+ }
+ .employee-sec {
+    .table {
+        tbody {
+            tr {
+                td{
+                    padding-top:10px;
+                    padding-bottom:10px;
+                }
+            }
+        }
+    }
+ }
+ .round-light{
+    width:35px;
+    height:35px;
+ }
+ 
+ 
+
+
+}
+
+@media only screen and (max-width: 480px){
+    .congrats-sec {
+    .congrats-content {
+        width: auto;
+        h3{
+        font-size:18px;
+        }
+        p{
+        margin-bottom:15px;
+        }      
+    }
+    }
+}
+
+@media only screen and (max-width: 451px){
+ .emp-details-table{
+    table{
+        tbody{
+            tr{
+                td{
+                    min-width: 280px;
+                }
+            }
+        }
+    }
+ } 
+  .date-picker-university {
+    .datepicker-inline {
+        .datepicker {
+            .datepicker--nav{
+                position:unset;
+            }
+        }
+    }
+ }
+
+
+}
+@media only screen and (max-width:420px){
+    .congrats-sec{
+        .congrats-content {
+            h3{               
+                font-size:16px;
+                padding-left:20px;
+                padding-right:20px;
+            }            
+            .btn-light{
+                padding:5px 12px;
+                font-size:12px;
+            }
+        }
+        .setting-option {
+            top:15px !important;
+            right:15px !important;
+        }
+    }
+    .show-value-top{
+        padding-left:15px;
+        padding-right:15px;
+        display:block !important;
+        text-align:center;
+    }
+}

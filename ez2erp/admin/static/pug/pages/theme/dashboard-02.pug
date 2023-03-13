@@ -1,0 +1,2125 @@
+- var chartist            = true;
+- var apex                = true;
+- var theme_customizer    = true;
+- var animate             = true;
+- var dashboard_2         = true;
+- var counter             = true;
+- var customcard          = true;
+- var clipboard           = true;
+- var prism               = true;
+- var knobchart           = true;
+- var morrischart         = true;
+- var slick_slider        = true;
+- var owlcarousel         = true;
+
+doctype html
+html(lang='en')
+  include ../../components/header-files
+  body
+    include ../../components/loader
+    // page-wrapper Start
+    #pageWrapper.page-wrapper.compact-wrapper
+      include ../../components/header
+      // Page Body Start
+      .page-body-wrapper.sidebar-icon
+        include ../../components/sidebar
+        .page-body.ecommerce-dash
+          .container-fluid
+            .page-header.dash-breadcrumb
+              .row
+                .col-6                               
+                  h3.f-w-600 default
+                .col-6
+                  .breadcrumb-sec
+                    ul.breadcrumb
+                      li.breadcrumb-item
+                        a(href='index.html')
+                          i(data-feather="home")
+                      li.breadcrumb-item Dashboard
+                      li.breadcrumb-item.active Ecommerce
+          // Container-fluid starts
+          .container-fluid
+            .row.size-column
+              .col-xl-12.box-col-12
+                .card.perform-overview-sec
+                  .card-header
+                    h5 Performance Overview                   
+                  .card-body.p-t-0
+                    .media.d-none
+                      .badge-groups.w-100.px-0
+                        h5.font-light Performance Overview
+                    .slide-4.overview
+                        div
+                          .card
+                            .card-body
+                              .media
+                                .media-body
+                                  ul.widget-card
+                                     li
+                                        img.img-fluid.me-2(src='../assets/images/dashboard-2/p_1.png',alt='Image description')
+                                        span.font-primary Total Revenue
+                                     li
+                                       h4.counter 985624
+                                     li.star-main
+                                        p Balanace +98%
+                                        ul.rating-cionlist
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                svg(viewbox='0 0 0 0' style='height:0; width: 0;')
+                                  defs
+                                    lineargradient#gradient-a(x2='0%' y2='100%')
+                                      stop(offset='0%' stop-color='#4d8aff')
+                                      stop(offset='100%' stop-color='transparent')
+                                .chartist-main-sec
+                                  .ct-chart1
+                        div
+                          .card
+                            .card-body
+                              .media
+                                .media-body
+                                  ul.widget-card
+                                     li
+                                        img.img-fluid.me-2(src='../assets/images/dashboard-2/p_1.png',alt='Image description')
+                                        span.font-primary Total Sale
+                                     li
+                                       h4.counter 6895
+                                     li.star-main
+                                        p Balanace +82%
+                                        ul.rating-cionlist
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                svg(viewbox='0 0 0 0' style='height:0; width: 0;')
+                                  defs
+                                    lineargradient#gradient-b(x2='0%' y2='100%')
+                                      stop(offset='0%' stop-color='#f73164')
+                                      stop(offset='100%' stop-color='transparent')
+                                .chartist-main-sec
+                                  .ct-chart2
+                        div
+                          .card
+                            .card-body
+                              .media
+                                .media-body
+                                   ul.widget-card
+                                     li
+                                        img.img-fluid.me-2(src='../assets/images/dashboard-2/p_3.png',alt='Image description')
+                                        span.font-success Total Client
+                                     li
+                                       h4.counter 1568
+                                     li.star-main
+                                        p Balanace +96%
+                                        ul.rating-cionlist
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                svg(viewbox='0 0 0 0' style='height:0; width: 0;')
+                                  defs
+                                    lineargradient#gradient-c(x2='0%' y2='100%')
+                                      stop(offset='0%' stop-color='#46d15e')
+                                      stop(offset='100%' stop-color='transparent')
+                                .chartist-main-sec
+                                   .ct-chart3
+                        div
+                          .card
+                            .card-body
+                              .media
+                                .media-body
+                                    ul.widget-card
+                                       li
+                                          img.img-fluid.me-2(src='../assets/images/dashboard-2/p_4.png',alt='Image description')
+                                          span.font-warning Total Product
+                                       li
+                                         h4.counter 850
+                                       li.star-main
+                                          p Balanace +79%
+                                          ul.rating-cionlist
+                                            li
+                                              i.fa.fa-star
+                                            li
+                                              i.fa.fa-star
+                                            li
+                                              i.fa.fa-star
+                                            li
+                                              i.fa.fa-star
+                                            li
+                                              i.fa.fa-star
+                                svg(viewbox='0 0 0 0' style='height:0; width: 0;')
+                                  defs
+                                    lineargradient#gradient-d(x2='0%' y2='100%')
+                                      stop(offset='0%' stop-color='#ff781e')
+                                      stop(offset='100%' stop-color='transparent')
+                                .chartist-main-sec
+                                  .ct-chart4
+                        div
+                          .card
+                            .card-body
+                              .media
+                                .media-body
+                                  ul.widget-card
+                                     li
+                                        img.img-fluid.me-2(src='../assets/images/dashboard-2/p_1.png',alt='Image description')
+                                        span.font-primary Total Revenue
+                                     li
+                                       h4.counter 985624
+                                     li.star-main
+                                        p Balanace +98%
+                                        ul.rating-cionlist
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                svg(viewbox='0 0 0 0' style='height:0; width: 0;')
+                                  defs
+                                    lineargradient#gradient-a(x2='0%' y2='100%')
+                                      stop(offset='0%' stop-color='#4d8aff')
+                                      stop(offset='100%' stop-color='transparent')
+                                .chartist-main-sec
+                                  .ct-chart5
+                        div
+                          .card
+                            .card-body
+                              .media
+                                .media-body
+                                  ul.widget-card
+                                     li
+                                        img.img-fluid.me-2(src='../assets/images/dashboard-2/p_1.png',alt='Image description')
+                                        span.font-primary Total Sale
+                                     li
+                                       h4.counter 6895
+                                     li.star-main
+                                        p Balanace +82%
+                                        ul.rating-cionlist
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                svg(viewbox='0 0 0 0' style='height:0; width: 0;')
+                                  defs
+                                    lineargradient#gradient-b(x2='0%' y2='100%')
+                                      stop(offset='0%' stop-color='#f73164')
+                                      stop(offset='100%' stop-color='transparent')
+                                .chartist-main-sec
+                                  .ct-chart6
+                        div
+                          .card
+                            .card-body
+                              .media
+                                .media-body
+                                   ul.widget-card
+                                     li
+                                        img.img-fluid.me-2(src='../assets/images/dashboard-2/p_3.png',alt='Image description')
+                                        span.font-success Total Client
+                                     li
+                                       h4.counter 1568
+                                     li.star-main
+                                        p Balanace +96%
+                                        ul.rating-cionlist
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                          li
+                                            i.fa.fa-star
+                                svg(viewbox='0 0 0 0' style='height:0; width: 0;')
+                                  defs
+                                    lineargradient#gradient-c(x2='0%' y2='100%')
+                                      stop(offset='0%' stop-color='#46d15e')
+                                      stop(offset='100%' stop-color='transparent')
+                                .chartist-main-sec
+                                   .ct-chart7
+                        div
+                          .card
+                            .card-body
+                              .media
+                                .media-body
+                                    ul.widget-card
+                                       li
+                                          img.img-fluid.me-2(src='../assets/images/dashboard-2/p_4.png',alt='Image description')
+                                          span.font-warning Total Product
+                                       li
+                                         h4.counter 850
+                                       li.star-main
+                                          p Balanace +79%
+                                          ul.rating-cionlist
+                                            li
+                                              i.fa.fa-star
+                                            li
+                                              i.fa.fa-star
+                                            li
+                                              i.fa.fa-star
+                                            li
+                                              i.fa.fa-star
+                                            li
+                                              i.fa.fa-star
+                                svg(viewbox='0 0 0 0' style='height:0; width: 0;')
+                                  defs
+                                    lineargradient#gradient-d(x2='0%' y2='100%')
+                                      stop(offset='0%' stop-color='#ff781e')
+                                      stop(offset='100%' stop-color='transparent')
+                                .chartist-main-sec
+                                  .ct-chart8
+              .col-xl-7.box-col-12.des-xl-100
+                .card.top-sell-sec
+                  .card-header.pb-0
+                    h5 Top Selling Product
+                    .card-header-right
+                        ul.setting-option
+                          li
+                            .setting-badge
+                              i.fa.fa-spin.fa-cog.font-primary
+                          li
+                            i.view-html.fa.fa-code.font-primary
+                          li
+                            i.icofont.icofont-maximize.full-card.font-primary
+                          li
+                            i.icofont.icofont-minus.minimize-card.font-primary
+                          li
+                            i.icofont.icofont-refresh.reload-card.font-primary
+                          li
+                            i.icofont.icofont-error.close-card.font-primary
+                  .card-body
+                    .top-sell-table
+                      .item
+                        .table-responsive.product-list
+                          table.table.table-bordernone
+                            thead
+                              tr
+                                th Name
+                                th Date
+                                th Quantity
+                                th % of sale
+                                th Total Revenue
+                            tbody
+                              tr
+                                td 
+                                  span 01
+                                  .t-title
+                                    a(href="user-profile.html")
+                                      img.img-40.m-r-15.rounded-circle.align-top(src='../assets/images/dashboard-2/i_1.png' alt='' data-original-title='' title='')
+                                    .d-inline-block.align-middle
+                                      span Yellow New Nike Shoes
+                                td 16 August
+                                td 54146
+                                td 
+                                 i.fa.fa-arrow-up.font-primary.me-1
+                                 | 65.00%
+                                td $210326
+                                td Done
+                              tr
+                                td 
+                                  span 02
+                                  .t-title
+                                    a(href="user-profile.html")
+                                      img.img-40.rounded-circle.align-top(src='../assets/images/dashboard-2/i_2.png' alt='' data-original-title='' title='')
+                                    .d-inline-block.align-middle
+                                      span Sony Brand New Headphon
+                                td 02 Octomber
+                                td 32015
+                                td 
+                                  i.fa.fa-arrow-up.font-primary.me-1
+                                  | 95.00%
+                                td $548564
+                                td Done
+                              tr
+                                td 
+                                  span 04
+                                  .t-title
+                                    a(href="user-profile.html")
+                                      img.img-40.rounded-circle.align-top(src='../assets/images/dashboard-2/i_3.png' alt='' data-original-title='' title='')
+                                    .d-inline-block.align-middle
+                                      span Beautiful Golden Tree Plant
+                                td 12 March
+                                td 95486
+                                td
+                                  i.fa.fa-arrow-down.font-secondary.me-1
+                                  |02.00%
+                                td $884596
+                                td Done
+                              tr
+                                td 
+                                  span 05
+                                  .t-title
+                                    a(href="user-profile.html")
+                                      img.img-40.rounded-circle.align-top(src='../assets/images/dashboard-2/i_4.png' alt='' data-original-title='' title='')
+                                    .d-inline-block.align-middle
+                                      span Marco M Kely Handbags
+                                td 31 December
+                                td 15495
+                                td
+                                  i.fa.fa-arrow-up.font-primary.me-1
+                                  |43.00%
+                                td $441523
+                                td Done
+                              tr
+                                td 
+                                  span 06
+                                  .t-title
+                                    a(href="user-profile.html")
+                                      img.img-40.rounded-circle.align-top(src='../assets/images/dashboard-2/i_5.png' alt='' data-original-title='' title='')
+                                    .d-inline-block.align-middle
+                                      span Being Human Branded T-shirt
+                                td 26 January
+                                td 66251
+                                td
+                                  i.fa.fa-arrow-up.font-primary.me-1
+                                  |88.00%
+                                td $112103
+                                td Done
+                    div.text-center
+                      a.f-w-700.btn-more(href="javascript:void(0)") More...
+                    .code-box-copy
+                      button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#selling-product', title='Copy')
+                        i.icofont.icofont-copy-alt
+                      pre                                           
+                        code.language-html#selling-product
+                          |&lt;div class="card top-sell-sec"&gt;
+                          |    &lt;div class="card-header pb-0"&gt;
+                          |      &lt;h5&gt;Top Selling Product&lt;/h5&gt;
+                          |      &lt;div class="card-header-right"&gt;
+                          |        &lt;ul class="setting-option"&gt;
+                          |          &lt;li&gt;
+                          |            &lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                          |          &lt;/li&gt;
+                          |          &lt;li&gt;
+                          |            &lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;
+                          |          &lt;/li&gt;
+                          |          &lt;li&gt;
+                          |            &lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;
+                          |          &lt;/li&gt;
+                          |          &lt;li&gt;
+                          |            &lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;
+                          |          &lt;/li&gt;
+                          |          &lt;li&gt;
+                          |            &lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;
+                          |          &lt;/li&gt;
+                          |          &lt;li&gt;
+                          |            &lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;
+                          |          &lt;/li&gt;
+                          |        &lt;/ul&gt;
+                          |      &lt;/div&gt;
+                          |    &lt;/div&gt;
+                          |    &lt;div class="card-body"&gt;
+                          |      &lt;div class="top-sell-table"&gt;
+                          |        &lt;div class="item"&gt;
+                          |          &lt;div class="table-responsive product-list"&gt;
+                          |          &lt;table class="table table-bordernone"&gt;
+                          |            &lt;thead&gt;
+                          |              &lt;tr&gt;
+                          |                &lt;th&gt;Name&lt;/th&gt;
+                          |                &lt;th&gt;Date&lt;/th&gt;
+                          |                &lt;th&gt;Quantity&lt;/th&gt;
+                          |                &lt;th&gt;% of sale&lt;/th&gt;
+                          |                &lt;th&gt;Total Revenue&lt;/th&gt;
+                          |              &lt;/tr&gt;
+                          |            &lt;/thead&gt;
+                          |            &lt;tbody&gt;
+                          |              &lt;tr&gt;
+                          |                &lt;td&gt; 
+                          |                  &lt;span&gt;01&lt;/span&gt;
+                          |                  &lt;div class="t-title"&gt;
+                          |                    &lt;a href="user-profile.html"&gt;
+                          |                      &lt;img class="img-40 m-r-15 rounded-circle align-top" src="../assets/images/dashboard-2/i_1.png" alt="" data-original-title="" title=""/&gt;
+                          |                    &lt;/a&gt;
+                          |                    &lt;div class="d-inline-block align-middle"&gt;
+                          |                      &lt;span&gt;Yellow New Nike Shoes&lt;/span&gt;
+                          |                    &lt;/div&gt;
+                          |                  &lt;/div&gt;
+                          |                &lt;/td&gt;
+                          |                &lt;td&gt;16 August&lt;/td&gt;
+                          |                &lt;td&gt;54146&lt;/td&gt;
+                          |                &lt;td&gt; &lt;i class="fa fa-arrow-up font-primary me-1"&gt;&lt;/i&gt;65.00%&lt;/td&gt;
+                          |                &lt;td&gt;$210326&lt;/td&gt;
+                          |                &lt;td&gt;Done&lt;/td&gt;
+                          |              &lt;/tr&gt;
+                          |              &lt;tr&gt;
+                          |                &lt;td&gt; 
+                          |                  &lt;span&gt;02&lt;/span&gt;
+                          |                  &lt;div class="t-title"&gt;
+                          |                    &lt;a href="user-profile.html"&gt;
+                          |                      &lt;img class="img-40 rounded-circle align-top" src="../assets/images/dashboard-2/i_2.png" alt="" data-original-title="" title=""/&gt;
+                          |                    &lt;/a&gt;
+                          |                    &lt;div class="d-inline-block align-middle"&gt;
+                          |                      &lt;span&gt;Sony Brand New Headphon&lt;/span&gt;
+                          |                    &lt;/div&gt;
+                          |                  &lt;/div&gt;
+                          |                &lt;/td&gt;
+                          |                &lt;td&gt;02 Octomber&lt;/td&gt;
+                          |                &lt;td&gt;32015&lt;/td&gt;
+                          |                &lt;td&gt; &lt;i class="fa fa-arrow-up font-primary me-1"&gt;&lt;/i&gt;95.00%&lt;/td&gt;
+                          |                &lt;td&gt;$548564&lt;/td&gt;
+                          |                &lt;td&gt;Done&lt;/td&gt;
+                          |              &lt;/tr&gt;
+                          |              &lt;tr&gt;
+                          |                &lt;td&gt;
+                          |                  &lt;span&gt;04&lt;/span&gt;
+                          |                  &lt;div class="t-title"&gt;
+                          |                    &lt;a href="user-profile.html"&gt;
+                          |                      &lt;img class="img-40 rounded-circle align-top" src="../assets/images/dashboard-2/i_3.png" alt="" data-original-title="" title=""/&gt;
+                          |                    &lt;/a&gt;
+                          |                    &lt;div class="d-inline-block align-middle"&gt;
+                          |                      &lt;span&gt;Beautiful Golden Tree Plant&lt;/span&gt;
+                          |                    &lt;/div&gt;
+                          |                  &lt;/div&gt;
+                          |                &lt;/td&gt;
+                          |                &lt;td&gt;12 March&lt;/td&gt;
+                          |                &lt;td&gt;95486&lt;/td&gt;
+                          |                &lt;td&gt;&lt;i class="fa fa-arrow-down font-secondary me-1"&gt;&lt;/i&gt;02.00%&lt;/td&gt;
+                          |                &lt;td&gt;$884596&lt;/td&gt;
+                          |                &lt;td&gt;Done&lt;/td&gt;
+                          |              &lt;/tr&gt;
+                          |              &lt;tr&gt;
+                          |                &lt;td&gt; 
+                          |                  &lt;span&gt;05&lt;/span&gt;
+                          |                  &lt;div class="t-title"&gt;
+                          |                      &lt;a href="user-profile.html"&gt;
+                          |                        &lt;img class="img-40 rounded-circle align-top" src="../assets/images/dashboard-2/i_4.png" alt="" data-original-title="" title=""/&gt;
+                          |                      &lt;/a&gt;
+                          |                      &lt;div class="d-inline-block align-middle"&gt;
+                          |                        &lt;span&gt;Marco M Kely Handbags&lt;/span&gt;
+                          |                      &lt;/div&gt;
+                          |                  &lt;/div&gt;
+                          |                &lt;/td&gt;
+                          |                &lt;td&gt;31 December&lt;/td&gt;
+                          |                &lt;td&gt;15495&lt;/td&gt;
+                          |                &lt;td&gt;&lt;i class="fa fa-arrow-up font-primary me-1"&gt;&lt;/i&gt;43.00%&lt;/td&gt;
+                          |                &lt;td&gt;$441523&lt;/td&gt;
+                          |                &lt;td&gt;Done&lt;/td&gt;
+                          |              &lt;/tr&gt;
+                          |              &lt;tr&gt;
+                          |                &lt;td&gt; 
+                          |                  &lt;span&gt;06&lt;/span&gt;
+                          |                  &lt;div class="t-title"&gt;
+                          |                    &lt;a href="user-profile.html"&gt;
+                          |                      &lt;img class="img-40 rounded-circle align-top" src="../assets/images/dashboard-2/i_5.png" alt="" data-original-title="" title=""/&gt;
+                          |                    &lt;/a&gt;
+                          |                    &lt;div class="d-inline-block align-middle"&gt;
+                          |                      &lt;span&gt;Being Human Branded T-shirt&lt;/span&gt;
+                          |                    &lt;/div&gt;
+                          |                  &lt;/div&gt;
+                          |                &lt;/td&gt;
+                          |                &lt;td&gt;26 January&lt;/td&gt;
+                          |                &lt;td&gt;66251&lt;/td&gt;
+                          |                &lt;td&gt;&lt;i class="fa fa-arrow-up font-primary me-1"&gt;&lt;/i&gt;88.00%&lt;/td&gt;
+                          |                &lt;td&gt;$112103&lt;/td&gt;
+                          |                &lt;td&gt;Done&lt;/td&gt;
+                          |              &lt;/tr&gt;
+                          |            &lt;/tbody&gt;
+                          |          &lt;/table&gt;
+                          |        &lt;/div&gt;
+                          |      &lt;/div&gt;
+                          |    &lt;/div&gt;
+                          |    &lt;div class="text-center"&gt;&lt;a class="f-w-700 btn-more" href="javascript:void(0)"&gt;More...&lt;/a&gt;&lt;/div&gt;
+                          |  &lt;/div&gt;
+                          |&lt;/div&gt;
+              .col-xl-5.box-col-12.des-xl-100
+                .row
+                  .col-xl-12.col-sm-6.des-xl-50.box-col-6.des-sm-100
+                    .card.service-contact-sec
+                      .card-header.pb-0
+                        h5 Services Contact
+                        .card-header-right
+                            ul.setting-option
+                              li
+                                .setting-badge
+                                  i.fa.fa-spin.fa-cog.font-primary
+                              li
+                                i.view-html.fa.fa-code.font-primary
+                              li
+                                i.icofont.icofont-maximize.full-card.font-primary
+                              li
+                                i.icofont.icofont-minus.minimize-card.font-primary
+                              li
+                                i.icofont.icofont-refresh.reload-card.font-primary
+                              li
+                                i.icofont.icofont-error.close-card.font-primary
+                      .card-body
+                        .table-responsive.groups-table.service-contact-table
+                          table.table.table-bordernone
+                            tbody
+                              tr
+                                td
+                                  .d-inline-block.align-middle
+                                    .t-title
+                                      a(href="user-profile.html")
+                                        img.img-radius.img-40.align-top.m-r-15.rounded-circle(src='../assets/images/dashboard-2/s_1.png' alt='' data-original-title='' title='')
+                                      .d-inline-block
+                                        span +1(056)5685 5684
+                                        p.d-block Marshel Medroled
+                                td
+                                  p Available Now
+                                td
+                                  .gradient-round
+                                    i.fa.fa-phone
+                              tr
+                                td
+                                  .d-inline-block.align-middle
+                                    .t-title
+                                      a(href="user-profile.html")
+                                        img.img-radius.img-40.align-top.m-r-15.rounded-circle(src='../assets/images/dashboard-2/s_2.png' alt='' data-original-title='' title='')
+                                      .d-inline-block
+                                        span +1(253) 3017 9801
+                                        p.d-block Eliyana Geloren
+                                td
+                                  p Available Now
+                                td
+                                  .gradient-round
+                                    i.fa.fa-phone
+                        .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#services-contact', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#services-contact
+                              |&lt;div class="card service-contact-sec"&gt;
+                              |  &lt;div class="card-header pb-0"&gt;
+                              |    &lt;h5&gt;Services Contact&lt;/h5&gt;
+                              |    &lt;div class="card-header-right"&gt;
+                              |      &lt;ul class="setting-option"&gt;
+                              |        &lt;li&gt;
+                              |          &lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |        &lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body"&gt;
+                              |    &lt;div class="table-responsive groups-table service-contact-table"&gt;
+                              |    &lt;table class="table table-bordernone"&gt;
+                              |      &lt;tbody&gt;
+                              |        &lt;tr&gt;
+                              |          &lt;td&gt;
+                              |            &lt;div class="d-inline-block align-middle"&gt;
+                              |              &lt;div class="t-title"&gt;
+                              |                &lt;a href="user-profile.html"&gt;
+                              |                  &lt;img class="img-radius img-40 align-top m-r-15 rounded-circle" src="../assets/images/dashboard-2/s_1.png" alt="" data-original-title="" title=""/&gt;
+                              |                &lt;/a&gt;
+                              |              &lt;div class="d-inline-block"&gt;
+                              |                &lt;span&gt;+1(056)5685 5684&lt;/span&gt;
+                              |                &lt;p class="d-block"&gt;Marshel Medroled&lt;/p&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |        &lt;/td&gt;
+                              |        &lt;td&gt;
+                              |          &lt;p&gt;Available Now&lt;/p&gt;
+                              |        &lt;/td&gt;
+                              |        &lt;td&gt;
+                              |          &lt;div class="gradient-round"&gt;&lt;i class="fa fa-phone"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |        &lt;/td&gt;
+                              |      &lt;/tr&gt;
+                              |      &lt;tr&gt;
+                              |        &lt;td&gt;
+                              |          &lt;div class="d-inline-block align-middle"&gt;
+                              |            &lt;div class="t-title"&gt;
+                              |              &lt;a href="user-profile.html"&gt;
+                              |                &lt;img class="img-radius img-40 align-top m-r-15 rounded-circle" src="../assets/images/dashboard-2/s_2.png" alt="" data-original-title="" title=""/&gt;
+                              |              &lt;/a&gt;
+                              |              &lt;div class="d-inline-block"&gt;
+                              |                &lt;span&gt;+1(253) 3017 9801&lt;/span&gt;
+                              |                &lt;p class="d-block"&gt;Eliyana Geloren&lt;/p&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |        &lt;/td&gt;
+                              |        &lt;td&gt;
+                              |          &lt;p&gt;Available Now&lt;/p&gt;
+                              |        &lt;/td&gt;
+                              |        &lt;td&gt;
+                              |         &lt;div class="gradient-round"&gt;&lt;i class="fa fa-phone"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |        &lt;/td&gt;
+                              |      &lt;/tr&gt;
+                              |      &lt;/tbody&gt;
+                              |    &lt;/table&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |&lt;/div&gt;
+                  .col-xl-12.col-sm-6.des-xl-50.box-col-6.des-sm-100
+                    .card
+                      .card-header
+                        h5 Connect With Us
+                        .card-header-right
+                          ul.setting-option
+                            li
+                              .setting-badge
+                                i.fa.fa-spin.fa-cog.font-primary
+                            li
+                              i.view-html.fa.fa-code.font-primary
+                            li
+                              i.icofont.icofont-maximize.full-card.font-primary
+                            li
+                              i.icofont.icofont-minus.minimize-card.font-primary
+                            li
+                              i.icofont.icofont-refresh.reload-card.font-primary
+                            li
+                              i.icofont.icofont-error.close-card.font-primary
+                      .card-body.p-t-0
+                        .connect-sec
+                          table
+                            tr
+                              td
+                                .facebook-sec
+                                  img.img-40(src='../assets/images/dashboard-2/facebook.png' alt=''  title='')
+                                  .name-user
+                                    span Facebook
+                                    p 680k
+                              td
+                                .google-sec
+                                  img.img-40(src='../assets/images/dashboard-2/googleplus.png' alt=''  title='')
+                                  .name-user
+                                    span Google
+                                    p 546k
+                              td
+                                .twitter-sec
+                                  img.img-40(src='../assets/images/dashboard-2/twitter.png' alt=''  title='')
+                                  .name-user
+                                    span Twitter
+                                    p 856k
+                        .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#contact-us', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#contact-us
+                              |&lt;div class="card"&gt;
+                              |  &lt;div class="card-header"&gt;
+                              |    &lt;h5&gt;Connect With Us&lt;/h5&gt;
+                              |  &lt;div class="card-header-right"&gt;
+                              |    &lt;ul class="setting-option"&gt;
+                              |      &lt;li&gt;
+                              |        &lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |      &lt;/li&gt;
+                              |      &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |    &lt;/ul&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body p-t-0"&gt;
+                              |    &lt;div class="connect-sec"&gt;
+                              |      &lt;table&gt;
+                              |        &lt;tr&gt;
+                              |          &lt;td&gt;
+                              |              &lt;div class="facebook-sec"&gt;
+                              |                &lt;img class="img-40" src="../assets/images/dashboard-2/facebook.png" alt="" title=""/&gt;
+                              |                &lt;div class="name-user"&gt;&lt;span&gt;Facebook&lt;/span&gt;
+                              |                &lt;p&gt;680k&lt;/p&gt;
+                              |                &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |          &lt;/td&gt;
+                              |          &lt;td&gt;
+                              |            &lt;div class="google-sec"&gt;
+                              |              &lt;img class="img-40" src="../assets/images/dashboard-2/googleplus.png" alt="" title=""/&gt;
+                              |              &lt;div class="name-user"&gt;&lt;span&gt;Google&lt;/span&gt;
+                              |              &lt;p&gt;546k&lt;/p&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/td&gt;
+                              |          &lt;td&gt;
+                              |            &lt;div class="twitter-sec"&gt;
+                              |              &lt;img class="img-40" src="../assets/images/dashboard-2/twitter.png" alt="" title=""/&gt;
+                              |              &lt;div class="name-user"&gt;
+                              |                &lt;span&gt;Twitter&lt;/span&gt;
+                              |                &lt;p&gt;856k&lt;/p&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/td&gt;
+                              |        &lt;/tr&gt;
+                              |      &lt;/table&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |&lt;/div&gt;
+              .col-xl-7.box-col-12.des-xl-100
+                .row
+                  .col-sm-4.des-sm-100
+                    .card.meeting-sec
+                      .card-header
+                        .card-header-right
+                          ul.setting-option
+                              li
+                                .setting-badge
+                                  i.fa.fa-spin.fa-cog.font-primary
+                              li
+                                i.view-html.fa.fa-code.font-primary
+                              li
+                                i.icofont.icofont-maximize.full-card.font-primary
+                              li
+                                i.icofont.icofont-minus.minimize-card.font-primary
+                              li
+                                i.icofont.icofont-refresh.reload-card.font-primary
+                              li
+                                i.icofont.icofont-error.close-card.font-primary
+                      .card-body.p-t-0
+                        .redial-block
+                          .redial-chart
+                            #chart-update-1
+                          .meeting-details.text-center
+                              h4 652594
+                              p Number of Meetings
+                              .meeting-rate.primary-rate
+                                span.font-primary 2.00%
+                                p (30 days)
+                        .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#number-meeting', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#number-meeting  
+                              |&lt;div class="card meeting-sec"&gt;
+                              |  &lt;div class="card-header"&gt;
+                              |    &lt;div class="card-header-right"&gt;
+                              |      &lt;ul class="setting-option"&gt;
+                              |        &lt;li&gt;
+                              |          &lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |        &lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body p-t-0"&gt;
+                              |    &lt;div class="redial-block"&gt;
+                              |      &lt;div class="redial-chart"&gt;
+                              |        &lt;div id="chart-update-1"&gt;&lt;/div&gt;
+                              |      &lt;/div&gt;
+                              |        &lt;div class="meeting-details text-center"&gt;
+                              |          &lt;h4&gt;652594&lt;/h4&gt;
+                              |          &lt;p&gt;Number of Meetings&lt;/p&gt;
+                              |          &lt;div class="meeting-rate primary-rate"&gt;
+                              |           &lt;span class="font-primary"&gt;2.00%&lt;/span&gt;
+                              |            &lt;p&gt;(30 days)&lt;/p&gt;
+                              |          &lt;/div&gt;
+                              |        &lt;/div&gt;
+                              |      &lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |&lt;/div&gt;
+                  .col-sm-4.des-sm-100
+                    .card
+                      .card-header
+                        .card-header-right
+                          ul.setting-option
+                            li
+                              .setting-badge.secondary-badge
+                                i.fa.fa-spin.fa-cog.font-secondary
+                            li
+                              i.view-html.fa.fa-code.font-secondary
+                            li
+                              i.icofont.icofont-maximize.full-card.font-secondary
+                            li
+                              i.icofont.icofont-minus.minimize-card.font-secondary
+                            li
+                              i.icofont.icofont-refresh.reload-card.font-secondary
+                            li
+                              i.icofont.icofont-error.close-card.font-secondary
+                      .card-body.p-t-0
+                        .redial-block
+                          .redial-chart
+                            #chart-update-2
+                          .meeting-details.text-center
+                              h4 88456
+                              p Number of Follower
+                              .meeting-rate.secondary-rate
+                                span.font-secondary 96.00%
+                                p (30 days)
+                        .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#number-follow', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#number-follow
+                              |&lt;div class="card meeting-sec"&gt;
+                              |  &lt;div class="card-header"&gt;
+                              |    &lt;div class="card-header-right"&gt;
+                              |      &lt;ul class="setting-option"&gt;
+                              |        &lt;li&gt;
+                              |          &lt;div class="setting-badge secondary-badge"&gt;&lt;i class="fa fa-spin fa-cog font-secondary"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |        &lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body p-t-0"&gt;
+                              |    &lt;div class="redial-block"&gt;
+                              |      &lt;div class="redial-chart"&gt;
+                              |        &lt;div id="chart-update-2"&gt;&lt;/div&gt;
+                              |      &lt;/div&gt;
+                              |        &lt;div class="meeting-details text-center"&gt;
+                              |          &lt;h4&gt;88456&lt;/h4&gt;
+                              |          &lt;p&gt;Number of Follower&lt;/p&gt;
+                              |          &lt;div class="meeting-rate primary-secondary"&gt;
+                              |           &lt;span class="font-secondary"&gt;96.00%&lt;/span&gt;
+                              |            &lt;p&gt;(30 days)&lt;/p&gt;
+                              |          &lt;/div&gt;
+                              |        &lt;/div&gt;
+                              |      &lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |&lt;/div&gt;                                
+                  .col-sm-4.des-sm-100
+                    .card          
+                      .card-header
+                        .card-header-right
+                          ul.setting-option
+                            li
+                              .setting-badge.success-badge
+                                i.fa.fa-spin.fa-cog.font-success
+                            li
+                              i.view-html.fa.fa-code.font-success
+                            li
+                              i.icofont.icofont-maximize.full-card.font-success
+                            li
+                              i.icofont.icofont-minus.minimize-card.font-success
+                            li
+                              i.icofont.icofont-refresh.reload-card.font-success
+                            li
+                              i.icofont.icofont-error.close-card.font-success                                  
+                      .card-body.p-t-0
+                        .redial-block
+                           .redial-chart
+                              #chart-update
+                           .meeting-details.text-center
+                              h4 955456
+                              p Number of Order
+                              .meeting-rate.success-rate
+                                span.font-success 84.00%
+                                p (30 days)
+                        .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#number-order', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#number-order
+                              |&lt;div class="card"&gt;
+                              |    &lt;div class="card-header"&gt;
+                              |    &lt;div class="card-header-right"&gt;
+                              |      &lt;ul class="setting-option"&gt;
+                              |        &lt;li&gt;
+                              |          &lt;div class="setting-badge success-badge"&gt;&lt;i class="fa fa-spin fa-cog font-success"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |        &lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="view-html fa fa-code font-success"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-success"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-success"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-success"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-success"&gt; &lt;/i&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body p-t-0"&gt;
+                              |    &lt;div class="redial-block"&gt;
+                              |    &lt;div class="redial-chart"&gt;
+                              |      &lt;div id="chart-update"&gt;&lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;div class="meeting-details text-center"&gt;
+                              |    &lt;h4&gt;955456&lt;/h4&gt;
+                              |    &lt;p&gt;Number of Order&lt;/p&gt;
+                              |    &lt;div class="meeting-rate success-rate"&gt;
+                              |      &lt;span class="font-success"&gt;84.00%&lt;/span&gt;
+                              |      &lt;p&gt;(30 days)&lt;/p&gt;
+                              |    &lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |&lt;/div&gt;
+                              |&lt;/div&gt;
+                                
+              .col-xl-5.col-sm-6.box-col-12.des-xl-50.des-sm-100
+                .card.business-growth-sec
+                  .card-header.pb-0.justify-content-between
+                    h5 Business Growth
+                    .center-content
+                      p Total Growth
+                      span.ms-3 $665000
+                    .card-header-right
+                      ul.setting-option
+                        li
+                          .setting-badge.primary-badge
+                            i.fa.fa-spin.fa-cog.font-primary
+                        li
+                          i.view-html.fa.fa-code.font-primary
+                        li
+                          i.icofont.icofont-maximize.full-card.font-primary
+                        li
+                          i.icofont.icofont-minus.minimize-card.font-primary
+                        li
+                          i.icofont.icofont-refresh.reload-card.font-primary
+                        li
+                          i.icofont.icofont-error.close-card.font-primary
+                  .card-body.p-0
+                    #business-chart
+                    .code-box-copy
+                      button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#business-growth', title='Copy')
+                        i.icofont.icofont-copy-alt
+                      pre
+                        code.language-html#business-growth
+                          |&lt;div class="card business-growth-sec"&gt;
+                          |  &lt;div class="card-header pb-0 justify-content-between"&gt;
+                          |    &lt;h5&gt;Business Growth&lt;/h5&gt;
+                          |    &lt;div class="center-content"&gt;
+                          |      &lt;p&gt;Total Growth&lt;/p&gt;
+                          |      &lt;span class="ms-3"&gt;$665000&lt;/span&gt;
+                          |    &lt;/div&gt;
+                          |    &lt;div class="card-header-right"&gt;
+                          |      &lt;ul class="setting-option"&gt;
+                          |        &lt;li&gt;&lt;div class="setting-badge primary-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                          |      &lt;/ul&gt;
+                          |    &lt;/div&gt;
+                          |    &lt;/div&gt;
+                          |    &lt;div class="card-body p-0"&gt;
+                          |      &lt;div id="business-chart"&gt;
+                          |    &lt;/div&gt;
+                          |  &lt;/div&gt;
+                          |&lt;/div&gt;
+              .col-xl-4.col-sm-6.box-col-12.des-xl-50.des-sm-100
+                .card.our-activity-table
+                  .card-header
+                    h5 Our Activities
+                    .card-header-right
+                      ul.setting-option
+                        li
+                          .setting-badge.primary-badge
+                            i.fa.fa-spin.fa-cog.font-primary
+                        li
+                          i.view-html.fa.fa-code.font-primary
+                        li
+                          i.icofont.icofont-maximize.full-card.font-primary
+                        li
+                          i.icofont.icofont-minus.minimize-card.font-primary
+                        li
+                          i.icofont.icofont-refresh.reload-card.font-primary
+                        li
+                          i.icofont.icofont-error.close-card.font-primary
+                  .card-body.p-t-0
+                    .table-responsive.groups-table
+                          table.table.table-bordernone
+                            tbody
+                              tr
+                                td
+                                  .media
+                                    .round-light.icon-secondary
+                                      i.fa.fa-star
+                                    .media-body
+                                      span Win best seller of the year award
+                                      p.d-block Company,San Francisco
+                                td
+                                  p 34 min ago
+                              tr
+                                td
+                                  .media
+                                    .round-light.icon-primary
+                                      i.fa.fa-check-circle
+                                    .media-body
+                                      span Approved our product in checking
+                                      p.d-block Elisse Joson,San Francisco
+                                td
+                                  p 1 hour ago
+                              tr
+                                td
+                                  .media
+                                    .round-light.icon-success
+                                      i.fa.fa-bookmark
+                                    .media-body
+                                        span Win best seller of the year award
+                                        p.d-block Company,San Francisco
+                                td
+                                  p 34 min ago
+                              tr
+                                td
+                                  .media
+                                    .round-light.icon-warning
+                                      i.fa.fa-shopping-basket
+                                    .media-body
+                                        span Approved our product in checking
+                                        p.d-block Elisse Joson,San Francisco
+                                td
+                                  p 1 hour ago
+                              tr
+                                td
+                                  .media
+                                    .round-light.icon-primary
+                                      i.fa.fa-microchip
+                                    .media-body
+                                        span Win best seller of the year award
+                                        p.d-block Company,San Francisco
+                                td
+                                    p 34 min ago
+                    div.text-center
+                      a.f-w-700.btn-more(href="javascript:void(0)") More...
+                    .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#our-activiti', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#our-activiti
+                              |&lt;div class="card our-activity-table"&gt;
+                              |  &lt;div class="card-header"&gt;
+                              |    &lt;h5&gt;Our Activities&lt;/h5&gt;
+                              |    &lt;div class="card-header-right"&gt;
+                              |      &lt;ul class="setting-option"&gt;
+                              |        &lt;li&gt;
+                              |          &lt;div class="setting-badge primary-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |        &lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body p-t-0"&gt;
+                              |    &lt;div class="table-responsive groups-table"&gt;
+                              |      &lt;table class="table table-bordernone"&gt;
+                              |        &lt;tbody&gt;
+                              |          &lt;tr&gt;
+                              |            &lt;td&gt;
+                              |              &lt;div class="media"&gt;
+                              |                &lt;div class="round-light icon-secondary"&gt;
+                              |                  &lt;i class="fa fa-star"&gt;&lt;/i&gt;
+                              |                &lt;/div&gt;
+                              |                &lt;div class="media-body"&gt;
+                              |                  &lt;span&gt;Win best seller of the year award&lt;/span&gt;
+                              |                  &lt;p class="d-block"&gt;Company,San Francisco&lt;/p&gt;
+                              |                &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/td&gt;
+                              |            &lt;td&gt;
+                              |              &lt;p&gt;34 min ago&lt;/p&gt;
+                              |            &lt;/td&gt;
+                              |          &lt;/tr&gt;
+                              |          &lt;tr&gt;
+                              |            &lt;td&gt;
+                              |              &lt;div class="media"&gt;
+                              |                &lt;div class="round-light icon-primary"&gt;&lt;i class="fa fa-check-circle"&gt;&lt;/i&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="media-body"&gt;
+                              |                &lt;span&gt;Approved our product in checking&lt;/span&gt;
+                              |                &lt;p class="d-block"&gt;Elisse Joson,San Francisco&lt;/p&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;/td&gt;
+                              |            &lt;td&gt;
+                              |              &lt;p&gt;1 hour ago&lt;/p&gt;
+                              |            &lt;/td&gt;
+                              |          &lt;/tr&gt;
+                              |          &lt;tr&gt;
+                              |            &lt;td&gt;
+                              |              &lt;div class="media"&gt;
+                              |                &lt;div class="round-light icon-success"&gt;
+                              |                  &lt;i class="fa fa-bookmark"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |                &lt;div class="media-body"&gt;
+                              |                  &lt;span&gt;Win best seller of the year award&lt;/span&gt;
+                              |                  &lt;p class="d-block"&gt;Company,San Francisco&lt;/p&gt;
+                              |                &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/td&gt;
+                              |            &lt;td&gt;
+                              |              &lt;p&gt;34 min ago&lt;/p&gt;
+                              |            &lt;/td&gt;
+                              |          &lt;/tr&gt;
+                              |          &lt;tr&gt;
+                              |            &lt;td&gt;
+                              |              &lt;div class="media"&gt;
+                              |                &lt;div class="round-light icon-warning"&gt;
+                              |                  &lt;i class="fa fa-shopping-basket"&gt;&lt;/i&gt;
+                              |                &lt;/div&gt;
+                              |                &lt;div class="media-body"&gt;
+                              |                  &lt;span&gt;Approved our product in checking&lt;/span&gt;
+                              |                  &lt;p class="d-block"&gt;Elisse Joson,San Francisco&lt;/p&gt;
+                              |                &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/td&gt;
+                              |            &lt;td&gt;
+                              |              &lt;p&gt;1 hour ago&lt;/p&gt;
+                              |            &lt;/td&gt;
+                              |          &lt;/tr&gt;
+                              |          &lt;tr&gt;
+                              |            &lt;td&gt;
+                              |              &lt;div class="media"&gt;
+                              |                &lt;div class="round-light icon-primary"&gt;
+                              |                  &lt;i class="fa fa-microchip"&gt;&lt;/i&gt;
+                              |                &lt;/div&gt;
+                              |                &lt;div class="media-body"&gt;
+                              |                  &lt;span&gt;Win best seller of the year award&lt;/span&gt;
+                              |                  &lt;p class="d-block"&gt;Company,San Francisco&lt;/p&gt;
+                              |                &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/td&gt;
+                              |            &lt;td&gt;
+                              |              &lt;p&gt;34 min ago&lt;/p&gt;
+                              |            &lt;/td&gt;
+                              |          &lt;/tr&gt;
+                              |       &lt;/tbody&gt;
+                              |     &lt;/table&gt;
+                              |   &lt;/div&gt;
+                              | &lt;div class="text-center"&gt;
+                              |   &lt;a class="f-w-700 btn-more" href="javascript:void(0)"&gt;More...&lt;/a&gt;
+                              | &lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+              .col-xl-4.col-lg-12.col-md-6.box-col-6.des-xl-50
+                .card.new-product-section
+                  .card-header.justify-content-between
+                    h5 New Product
+                    .center-content
+                      p Sold Product
+                      span.m-l-10 84562
+                    .card-header-right
+                      ul.setting-option
+                        li
+                          .setting-badge.primary-badge
+                            i.fa.fa-spin.fa-cog.font-primary
+                        li
+                          i.view-html.fa.fa-code.font-primary
+                        li
+                          i.icofont.icofont-maximize.full-card.font-primary
+                        li
+                          i.icofont.icofont-minus.minimize-card.font-primary
+                        li
+                          i.icofont.icofont-refresh.reload-card.font-primary
+                        li
+                          i.icofont.icofont-error.close-card.font-primary
+                  .card-body.p-t-0
+                      .new-product-main
+                        .slider.single-item
+                            div
+                              .row.pro-block
+                                .col-sm-6
+                                  .slid-wrapper
+                                    .plus-circle.float-end                                     
+                                      i.icon-plus
+                                  .slider.single-item-small
+                                    div 
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-1.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Mix3
+                                            p USD 115.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-1.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Mix3
+                                            p USD 115.00
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-2.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Speaker
+                                            p USD 94.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-2.png' alt='First slide')
+                                        .carousel-content 
+                                            a(href="user-profile.html") 
+                                              span Xiaomi Speaker
+                                            p USD 94.00
+                                .col-sm-6
+                                  .slid-wrapper
+                                    .plus-circle.float-end
+                                       i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                      .product-box 
+                                        img(src='../assets/images/dashboard-2/product-3.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Mouse
+                                            p USD 30.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-3.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Mouse
+                                            p USD 30.00
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                      .product-box 
+                                        img(src='../assets/images/dashboard-2/product-4.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Earbuds
+                                            p USD 102.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-4.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Earbuds
+                                            p USD 102.00
+                            div
+                              .row.pro-block
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-1.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Mix3
+                                            p USD 115.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-1.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Mix3
+                                            p USD 115.00
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                      .product-box 
+                                        img(src='../assets/images/dashboard-2/product-2.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                            span Xiaomi Speaker
+                                            p USD 94.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-2.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Speaker
+                                            p USD 94.00
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                     .product-box
+                                        img(src='../assets/images/dashboard-2/product-3.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Mouse
+                                            p USD 30.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-3.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Mouse
+                                            p USD 30.00
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                     .product-box
+                                        img(src='../assets/images/dashboard-2/product-4.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Earbuds
+                                            p USD 102.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-4.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Earbuds
+                                            p USD 102.00
+                            div
+                              .row.pro-block
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-1.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Mix3
+                                            p USD 115.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-4.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Mix3
+                                            p USD 115.00
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-2.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Speaker
+                                            p USD 94.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-2.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Xiaomi Speaker
+                                            p USD 94.00
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-3.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Mouse
+                                            p USD 30.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-3.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Mouse
+                                            p USD 30.00
+                                .col-sm-6
+                                  .slid-wrapper
+                                        .plus-circle.float-end
+                                           i.icon-plus
+                                  .slider.single-item-small
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-4.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span Wireless Earbuds
+                                            p USD 102.00
+                                    div
+                                      .product-box
+                                        img(src='../assets/images/dashboard-2/product-4.png' alt='First slide')
+                                        .carousel-content
+                                            a(href="user-profile.html")  
+                                              span  Wireless Earbuds
+                                            p USD 102.00
+                      .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#new-pro', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#new-pro
+                              |&lt;div class="card new-product-section"&gt;
+                              |  &lt;div class="card-header justify-content-between"&gt;
+                              |    &lt;h5&gt;New Product&lt;/h5&gt;
+                              |    &lt;div class="center-content"&gt;
+                              |      &lt;p&gt;Sold Product&lt;/p&gt;&lt;span class="m-l-10"&gt;84562&lt;/span&gt;
+                              |    &lt;/div&gt;
+                              |    &lt;div class="card-header-right"&gt;
+                              |      &lt;ul class="setting-option"&gt;
+                              |        &lt;li&gt;
+                              |          &lt;div class="setting-badge primary-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |        &lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |     &lt;/div&gt;
+                              |   &lt;/div&gt;
+                              |   &lt;div class="card-body p-t-0"&gt;
+                              |    &lt;div class="new-product-main"&gt;
+                              |      &lt;div class="slider single-item"&gt;
+                              |        &lt;div&gt;
+                              |          &lt;div class="row pro-block"&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-1.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Mix3&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 115.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-1.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Mix3&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 115.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-2.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Speaker&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 94.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-2.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Speaker&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 94.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-3.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Mouse&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 30.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-3.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Mouse&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 30.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-4.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Earbuds&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 102.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-4.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Earbuds&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 102.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |        &lt;/div&gt;
+                              |        &lt;div&gt;
+                              |          &lt;div class="row pro-block"&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-1.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Mix3&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 115.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-1.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Mix3&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 115.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-2.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Speaker&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 94.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-2.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Speaker&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 94.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-3.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Mouse&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 30.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-3.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Mouse&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 30.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-4.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Earbuds&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 102.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-4.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Earbuds&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 102.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |        &lt;/div&gt;
+                              |        &lt;div&gt;
+                              |          &lt;div class="row pro-block"&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-1.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Mix3&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 115.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-1.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Mix3&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 115.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-2.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Speaker&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 94.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-2.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Xiaomi Speaker&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 94.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-3.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Mouse&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 30.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-3.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Mouse&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 30.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;div class="col-sm-6"&gt;
+                              |              &lt;div class="slid-wrapper"&gt;
+                              |                &lt;div class="plus-circle float-end"&gt; &lt;i class="icon-plus"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="slider single-item-small"&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-4.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Earbuds&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 102.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |                  &lt;div&gt;
+                              |                    &lt;div class="product-box"&gt;
+                              |                      &lt;img src="../assets/images/dashboard-2/product-4.png" alt="First slide"/&gt;
+                              |                      &lt;div class="carousel-content"&gt;
+                              |                        &lt;a href="user-profile.html"&gt; 
+                              |                          &lt;span&gt;Wireless Earbuds&lt;/span&gt;
+                              |                        &lt;/a&gt;
+                              |                        &lt;p&gt;USD 102.00&lt;/p&gt;
+                              |                      &lt;/div&gt;
+                              |                    &lt;/div&gt;
+                              |                  &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |        &lt;/div&gt;
+                              |        &lt;/div&gt;
+                              |      &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |&lt;/div&gt;
+                          
+              .col-xl-4.col-lg-12.col-md-6.box-col-6.des-xl-50
+                .card.o-hidden.payment-sec-main
+                  .card-header
+                    h5.font-light Payment
+                    .card-header-right
+                      ul.setting-option.bg-transparent
+                        li
+                          .setting-badge.light-badge
+                            i.fa.fa-spin.fa-cog
+                        li
+                          i.view-html.fa.fa-code
+                        li
+                          i.icofont.icofont-maximize.full-card
+                        li
+                          i.icofont.icofont-minus.minimize-card
+                        li
+                          i.icofont.icofont-refresh.reload-card
+                        li
+                          i.icofont.icofont-error.close-card
+                  .card-body.p-t-0                   
+                    .payment-main
+                      #sync1.owl-carousel.owl-theme
+                        .item.p-0
+                          .visa-card
+                            .card-logo
+                              img.img-fluid(src="../assets/images/dashboard-2/visa-card/visa.png" alt="" )
+                            ul.card-number
+                              li ****
+                              li ****
+                              li ****
+                              li 8597
+                            h6.carl-holder Johan deo    
+                            .d-flex.justify-content-between.align-items-center
+                              .valid-thru 
+                                span VALID THRU
+                                span.vdate 11/21
+                              a.card-btn(href="javascript:void(0)") next 
+                                i.fa.fa-arrow-circle-right.font-primary
+                        .item.p-0
+                          .visa-card
+                            .card-logo
+                              img.img-fluid(src="../assets/images/dashboard-2/visa-card/master-card.png" alt="" )
+                            ul.card-number
+                              li ****
+                              li ****
+                              li ****
+                              li 8597
+                            h6.carl-holder Johan deo    
+                            .d-flex.justify-content-between.align-items-center
+                              .valid-thru 
+                                span VALID THRU
+                                span.vdate 11/21
+                              a.card-btn(href="javascript:void(0)") next 
+                                i.fa.fa-arrow-circle-right.font-primary
+                        .item.p-0
+                          .visa-card
+                            .card-logo
+                              img.img-fluid(src="../assets/images/dashboard-2/american-ex.png" alt="" )
+                            ul.card-number
+                              li ****
+                              li ****
+                              li ****
+                              li 358
+                            h6.carl-holder Johan deo    
+                            .d-flex.justify-content-between.align-items-center
+                              .valid-thru 
+                                span VALID THRU
+                                span.vdate 9/22
+                              a.card-btn(href="javascript:void(0)") next 
+                                i.fa.fa-arrow-circle-right.font-primary                       
+                        .item
+                           h1 4
+                      h5.font-light Active Card
+                       
+                      #sync2.owl-carousel.owl-theme
+                        .item
+                          img(src='../assets/images/dashboard-2/visa.png' alt='' data-original-title='' title='')
+                          .check-circle
+                            i.fa.fa-check
+                        .item
+                          img(src='../assets/images/dashboard-2/card.png' alt='' data-original-title='' title='')
+                          .check-circle
+                            i.fa.fa-check
+                        .item
+                          img(src='../assets/images/dashboard-2/american-ex.png' alt='' data-original-title='' title='')
+                          .check-circle
+                            i.fa.fa-check
+                        .item
+                          img(src='../assets/images/dashboard-2/card-last.png' alt='' data-original-title='' title='')
+                          .check-circle
+                           i.fa.fa-check
+                    .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#payment-sec', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#payment-sec
+                              |&lt;div class="card o-hidden payment-sec-main"&gt;
+                              |  &lt;div class="card-header"&gt;
+                              |    &lt;h5 class="font-light"&gt;Payment&lt;/h5&gt;
+                              |    &lt;div class="card-header-right"&gt;
+                              |      &lt;ul class="setting-option bg-transparent"&gt;
+                              |        &lt;li&gt;
+                              |          &lt;div class="setting-badge light-badge"&gt;&lt;i class="fa fa-spin fa-cog"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |        &lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="view-html fa fa-code"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-error close-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body p-t-0"&gt; 
+                              |    &lt;div class="payment-main"&gt;
+                              |      &lt;div class="owl-carousel owl-theme" id="sync1"&gt;
+                              |        &lt;div class="item p-0"&gt;
+                              |          &lt;div class="visa-card"&gt;
+                              |            &lt;div class="card-logo"&gt;
+                              |              &lt;img class="img-fluid" src="../assets/images/dashboard-2/visa-card/visa.png" alt=""/&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;ul class="card-number"&gt;
+                              |              &lt;li&gt;****&lt;/li&gt;
+                              |              &lt;li&gt;****&lt;/li&gt;
+                              |              &lt;li&gt;****&lt;/li&gt;
+                              |              &lt;li&gt;8597&lt;/li&gt;
+                              |            &lt;/ul&gt;
+                              |            &lt;h6 class="carl-holder"&gt;Johan deo &lt;/h6&gt;
+                              |            &lt;div class="d-flex justify-content-between align-items-center"&gt;
+                              |              &lt;div class="valid-thru"&gt; 
+                              |                &lt;span&gt;VALID THRU&lt;/span&gt;
+                              |                &lt;span class="vdate"&gt;11/21&lt;/span&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;a class="card-btn" href="javascript:void(0)"&gt;next &lt;i class="fa fa-arrow-circle-right font-primary"&gt;&lt;/i&gt;&lt;/a&gt;
+                              |            &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |          &lt;div class="item p-0"&gt;
+                              |            &lt;div class="visa-card"&gt;
+                              |              &lt;div class="card-logo"&gt;
+                              |                &lt;img class="img-fluid" src="../assets/images/dashboard-2/visa-card/master-card.png" alt=""/&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;ul class="card-number"&gt;
+                              |                &lt;li&gt;****&lt;/li&gt;
+                              |                &lt;li&gt;****&lt;/li&gt;
+                              |                &lt;li&gt;****&lt;/li&gt;
+                              |                &lt;li&gt;8597&lt;/li&gt;
+                              |              &lt;/ul&gt;
+                              |              &lt;h6 class="carl-holder"&gt;Johan deo &lt;/h6&gt;
+                              |              &lt;div class="d-flex justify-content-between align-items-center"&gt;
+                              |                &lt;div class="valid-thru"&gt;
+                              |                   &lt;span&gt;VALID THRU&lt;/span&gt;
+                              |                   &lt;span class="vdate"&gt;11/21&lt;/span&gt;
+                              |                &lt;/div&gt;
+                              |                &lt;a class="card-btn" href="javascript:void(0)"&gt;next &lt;i class="fa fa-arrow-circle-right font-primary"&gt;&lt;/i&gt;&lt;/a&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="item p-0"&gt;
+                              |               &lt;div class="visa-card"&gt;
+                              |               &lt;div class="card-logo"&gt;
+                              |               &lt;img class="img-fluid" src="../assets/images/dashboard-2/american-ex.png" alt=""/&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;ul class="card-number"&gt;
+                              |                &lt;li&gt;****&lt;/li&gt;
+                              |                &lt;li&gt;****&lt;/li&gt;
+                              |                &lt;li&gt;****&lt;/li&gt;
+                              |                &lt;li&gt;358&lt;/li&gt;
+                              |              &lt;/ul&gt;
+                              |              &lt;h6 class="carl-holder"&gt;Johan deo &lt;/h6&gt;
+                              |              &lt;div class="d-flex justify-content-between align-items-center"&gt;
+                              |              &lt;div class="valid-thru"&gt; 
+                              |                &lt;span&gt;VALID THRU&lt;/span&gt;
+                              |                &lt;span class="vdate"&gt;9/22&lt;/span&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;a class="card-btn" href="javascript:void(0)"&gt;next &lt;i class="fa fa-arrow-circle-right font-primary"&gt; &lt;/i&gt;&lt;/a&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="item"&gt;
+                              |                &lt;h1&gt;4&lt;/h1&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;h5 class="font-light"&gt;Active Card&lt;/h5&gt;
+                              |              &lt;div class="owl-carousel owl-theme" id="sync2"&gt;
+                              |              &lt;div class="item"&gt;&lt;img src="../assets/images/dashboard-2/visa.png" alt="" data-original-title="" title=""/&gt;
+                              |              &lt;div class="check-circle"&gt;&lt;i class="fa fa-check"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="item"&gt;&lt;img src="../assets/images/dashboard-2/card.png" alt="" data-original-title="" title=""/&gt;
+                              |              &lt;div class="check-circle"&gt;&lt;i class="fa fa-check"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="item"&gt;&lt;img src="../assets/images/dashboard-2/american-ex.png" alt="" data-original-title="" title=""/&gt;
+                              |              &lt;div class="check-circle"&gt;&lt;i class="fa fa-check"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;div class="item"&gt;&lt;img src="../assets/images/dashboard-2/card-last.png" alt="" data-original-title="" title=""/&gt;
+                              |              &lt;div class="check-circle"&gt;&lt;i class="fa fa-check"&gt;&lt;/i&gt;&lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;/div&gt;
+                              |              &lt;/div&gt;
+
+              .col-xl-12.box-col-12
+                .card.pro-market-sec
+                  .card-header.pb-0.justify-content-between
+                    h5 Product Market Value
+                    .center-content
+                      .center-content-left
+                        p This Month
+                        span.m-l-10 $42866
+                      .center-content-right
+                        p Last Month
+                        span.m-l-10 $20548
+                    .card-header-right
+                      ul.setting-option
+                        li
+                          .setting-badge
+                            i.fa.fa-spin.fa-cog
+                        li
+                          i.view-html.fa.fa-code
+                        li
+                          i.icofont.icofont-maximize.full-card
+                        li
+                          i.icofont.icofont-minus.minimize-card
+                        li
+                          i.icofont.icofont-refresh.reload-card
+                        li
+                          i.icofont.icofont-error.close-card
+                  .card-body
+                      .github-chart
+                        .flot-chart-placeholder#github-issues
+                      .code-box-copy
+                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#market-value', title='Copy')
+                            i.icofont.icofont-copy-alt
+                          pre
+                            code.language-html#market-value
+                              |&lt;div class="card pro-market-sec"&gt;
+                              |    &lt;div class="card-header pb-0 justify-content-between"&gt;
+                              |      &lt;h5&gt;Product Market Value&lt;/h5&gt;
+                              |      &lt;div class="center-content"&gt;  
+                              |        &lt;div class="center-content-left"&gt;
+                              |          &lt;p&gt;This Month&lt;/p&gt;
+                              |          &lt;span class="m-l-10"&gt;$42866&lt;/span&gt;
+                              |        &lt;/div&gt;
+                              |        &lt;div class="center-content-right"&gt;
+                              |          &lt;p&gt;Last Month&lt;/p&gt;&lt;span class="m-l-10"&gt;$20548&lt;/span&gt;
+                              |        &lt;/div&gt;
+                              |      &lt;/div&gt;
+                              |      &lt;div class="card-header-right"&gt;
+                              |        &lt;ul class="setting-option"&gt;
+                              |          &lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="view-html fa fa-code"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-maximize full-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-error close-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;/ul&gt;
+                              |      &lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |    &lt;div class="card-body"&gt;
+                              |     &lt;div class="github-chart"&gt;
+                              |       &lt;div class="flot-chart-placeholder" id="github-issues"&gt;&lt;/div&gt;
+                              |     &lt;/div&gt;
+                              |   &lt;/div&gt;
+                              | &lt;/div&gt;
+          // Container-fluid Ends
+        include ../../components/taptop
+        include ../../components/footer
+    include ../../components/footer-files

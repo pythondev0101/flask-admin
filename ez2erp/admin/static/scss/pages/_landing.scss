@@ -1,0 +1,610 @@
+/**====================
+  38. Landing CSS Start
+=======================**/
+$landing-color:$primary-color;
+.landing-page{
+  .demo-section{
+    .apps{
+      .demo-box .demo-title{
+        padding: 8px 20px;
+        h3{
+          font-size: 16px;
+        }   
+      }
+    }
+  }
+.section-py-space{
+  padding-top:70px;
+  padding-bottom:70px;
+}
+.section-pt-space{
+  padding-top:70px;
+}
+.section-pb-space{
+  padding-bottom:70px;
+}
+.title{
+  margin-bottom:35px;
+  width:fit-content;
+  margin-left:auto;
+  margin-right:auto; 
+  display:flex;
+  align-items:center;
+  h2{
+    font-size:30px;
+    text-transform:uppercase;
+    font-weight:700;
+    color:$landing-color;
+    margin-bottom:0;
+  } 
+  .logo-wrraper{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background-color:$primary-light;
+    display:flex;
+    align-items:center;
+    justify-content:center;    
+    margin-right:10px;  
+    img{
+      width:auto;
+      height:15px;     
+    }
+  }
+}
+
+
+// landing header 
+.custom-container{
+  max-width:1600px;
+  padding-right: var(--bs-gutter-x, 0.75rem);
+  padding-left: var(--bs-gutter-x, 0.75rem);
+  margin-right: auto;
+  margin-left: auto;
+}
+.navbar-nav{
+  align-items: center;
+  .nav-item {
+    position: relative;
+    .nav-link{
+      color:$black;
+      font-size:15px;
+      font-weight:500;
+      letter-spacing:1px;
+      padding:12px;
+      transition:all 0.3s ease;
+      opacity:0.7;
+      &:hover,&.active {
+        opacity: 1;
+        text-shadow: 0 0 0 $primary-color;
+        transition: all 0.3s ease;
+        color:$primary-color;
+      }
+    }
+  }
+}
+.btn-landing{   
+  border-radius: 20px;
+  color:$white;
+  background-color:$primary-color;
+  font-size: 15px;
+  padding: 15px 30px;
+  line-height:1;   
+  font-weight:700;   
+  display:block;
+  width:fit-content;
+  &:hover{
+    color:$white;
+  }
+}
+.landing-header{   
+  filter: drop-shadow(0px 5px 17.5px rgba(36,105,92,0.06));
+  background-color:$white;    
+  padding-top: 18px;
+  padding-bottom: 18px;
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:4;   
+  ul.landing-menu{
+    li.nav-item{      
+      &.menu-back{
+        border-bottom:1px solid $light-gray;
+        padding:22px 20px;
+        text-align: right;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size:16px;
+        display:none;
+        cursor: pointer;
+        margin-bottom:15px;
+        i{
+          font-size:16px;
+          margin-left:10px;
+        }
+      } 
+      a.nav-link{
+        font-size:16px;         
+        font-weight:600;       
+        color:$theme-font-color;
+        padding:10px 20px;
+      }
+      &:hover{
+        a.nav-link{
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  .buy-block{
+    display: flex;
+    align-items: center;
+    .toggle-menu{
+      margin-left:20px;
+      display:none;
+      cursor: pointer;
+      i{
+        font-size:24px;
+        color:$primary-color;
+      }
+    }
+  }
+}
+
+@-webkit-keyframes slide {
+  from{
+      background-position:1725px;
+  }
+  to{
+      background-position:575px;
+  }
+}
+
+// landing home
+.landing-home{
+  background-color:$white;  
+  position:relative;
+  overflow:hidden;
+  background-image: url(../images/landing/landing-home/home-bg.jpg);
+  background-size: cover;
+  background-position: center center;
+  display: block;
+  animation: slide 100s linear infinite;
+
+  .landing-home-contain{     
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+    display:flex;
+    align-items:center;  
+    width:37%;
+    .landing-logo{
+      margin-bottom:25px;
+    }
+    h6{
+      font-size:20px;
+      letter-spacing:9px;       
+      color:$theme-font-color;
+      font-weight: 500;     
+      text-transform:uppercase;
+      margin-bottom:0;
+      font-family: $font-roboto;     
+    }
+    h2{
+      font-size: 50px;
+      color:$primary-color;
+      font-weight:700;    
+      margin-bottom:15px;
+      line-height:1.4;
+      font-family: $font-roboto;
+      span{
+        font-size:50px;
+        color:$theme-font-color;
+        font-weight: 700;
+        display: block;       
+        font-family: $font-roboto;
+      }
+    }
+    p{
+      font-size: 16px;
+      margin-bottom: 30px;  
+      color: $dark-gray;
+      font-family: $font-roboto;          
+    }
+    .btn{
+      text-transform:capitalize;     
+    } 
+  }
+  .animat-block{  
+    img{
+      position: absolute;
+      width: auto;
+      z-index: 1;
+      transition: all 0.3s ease;
+      &:nth-child(-n+7){
+        transform:rotate(-35deg);
+        &:hover{
+          box-shadow: 0 0 37px rgba(0, 0, 0 ,0.19);        
+          transition: all 0.3s ease;
+          z-index: 3;
+        }
+      }    
+    }
+    .animat1{
+      top:17%;
+      right:25%;
+      width:auto;
+      height:330px;
+      animation: move2 1.2s infinite alternate;
+    }
+    .animat2{
+      top:0;
+      right:12%;
+      animation: move2 1.3s infinite alternate;
+    }
+    .animat3{
+      bottom:0;
+      right:35%;
+      z-index:0;
+      width:auto;
+      animation: move2 1.2s infinite alternate;
+    }
+    .animat4{
+      bottom:13%;
+      right:18%;
+      z-index:2;
+      height:295px;
+      animation: move2 1.3s infinite alternate;
+    }
+    .animat5{
+      top:18%;
+      right:2%;
+      height:310px;
+      animation: move2 1s infinite alternate;
+    }
+    .animat6{
+      bottom:-5%;
+      right:10%;
+      animation: move2 1.2s infinite alternate;
+    }
+    .animat7{
+      bottom:10%;
+      right:-3%;
+      animation:move2 1.3s infinite alternate;
+    }       
+    .animat12{
+      top:17%;
+      left:23%;
+      animation:animationleft 8s infinite reverse;
+    }
+    .animat13{
+      top:5%;
+      left:15%;
+      animation:animationleft 10s infinite;
+    }
+  }
+}
+
+@keyframes move2{
+  0%{
+    transform:rotate(-35deg) translateY(0);
+  }
+  100%{
+    transform:rotate(-35deg) translateY(-3px);
+  }
+}
+
+@keyframes animationleft{
+  0%{
+    transform: translate(0, 0px);
+  }
+  50%{
+    transform: translate(20px, 0);
+  }
+  100%{
+    transform: translate(0, 0px);
+  }
+}
+
+
+
+// demo section
+.demo-section{
+
+  .demo-box{
+    background-color:$white;
+    border: 1px solid #ddd;   
+    .demo-title{
+      position: absolute;
+      width: fit-content;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      bottom: -20px;
+      background-color: #d6e5ff;
+      padding: 12px 30px;
+      border-radius: 25px;      
+      h3{
+        font-size: calc(14px + (20 - 14) * ((100vw - 320px) / (1920 - 320)));      
+        margin-bottom:0;
+        font-weight:700;  
+        color:$primary-color;
+        transition: all 0.5s ease;
+      }
+    }
+    .img-wrraper{      
+      overflow:hidden;
+      position: relative;
+      img{
+        transition: all 0.5s ease;
+        width:100%;
+      }   
+      ul.demo-link{       
+        position:absolute;
+        top:0 ;
+        left:0 ;
+        width:100% ;
+        height:100% ;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        z-index:0;
+        box-shadow: inset 0px -280px 100px -93px rgba(255, 255, 255 ,0.9);
+        opacity:0 ;               
+        transition:all 0.5s ease;
+        li{         
+          &:nth-child(n+2){
+            margin-left:10px;
+          }
+          a{
+            display:flex;
+            align-items:center;
+            justify-content:center;           
+            background-color: #d6e5ff;
+            color: $dark-color;
+            border-radius: 35px;
+            padding: 12px 22px;
+            text-transform: capitalize;
+            border: 1px solid #d6e5ff;
+            font-weight: 500;
+            img{
+              width:auto;
+              height:50%;
+            }
+            svg{
+              width: 20px;
+              height:auto;             
+              margin-right:5px;
+              fill: $primary-color;
+              polygon{
+                stroke: $primary-color !important;
+              }
+            }
+          }
+        }
+      } 
+    }
+    &:hover{
+      .img-wrraper{
+        img{
+          transform:scale(1.02);
+        }
+        ul.demo-link{
+          opacity:1;                  
+        }
+      }
+      .demo-title{
+        background-color: $primary-color;
+        transition: all 0.3s ease;
+        h3{
+          color:$white;
+          transition: all 0.3s ease;
+        }
+      }
+    }
+  }
+  .demo-block{
+    margin-bottom:-30px;
+    >div{
+      margin-bottom:50px;
+    }
+  }
+}
+
+// unic-cards start
+.unique-cards{
+  .img-wrraper{       
+    img{
+      width: 100%;
+      transition: all 0.5s ease;
+    }
+    &:hover{
+      box-shadow: 0 0 37px rgba(8,21,66,.05);
+      img{
+        transform:scale(1.01);
+      }
+    }
+  }
+}
+
+// Frameworks
+.framework{
+  .nav {
+    margin-bottom:50px;   
+   .nav-item{
+     &:nth-child(n+2){
+       margin-left:20px;
+     }
+   }
+   .nav-link{           
+     border-radius:5px;    
+     padding:15px 30px;
+     align-items:center;
+     background-color: $white; 
+     h5{
+      font-weight:700;
+     }
+     p{
+      color:$light-text;
+     }
+     &.active,&.show{
+       background-color:rgba($primary-color,0.1);
+       color:$primary-color;      
+     }
+     img{
+       height:35px;
+       margin-right:10px;
+     }
+   }
+  }
+  ul.framworks-list{
+    text-align: center;
+    li{
+     display:inline-block;
+     background-color:$white;
+     padding:40px 10px;
+     margin-bottom:30px;
+     border-radius:10px;       
+     border:1px solid $light-gray;
+     margin:10px;
+     height:185px;
+     width:185px;       
+     transition:all 0.3s ease;
+     text-align:center;
+     h6{
+       margin-top:10px;
+       margin-bottom:unset;
+       transition: all 0.5s ease;
+     }
+     img{
+      transition:all 0.5s ease;
+     }
+     &:hover{
+      img{
+        transform:scale(0.9);
+      }
+      h6{
+        color:$primary-color;
+      }
+     }
+    }
+  }
+}
+
+
+// core feature
+.core-feature{
+  .feature-block{
+    margin-bottom:-25px;
+    >div{
+      margin-bottom:25px;
+    }
+  }
+  .feature-box{
+    border:1px solid $light-gray;
+    padding:45px 16px ;
+    text-align:center;
+    border-radius:15px;
+    background-color:$white;
+    .icon-wrraper{
+      width:60px;
+      height:60px;
+      border-radius:60px;
+      background-color:rgba($primary-color,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+      transition:all 0.2s ease;
+      svg{
+        width:40%;
+        height:auto;  
+        color:$primary-color;        
+        transition:all 0.2s ease;
+      }
+    }
+    h6{
+      margin-bottom:0;
+      margin-top:10px;
+      font-weight:700;
+    }
+    &:hover{
+      .icon-wrraper{
+        background-color:$primary-color;
+        svg{         
+          color:$white;          
+        }
+      }      
+    }
+  }
+}
+
+
+
+// footer //
+.landing-footer{
+  background-color: #ededed;
+  .footer-contain{
+    text-align: center;
+    .rating-wrraper{
+      margin-bottom:10px;
+      svg{
+        width:auto;
+        height:calc(50px + (120 - 50) * ((100vw - 320px) / (1920 - 320)));
+      }
+    }
+    h2{     
+      font-size: calc(18px + (40 - 18) * ((100vw - 320px) / (1920 - 320)));
+      font-weight: 700;
+      margin-bottom: 0;
+      line-height: 1.4;     
+      letter-spacing: 0;
+      opacity: 0.8;
+    }     
+    p{
+      font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));
+      color:$light-text;      
+    }
+    .star-rate{
+      margin-bottom:50px;
+      li{
+        display: inline-block;
+        i{
+          font-size: calc(16px + (30 - 16) * ((100vw - 320px) / (1920 - 320)));
+        }
+      }
+    }
+    .btn-footer{
+      a{
+        &:nth-child(n+2){
+          margin-left:10px;
+        }
+      }
+    }
+  }
+}
+}
+.landing-button{
+  display: flex;
+  flex-wrap: wrap;
+  .btn-landing{
+    padding: 10px 30px;
+  }
+}
+.go-btn{
+  &:hover{
+    i{
+     animation: fadeInLeft 1.2s infinite alternate;
+     transition: all 0.3s ease;
+    }
+  }
+  i{
+    padding-left: 5px;
+    transition: all 0.3s ease;
+  }
+}
+
+/**=====================
+     38. Landing CSS Ends
+==========================**/

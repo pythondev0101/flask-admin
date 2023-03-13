@@ -1,0 +1,871 @@
+- var chartist              = true;
+- var theme_customizer      = true;
+- var apex                  = true;
+- var dashboard_default     = true;
+- var notify                = true;
+- var animate               = true;
+- var knobchart             = true;
+- var morrischart           = true;
+- var customcard            = true;
+- var counter               = true;
+- var clipboard             = true;
+- var prism                 = true;
+- var chartjs               = true;
+- var greeting              = true;
+
+doctype html
+html(lang='en')
+    include ../../components/header-files
+    body
+        include ../../components/loader
+        // page-wrapper Start
+        #pageWrapper.page-wrapper.compact-wrapper
+            include ../../components/header
+            // Page Body Start
+            .page-body-wrapper.sidebar-icon
+                include ../../components/sidebar
+                .page-body
+                    .container-fluid
+                        .page-header.dash-breadcrumb
+                            .row
+                              .col-6                               
+                                h3.f-w-600 default
+                              .col-6
+                                .breadcrumb-sec
+                                  ul.breadcrumb
+                                    li.breadcrumb-item
+                                      a(href='index.html')
+                                        i(data-feather="home")
+                                    li.breadcrumb-item Dashboard
+                                    li.breadcrumb-item.active Default
+                    // Container-fluid starts
+                    .container-fluid.default-dash
+                        .row                      
+                          .col-xl-4.col-md-6.des-xl-50.box-col-6
+                            .card.profile-greeting
+                              .card-decore
+                                 .main
+                                    img.img-fluid(src='../assets/images/dashboard/1.png',alt='Image description')
+                                 .dot.dot1
+                                 .dot.dot2     
+                                 .dot.dot3     
+                                 .dot.dot4
+                                 .cross.cross1     
+                                 .cross.cross2     
+                                 .cross.cross3     
+                              .card-body
+                                  .greeting-user.text-center
+                                    div
+                                      h1 Welcome                                      
+                                      h6 Congratulations! Allie Grater
+                                      p Have you seen our latest blog post? Why not head over there and give it a read? We're sure you'll love it!                                      
+                                      a.btn.btn-light(href="blog.html" data-original-title="" title="") Check Update
+                              canvas#confetti
+                          .col-xl-4.col-md-6.des-xl-50.box-col-6
+                            .card.latest-update-sec
+                              .card-header
+                                h5 Latest Update
+                                .card-header-right
+                                  ul.setting-option
+                                    li
+                                      .setting-badge
+                                        i.fa.fa-spin.fa-cog.font-primary
+                                    li
+                                      i.view-html.fa.fa-code.font-primary
+                                    li
+                                      i.icofont.icofont-maximize.full-card.font-primary
+                                    li
+                                      i.icofont.icofont-minus.minimize-card.font-primary
+                                    li
+                                      i.icofont.icofont-refresh.reload-card.font-primary
+                                    li
+                                      i.icofont.icofont-error.close-card.font-primary
+                              .card-body.p-t-0
+                                #chart-candle
+                                .update-block
+                                  .table-responsive.custom-scrollbar
+                                    table.table.table-bordernone
+                                      tbody
+                                        tr
+                                          td
+                                            .update-widgets
+                                              .icon.bg-primary
+                                                i.fa.fa-star
+                                          td                                              
+                                            span Win best seller of the year award
+                                            p Company San Francisco
+                                          td
+                                            p 34 minits ago
+                                        tr 
+                                          td 
+                                            .update-widgets
+                                              .icon.bg-secondary.me-3
+                                                i.fa.fa-check-circle
+                                          td                                             
+                                            span Approved our product in checking
+                                            p Elisse joson,San francisco
+                                          td
+                                            p 1 hour ago
+                                .code-box-copy
+                                    button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#letest-update', title='Copy')
+                                      i.icofont.icofont-copy-alt
+                                    pre                                           
+                                      code.language-html#letest-update
+                                        |&lt;div class="card latest-update-sec"&gt;
+                                        |  &lt;div class="card-header"&gt;
+                                        |  &lt;h5&gt;Latest Update&lt;/h5&gt;
+                                        |  &lt;div class="card-header-right"&gt;
+                                        |  &lt;ul class="setting-option"&gt;
+                                        |  &lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                                        |  &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |  &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |  &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |  &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |  &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |  &lt;/ul&gt;
+                                        |  &lt;/div&gt;
+                                        |  &lt;/div&gt;
+                                        |  &lt;div class="card-body p-t-0"&gt;
+                                        |  &lt;div id="chart-candle"&gt;&lt;/div&gt;
+                                        |  &lt;div class="update-block"&gt;
+                                        |  &lt;div class="table-responsive"&gt;
+                                        |  &lt;table class="table table-bordernone"&gt;
+                                        |  &lt;tbody&gt;
+                                        |    &lt;tr&gt;
+                                        |      &lt;td&gt;
+                                        |        &lt;div class="update-widgets"&gt;
+                                        |          &lt;div class="icon bg-primary"&gt;
+                                        |            &lt;i class="fa fa-star"&gt;&lt;/i&gt;
+                                        |          &lt;/div&gt;
+                                        |        &lt;/div&gt;
+                                        |      &lt;/td&gt;
+                                        |      &lt;td&gt; 
+                                        |        &lt;span&gt;Win best seller of the year award&lt;/span&gt;
+                                        |        &lt;p&gt;Company San Francisco&lt;/p&gt;
+                                        |      &lt;/td&gt;
+                                        |      &lt;td&gt;
+                                        |        &lt;p&gt;34 minits ago&lt;/p&gt;
+                                        |      &lt;/td&gt;
+                                        |      &lt;/tr&gt;
+                                        |      &lt;tr&gt; 
+                                        |      &lt;td&gt; 
+                                        |      &lt;div class="update-widgets"&gt;
+                                        |      &lt;div class="icon bg-secondary me-3"&gt;&lt;i class="fa fa-check-circle"&gt;&lt;/i&gt;&lt;/div&gt;
+                                        |      &lt;/div&gt;
+                                        |      &lt;/td&gt;
+                                        |      &lt;td&gt; &lt;span&gt;Approved our product in checking&lt;/span&gt;
+                                        |      &lt;p&gt;Elisse joson,San francisco&lt;/p&gt;
+                                        |      &lt;/td&gt;
+                                        |      &lt;td&gt;&lt;p&gt;1 hour ago&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
+                                        |    &lt;/table&gt;
+                                        |  &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+                                        |&lt;/div&gt;
+                          .col-xl-4.des-xl-100.box-col-12
+                            .row
+                              .col-xl-12.col-sm-6.des-xl-50.box-col-6
+                                .card.daily-earning-sec
+                                  .card-header
+                                    h5 Dailly Earning
+                                    .card-header-right
+                                        ul.setting-option
+                                          li
+                                            .setting-badge
+                                              i.fa.fa-spin.fa-cog.font-primary
+                                          li
+                                            i.view-html.fa.fa-code.font-primary
+                                          li
+                                            i.icofont.icofont-maximize.full-card.font-primary
+                                          li
+                                            i.icofont.icofont-minus.minimize-card.font-primary
+                                          li
+                                            i.icofont.icofont-refresh.reload-card.font-primary
+                                          li
+                                            i.icofont.icofont-error.close-card.font-primary
+                                  .card-body.p-t-0
+                                      h3.d-flex $
+                                        .counter 8,55,462
+                                      .progress-gradient-fill
+                                        .progress.sm-progress-bar  
+                                          .progress-gradient-primary(role='progressbar' style='width: 80%' aria-valuenow='80' aria-valuemin='0' aria-valuemax='100')
+                                      .tag-section.d-flex.justify-content-between.align-items-end
+                                          .tag-content.d-flex
+                                              i.fa.fa-arrow-up.toprightarrow-primary
+                                              span 78.21%
+                                              p More than last year
+                                          .round-tag
+                                                i.fa.fa-usd
+                                      .code-box-copy
+                                          button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#dailly-earning', title='Copy')
+                                            i.icofont.icofont-copy-alt
+                                          pre
+                                            code.language-html#dailly-earning
+                                              |&lt;div class="card daily-earning-sec"&gt;
+                                              |&lt;div class="card-header"&gt;
+                                              |&lt;h5&gt;Dailly Earning&lt;/h5&gt;
+                                              |&lt;div class="card-header-right"&gt;
+                                              |&lt;ul class="setting-option"&gt;
+                                              |&lt;li&gt;
+                                              |&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                                              |&lt;/li&gt;
+                                              |&lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                              |&lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                              |&lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                              |&lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                              |&lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                              |&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="card-body p-t-0"&gt;
+                                              |&lt;h3 class="d-flex"&gt;$&lt;div class="counter"&gt;8,55,462&lt;/div&gt;&lt;/h3&gt;
+                                              |&lt;div class="progress-gradient-fill"&gt;
+                                              |&lt;div class="progress sm-progress-bar"&gt; 
+                                              |&lt;div class="progress-gradient-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+                                              |&lt;/div&gt;
+                                              |&lt;/div&gt;
+                                              |&lt;div class="tag-section d-flex justify-content-between align-items-end"&gt;
+                                              |&lt;div class="tag-content d-flex"&gt;&lt;i class="fa fa-arrow-up toprightarrow-primary"&gt;&lt;/i&gt;&lt;span&gt;78.21%&lt;/span&gt;
+                                              |&lt;p&gt;More than last year&lt;/p&gt;
+                                              |&lt;/div&gt;
+                                              |&lt;div class="round-tag"&gt;&lt;i class="fa fa-usd"&gt;&lt;/i&gt;&lt;/div&gt;
+                                              |&lt;/div&gt;
+                                              |&lt;/div&gt;
+                                              |&lt;/div&gt;
+                              .col-xl-12.col-sm-6.des-xl-50.box-col-6
+                                .card.total-events-sec
+                                  .card-header.justify-content-between
+                                      h5 Total Events
+                                      .center-content
+                                        p last year events
+                                        span.counter 5945
+                                      .card-header-right
+                                        ul.setting-option
+                                          li
+                                            .setting-badge
+                                              i.fa.fa-spin.fa-cog.font-primary
+                                          li
+                                            i.view-html.fa.fa-code.font-primary
+                                          li
+                                            i.icofont.icofont-maximize.full-card.font-primary
+                                          li
+                                            i.icofont.icofont-minus.minimize-card.font-primary
+                                          li
+                                            i.icofont.icofont-refresh.reload-card.font-primary
+                                          li
+                                            i.icofont.icofont-error.close-card.font-primary
+                                  .card-body.p-0
+                                    .apex-complain
+                                      #mix1
+                                    .small-mix
+                                    .code-box-copy
+                                      button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#total-events', title='Copy')
+                                        i.icofont.icofont-copy-alt
+                                      pre
+                                        code.language-html#total-events
+                                          |&lt;div class="card total-events-sec"&gt;
+                                          |  &lt;div class="card-header justify-content-between"&gt;
+                                          |  &lt;h5&gt;Total Events&lt;/h5&gt;
+                                          |  &lt;div class="center-content"&gt;
+                                          |  &lt;p&gt;last year events&lt;/p&gt;
+                                          |  &lt;span class="counter"&gt;5945&lt;/span&gt;
+                                          |  &lt;/div&gt;
+                                          |  &lt;div class="card-header-right"&gt;
+                                          |  &lt;ul class="setting-option"&gt;
+                                          |  &lt;li&gt;
+                                          |  &lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                                          |  &lt;/li&gt;
+                                          |  &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                          |  &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                          |  &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                          |  &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                          |  &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                          |  &lt;/ul&gt;
+                                          |  &lt;/div&gt;
+                                          |  &lt;/div&gt;
+                                          |  &lt;div class="card-body p-0"&gt;
+                                          |  &lt;div class="apex-complain"&gt;
+                                          |  &lt;div id="mix1"&gt;&lt;/div&gt;
+                                          |  &lt;/div&gt;
+                                          |  &lt;div class="small-mix"&gt;&lt;/div&gt;
+                                          |  &lt;/div&gt;
+                                          |&lt;/div&gt;
+                          .col-xl-4.col-lg-12.col-md-6.des-md-55.des-xl-55.xl-50.box-col-6
+                            .card.monthly-earning-sec
+                              .card-header.justify-content-between
+                                  h5 Quick Option
+                                  .center-content
+                                    .center-content-left
+                                      p Total transaction
+                                      span.counter 66548400                                    
+                              .card-body.p-t-0
+                                .row.options-main
+                                   .col-4
+                                      .option-box
+                                        i.icofont.icofont-bill-alt.txt-primary
+                                        h5 25500
+                                        h6 Cash On Hand
+                                   .col-4
+                                      .option-box
+                                        i.icofont.icofont-bank-alt.txt-secondary
+                                        h5 30000
+                                        h6 Bank balance                                        
+                                   .col-4
+                                      .option-box
+                                        i.icofont.icofont-mastercard.txt-success
+                                        h5 Mastercard
+                                        h6 Credit card
+                                   .col-4
+                                      .option-box
+                                        i.icofont.icofont-trophy-alt.txt-info
+                                        h5 435.5
+                                        h6 Total cashback
+                                   .col-4
+                                      .option-box
+                                        i.icofont.icofont-ticket.txt-warning
+                                        h5 Unlock 5
+                                        h6 Coupans
+                                   .col-4
+                                      .option-box
+                                        i.icofont.icofont-maestro.txt-danger
+                                        h5 3500
+                                        h6 Win Points
+                          .col-xl-4.col-lg-12.col-md-6.des-md-45.xl-50.des-xl-45.box-col-6
+                            .card.dash-chat
+                              .card-header.pb-0
+                                  h5 Recent messages
+                              .card-body
+                                .chat-box.dashboard-chat
+                                  .chat
+                                    .media.left-side-chat
+                                      a(href="user-profile.html")
+                                        img.rounded-circle.chat-user-img.img-40.m-r-10(src='../assets/images/user/4.jpg', alt='')
+                                      .media-body
+                                        .message-main
+                                          p.mb-0 Hi I am Alan,can you help me to find best admin?.
+                                    .media.right-side-chat
+                                      .media-body.text-right
+                                        .message-main
+                                          p.pull-right
+                                            | Sure, wingo is best admin for your project, you can it check
+                                            a(href="https://themeforest.net/user/pixelstrap/portfolio")  Here
+                                      a(href="user-profile.html")
+                                        img.rounded-circle.chat-user-img.img-40.m-l-10(src='../assets/images/user/5.jpg', alt='')
+                                    .media.m-t-10.left-side-chat
+                                      a(href="user-profile.html")
+                                        img.rounded-circle.chat-user-img.img-40.m-r-10(src='../assets/images/user/4.jpg', alt='')
+                                      .media-body
+                                        .message-main
+                                          p I checked it's nice theme, Thanks man.
+                                .media.chat-footer.bg-primary
+                                  a(href="user-profile.html")
+                                    img.img-fluid.imogi(src="../assets/images/smiley.png" alt="")
+                                  .media-body
+                                    input.form-control(type='text', placeholder='Type your message', required='')
+                                  a.d-flex(href="chat.html")
+                                    i(data-feather="fast-forward")                              
+                          .col-xl-4.col-lg-12.col-md-6.des-xl-50.xl-40.box-col-6
+                            .card.pro-valuation-sec
+                              .card-header.pb-0
+                                h5 Product Valuation
+                                .card-header-right
+                                    ul.setting-option
+                                      li
+                                        .setting-badge
+                                          i.fa.fa-spin.fa-cog.font-primary
+                                      li
+                                        i.view-html.fa.fa-code.font-primary
+                                      li
+                                        i.icofont.icofont-maximize.full-card.font-primary
+                                      li
+                                        i.icofont.icofont-minus.minimize-card.font-primary
+                                      li
+                                        i.icofont.icofont-refresh.reload-card.font-primary
+                                      li
+                                        i.icofont.icofont-error.close-card.font-primary
+                              .card-body.py-0
+                                  #valuation-chart
+                                  .code-box-copy
+                                    button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#product-valuation', title='Copy')
+                                      i.icofont.icofont-copy-alt
+                                    pre
+                                      code.language-html#product-valuation
+                                        |&lt;div class="card pro-valuation-sec"&gt;
+                                        |&lt;div class="card-header pb-0"&gt;
+                                        |&lt;h5&gt;Product Valuation&lt;/h5&gt;
+                                        |&lt;div class="card-header-right"&gt;
+                                        |&lt;ul class="setting-option"&gt;
+                                        |&lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                                        |&lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |&lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |&lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |&lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |&lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                        |&lt;/ul&gt;
+                                        |&lt;/div&gt;
+                                        |&lt;/div&gt;
+                                        |&lt;div class="card-body py-0"&gt;
+                                        |&lt;div id="valuation-chart"&gt;&lt;/div&gt;
+                                        |&lt;/div&gt;
+                                        |&lt;/div&gt;
+                          .col-xl-3.col-md-6.des-xl-50.col-lg-6.col-md-6.col-sm-6.xl-30.box-col-6.des-order-2
+                            .card.profile-sec
+                              .card-header.pb-0
+                                  h5 Profile
+                                  .card-header-right
+                                    ul.setting-option
+                                        li
+                                          .setting-badge
+                                            i.fa.fa-spin.fa-cog.font-primary
+                                        li
+                                          i.view-html.fa.fa-code.font-primary
+                                        li
+                                          i.icofont.icofont-maximize.full-card.font-primary
+                                        li
+                                          i.icofont.icofont-minus.minimize-card.font-primary
+                                        li
+                                          i.icofont.icofont-refresh.reload-card.font-primary
+                                        li
+                                          i.icofont.icofont-error.close-card.font-primary
+                              .card-body.p-t-0
+                                .user-details-main
+                                    .user-img
+                                      img.rounded-circle(src="../assets/images/dashboard/profile_img.png" alt="Card image cap")
+                                      span.badge.flat-badge-primary New
+                                    .user-detail
+                                      a(href="user-profile.html")
+                                        span Emay Walter
+                                      p Mahager
+                                .user-content
+                                  .small-bar
+                                    .small-chart1.flot-chart-container
+                                  .user-content-right
+                                    span +26%
+                                    p Productivity                        
+                                .code-box-copy
+                                    button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#profile-sec', title='Copy')
+                                      i.icofont.icofont-copy-alt
+                                    pre
+                                      code.language-html#profile-sec
+                                          |&lt;div class="card profile-sec"&gt;
+                                          |&lt;div class="card-header pb-0"&gt;&lt;h5&gt;Profile&lt;/h5&gt;
+                                          |&lt;div class="card-header-right"&gt;
+                                          |&lt;ul class="setting-option"&gt;
+                                          |&lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                                          |&lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;&lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                          |&lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                          |&lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                          |&lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                          |&lt;/ul&gt;
+                                          |&lt;/div&gt;
+                                          |&lt;/div&gt;
+                                          |&lt;div class="card-body p-t-0"&gt;
+                                          |&lt;div class="user-details-main"&gt;
+                                          |&lt;div class="user-img"&gt;&lt;img class="rounded-circle" src="../assets/images/dashboard/profile_img.png" alt="Card image cap"/&gt;&lt;span class="badge flat-badge-primary"&gt;New&lt;/span&gt;&lt;/div&gt;
+                                          |&lt;div class="user-detail"&gt;&lt;a href="user-profile.html"&gt;&lt;span&gt;Emay Walter&lt;/span&gt;&lt;/a&gt;
+                                          |&lt;p&gt;Mahager&lt;/p&gt;
+                                          |&lt;/div&gt;
+                                          |&lt;/div&gt;
+                                          |&lt;div class="user-content"&gt;
+                                          |&lt;div class="small-bar"&gt;
+                                          |&lt;div class="small-chart1 flot-chart-container"&gt;&lt;/div&gt;
+                                          |&lt;/div&gt;
+                                          |&lt;div class="user-content-right"&gt;&lt;span&gt;+26%&lt;/span&gt;
+                                          |&lt;p&gt;Productivity&lt;/p&gt;
+                                          |&lt;/div&gt;
+                                          |&lt;/div&gt;
+                                          |&lt;/div&gt;
+                                          |&lt;/div&gt;
+                          .col-xl-6.des-xl-100.xl-100.box-col-12.deals-sec
+                            .card
+                              .card-body
+                                .best-dealer-table.responsive-tbl
+                                  .item
+                                    .table-responsive.product-list
+                                      table.table.table-bordernone
+                                        thead
+                                          tr
+                                            th Deals
+                                            th Name
+                                            th Date
+                                            th Projects
+                                            th Country
+                                            th Currency
+                                        tbody
+                                          tr
+                                            td 01
+                                            td
+                                              .t-title.d-inline-block.align-middle
+                                                a(href='user-profile.html')
+                                                  img.img-40.m-r-15.rounded-circle.align-top(src='../assets/images/dashboard/p-1.png' alt='' data-original-title='' title='')
+                                                .status-circle.bg-primary
+                                                .d-inline-block
+                                                  span Ossim keter
+                                                  p 2019
+                                            td 16 August
+                                            td Graden
+                                            td
+                                              i.flag-icon.flag-icon-gb
+                                            td
+                                              span.label $1,58,652                                           
+                                          tr
+                                            td 02
+                                            td
+                                              .t-title.d-inline-block.align-middle
+                                                a(href='user-profile.html')
+                                                  img.img-40.m-r-15.rounded-circle.align-top(src='../assets/images/dashboard/p-2.png' alt='' data-original-title='' title='')
+                                                .status-circle.bg-primary
+                                                .d-inline-block
+                                                  span Venter loren
+                                                  p 2018
+                                            td 21 September
+                                            td Business Hub
+                                            td
+                                              i.flag-icon.flag-icon-us
+                                            td
+                                              span.label $95,025                                           
+                                          tr
+                                            td 03
+                                            td
+                                              .t-title.d-inline-block.align-middle
+                                                a(href='user-profile.html')
+                                                  img.img-40.m-r-15.rounded-circle.align-top(src='../assets/images/dashboard/p-3.png' alt='' data-original-title='' title='')
+                                                .status-circle.bg-primary
+                                                .d-inline-block
+                                                  span Fran loain
+                                                  p 2019
+                                            td 06 March
+                                            td Water Park
+                                            td
+                                              i.flag-icon.flag-icon-za
+                                            td
+                                              span.label $90,155                                           
+                          .col-xl-3.col-md-6.des-xl-50.xl-30.col-lg-6.col-md-6.col-sm-6.box-col-6.des-order-1
+                            .card.social-review-sec
+                              .card-header
+                                  h5 Social Review
+                                  .card-header-right
+                                    ul.setting-option
+                                      li
+                                        .setting-badge
+                                          i.fa.fa-spin.fa-cog.font-primary
+                                      li
+                                        i.view-html.fa.fa-code.font-primary
+                                      li
+                                        i.icofont.icofont-maximize.full-card.font-primary
+                                      li
+                                        i.icofont.icofont-minus.minimize-card.font-primary
+                                      li
+                                        i.icofont.icofont-refresh.reload-card.font-primary
+                                      li
+                                        i.icofont.icofont-error.close-card.font-primary
+                              .card-body.p-t-0.p-b-0.social-main
+                                .social-review-content
+                                  h5.counter 6895
+                                  .star-sec-main
+                                    h6.mb-0 You got +65%
+                                    ul.star-sec
+                                      li
+                                        i.fa.fa-star
+                                      li
+                                        i.fa.fa-star
+                                      li
+                                        i.fa.fa-star
+                                      li
+                                        i.fa.fa-star
+                                      li
+                                        i.fa.fa-star
+                                  p More reviews than last week
+                                ul.reviewer-profile
+                                  li
+                                    a(href='user-profile.html')
+                                      img.rounded-circle(src='../assets/images/dashboard/social/1.png' alt="Card image cap")
+                                  li
+                                    a(href='user-profile.html')
+                                      img.rounded-circle(src='../assets/images/dashboard/social/2.png' alt="Card image cap")
+                                  li
+                                    a(href='user-profile.html')
+                                      img.rounded-circle(src='../assets/images/dashboard/social/3.png' alt="Card image cap")
+                                  li
+                                    a(href='user-profile.html')
+                                      img.rounded-circle(src='../assets/images/dashboard/social/4.png' alt="Card image cap")
+                                  li
+                                    a(href='user-profile.html')
+                                      img.rounded-circle(src='../assets/images/dashboard/social/5.png' alt="Card image cap")
+                                ul.review-details
+                                  li
+                                    .left-review
+                                      span.counter 6521
+                                      p 5 star review
+                                  li
+                                    .right-review
+                                      span.counter 0374
+                                      p 4 start review
+                                .code-box-copy
+                                  button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#social-review', title='Copy')
+                                    i.icofont.icofont-copy-alt
+                                  pre
+                                    code.language-html#social-review
+                                      |&lt;div class="card social-review-sec"&gt;
+                                      |  &lt;div class="card-header"&gt;
+                                      |  &lt;h5&gt;Social Review&lt;/h5&gt;
+                                      |  &lt;div class="card-header-right"&gt;
+                                      |  &lt;ul class="setting-option"&gt;
+                                      |  &lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;/ul&gt;
+                                      |  &lt;/div&gt;
+                                      |  &lt;/div&gt;
+                                      |  &lt;div class="card-body p-t-0 p-b-0 social-main"&gt;
+                                      |  &lt;div class="social-review-content"&gt;
+                                      |  &lt;h5 class="counter"&gt;6895&lt;/h5&gt;
+                                      |  &lt;div class="star-sec-main"&gt;
+                                      |  &lt;h6 class="mb-0"&gt;You got +65%&lt;/h6&gt;
+                                      |  &lt;ul class="star-sec"&gt;
+                                      |  &lt;li&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;i class="fa fa-star"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |  &lt;/ul&gt;
+                                      |  &lt;/div&gt;
+                                      |  &lt;p&gt;More reviews than last week&lt;/p&gt;
+                                      |  &lt;/div&gt;
+                                      |  &lt;ul class="reviewer-profile"&gt;
+                                      |  &lt;li&gt;&lt;a href="user-profile.html"&gt;&lt;img class="rounded-circle" src="../assets/images/dashboard/social/1.png" alt="Card image cap"/&gt;&lt;/a&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;a href="user-profile.html"&gt;&lt;img class="rounded-circle" src="../assets/images/dashboard/social/2.png" alt="Card image cap"/&gt;&lt;/a&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;a href="user-profile.html"&gt;&lt;img class="rounded-circle" src="../assets/images/dashboard/social/3.png" alt="Card image cap"/&gt;&lt;/a&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;a href="user-profile.html"&gt;&lt;img class="rounded-circle" src="../assets/images/dashboard/social/4.png" alt="Card image cap"/&gt;&lt;/a&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;&lt;a href="user-profile.html"&gt;&lt;img class="rounded-circle" src="../assets/images/dashboard/social/5.png" alt="Card image cap"/&gt;&lt;/a&gt;&lt;/li&gt;
+                                      |  &lt;/ul&gt;
+                                      |  &lt;ul class="review-details"&gt;
+                                      |  &lt;li&gt;
+                                      |  &lt;div class="left-review"&gt;&lt;span class="counter"&gt;6521&lt;/span&gt;
+                                      |  &lt;p&gt;5 star review&lt;/p&gt;
+                                      |  &lt;/div&gt;&lt;/li&gt;
+                                      |  &lt;li&gt;
+                                      |  &lt;div class="right-review"&gt;&lt;span class="counter"&gt;0374&lt;/span&gt;
+                                      |  &lt;p&gt;4 start review&lt;/p&gt;
+                                      |  &lt;/div&gt;
+                                      |  &lt;/li&gt;
+                                      |  &lt;/ul&gt;
+                                      |  &lt;/div&gt;
+                                      |&lt;/div&gt;
+                          .col-xl-4.col-lg-12.col-md-6.des-xl-50.box-col-6.box-col-6
+                            .card.statistics-sec
+                              .card-header
+                                h5 Statistics
+                                .card-header-right
+                                  ul.setting-option
+                                    li
+                                      .setting-badge
+                                        i.fa.fa-spin.fa-cog.font-primary
+                                    li
+                                      i.view-html.fa.fa-code.font-primary
+                                    li
+                                      i.icofont.icofont-maximize.full-card.font-primary
+                                    li
+                                      i.icofont.icofont-minus.minimize-card.font-primary
+                                    li
+                                      i.icofont.icofont-refresh.reload-card.font-primary
+                                    li
+                                      i.icofont.icofont-error.close-card.font-primary
+                              .card-body.chart-block.p-0
+                                #chart-statistics
+                                .code-box-copy
+                                  button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#statistics-sec', title='Copy')
+                                    i.icofont.icofont-copy-alt
+                                  pre
+                                    code.language-html#statistics-sec
+                                      |&lt;div class="card statistics-sec"&gt;
+                                      |&lt;div class="card-header"&gt;
+                                      |&lt;h5&gt;Statistics&lt;/h5&gt;
+                                      |&lt;div class="card-header-right"&gt;
+                                      |&lt;ul class="setting-option"&gt;
+                                      |&lt;li&gt;
+                                      |&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+                                      |&lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |&lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |&lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |&lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |&lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |&lt;/ul&gt;
+                                      |&lt;/div&gt;
+                                      |&lt;/div&gt;
+                                      |&lt;div class="card-body chart-block p-0"&gt;
+                                      |&lt;div id="chart-statistics"&gt;&lt;/div&gt;
+                                      |&lt;/div&gt;
+                                      |&lt;div class="card-footer"&gt;
+                                      |&lt;div class="statistics-details text-center"&gt;
+                                      |&lt;table class="table table-bordernone"&gt;
+                                      |&lt;tbody&gt;
+                                      |&lt;tr&gt;
+                                      |&lt;td&gt;&lt;span&gt;Emails&lt;/span&gt;&lt;/td&gt;
+                                      |&lt;td&gt;
+                                      |&lt;h6&gt; &lt;i class="fa fa-arrow-up font-primary me-1"&gt; &lt;/i&gt;&lt;span class="font-primary me-1"&gt;22 &lt;/span&gt;Growth in Last Week&lt;/h6&gt;&lt;/td&gt;
+                                      |&lt;td&gt;&lt;span&gt;8457&lt;/span&gt;&lt;/td&gt;
+                                      |&lt;/tr&gt;
+                                      |&lt;tr&gt;&lt;td&gt;&lt;span&gt;Events&lt;/span&gt;&lt;/td&gt;
+                                      |&lt;td&gt;
+                                      |&lt;h6&gt;&lt;i class="fa fa-arrow-down me-1 font-secondary"&gt;&lt;/i&gt;&lt;span class="font-secondary me-1"&gt;8&lt;/span&gt;in Last Week&lt;/h6&gt;
+                                      |&lt;/td&gt;
+                                      |&lt;td&gt;&lt;span&gt;16&lt;/span&gt;&lt;/td&gt;
+                                      |&lt;/tr&gt;
+                                      |&lt;tr&gt;
+                                      |&lt;td&gt;&lt;span&gt;Visits&lt;/span&gt;&lt;/td&gt;
+                                      |&lt;td&gt;
+                                      |&lt;h6&gt;&lt;i class="fa fa-arrow-up font-info me-1"&gt;&lt;/i&gt;&lt;span class="font-info me-1"&gt;22&lt;/span&gt;Great Growth in Last Week&lt;/h6&gt;
+                                      |&lt;/td&gt;
+                                      |&lt;td&gt;&lt;span&gt;8457&lt;/span&gt;&lt;/td&gt;
+                                      |&lt;/tr&gt;
+                                      |&lt;/tbody&gt;
+                                      |&lt;/table&gt;
+                                      |&lt;/div&gt;
+                                      |&lt;/div&gt;
+                                      |&lt;/div&gt;
+                              .card-footer
+                                .statistics-details.text-center
+                                  table.table.table-bordernone
+                                    tbody
+                                      tr
+                                        td
+                                          span Emails
+                                        td
+                                          h6 
+                                           i.fa.fa-arrow-up.font-primary.me-1 
+                                           span.font-primary.me-1 22 
+                                           | Growth in Last Week
+                                        td
+                                          span 8457
+                                      tr
+                                        td
+                                          span Events
+                                        td
+                                          h6
+                                           i.fa.fa-arrow-down.me-1.font-secondary
+                                           span.font-secondary.me-1 8
+                                           |in Last Week
+                                        td
+                                          span 16
+                                      tr
+                                        td
+                                          span Visits
+                                        td
+                                          h6
+                                            i.fa.fa-arrow-up.font-info.me-1
+                                            span.font-info.me-1 22
+                                            |Great Growth in Last Week
+                                        td
+                                          span 8457
+                          .col-xl-4.col-md-6.des-xl-50.box-col-6
+                            .card.goal-overview-sec
+                              .card-header
+                                h5 Goal Overview
+                                .card-header-right
+                                  ul.setting-option
+                                    li
+                                      .setting-badge
+                                        i.fa.fa-spin.fa-cog.font-primary
+                                    li
+                                      i.view-html.fa.fa-code.font-primary
+                                    li
+                                      i.icofont.icofont-maximize.full-card.font-primary
+                                    li
+                                      i.icofont.icofont-minus.minimize-card.font-primary
+                                    li
+                                      i.icofont.icofont-refresh.reload-card.font-primary
+                                    li
+                                      i.icofont.icofont-error.close-card.font-primary
+                              .card-body.p-b-0.text-center
+                                .goal-chart-block
+                                  .goal-overview-chart
+                                  .highest-goal
+                                    span $3.9k
+                                    p Highest
+                                .code-box-copy
+                                  button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#goal-view', title='Copy')
+                                    i.icofont.icofont-copy-alt
+                                  pre
+                                    code.language-html#goal-view 
+                                      |&lt;div class="card goal-overview-sec"&gt;
+                                      |  &lt;div class="card-header"&gt;
+                                      |    &lt;h5&gt;Goal Overview&lt;/h5&gt;
+                                      |    &lt;div class="card-header-right"&gt;
+                                      |    &lt;ul class="setting-option"&gt;
+                                      |      &lt;li&gt;
+                                      |        &lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;
+                                      |      &lt;/li&gt;
+                                      |      &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |      &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |      &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |      &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |      &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+                                      |    &lt;/ul&gt;
+                                      |    &lt;/div&gt;
+                                      |    &lt;/div&gt;
+                                      |    &lt;div class="card-body p-b-0 text-center"&gt;
+                                      |    &lt;div class="goal-chart-block"&gt;
+                                      |    &lt;div class="goal-overview-chart"&gt;&lt;/div&gt;
+                                      |    &lt;div class="highest-goal"&gt;&lt;span&gt;$3.9k&lt;/span&gt;
+                                      |    &lt;p&gt;Highest&lt;/p&gt;
+                                      |    &lt;/div&gt;
+                                      |    &lt;/div&gt;
+                                      |    &lt;/div&gt;
+                                      |    &lt;div class="card-footer"&gt;
+                                      |    &lt;ul class="goal-details"&gt;
+                                      |    &lt;li&gt;
+                                      |    &lt;div class="complete-goal"&gt;
+                                      |    &lt;h4&gt;65%&lt;/h4&gt;&lt;span&gt;Completed Goal&lt;/span&gt;
+                                      |    &lt;/div&gt;
+                                      |    &lt;/li&gt;
+                                      |    &lt;li&gt;
+                                      |    &lt;div class="expected-goal"&gt;
+                                      |    &lt;h4&gt;98%&lt;/h4&gt;&lt;span&gt;Our Expected Goal&lt;/span&gt;
+                                      |    &lt;/div&gt;
+                                      |    &lt;/li&gt;
+                                      |    &lt;/ul&gt;
+                                      |    &lt;/div&gt;
+                                      |&lt;/div&gt;
+                              .card-footer
+                                ul.goal-details
+                                  li
+                                    .complete-goal
+                                      h4 65%
+                                      span Completed Goal
+                                  li
+                                    .expected-goal
+                                      h4 98%
+                                      span Our Expected Goal
+                                
+
+                          .col-xl-4.col-md-6.des-xl-50.box-col-6
+                            .card.o-hidden.help-sec
+                              .card-header
+                                .badge-main.w-100
+                                  ul.setting-option.bg-transparent
+                                    li
+                                      .setting-badge.light-badge
+                                        i.fa.fa-cog
+                                    li
+                                      i.view-html.fa.fa-code
+                                    li
+                                      i.icofont.icofont-maximize.full-card
+                                    li
+                                      i.icofont.icofont-minus.minimize-card
+                                    li
+                                      i.icofont.icofont-refresh.reload-card
+                                    li
+                                      i.icofont.icofont-error.close-card
+                              .card-body.p-0                               
+                                .help-desk.text-center
+                                  .help-profile
+                                    .round-animation
+                                      i
+                                      i
+                                    img.img-fluid.img-100(src='../assets/images/dashboard/mirage-delete.png')
+                                  h4.font-light Have a any question
+                                  p.font-light Lorem ipsum is simply dummy text of the printing and typesetting industry.
+                                  a.btn.btn-light(href="faq.html" data-original-title="" title="") Ask Question
+                    // Container-fluid Ends
+                include ../../components/footer
+                include ../../components/taptop        
+        include ../../components/footer-files

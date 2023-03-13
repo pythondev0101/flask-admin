@@ -1,0 +1,325 @@
+/**=====================
+    Typography css start
+==========================**/
+//Custom css Start
+body {
+    font-size:$body-font-size;
+    overflow-x:hidden;
+    font-family:$font-sfpro;
+    color: $theme-body-font-color;
+    background-color: $body-bg-color;
+    scroll-behavior: smooth;
+}
+ul {
+    padding-left: $ul-padding-left;
+    list-style-type: none;
+    margin-bottom: 0;
+}
+* a {
+    color: $primary-color;
+    text-decoration: none;
+        letter-spacing: 1px;
+}
+a{
+    &:hover{
+        text-decoration: none;
+        color: $primary-color;
+    }
+}
+*.btn:focus{
+    box-shadow : $btn-focus-box-shadow !important;
+}
+p {
+    font-size: $paragraph-font-size;
+    line-height: $paragraph-line-height;
+    letter-spacing: $paragraph-letter-spacing;
+}
+span{
+    font-weight:500;
+}
+code{
+    color: $code-tag-color !important;
+    background-color: $code-tag-bg-color;
+    padding: $code-tag-padding;
+    margin: $code-tag-margin;
+    border-radius: $code-tag-border-radious;
+}
+blockquote{
+    border-left: $blockquote-border;
+    padding: $blockquote-padding;
+    &.text-center{
+        border: none;
+        padding: $blockquote-padding;
+    }
+    &.text-end{
+        border-left: none;
+        border-right: $blockquote-border;
+        padding: $blockquote-padding;
+    }
+}
+:focus{
+    outline-color: $all-focus-outline-color;
+}
+.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+svg{
+    vertical-align: baseline;
+}
+input {
+    &:focus {
+        outline-color: $transparent-color;
+    }
+}
+label { 
+    margin-bottom: .5rem;
+}
+.media-widgets {
+    .media-body {
+        margin-bottom: 30px;
+    }
+}
+//Custom css End
+
+//Typography css start
+
+.typography {
+    h1,.h1,
+    h2,.h2,
+    h3,.h3,
+    h4,.h4,
+    h5,.h5,
+    h6,.h6 {
+        margin: 20px 0;
+        margin-top: 0;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+    small {
+        padding-left: $small-tag-padding;
+        color: $small-tag-color;
+    }
+}
+pre{
+    background-color: $pre-tag-bg-color;
+    padding: $pre-tag-padding;
+}
+
+
+//Typography css end
+
+.owl-theme {
+    .owl-dots {
+        .owl-dot{
+            span{
+                background: lighten($primary-color, 20%);
+            }
+            &.active,&:hover {
+                span {
+                    background: $primary-color;
+                }
+            }
+        }
+    }
+    .owl-nav{
+        &.disabled {
+            &+ .owl-dots {
+                margin-bottom: -10px;
+                margin-top: 25px;
+            }
+        }
+    }
+}
+
+.click2edit{
+    &~.note-editor{
+        &.note-frame{
+            margin-bottom: 30px;
+        }
+    }
+}
+.note-editor{
+    &.note-frame {
+        border-color: $light-color;
+    }
+}
+.note-editor{
+    &.note-frame {
+        border-color: $light-color;
+    }
+}
+// modal page
+.modal {
+    .modal-body {
+        .card {
+            box-shadow: none !important;
+        }
+    }
+}
+.modal-dialog{
+    .modal-content{
+        .modal-body{
+            p{
+                a{
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
+
+// index page notify
+.alert-theme{
+    button{    
+        top: 22px !important;
+        right: 40px !important;
+        color: $primary-color;
+    }
+    span{
+        + span{
+            + span{                
+                background-color: lighten($primary-color, 40%);
+                color: $primary-color;
+                border-radius: 4px;
+                box-shadow: 0 2px 14px -3px rgba($black, 0.2);
+            }
+        }
+    }
+    i{
+        padding: 20px;
+        padding-right: 0 !important;
+        margin-right: 20px !important;
+    }
+    .progress {
+        margin-top: -2px !important;
+        height: 2px;
+        .progress-bar {
+            background-color: $primary-color;
+        }
+    }
+}
+.alert-copy{
+    border: 1px solid $primary-color;
+    line-height: 1;
+    display: inline-block;
+    width: 300px;
+    color: $white;
+    background-color: $primary-color;
+    .close{
+        box-shadow: none;
+        color: $white;
+        line-height: 1.4;
+        font-weight: 100;
+    }
+}
+.ace-editor {
+    height: 400px;
+    width: 100%;
+}
+.editor-toolbar{
+    width: 100% !important;
+}
+.CodeMirror{
+    top:0!important;
+}
+
+// rangeslider
+.irs-from, .irs-to, .irs-single {
+    background: $primary-color;
+    &:after {
+        border-top-color:$primary-color;
+    }
+}
+.irs-line-mid, .irs-line-left, .irs-line-right, .irs-bar, .irs-bar-edge {
+    background-color: $primary-color;
+}
+
+// sweetalert css
+.swal-button {
+    background-color: $primary-color;
+    &:active {
+        background-color: darken($primary-color, 5%);
+    }
+}
+.swal-button--cancel {
+    background-color: #EFEFEE !important;
+}
+.clipboaard-container{
+    h6{
+        line-height: 1.6;
+    }
+}
+
+
+fieldset{
+    .bootstrap-touchspin-postfix,.bootstrap-touchspin-prefix{
+            border-radius: 0;
+            padding: .4rem .75rem;
+    }   
+    .input-group-prepend{
+        &~.form-control{
+            height: 39px;
+        }
+    }
+    .input-group-lg{
+        .input-group-prepend,.input-group-append{
+            .btn{
+                    padding: 0.8rem 1.75rem;
+            }
+        }
+    } 
+}
+.f1 .f1-steps .f1-step .f1-step-icon{
+    padding: 12px;
+}
+.form-inline .form-group {
+    display: flex;
+}
+.input-group-text {
+    i{
+        line-height: 1.5;
+    }
+}
+
+// genral //
+.media {
+    display: flex;
+    align-items: flex-start;
+
+    .media-body {
+        flex: 1;
+    }
+}
+.row {
+    > div {
+        position: relative;
+    }
+}
+[class*="col-"] {
+    position: relative;
+}
+hr{
+    opacity:1;
+    background-color:$light-semi-gray;
+}
+
+.modal-header, .modal-footer, .modal-content{
+    border-color: $light-semi-gray;   
+}
+
+.position-unset{
+    position: unset !important;
+}
+
+.rating-cionlist{
+    display: flex;
+    align-items: center;
+    li{
+        i{
+            color:$rating;
+        }
+    }   
+}
+

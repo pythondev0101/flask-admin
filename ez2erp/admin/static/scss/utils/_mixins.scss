@@ -1,0 +1,34 @@
+@mixin flex($disp,$align-items:0,$content:0,$text-align:0){
+     display: $disp;
+     
+     @if $align-items != 0 {
+       align-items:$align-items;
+     }
+      @if $content != 0 {
+       justify-content:$content;
+     }
+      @if $text-align != 0 {
+           text-align:$text-align;
+      }
+   
+}
+
+@mixin square($h,$w, $radius: 0) {
+  height: $h;
+  width: $w;
+
+  @if $radius != 0 {
+    border-radius: $radius;
+  }
+}
+
+@mixin back-img ($image) {
+    position: relative;
+
+  background: {
+    image: $image;
+    repeat: no-repeat;
+    position: center center;
+    size: cover !important;
+  }
+}
