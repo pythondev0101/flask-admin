@@ -1,0 +1,23 @@
+{% if inline.data | length > 0 %}
+
+    {% for imodel in inline.data %}
+        <tr>
+        <td scope="row"><strong>{{ imodel.model.description }}</strong></td>
+        <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.read %} checked {% endif %} type="checkbox" value="{{imodel.id}}" name="edit_chk_read_{{ imodel.id }}" class="permission-read form-check-input"/></label></div></td>
+        <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.create %} checked {% endif %} type="checkbox" value="{{imodel.id}}" name="edit_chk_create_{{ imodel.id }}" class="permission-create form-check-input"/></label></div></td>
+        <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.write %} checked {% endif %} type="checkbox" value="{{imodel.id}}" name="edit_chk_write_{{ imodel.id }}" class="permission-write form-check-input"/></label></div></td>
+        <td><div class="position-relative form-check form-check-inline"><label class="form-check-label"><input {% if imodel.delete %} checked {% endif %} type="checkbox" value="{{imodel.id}}" name="edit_chk_delete_{{ imodel.id }}" class="permission-delete form-check-input"/></label></div></td>
+        </tr>
+    {% endfor %}
+
+{% else %}
+
+    <tr>
+        {% if current_user.is_superuser %}
+        <td colspan="6" style="text-align: center;">Full permissions</td>
+        {% else %}
+        <td colspan="6" style="text-align: center;">No permissions</td>
+        {% endif %}
+    </tr>
+    
+{% endif %}

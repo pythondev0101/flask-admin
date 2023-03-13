@@ -1,0 +1,103 @@
+{% extends "admin/admin_base.html" %}
+
+
+{% block extra_head %}
+<script type="text/javascript">
+    TABLE_NAME = "{{TABLE_OPTIONS['table_name']}}";
+    VIEW_MODAL = "{{TABLE_OPTIONS['view_modal']}}";
+    JS_FIELDS = `{{MODAL_DATA['js_fields'] | tojson}}`;
+    VIEW_MODAL_URL = "{{TABLE_OPTIONS['view_modal_url']}}";
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="{{ RENDERED_MODEL.__amicon__ }} icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    {{ TABLE_OPTIONS['heading'] }}
+                    <div class="page-title-subheading">
+                        {{ TABLE_OPTIONS['subheading'] }}
+                    </div>
+                </div>
+            </div>
+            
+            {% block actions %}
+
+                {% if TABLE_OPTIONS['actions'] %}
+                    {% include TABLE_OPTIONS['action_template'] %}
+                {% endif %}
+
+            {% endblock %}
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                    <div class="table-responsive">
+                    <table id="index_table" class="align-middle mb-0 table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center"></th>
+                            {% for column in TABLE_OPTIONS['table_columns'] %}
+                            <th class="text-center">{{ column.upper() }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for row_data in TABLE_OPTIONS['table_data'] %}
+
+                                {% if TABLE_OPTIONS['view_modal'] %}
+                                    <tr class="item row_object" id="{{row_data[0]}}"  data-toggle="modal" data-target="#viewModal">
+                                    <param id="param_{{row_data[0]}}" name="param_{{row_data[0]}}" {% if TABLE_OPTIONS['edit_url'] %} value="{{url_for(TABLE_OPTIONS['edit_url'],oid=row_data[0] | string)}}" {% endif %}>
+                                {% else %}
+                                    <tr class="item row_object" id="{{row_data[0]}}">
+                                {% endif %}
+
+                                    <!-- TEMPORARY conversion ng boolean word 'true' to 'YES' and 'false' to 'NO' -->
+                                    <td class="text-center"></td>
+
+                                    {% for value in row_data %}
+                                        {% if loop.index > 1 %}
+
+                                            <td class="text-center">
+                                                {% if value == none %}
+                                                <!-- pass -->
+                                                {% else %}
+                                                    {{value}}
+                                                {% endif %}
+                                            </td>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block modals %}
+    
+    {% if TABLE_OPTIONS['create_modal'] and TABLE_OPTIONS['create_url'] %}
+        {% include TABLE_OPTIONS['create_modal_template'] %}
+    {% endif %}
+
+    {% if TABLE_OPTIONS['view_modal'] %}
+        {% include TABLE_OPTIONS['view_modal_template'] %}
+    {% endif %}
+
+{% endblock %}
