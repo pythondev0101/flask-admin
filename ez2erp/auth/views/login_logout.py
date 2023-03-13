@@ -1,14 +1,14 @@
 from werkzeug.urls import url_parse
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_user, logout_user, login_required
-from app import CONTEXT
-from app.auth import bp_auth
-from app.auth.models import User
-from app.auth.forms import LoginForm
-from app.admin import admin_urls
-from app.auth import auth_urls
-from app.auth import auth_templates
-from app.auth.permissions import load_permissions
+from ez2erp import CONTEXT
+from ez2erp.auth import bp_auth
+from ez2erp.auth.models import User
+from ez2erp.auth.forms import LoginForm
+from ez2erp.admin import admin_urls
+from ez2erp.auth import auth_urls
+from ez2erp.auth import auth_templates
+from ez2erp.auth.permissions import load_permissions
 
 
 

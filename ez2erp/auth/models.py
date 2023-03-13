@@ -11,9 +11,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 """--------------END--------------"""
 
 """ APP IMPORTS  """
-from app import login_manager,db
-from app.admin.models import Admin
-from app.core.models import Base
+from ez2erp import login_manager,db
+from ez2erp.admin.models import Admin
+from ez2erp.core.models import Base
 """--------------END--------------"""
 from mongoengine.document import Document
 

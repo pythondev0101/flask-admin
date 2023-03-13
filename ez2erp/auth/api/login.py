@@ -1,8 +1,8 @@
 from flask import jsonify, abort, request
 from flask_cors import cross_origin
-from app.auth import bp_auth
-from app.auth.models import User
-from app import csrf
+from ez2erp.auth import bp_auth
+from ez2erp.auth.models import User
+from ez2erp import csrf
 
 
 

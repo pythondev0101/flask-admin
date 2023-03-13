@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
-from app.admin.forms import AdminTableForm, AdminEditForm, AdminInlineForm, AdminField
+from ez2erp.admin.forms import AdminTableForm, AdminEditForm, AdminInlineForm, AdminField
 from .models import Role
 
 

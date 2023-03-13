@@ -2,15 +2,15 @@ from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
 from flask_cors import cross_origin
-from app import db
-from app.core.models import CoreModel
-from app.core.logging import create_log
-from app.auth import bp_auth
-from app.auth.models import User, UserPermission, Role
-from app.auth.forms import UserForm, UserEditForm, UserPermissionForm
-from app.auth import auth_urls
-from app.auth.permissions import load_permissions, check_create
-from app.admin.templating import admin_table, admin_edit
+from ez2erp import db
+from ez2erp.core.models import CoreModel
+from ez2erp.core.logging import create_log
+from ez2erp.auth import bp_auth
+from ez2erp.auth.models import User, UserPermission, Role
+from ez2erp.auth.forms import UserForm, UserEditForm, UserPermissionForm
+from ez2erp.auth import auth_urls
+from ez2erp.auth.permissions import load_permissions, check_create
+from ez2erp.admin.templating import admin_table, admin_edit
 
 
 

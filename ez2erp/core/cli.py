@@ -4,12 +4,12 @@ import click
 import csv
 from shutil import copyfile
 from config import basedir
-from app.core.models import CoreModel, CoreModule
-from app import MODULES
-from app import db
+from ez2erp.core.models import CoreModel, CoreModule
+from ez2erp import MODULES
+from ez2erp import db
 from . import bp_core
 from .models import CoreCity,CoreProvince
-from app.auth.models import User, Role
+from ez2erp.auth.models import User, Role
 
 
 

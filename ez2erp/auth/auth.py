@@ -1,4 +1,4 @@
-from app.core import CoreModule
+from ez2erp.core import CoreModule
 
 
 

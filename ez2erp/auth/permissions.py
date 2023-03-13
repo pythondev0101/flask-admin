@@ -1,12 +1,12 @@
 from flask import session
 from flask_login import current_user
-from app import CONTEXT, MODULES
-from app.core.models import CoreModel
+from ez2erp import CONTEXT, MODULES
+from ez2erp.core.models import CoreModel
 
 
 
 def load_permissions(user_id):
-    from app.auth.models import User, UserPermission, RolePermission
+    from ez2erp.auth.models import User, UserPermission, RolePermission
     user = User.objects.get_or_404(id=user_id)
 
     if not user and not current_user.is_authenticated:
@@ -41,7 +41,7 @@ def load_permissions(user_id):
 
 
 def check_create(model_name):
-    from app.auth.models import User
+    from ez2erp.auth.models import User
 
     if current_user.is_superuser:
         return True
@@ -61,7 +61,7 @@ def check_create(model_name):
 
 
 def check_read(model_name):
-    from app.auth.models import User
+    from ez2erp.auth.models import User
 
     if current_user.is_superuser:
         return True

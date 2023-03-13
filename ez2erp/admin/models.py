@@ -1,5 +1,5 @@
 """ ADMIN MODELS"""
-from app import db
+from ez2erp import db
 from mongoengine.document import Document
 
 

@@ -1,5 +1,5 @@
 import os
-from app import create_app
+from ez2erp import create_app
 from dotenv import load_dotenv
 
 

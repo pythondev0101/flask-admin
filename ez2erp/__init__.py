@@ -11,7 +11,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 from flask_pymongo import PyMongo
-from config import app_config
+from config import APP_CONFIG
 
 # DEVELOPERS-NOTE: -INCLUDE YOUR IMPORTS HERE-
 
@@ -49,7 +49,7 @@ def create_app(config_name):
         A string para kung ano ang gagamiting environment configuration(eg.develop,production,testing)
     """
     app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object(app_config[config_name])
+    app.config.from_object(APP_CONFIG[config_name])
     app.register_error_handler(500, internal_server_error)
 
     db.init_app(app)
@@ -69,9 +69,9 @@ def create_app(config_name):
     with app.app_context():
 
         # DEVELOPERS-NOTE: -IMPORT HERE THE SYSTEM MODULES-
-        from app.core import bp_core
-        from app.auth import bp_auth
-        from app.admin import bp_admin
+        from ez2erp.core import bp_core
+        from ez2erp.auth import bp_auth
+        from ez2erp.admin import bp_admin
         # -Add here-
         #                   -END-
 
@@ -83,8 +83,8 @@ def create_app(config_name):
         #               -END-
 
         # DEVELOPERS-NOTE: -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
-        from app.admin.admin import AdminModule
-        from app.auth.auth import AuthModule
+        from ez2erp.admin.admin import AdminModule
+        from ez2erp.auth.auth import AuthModule
         # -Add here-
         #                  -END-
         

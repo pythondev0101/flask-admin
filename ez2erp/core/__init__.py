@@ -1,5 +1,5 @@
-from app.auth import auth_urls
-from app.admin import admin_urls
+from ez2erp.auth import auth_urls
+from ez2erp.admin import admin_urls
 from flask import Blueprint, request, redirect, url_for, render_template
 from flask_login import current_user
 

@@ -1,9 +1,9 @@
 """ CORE MODELS """
 from mongoengine.document import Document
-from app.admin.models import Admin
+from ez2erp.admin.models import Admin
 from datetime import datetime
 
-from app import db
+from ez2erp import db
 import enum
 
 

@@ -13,9 +13,6 @@ class Config(object):
 
     CORS_HEADERS = 'Content-Type' # Flask Cors
 
-    MONGODB_HOST = "mongodb+srv://dbUser:dbUserPassword@cluster0.hfnwc.mongodb.net/db-prime-test?retryWrites=true&w=majority"
-
-    MONGO_URI = "mongodb+srv://dbUser:dbUserPassword@cluster0.hfnwc.mongodb.net/db-prime-test?retryWrites=true&w=majority"
     # DEVELOPERS-NOTE: ADMIN PAGE CONFIGURATIONS HERE
     ADMIN = {
         'APPLICATION_NAME': 'Likes',
@@ -37,49 +34,29 @@ class Config(object):
     #                 -END-
 
 
-# def _get_database(server):
-#     load_dotenv()
-
-#     host = os.environ.get('DATABASE_HOST')
-#     user = os.environ.get('DATABASE_USER')
-#     password = os.environ.get('DATABASE_PASSWORD')
-#     database = os.environ.get('DATABASE_NAME')
-#     if server == 'pythonanywhere':
-#         return "mysql://{}:{}@{}/{}".format(user,password,host,database)
-#     else:
-#         return "mysql+pymysql://{}:{}@{}/{}".format(user,password,host,database)
-
-
 class DevelopmentConfig(Config):
     """
     Development configurations
     """
-
-    # SQLALCHEMY_DATABASE_URI = _get_database('localhost')
-    # SQLALCHEMY_TRACK_MODIFICATIONS = False
+    load_dotenv()
+    
+    MONGO_URI = os.environ.get('MONGO_URI_DEV')
+    MONGODB_HOST = os.environ.get('MONGO_URI_DEV')
     DEBUG = True
-    # SQLALCHEMY_ECHO = True
+    TESTING = True
+
 
 class ProductionConfig(Config):
     """
     Production configurations
     """
-    # SQLALCHEMY_DATABASE_URI = _get_database('pythonanywhere')
-    DEBUG = False
-    # SQLALCHEMY_TRACK_MODIFICATIONS = False
+    load_dotenv()
     
-
-class TestingConfig(Config):
-    """
-    Testing configurations
-    """
-
-    TESTING = True
-    # SQLALCHEMY_ECHO = True
+    MONGO_URI = os.environ.get('MONGO_URI_PROD')
+    DEBUG = False
 
 
-app_config = {
+APP_CONFIG = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
-    'testing': TestingConfig
 }

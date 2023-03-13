@@ -3,8 +3,8 @@ from flask import flash, redirect, url_for, request, jsonify
 from flask_login import login_required
 from flask_cors import cross_origin
 from sqlalchemy import text
-from app import db, mongo
-from app.admin import bp_admin
+from ez2erp import db, mongo
+from ez2erp.admin import bp_admin
 
 
 

@@ -1,8 +1,8 @@
 from flask import render_template
 from flask_login import current_user
-from app import MODULES, CONTEXT, db
-from app.core.models import CoreModel, CoreModule
-from app.auth.permissions import check_read
+from ez2erp import MODULES, CONTEXT, db
+from ez2erp.core.models import CoreModel, CoreModule
+from ez2erp.auth.permissions import check_read
 
 
 

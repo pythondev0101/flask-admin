@@ -1,7 +1,7 @@
 from flask import current_app
-from app.core import CoreModule
+from ez2erp.core import CoreModule
 from .models import AdminDashboard, AdminApp
-from app.auth.models import User,Role
+from ez2erp.auth.models import User,Role
 
 
 
