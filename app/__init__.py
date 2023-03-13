@@ -21,6 +21,7 @@ db = MongoEngine()
 mongo = PyMongo()
 migrate = Migrate()
 csrf = CSRFProtect()
+cors = CORS()
 login_manager = LoginManager()
 
 # DEVELOPERS-NOTE: -INITIATE YOUR IMPORTS HERE-
@@ -55,7 +56,7 @@ def create_app(config_name):
     mongo.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
-    cors = CORS(app, resources={r"/*": {"origins": "*"}})
+    cors.init_app(app)
     csrf.init_app(app)
 
     # DEVELOPERS-NOTE: -INITIALIZE YOUR IMPORTS HERE-
@@ -76,8 +77,8 @@ def create_app(config_name):
 
         # DEVELOPERS-NOTE: -REGISTER HERE THE MODULE BLUEPRINTS-
         app.register_blueprint(bp_core, url_prefix='/')
-        app.register_blueprint(bp_auth, url_prefix='/api/auth')
-        app.register_blueprint(bp_admin, url_prefix='/api/admin')
+        app.register_blueprint(bp_auth, url_prefix='/auth')
+        app.register_blueprint(bp_admin, url_prefix='/admin')
         # -Add here-
         #               -END-
 

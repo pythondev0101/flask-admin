@@ -13,9 +13,9 @@ class Config(object):
 
     CORS_HEADERS = 'Content-Type' # Flask Cors
 
-    MONGODB_HOST = "mongodb+srv://dbUser:dbUserPassword@cluster0.hfnwc.mongodb.net/likesDB?retryWrites=true&w=majority"
+    MONGODB_HOST = "mongodb+srv://dbUser:dbUserPassword@cluster0.hfnwc.mongodb.net/db-prime-test?retryWrites=true&w=majority"
 
-    MONGO_URI = "mongodb+srv://dbUser:dbUserPassword@cluster0.hfnwc.mongodb.net/likesDB?retryWrites=true&w=majority"
+    MONGO_URI = "mongodb+srv://dbUser:dbUserPassword@cluster0.hfnwc.mongodb.net/db-prime-test?retryWrites=true&w=majority"
     # DEVELOPERS-NOTE: ADMIN PAGE CONFIGURATIONS HERE
     ADMIN = {
         'APPLICATION_NAME': 'Likes',

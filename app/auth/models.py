@@ -42,20 +42,6 @@ class User(UserMixin, Base, Admin):
     role = db.ReferenceField('Role')
     is_admin = db.BooleanField(default=False)
 
-    @classmethod
-    def authenticate(cls, **kwargs):
-        username = kwargs.get('username')
-        password = kwargs.get('password')
-        
-        if not username or not password:
-            return None
-
-        user = cls.objects(username=username).first()
-        if not user or not user.check_password(password):
-            return None
-
-        return user
-
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -64,13 +50,7 @@ class User(UserMixin, Base, Admin):
 
     def __repr__(self):
         return "<User {}>".format(self.username)
-    
-    def to_dict(self):
-        return dict(
-            id=self.id,
-            username=self.username,
-            create_at=self.created_at,
-            )
+
 
 class UserPermission(db.Document):
     meta = {

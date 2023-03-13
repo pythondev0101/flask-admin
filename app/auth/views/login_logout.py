@@ -12,39 +12,39 @@ from app.auth.permissions import load_permissions
 
 
 
-# @bp_auth.route('/login', methods=['GET', 'POST'])
-# def login():
-#     form = LoginForm()
+@bp_auth.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
 
-#     if request.method == "GET":
-#         if current_user.is_authenticated:
-#             return redirect(url_for(admin_urls['admin']))
-#         return render_template(auth_templates['login'], \
-#             title=current_app.config['ADMIN']['APPLICATION_NAME'], form=form)
+    if request.method == "GET":
+        if current_user.is_authenticated:
+            return redirect(url_for(admin_urls['admin']))
+        return render_template(auth_templates['login'], \
+            title=current_app.config['ADMIN']['APPLICATION_NAME'], form=form)
     
-#     if not form.validate_on_submit():
-#         for key, value in form.errors.items():
-#             flash(str(key) + str(value), 'error')
-#         return redirect(url_for(current_app.config['AUTH']['LOGIN_REDIRECT_URL']))
+    if not form.validate_on_submit():
+        for key, value in form.errors.items():
+            flash(str(key) + str(value), 'error')
+        return redirect(url_for(current_app.config['AUTH']['LOGIN_REDIRECT_URL']))
 
-#     user = User.objects(username=form.username.data).first()
-#     if user is None or not user.check_password(form.password.data):
-#         flash('Invalid username or password','success')
-#         return redirect(url_for(auth_urls['login']))
+    user = User.objects(username=form.username.data).first()
+    if user is None or not user.check_password(form.password.data):
+        flash('Invalid username or password','success')
+        return redirect(url_for(auth_urls['login']))
 
-#     login_user(user, remember=form.remember_me.data)
+    login_user(user, remember=form.remember_me.data)
     
-#     load_permissions(user.id)
+    load_permissions(user.id)
     
-#     next_page = request.args.get('next')
+    next_page = request.args.get('next')
     
-#     if not next_page or url_parse(next_page).netloc != '':
-#         next_page = url_for(current_app.config['AUTH']['LOGIN_REDIRECT_URL'])
-#     return redirect(next_page)
+    if not next_page or url_parse(next_page).netloc != '':
+        next_page = url_for(current_app.config['AUTH']['LOGIN_REDIRECT_URL'])
+    return redirect(next_page)
 
 
-# @bp_auth.route('/logout')
-# @login_required
-# def logout():
-#     logout_user()
-#     return redirect(url_for('core.index'))
+@bp_auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('core.index'))
