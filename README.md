@@ -4,8 +4,8 @@ It's similar to Django-Admin but with a ready-to-use/customable modules and can 
 Django-Admin + small ODOO = ez2ERP!
 
 Please contact me if you have any questions!
-Email Address: rmontemayor0101@gmail.com
-LinkedIn: https://www.linkedin.com/in/rmontemayor0101/
+* Email Address: rmontemayor0101@gmail.com
+* LinkedIn: https://www.linkedin.com/in/rmontemayor0101/
 
 ## Features
 
