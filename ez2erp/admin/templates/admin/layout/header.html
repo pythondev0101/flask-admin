@@ -1,0 +1,207 @@
+<!-- page Header Start -->
+<div class="page-main-header">
+  <div class="main-header-right row m-0">
+    <div class="main-header-left">
+      <div class="logo-wrapper"><a href="/dashboard_default"><img class="img-fluid"
+            src="{{ url_for('bp_admin.static', filename='images/logo/logo.png') }}" alt="img"></a></div>
+    </div>
+    <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="align-center" id="sidebar-toggle"></i>
+    </div>
+    <div class="left-menu-header col">
+      <ul>
+        <li>
+          <form class="form-inline search-form">
+            <div class="search-bg"><i class="fa fa-search"></i></div>
+            <input class="form-control-plaintext" placeholder="Search here.....">
+          </form><span class="d-sm-none mobile-search search-bg"><i class="fa fa-search"></i></span>
+        </li>
+      </ul>
+    </div>
+    <div class="nav-right col pull-right right-menu">
+      <ul class="nav-menus">
+        <!--
+        <li class="onhover-dropdown">
+          <div class="notification-box"><i data-feather="shopping-bag"></i><span
+              class="badge badge-pill badge-secondary">4</span></div>
+          <div class="notification-dropdown cart onhover-show-div">
+            <div class="m-3">
+              <div class="row">
+                <div class="col">
+                  <p> <b>5 </b>Items in Cart</p>
+                </div>
+                <div class="col text-end">
+                  <p class="m-0">Cart Subtotal</p>
+                  <h5 class="txt-primary f-w-700">5000$</h5>
+                </div>
+              </div><a class="btn btn-dark w-100 mt-1" href="/ecommerce_checkout">Process To Checkout</a>
+            </div>
+            <ul class="border-top custom-scrollbar">
+              <li>
+                <div class="media"><img src="{{ url_for('bp_admin.static', filename='images/product/small/tshirt.png') }}" alt="">
+                  <div class="media-body"><a href="/ecommerce_product">Woman T-shirt - yellow</a>
+                    <h6 class="price">200$</h6>
+                    <div class="row">
+                      <div class="col-9">
+                        <h6 class="qty">Qty
+                          <input class="form-control" type="number" placeholder="1" min="1">
+                        </h6>
+                      </div>
+                      <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i
+                          data-feather="trash-2"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="media"><img src="{{ url_for('bp_admin.static', filename='images/product/small/bag.png') }}" alt="">
+                  <div class="media-body"><a href="/ecommerce_product">Woman bag - purple</a>
+                    <h6 class="price">100$</h6>
+                    <div class="row">
+                      <div class="col-9">
+                        <h6 class="qty">Qty
+                          <input class="form-control" type="number" placeholder="1" min="1">
+                        </h6>
+                      </div>
+                      <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i
+                          data-feather="trash-2"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="media"><img src="{{ url_for('bp_admin.static', filename='images/product/small/headphone.png') }}" alt="">
+                  <div class="media-body"><a href="/ecommerce_product">Unisex headphone - Red</a>
+                    <h6 class="price">2000$</h6>
+                    <div class="row">
+                      <div class="col-9">
+                        <h6 class="qty">Qty
+                          <input class="form-control" type="number" placeholder="1" min="1">
+                        </h6>
+                      </div>
+                      <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i
+                          data-feather="trash-2"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="media"><img src="{{ url_for('bp_admin.static', filename='images/product/small/chair.png') }}" alt="">
+                  <div class="media-body"><a href="/ecommerce_product">Ergonomic Chair</a>
+                    <h6 class="price">920$</h6>
+                    <div class="row">
+                      <div class="col-9">
+                        <h6 class="qty">Qty
+                          <input class="form-control" type="number" placeholder="1" min="1">
+                        </h6>
+                      </div>
+                      <div class="col-3 text-end d-flex"><i class="me-1" data-feather="edit"></i><i
+                          data-feather="trash-2"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div class="m-3 mt-1"><a class="btn btn-light w-100 mt-3" href="/ecommerce_cart">View cart</a>
+            </div>
+          </div>
+        </li>
+        <!><li class="onhover-dropdown">
+          <div class="notification-box"><i data-feather="bell"></i><span class="badge badge-pill badge-primary">4</span>
+          </div>
+          <div class="notification-dropdown onhover-show-div">
+            <div class="m-3"><a class="btn btn-dark w-100" href="/email_email_app">You have 4
+                notifications</a></div>
+            <ul class="border-top">
+              <li>
+                <p class="mb-0 ps-4 p-relative"><i class="fa fa-circle me-3 font-primary"> </i>Delivery processing <span
+                    class="pull-right">10 min.</span></p>
+              </li>
+              <li>
+                <p class="mb-0 ps-4 p-relative"><i class="fa fa-circle me-3 font-success"></i>Order Complete<span
+                    class="pull-right">1 hr</span></p>
+              </li>
+              <li>
+                <p class="mb-0 ps-4 p-relative"><i class="fa fa-circle me-3 font-info"></i>Tickets Generated<span
+                    class="pull-right">3 hr</span></p>
+              </li>
+              <li>
+                <p class="mb-0 ps-4 p-relative"><i class="fa fa-circle me-3 font-warning"></i>Delivery Complete<span
+                    class="pull-right">6 hr </span></p>
+              </li>
+            </ul>
+            <div class="m-3 mt-1"><a class="btn btn-light w-100" href="/email_email_app">View all</a></div>
+          </div>
+        </li>
+        <li class="onhover-dropdown"><i data-feather="message-square"></i>
+          <div class="chat-dropdown onhover-show-div">
+            <div class="m-3"><a class="btn btn-dark w-100" href="/chat_chat_app">You have 3 message</a></div>
+            <ul class="border-top custom-scrollbar">
+              <li>
+                <div class="media"><img class="img-fluid rounded-circle me-3"
+                    src="{{ url_for('bp_admin.static', filename='images/avtar/emoji/7.png') }}" alt="">
+                  <div class="status-circle online"></div>
+                  <div class="media-body"><span>Erica Hughes</span>
+                    <p class="f-12 light-font">okay, trying now.</p>
+                  </div>
+                  <p class="badge badge-primary">32 min</p>
+                </div>
+              </li>
+              <li>
+                <div class="media"><img class="img-fluid rounded-circle me-3"
+                    src="{{ url_for('bp_admin.static', filename='images/avtar/emoji/8.png') }}" alt="">
+                  <div class="status-circle away"></div>
+                  <div class="media-body"><span>Kori Thomas</span>
+                    <p class="f-12 light-font">i could help in some of bug?</p>
+                  </div>
+                  <p class="badge badge-success">58 min</p>
+                </div>
+              </li>
+              <li>
+                <div class="media"><img class="img-fluid rounded-circle me-3"
+                    src="{{ url_for('bp_admin.static', filename='images/avtar/emoji/4.png') }}" alt="">
+                  <div class="status-circle offline"></div>
+                  <div class="media-body"><span>Ain Chavez</span>
+                    <p class="f-12 light-font">It's working awesome :)</p>
+                  </div>
+                  <p class="badge badge-danger">1 hr</p>
+                </div>
+              </li>
+              <li>
+                <div class="media"><img class="img-fluid rounded-circle me-3"
+                    src="{{ url_for('bp_admin.static', filename='images/avtar/emoji/1.png') }}" alt="">
+                  <div class="status-circle offline"></div>
+                  <div class="media-body"><span>Johan deo</span>
+                    <p class="f-12 light-font">Great Thanks you !!</p>
+                  </div>
+                  <p class="badge badge-danger">2 hr</p>
+                </div>
+              </li>
+            </ul>
+            <div class="m-3"><a class="btn btn-light w-100" href="/chat_chat_app">View all</a></div>
+          </div>
+        </li>
+        <li>
+          <div class="mode"><i class="fa fa-moon-o"></i></div>
+        </li>
+        <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a>
+        </li> 
+        -->
+        <li class="onhover-dropdown">
+          <div class="media profile-media"><img class="rounded-circle"
+              src="{{ url_for('bp_admin.static', filename='images/avtar/emoji/9.png') }}" alt="">
+          </div>
+          <ul class="profile-dropdown onhover-show-div">
+            <li><a href="/users_users_profile"><i data-feather="user"></i><span>Account </span></a></li>
+            <li><a href="/basic_email"><i data-feather="mail"></i><span>Inbox</span></a>
+            </li>
+            <li><a href="/kanban_board"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
+            <li><a href="{{ url_for('bp_admin.settings') }}"><i data-feather="settings"></i><span>Settings</span></a></li>
+            <li><a class="btn btn-light w-100" href="{{ url_for('bp_auth.logout') }}">Log out</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="d-lg-none col mobile-toggle pull-right"><i data-feather="more-horizontal"></i></div>
+  </div>
+</div>
+<!-- page Header End-->

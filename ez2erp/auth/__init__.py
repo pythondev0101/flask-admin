@@ -27,9 +27,6 @@ auth_templates = {
     'role_index': 'auth/role_index.html',
 }
 
-
 from . import views
 from . import models
-from . import api
-
 

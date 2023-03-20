@@ -1,26 +1,125 @@
 from flask import render_template
 from flask_login import current_user
-from ez2erp import MODULES, CONTEXT, db
+from ez2erp import CONTEXT, db, MODULES
 from ez2erp.core.models import CoreModel, CoreModule
 from ez2erp.auth.permissions import check_read
 
 
+class SidebarItem:
+    def __init__(self, name, link, icon='home', **kwargs):
+        self.name = name
+        self.link = link
+        self.icon = icon
+        if 'type' in kwargs:
+            self.type = kwargs['type']
+        else:
+            self.type = 'single'
+
+        if 'sub_items' in kwargs:
+            self.sub_items = kwargs['sub_items']
+
+
+class Sidebar:
+    def __init__(self, items):
+        self.items = items
+
+
+class PageConfig:
+    def __init__(self, template, **kwargs):
+        self.template = template
+
+        if 'sidebar' in kwargs:
+            self.sidebar = kwargs['sidebar']
+
+
+class Page:
+    def __init__(self, config, model=None,  **kwargs):
+        self.config: PageConfig = config
+        self.model = model
+        self.columns = kwargs.get('columns', None)
+        self.table_data = kwargs.get('table_data', None)
+
+
+    @classmethod
+    def blank(cls, config):
+        return cls(config)
+
+
+    @classmethod
+    def table(cls, model, columns, config=None):
+        if config is None:
+            config = PageConfig(
+                "admin/admin_wingo_table.html", 
+                sidebar=[]
+            )
+
+        table_data = model.query.all()
+        return cls(config, model, columns=columns, table_data=table_data)
+
+
+    @classmethod
+    def dashboard(cls, config=None):
+        if config is None:
+            sidebar = Sidebar(
+                items=[
+                    SidebarItem(
+                        name='Apps',
+                        link='bp_admin.apps',
+                        type='dropdown',
+                        sub_items=[
+                            SidebarItem(
+                                name='Blog',
+                                link='bp_admin.dashboard'
+                            ),
+                            SidebarItem(
+                                name='Inventory',
+                                link='bp_admin.dashboard'
+                            ),
+                            SidebarItem(
+                                name='Social',
+                                link='bp_admin.dashboard'
+                            )
+                        ]
+                    ),
+                    SidebarItem(
+                        name='Dashboard',
+                        link='bp_admin.dashboard'
+                    )
+                ]
+            )
+            config = PageConfig(
+                "admin/admin_wingo_dashboard.html", sidebar=sidebar)
+        return cls(config)
+
+    def display(self):
+        context = {}
+        if hasattr(self, 'columns'):
+            context['columns'] = self.columns
+        if hasattr(self, 'table_data'):
+            context['table_data'] = self.table_data
+
+        return render_template(self.config.template, sidebar=self.config.sidebar, **context)
+
+
+# def display_normal_page(page):
+#     template = page.template
+#     return render_template(template, sidebar=sidebar)
+
 
 def admin_render_template(rendered_model, template_name_or_list, module_name, scripts=None, modals=None, **context):
-    
     vdata = {
         'sidebar': None,
         'module': None,
-        }
+    }
 
     module = None
-    
+
     for _module in MODULES:
         if _module.module_name == module_name:
             module = _module
             vdata['module'] = _module
             break
-    
+
     if module is not None and module.sidebar is not None:
         vdata['sidebar'] = module.sidebar
 
@@ -36,8 +135,8 @@ def admin_render_template(rendered_model, template_name_or_list, module_name, sc
 
 def admin_dashboard(model, **kwargs):
     options = {
-        'dashboard_template': "admin/admin_dashboard.html",
-        'box1': None,'box2': None,'box3': None,'box4': None,
+        'dashboard_template': "admin/admin_wingo_dashboard.html",
+        'box1': None, 'box2': None, 'box3': None, 'box4': None,
         'data': None,
         'title': 'Admin Dashboard',
         'module': 'admin',
@@ -46,9 +145,9 @@ def admin_dashboard(model, **kwargs):
     options.update(kwargs)
 
     active_model = model.__amname__
-    
-    return admin_render_template(model, options['dashboard_template'], options['module'], title=options['title'], \
-        options=options, data=options['data'], active_model=active_model, UID=str(current_user.id))
+
+    return admin_render_template(model, options['dashboard_template'], options['module'], title=options['title'],
+                                 options=options, data=options['data'], active_model=active_model, UID=str(current_user.id))
 
 
 def admin_table(*models, fields, form=None, **options):
@@ -59,7 +158,7 @@ def admin_table(*models, fields, form=None, **options):
     table_name = models[0].__tablename__
 
     if not check_read(model_name):
-        return render_template('auth/authorization_error.html',context=CONTEXT)
+        return render_template('auth/authorization_error.html', context=CONTEXT)
 
     table_options = {
         'module_name': None,
@@ -78,36 +177,39 @@ def admin_table(*models, fields, form=None, **options):
         'edit_url': None,
         'create_button': False,
         'actions': True,
-        'create_modal': None, # Form is needed to enable
-        'view_modal': None, # Form is needed
+        'create_modal': None,  # Form is needed to enable
+        'view_modal': None,  # Form is needed
         'parent_model': None,
         'table_name': table_name,
         'modals': [],
         'scripts': [
             {'bp_admin.static': 'js/admin_table.js'}
-            ]
+        ]
     }
 
     table_options.update(options)
 
     if table_options['module_name'] is None:
         _query_module_name = CoreModel.objects(name=model_name).first()
-        table_options['module_name'] = CoreModule.objects.get(id=_query_module_name.module.id).name
-    
+        table_options['module_name'] = CoreModule.objects.get(
+            id=_query_module_name.module.id).name
+
     if models[0].__parent_model__ is not None:
         table_options['parent_model'] = models[0].__parent_model__
-    
+
     if table_options['table_data'] is None:
         if len(models) == 1:
             table_options['table_data'] = models[0].objects.scalar(*fields)
 
         elif len(models) == 2:
-            table_options['table_data'] = models[0].query.outerjoin(models[1]).with_entities(*fields).all()
+            table_options['table_data'] = models[0].query.outerjoin(
+                models[1]).with_entities(*fields).all()
 
         elif len(models) == 3:
-            _query1 = db.session.query(models[0],models[1],models[2])
-            table_options['table_data'] = _query1.outerjoin(models[1]).outerjoin(models[2]).with_entities(*fields).all()
-    
+            _query1 = db.session.query(models[0], models[1], models[2])
+            table_options['table_data'] = _query1.outerjoin(
+                models[1]).outerjoin(models[2]).with_entities(*fields).all()
+
     modal_data = {
         'create_url': None,
         'fields_sizes': None,
@@ -121,9 +223,10 @@ def admin_table(*models, fields, form=None, **options):
         table_options['heading'] = form.__heading__
         table_options['subheading'] = form.__subheading__
 
-        if table_options['view_modal'] is None: # Kung wala, iseset nya sa true dahil may form naman
+        # Kung wala, iseset nya sa true dahil may form naman
+        if table_options['view_modal'] is None:
             table_options['view_modal'] = True
-        
+
         if table_options['create_modal'] is None:
             table_options['create_modal'] = True
 
@@ -144,19 +247,20 @@ def admin_table(*models, fields, form=None, **options):
                 elif _field_count >= 3:
                     _field_sizes.append(4)
                 _row_count = _row_count + 1
-            
+
             modal_data['create_url'] = table_options['create_url']
             modal_data['fields_sizes'] = _field_sizes
             modal_data['js_fields'] = _js_fields
             modal_data['title'] = model_name
 
-    return admin_render_template(models[0], table_options['table_template'], table_options['module_name'],\
-        FORM=form, TABLE_OPTIONS=table_options, MODAL_DATA=modal_data, scripts=table_options['scripts'], \
-            modals=table_options['modals'], title=table_options['title'])
+    return admin_render_template(models[0], table_options['table_template'], table_options['module_name'],
+                                 FORM=form, TABLE_OPTIONS=table_options, MODAL_DATA=modal_data, scripts=table_options[
+                                     'scripts'],
+                                 modals=table_options['modals'], title=table_options['title'])
 
 
 def admin_edit(model, form, update_url, oid, table_url, **options):
-    
+
     model_name = model.__amname__
     _query1 = CoreModel.objects(name=model_name).first()
     module_name = CoreModule.objects.get(id=_query1.module.id).name
@@ -196,13 +300,14 @@ def admin_edit(model, form, update_url, oid, table_url, **options):
         elif _field_count >= 3:
             edit_options['fields_sizes'].append(4)
 
-    return admin_render_template(model, edit_options['edit_template'], edit_options['module_name'], FORM=form,\
-        EDIT_OPTIONS=edit_options, OID=oid, scripts=edit_options['scripts'], modals=edit_options['modals'],\
-            title=edit_options['title'])
+    return admin_render_template(model, edit_options['edit_template'], edit_options['module_name'], FORM=form,
+                                 EDIT_OPTIONS=edit_options, OID=oid, scripts=edit_options[
+                                     'scripts'], modals=edit_options['modals'],
+                                 title=edit_options['title'])
 
 
 class DashboardBox:
-    def __init__(self,heading,subheading, number):
+    def __init__(self, heading, subheading, number):
         self.heading = heading
         self.subheading = subheading
         self.number = number

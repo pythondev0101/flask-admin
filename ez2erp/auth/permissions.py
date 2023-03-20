@@ -1,13 +1,13 @@
 from flask import session
 from flask_login import current_user
-from ez2erp import CONTEXT, MODULES
+from ez2erp import CONTEXT
 from ez2erp.core.models import CoreModel
 
 
 
 def load_permissions(user_id):
     from ez2erp.auth.models import User, UserPermission, RolePermission
-    user = User.objects.get_or_404(id=user_id)
+    user = User.query.retrieve(user_id)
 
     if not user and not current_user.is_authenticated:
         CONTEXT['system_modules'].pop('admin',None)

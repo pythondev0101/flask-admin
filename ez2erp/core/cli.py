@@ -5,11 +5,9 @@ import csv
 from shutil import copyfile
 from config import basedir
 from ez2erp.core.models import CoreModel, CoreModule
-from ez2erp import MODULES
-from ez2erp import db
+from ez2erp import db, MODULES
 from . import bp_core
 from .models import CoreCity,CoreProvince
-from ez2erp.auth.models import User, Role
 
 
 

@@ -1,24 +1,8 @@
-from ez2erp.auth import auth_urls
-from ez2erp.admin import admin_urls
-from flask import Blueprint, request, redirect, url_for, render_template
-from flask_login import current_user
+from flask import Blueprint
 
 
-
-core_urls = {
-    'index': 'core.index',
-}
 
 bp_core = Blueprint('core', __name__)
-
-
-@bp_core.route('/')
-def index():
-    if request.method == "GET":
-        if current_user.is_authenticated:
-            return redirect(url_for(admin_urls['admin']))
-        else:
-            return redirect(url_for(auth_urls['login']))
 
 
 from . import cli

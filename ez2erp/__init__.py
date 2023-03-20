@@ -4,8 +4,6 @@ app/__init__.py
 Create our application
 """
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
@@ -18,19 +16,15 @@ from config import APP_CONFIG
 #                  -END-
 
 db = MongoEngine()
-mongo = PyMongo()
-migrate = Migrate()
-csrf = CSRFProtect()
-cors = CORS()
-login_manager = LoginManager()
+MONGO = PyMongo()
+CSRF = CSRFProtect()
+APP_CORS = CORS()
+LOGIN_MANAGER = LoginManager()
 
 # DEVELOPERS-NOTE: -INITIATE YOUR IMPORTS HERE-
-
 #                   -END-
 
-
 MODULES = []
-
 CONTEXT = {
     'system_modules': []
 }
@@ -52,45 +46,38 @@ def create_app(config_name):
     app.config.from_object(APP_CONFIG[config_name])
     app.register_error_handler(500, internal_server_error)
 
+    MONGO.init_app(app)
+    LOGIN_MANAGER.init_app(app)
+    APP_CORS.init_app(app)
+    CSRF.init_app(app)
     db.init_app(app)
-    mongo.init_app(app)
-    migrate.init_app(app, db)
-    login_manager.init_app(app)
-    cors.init_app(app)
-    csrf.init_app(app)
-
+    print(MONGO)
     # DEVELOPERS-NOTE: -INITIALIZE YOUR IMPORTS HERE-
 
     #                    -END-
 
-    login_manager.login_view = 'bp_auth.login'
-    login_manager.login_message = "You must be logged in to access this page."
+    LOGIN_MANAGER.login_view = 'bp_auth.login'
+    LOGIN_MANAGER.login_message = "You must be logged in to access this page."
 
+
+    # DEVELOPERS-NOTE: -IMPORT HERE THE SYSTEM MODULES-
+    from ez2erp.auth import bp_auth
+    from ez2erp.admin import bp_admin
+    from ez2erp.home import bp_home
+    #                   -END-
+
+    # DEVELOPERS-NOTE: -REGISTER HERE THE MODULE BLUEPRINTS-
+    app.register_blueprint(bp_admin, url_prefix='/admin')
+    app.register_blueprint(bp_auth, url_prefix='/auth')
+    app.register_blueprint(bp_home, url_prefix='/')
+    #               -END-
     with app.app_context():
-
-        # DEVELOPERS-NOTE: -IMPORT HERE THE SYSTEM MODULES-
-        from ez2erp.core import bp_core
-        from ez2erp.auth import bp_auth
-        from ez2erp.admin import bp_admin
-        # -Add here-
-        #                   -END-
-
-        # DEVELOPERS-NOTE: -REGISTER HERE THE MODULE BLUEPRINTS-
-        app.register_blueprint(bp_core, url_prefix='/')
-        app.register_blueprint(bp_auth, url_prefix='/auth')
-        app.register_blueprint(bp_admin, url_prefix='/admin')
-        # -Add here-
-        #               -END-
-
         # DEVELOPERS-NOTE: -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
-        from ez2erp.admin.admin import AdminModule
-        from ez2erp.auth.auth import AuthModule
-        # -Add here-
+        # from ez2erp.admin.admin import AdminModule
         #                  -END-
-        
+
         # DEVELOPERS-NOTE: -APPEND YOUR MODULE HERE-
-        MODULES.append(AdminModule)
-        MODULES.append(AuthModule)
+        # MODULES.append(AdminModule)
         # -Add here-
         #                  -END-
 

@@ -1,5 +1,5 @@
 from . import (
-    login_logout,
+    login,
     role,
     user
 )

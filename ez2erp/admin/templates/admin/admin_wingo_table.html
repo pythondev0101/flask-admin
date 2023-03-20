@@ -1,0 +1,64 @@
+{% extends 'admin/admin_wingo_base.html' %}
+
+
+{% block css %}
+<!-- Plugins css start-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('bp_admin.static', filename='css/vendors/datatables.css') }}">
+<!-- Plugins css Ends-->
+{% endblock css %}
+
+
+{% block content %}
+<div class="page-body">
+  {% include 'admin/layout/breadcrumb.html' %}
+  <!-- Container-fluid starts-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <h5>Table</h5><span>List of models</span>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="display datatables" id="tblMain">
+                <thead>
+                  <tr>
+                    {% for column in columns %}
+                        <th>{{column.upper()}}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in table_data %}
+                    
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Container-fluid Ends-->
+</div>
+{% endblock content %}
+
+
+{% block scriptcontent %}
+<!-- Plugins JS start-->
+<script src="{{ url_for('bp_admin.static', filename='js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/datatable/datatables/datatable.custom.js') }}"></script>
+<!-- Plugins JS Ends-->
+
+<script>
+  $(document).ready(function(){
+    var dtTable = $('#tblMain').DataTable({
+      "dom": 'rtip',
+      "pageLength": 20,
+      "order": [[ 1, 'asc' ]]
+  });
+  });
+</script>
+{% endblock scriptcontent %}

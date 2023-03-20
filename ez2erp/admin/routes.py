@@ -3,7 +3,7 @@ from flask import flash, redirect, url_for, request, jsonify
 from flask_login import login_required
 from flask_cors import cross_origin
 from sqlalchemy import text
-from ez2erp import db, mongo
+from ez2erp import db, MONGO
 from ez2erp.admin import bp_admin
 
 
@@ -63,7 +63,7 @@ def get_view_modal_data():
         table,column,id = request.args.get('table'),request.args.get('column'), request.args.get('id')
         print(table, column, id)
         # query = "select {} from {} where id = {} limit 1".format(column,table,id)
-        query = mongo.db[table].find_one({'id': id}, {column: True})
+        query = MONGO.db[table].find_one({'id': id}, {column: True})
 
         print(query)
 

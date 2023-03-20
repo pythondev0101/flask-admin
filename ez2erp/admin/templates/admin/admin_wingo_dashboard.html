@@ -1,0 +1,466 @@
+{% extends 'admin/admin_wingo_base.html' %}
+
+{% block css %}
+<!-- Plugins css start-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('bp_admin.static', filename='css/vendors/animate.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('bp_admin.static', filename='css/vendors/date-picker.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('bp_admin.static', filename='css/vendors/prism.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('bp_admin.static', filename='css/vendors/vector-map.css') }}">
+<!-- Plugins css Ends-->
+{% endblock css %}
+
+{% block content %}
+<div class="page-body project-dash">
+    <div class="container-fluid">
+        <div class="page-header dash-breadcrumb">
+          <div class="row">
+            <div class="col-6">
+              <h3 class="f-w-600">Dashboard</h3>
+            </div>
+            <div class="col-6">
+              <div class="breadcrumb-sec">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Dashboard</li>
+                    <li class="breadcrumb-item active">Project</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <!-- Container-fluid starts-->
+  <div class="container-fluid project-dash">
+    <div class="row size-column">
+        <div class="col-xl-8 des-xl-100 congrats-sec-main box-col-12">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body p-0">
+                  <div class="congrats-sec">
+                    <div class="card-header-right">
+                      <ul class="setting-option bg-transparent">
+                        <li>
+                          <div class="setting-badge light-badge"><i class="fa fa-cog"></i></div>
+                        </li>
+                        <li><i class="view-html fa fa-code"></i></li>
+                        <li><i class="icofont icofont-maximize full-card"></i></li>
+                        <li><i class="icofont icofont-minus minimize-card"></i></li>
+                        <li><i class="icofont icofont-refresh reload-card"></i></li>
+                        <li><i class="icofont icofont-error close-card"></i></li>
+                      </ul>
+                    </div>
+                    <div class="congrats-content">
+                      <h3>Congratulations mark jecno </h3>
+                      <p>Lorem ipsum is simply dummy text of the printing and typesetting printing and typesetting industry.</p>
+                      <a class="btn btn-light learn-btn" href="/blog_single">Learn More<i
+                          class="fa fa-arrow-right font-primary ms-2"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 box-col-12 box-col-6">
+              <div class="card today-task-sec">
+                <div class="card-header justify-content-between">
+                  <h5>Today Task</h5>
+                  <div class="center-content">
+                    <p>5 Task</p><span>Completed</span>
+                  </div>
+                  <div class="card-header-right">
+                    <ul class="setting-option">
+                      <li>
+                        <div class="setting-badge"><i class="fa fa-spin fa-cog font-primary"></i></div>
+                      </li>
+                      <li><i class="view-html fa fa-code font-primary"></i></li>
+                      <li><i class="icofont icofont-maximize full-card font-primary"></i></li>
+                      <li><i class="icofont icofont-minus minimize-card font-primary"></i></li>
+                      <li><i class="icofont icofont-refresh reload-card font-primary"></i></li>
+                      <li><i class="icofont icofont-error close-card font-primary"></i></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body p-t-0">
+                  <div class="table-responsive task-details">
+                    <table class="table table-bordernone">
+                      <tbody>
+                        <tr>
+                          <td><span>Google Project Apply Review</span>
+                            <p>Completed in 3 Hours</p>
+                          </td>
+                          <td class="progress-showcase">
+                            <div class="progress sm-progress-bar">
+                              <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>75% Percentage</p>
+                          </td>
+                          <td> <a class="btn light-primary" href="javascript:void(0)">Edit</a></td>
+                        </tr>
+                        <tr>
+                          <td><span>Business Logo Create</span>
+                            <p>Completed in 5 Hours</p>
+                          </td>
+                          <td class="progress-showcase">
+                            <div class="progress sm-progress-bar">
+                              <div class="progress-bar bg-secondary" role="progressbar" style="width: 100%" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>Completed</p>
+                          </td>
+                          <td><a class="btn light-secondary" href="javascript:void(0)">Edit</a></td>
+                        </tr>
+                        <tr>
+                          <td><span>Business Project Research</span>
+                            <p>Completed in 2 Hours</p>
+                          </td>
+                          <td class="progress-showcase">
+                            <div class="progress sm-progress-bar">
+                              <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>65% Percentage</p>
+                          </td>
+                          <td><a class="btn light-success" href="javascript:void(0)">Edit</a></td>
+                        </tr>
+                        <tr>
+                          <td><span>Recruitment in IT Department</span>
+                            <p>Completed in 4 Days</p>
+                          </td>
+                          <td class="progress-showcase">
+                            <div class="progress sm-progress-bar">
+                              <div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p>90% Percentage</p>
+                          </td>
+                          <td><a class="btn light-warning" href="javascript:void(0)">Edit</a></td>
+                        </tr>
+                        <tr>
+                          <td><span>Submit Riverfront Project</span>
+                            <p>Completed in 2 Days</p>
+                          </td>
+                          <td>
+                            <div class="progress-showcase">
+                              <div class="progress sm-progress-bar">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="25"
+                                  aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              <p>30% Percentage</p>
+                            </div>
+                          </td>
+                          <td><a class="btn light-info" href="javascript:void(0)">Edit</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-center"><a class="f-w-700" href="javascript:void(0)">More...</a></div>
+                  <div class="code-box-copy">
+                    <button class="code-box-copy__btn btn-clipboard" data-clipboard-target="#today-task" title="Copy"><i
+                        class="icofont icofont-copy-alt"></i></button>
+                    <pre><code class="language-html" id="today-task">&lt;div class="card today-task-sec"&gt;
+        &lt;div class="card-header justify-content-between"&gt;
+        &lt;h5&gt;Today Task&lt;/h5&gt;
+        &lt;div class="center-content"&gt;
+        &lt;p&gt;5 Task&lt;/p&gt;
+        &lt;span&gt;Completed&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class="card-header-right"&gt;
+        &lt;ul class="setting-option"&gt;
+        &lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="card-body p-t-0"&gt;
+        &lt;div class="table-responsive task-details"&gt;
+        &lt;table class="table table-bordernone"&gt;
+        &lt;tbody&gt;
+        &lt;tr&gt;
+        &lt;td&gt;
+        &lt;span&gt;Google Project Apply Review&lt;/span&gt;
+        &lt;p&gt;Completed in 3 Hours&lt;/p&gt;
+        &lt;/td&gt;
+        &lt;td class="progress-showcase"&gt;
+        &lt;div class="progress sm-progress-bar"&gt;
+        &lt;div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p&gt;75% Percentage&lt;/p&gt;
+        &lt;/td&gt;
+        &lt;td&gt; 
+        &lt;a class="btn light-primary" href="javascript:void(0)"&gt;Edit&lt;/a&gt;
+        &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+        &lt;td&gt;
+        &lt;span&gt;Business Logo Create&lt;/span&gt;
+        &lt;p&gt;Completed in 5 Hours&lt;/p&gt;
+        &lt;/td&gt;
+        &lt;td class="progress-showcase"&gt;
+        &lt;div class="progress sm-progress-bar"&gt;
+        &lt;div class="progress-bar bg-secondary" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p&gt;Completed&lt;/p&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+        &lt;a class="btn light-secondary" href="javascript:void(0)"&gt;Edit&lt;/a&gt;
+        &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+        &lt;td&gt;
+        &lt;span&gt;Business Project Research&lt;/span&gt;
+        &lt;p&gt;Completed in 2 Hours&lt;/p&gt;
+        &lt;/td&gt;
+        &lt;td class="progress-showcase"&gt;
+        &lt;div class="progress sm-progress-bar"&gt;
+        &lt;div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p&gt;65% Percentage&lt;/p&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+        &lt;a class="btn light-success" href="javascript:void(0)"&gt;Edit&lt;/a&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+        &lt;td&gt;
+        &lt;span&gt;Recruitment in IT Department&lt;/span&gt;
+        &lt;p&gt;Completed in 4 Days&lt;/p&gt;
+        &lt;/td&gt;
+        &lt;td class="progress-showcase"&gt;
+        &lt;div class="progress sm-progress-bar"&gt;
+        &lt;div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p&gt;90% Percentage&lt;/p&gt;
+        &lt;/td&gt;
+        &lt;td&gt;&lt;a class="btn light-warning" href="javascript:void(0)"&gt;Edit&lt;/a&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+        &lt;td&gt;
+        &lt;span&gt;Submit Riverfront Project&lt;/span&gt;
+        &lt;p&gt;Completed in 2 Days&lt;/p&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+        &lt;div class="progress-showcase"&gt;
+        &lt;div class="progress sm-progress-bar"&gt;
+         &lt;div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p&gt;30% Percentage&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+        &lt;a class="btn light-info" href="javascript:void(0)"&gt;Edit&lt;/a&gt;
+        &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;/table&gt;
+        &lt;/div&gt;
+        &lt;div class="text-center"&gt;
+        &lt;a class="f-w-700" href="javascript:void(0)"&gt;More...&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 box-col-12 box-col-6">
+              <div class="card project-goal-sec">
+                <div class="card-header justify-content-between">
+                  <h5>Project Goal</h5>
+                  <div class="center-content">
+                    <p>Archive</p><span>$658429</span>
+                  </div>
+                  <div class="card-header-right">
+                    <ul class="setting-option">
+                      <li>
+                        <div class="setting-badge"><i class="fa fa-spin fa-cog font-primary"></i></div>
+                      </li>
+                      <li><i class="view-html fa fa-code font-primary"></i></li>
+                      <li><i class="icofont icofont-maximize full-card font-primary"></i></li>
+                      <li><i class="icofont icofont-minus minimize-card font-primary"></i></li>
+                      <li><i class="icofont icofont-refresh reload-card font-primary"></i></li>
+                      <li><i class="icofont icofont-error close-card font-primary"></i></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div id="radar-chart"></div>
+                  <div class="code-box-copy">
+                    <button class="code-box-copy__btn btn-clipboard" data-clipboard-target="#project-goal" title="Copy"><i
+                        class="icofont icofont-copy-alt"></i></button>
+                    <pre><code class="language-html" id="project-goal">&lt;div class="card project-goal-sec"&gt;
+        &lt;div class="card-header justify-content-between"&gt;
+        &lt;h5&gt;Project Goal&lt;/h5&gt;
+        &lt;div class="center-content"&gt;
+        &lt;p&gt;Archive&lt;/p&gt;
+        &lt;span&gt;$658429&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class="card-header-right"&gt;
+        &lt;ul class="setting-option"&gt;
+        &lt;li&gt;
+        &lt;div class="setting-badge"&gt;
+        &lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;
+        &lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="card-body p-0"&gt;
+        &lt;div id="radar-chart"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- side calendar -->
+        <div class="col-xl-4 des-xl-100 box-col-12">
+          <div class="row">
+            <div class="col-xl-12 col-md-6 des-xl-50 box-col-6">
+              <div class="card project-calendar" data-intro="This is Date picker">
+                <div class="card-header">
+                  <h5>calendar</h5>
+                  <div class="card-header-right">
+                    <ul class="setting-option">
+                      <li>
+                        <div class="setting-badge"><i class="fa fa-spin fa-cog font-primary"></i></div>
+                      </li>
+                      <li><i class="view-html fa fa-code font-primary"></i></li>
+                      <li><i class="icofont icofont-maximize full-card font-primary"></i></li>
+                      <li><i class="icofont icofont-minus minimize-card font-primary"></i></li>
+                      <li><i class="icofont icofont-refresh reload-card font-primary"></i></li>
+                      <li><i class="icofont icofont-error close-card font-primary"></i></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="datepicker-here date-picker-university" data-language="en"></div>
+                  <div class="code-box-copy">
+                    <button class="code-box-copy__btn btn-clipboard" data-clipboard-target="#calender-sec" title="Copy"><i
+                        class="icofont icofont-copy-alt"></i></button>
+                    <pre><code class="language-html" id="calender-sec">&lt;div class="card project-calendar" data-intro="This is Date picker"&gt;
+        &lt;div class="card-header"&gt;
+        &lt;h5&gt;calendar&lt;/h5&gt;
+        &lt;div class="card-header-right"&gt;
+        &lt;ul class="setting-option"&gt;
+        &lt;li&gt;&lt;div class="setting-badge"&gt;&lt;i class="fa fa-spin fa-cog font-primary"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="view-html fa fa-code font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;i class="icofont icofont-error close-card font-primary"&gt;&lt;/i&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="card-body"&gt;
+        &lt;div class="datepicker-here date-picker-university" data-language="en"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12 col-md-6 des-xl-50 box-col-6">
+              <div class="card employee-sec">
+                <div class="card-body">
+                  <div class="table-responsive groups-table emp-details-table">
+                    <table class="table table-bordernone">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="media">
+                              <div class="round-light icon-secondary"><i class="fa fa-user"></i></div>
+                              <div class="media-body"><span>All Employe Distribute Work</span>
+                                <p>Company,SanFrancisco</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p>9:00 to 10:00</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="media">
+                              <div class="round-light icon-primary"><i class="fa fa-check-circle"></i></div>
+                              <div class="media-body"><span>Business Plan is Approved</span>
+                                <p>Elisse Joson,San Francisco</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p>10:00 to 1:00</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="media">
+                              <div class="round-light icon-success"><i class="fa fa-graduation-cap"></i></div>
+                              <div class="media-body"><span>Our Education Project Presentation</span>
+                                <p>Company,San Francisco</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p>1:10 to 3:15</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="media">
+                              <div class="round-light icon-warning"><i class="fa fa-coffee"></i></div>
+                              <div class="media-body"><span>Coffe Break</span>
+                                <p>Our Company All Team Member</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p>3:15 to 3:30</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <!-- Container-fluid Ends-->
+</div>
+{% endblock content %}
+{% block scriptcontent %}
+<!-- Plugins JS start-->
+<script src="{{ url_for('bp_admin.static', filename='js/chart/apex-chart/apex-chart.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/chart/apex-chart/stock-prices.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/prism/prism.min.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/clipboard/clipboard.min.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/custom-card/custom-card.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/vector-map/jquery-jvectormap-2.0.2.min.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/vector-map/map/jquery-jvectormap-world-mill-en.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/vector-map/map/jquery-jvectormap-us-aea-en.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/vector-map/map/jquery-jvectormap-uk-mill-en.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/vector-map/map/jquery-jvectormap-au-mill.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/vector-map/map/jquery-jvectormap-chicago-mill-en.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/vector-map/map/jquery-jvectormap-in-mill.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/vector-map/map/jquery-jvectormap-asia-mill.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/datepicker/date-picker/datepicker.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/datepicker/date-picker/datepicker.en.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/datepicker/date-picker/datepicker.custom.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/vector-map/map-vector.js') }}"></script>
+<script src="{{ url_for('bp_admin.static', filename='js/dashboard/dashboard_3.js') }}"></script>
+<!-- Plugins JS Ends-->
+{% endblock scriptcontent %}
