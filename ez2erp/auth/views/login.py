@@ -30,6 +30,7 @@ def login():
             return redirect(url_for(auth_urls['login']))
 
         login_user(user, remember=False)
+        print(user)
         load_permissions(user.id)
         
         next_page = request.args.get('next')
@@ -37,10 +38,3 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for(current_app.config['AUTH']['LOGIN_REDIRECT_URL'])
         return redirect(next_page)
-
-
-@bp_auth.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('core.index'))

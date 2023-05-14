@@ -16,23 +16,36 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="card">
-          <div class="card-header pb-0">
-            <h5>Table</h5><span>List of models</span>
-          </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="display datatables" id="tblMain">
                 <thead>
                   <tr>
                     {% for column in columns %}
-                        <th>{{column.upper()}}</th>
+                      {% if column == 'Actions' %}
+                        <th>{{column}}</th>
+                      {% else %}
+                        <th>{{column.label.upper()}}</th>
+                      {% endif %}
                     {% endfor %}
                   </tr>
                 </thead>
                 <tbody>
-                  {% for row in table_data %}
-                    
-                  {% endfor %}
+                  {% if table_data|length > 0 %}
+                    {% for row in table_data %}
+                      <tr>
+                        {% if edit_url %}
+                        <param id="param_{{row[0]}}" value="{{url_for(edit_url, oid=row[0])}}">
+                        {% endif %}
+
+                        {% for val in row %}
+                          <td>
+                            {{val}}
+                          </td>
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                  {% endif %}
                 </tbody>
               </table>
             </div>
@@ -53,12 +66,56 @@
 <!-- Plugins JS Ends-->
 
 <script>
+  var isWithActions = "{{with_actions}}";
+  var dtTblMain;
+  
   $(document).ready(function(){
-    var dtTable = $('#tblMain').DataTable({
-      "dom": 'rtip',
-      "pageLength": 20,
-      "order": [[ 1, 'asc' ]]
-  });
-  });
+    init();
+
+    function init(){
+      loadDataTable();
+    }
+
+    function loadDataTable(){
+      let tblMainColumnDefs = [
+        {
+          "targets": [0],
+          "visible": false
+        },
+      ];
+
+      if(isWithActions == "True"){
+        tblMainColumnDefs.push(
+          {
+            "targets": [-1],
+            "render": function (data, type, row) {
+              return `
+              <button class="btn-edit btn btn-success btn-xs" type="button" data-original-title="btn btn-danger btn-xs">Edit</button>
+              `;
+            }
+          }
+        );
+      }
+
+      dtTable = $('#tblMain').DataTable({
+        "dom": 'rtip',
+        "pageLength": 20,
+        "columnDefs": tblMainColumnDefs
+      });
+    }
+
+    $("#tblMain tbody").on('click', '.btn-edit', function(){
+      let row = dtTable.row($(this).parents('tr')).data();
+
+      let editUrl = $(`#param_${row[0]}`).val();
+      console.log(editUrl);
+
+      if(editUrl == "None"){
+        alert("Include edit_url with value to the Page object");
+        return;
+      }
+      location.href = editUrl;
+    });
+  }); // document.ready
 </script>
 {% endblock scriptcontent %}

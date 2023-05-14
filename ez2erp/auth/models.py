@@ -2,39 +2,40 @@
 
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from ez2erp import MONGO, LOGIN_MANAGER, db 
-from ez2erp.admin.models import Admin
-from ez2erp.core.models import Base
-from ez2erp.db.model import BaseModel
-from ez2erp.db.fields import TextField
+from ez2erp import LOGIN_MANAGER
+from ez2erp.db.models import BaseModel
+from ez2erp.db import fields
 
 
 
 class User(UserMixin, BaseModel):
-    collection = 'auth_users'
-
-    username = TextField('Username')
-    fname = TextField('First Name')
-    lname = TextField('Last Name')
-    password_hash = TextField()
-    contact_no = TextField('Contact No.')
-    email = TextField('Email')
-    role = TextField('Role')
+    ez2collection = 'auth_users'
+    username = fields.TextField()
+    fname = fields.TextField('First Name')
+    lname = fields.TextField('Last Name')
+    password_hash = fields.TextField()
+    contact_no = fields.TextField('Contact No.')
+    email = fields.TextField()
+    role = fields.TextField()
     image_path: str = 'img/user_default_image.png'
 
+    # def __init__(self, data=None):
+    #     BaseModel.__init__(self, data=data)
+        # 
+        # if data:
+        #     self.username = data.get('username')
+        #     self.fname = data.get('fname')
+        #     self.lname = data.get('lname')
+        #     self.contact_no = data.get('contact_no')
+        #     self.password_hash = data.get('password_hash')
+        #     self.email = data.get('email')
+        #     self.role = data.get('role', 'member')
+        #     self.image_path = data.get('image_path', 'img/user_default_image.png')
 
-    def __init__(self, data=None):
-        BaseModel.__init__(self, data=data)
-        
-        if data:
-            self.username = data.get('username', '')
-            self.fname = data.get('fname', '')
-            self.lname = data.get('lname', '')
-            self.contact_no = data.get('contact_no', '')
-            self.password_hash = data.get('password_hash', '')
-            self.email = data.get('email', '')
-            self.role = data.get('role', 'member')
-            self.image_path = data.get('image_path', 'img/user_default_image.png')
+
+    @property
+    def full_name(self):
+        return self.fname + " " + self.lname
 
 
     def set_password(self, password):
@@ -46,28 +47,27 @@ class User(UserMixin, BaseModel):
         return check_password_hash(self.password_hash, password)
 
 
-    def get_full_name(self):
-        return self.fname + " " + self.lname
+    # @classmethod
+    # def find_by_username(cls, username):
+    #     query = Model.find_one(cls, {'username': username})
+    #     if query is None:
+    #         return None
+    #     print(query)
+    #     return cls(data=query)
 
 
-    @classmethod
-    def find_by_username(cls, username):
-        query = Model.find_one(cls, {'username': username})
-        if query is None:
-            return None
-        print(query)
-        return cls(data=query)
+    # @property 
+    # def code(self):
+    #     self._code = "{}-{}".format(type(self).__name__, self.username) 
+    #     return self._code
 
 
-    @property
-    def code(self):
-        self._code = "{}-{}".format(type(self).__name__, self.username) 
-        return self._code
+class Role(BaseModel):
+    ez2collection = 'auth_roles'
+    name = fields.TextField() 
+    description = fields.TextField()
+    # permissions = db.ListField()
 
-
-    @property
-    def full_name(self):
-        return self.fname + " " + self.lname
 
 
 @LOGIN_MANAGER.user_loader
@@ -108,43 +108,26 @@ def load_user(user_id):
 #         return "<User {}>".format(self.username)
 
 
-class UserPermission(db.Document):
+class UserPermission(BaseModel):
     meta = {
         'collection': 'auth_user_permissions'
     }
 
-    model = db.ReferenceField('CoreModel')
-    read = db.BooleanField(default=True)
-    create = db.BooleanField(default=False)
-    write = db.BooleanField(default=False)
-    doc_delete = db.BooleanField(default=False)
+    # model = db.ReferenceField('CoreModel')
+    model = None
+    read = fields.BooleanField()
+    create = fields.BooleanField()
+    write = fields.BooleanField()
+    doc_delete = fields.BooleanField()
 
 
-class Role(Base, Admin):
-    meta = {
-        'collection': 'auth_user_roles'
-    }
-
-    __tablename__ = 'auth_user_roles'
-    __amname__ = 'role'
-    __amicon__ = 'pe-7s-id'
-    __amdescription__ = "Roles"
-    __view_url__ = 'bp_auth.roles'
-
-    """ COLUMNS """
-    name = db.StringField()
-    # permissions = db.ListField()
-
-
-class RolePermission(db.Document):
-    meta = {
-        'collection': 'auth_role_permissions'
-    }
-
-    role = db.ReferenceField('Role')
-    model = db.ReferenceField('CoreModel')
-    read = db.BooleanField(default=True)
-    create = db.BooleanField(default=False)
-    write = db.BooleanField(default=False)
-    doc_delete = db.BooleanField(default=False)
+class RolePermission(BaseModel):
+    ez2collection = 'auth_role_permissions'
+    # role = db.ReferenceField('Role')
+    role = None
+    model = None
+    read = fields.BooleanField()
+    create = fields.BooleanField()
+    write = fields.BooleanField()
+    doc_delete = fields.BooleanField()
 

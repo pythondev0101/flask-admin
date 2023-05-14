@@ -1,0 +1,55 @@
+{% extends 'admin/admin_wingo_base.html' %}
+
+
+{% block content %}
+<div class="page-body">
+    {% include 'admin/layout/breadcrumb.html' %}
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <form action="", method="POST">
+          <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="form theme-form projectcreate">
+                    {% for row in form.inputs %}
+                      {% set row_counter = loop %}
+
+                      <div class="row">
+                      {% for input in row %}
+                        <div class="col">
+                          <div class="{{form.sizes[row_counter.index-1]}}">
+                            <label>{{input.label}}</label>
+                            <input 
+                              name="{{input.field}}" 
+                              value="{% if not input.value == None %}{{input.value}}{% endif %}" 
+                              class="form-control" type="text" placeholder="{{input.label}}"
+                            >
+                          </div>
+                        </div>
+                      {% endfor %}
+                      </div>
+                    {% endfor %}
+                    <div class="row">
+                      </br>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="text-end">
+                          <button type="submit" class="btn btn-success me-3">Save</button>
+                          <a class="btn btn-danger" href="#">Cancel</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    <!-- Container-fluid Ends-->
+</div>
+{% endblock content %}
+

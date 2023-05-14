@@ -1,12 +1,21 @@
 from flask import render_template
 from flask_login import current_user
-from ez2erp import CONTEXT, db, MODULES
-from ez2erp.core.models import CoreModel, CoreModule
+from ez2erp import CONTEXT, db
+# from ez2erp.core.models import CoreModel, CoreModule
 from ez2erp.auth.permissions import check_read
+from ez2erp.core.errors import PageError
+
+
+
+class Breadcrumb:
+    def __init__(self, title=None, parent=None, child=None):
+        self.title = title
+        self.parent = parent
+        self.child = child
 
 
 class SidebarItem:
-    def __init__(self, name, link, icon='home', **kwargs):
+    def __init__(self, name, link=None, icon='home', **kwargs):
         self.name = name
         self.link = link
         self.icon = icon
@@ -25,79 +34,112 @@ class Sidebar:
 
 
 class PageConfig:
-    def __init__(self, template, **kwargs):
+    def __init__(self, template=None, sidebar=None, **kwargs):
         self.template = template
-
-        if 'sidebar' in kwargs:
-            self.sidebar = kwargs['sidebar']
+        self.sidebar = sidebar
 
 
 class Page:
-    def __init__(self, config, model=None,  **kwargs):
+    def __init__(self, config, model=None, **kwargs):
         self.config: PageConfig = config
         self.model = model
-        self.columns = kwargs.get('columns', None)
-        self.table_data = kwargs.get('table_data', None)
+        self.columns = kwargs.get('columns')
+        self.table_data = kwargs.get('table_data')
+        self.with_actions = kwargs.get('with_actions', False)
+        self.edit_url = kwargs.get('edit_url')
+        self.title = kwargs.get('title', 'ez2ERP')
+
+        if 'breadcrumb' in kwargs:
+            self.breadcrumb = kwargs['breadcrumb']
+        else:
+            if self.model:
+                self.breadcrumb = Breadcrumb(
+                    title="{}s".format(self.model.__name__),
+                    parent='Admin',
+                    child="{}s".format(self.model.__name__)
+                )
+            else:
+                self.breadcrumb = Breadcrumb(
+                    title='breadcrumb.title',
+                    parent='breadcrumb.parent',
+                    child='breadcrumb.child'
+                )
+
+        if 'form' in kwargs:
+            self.form = kwargs.get('form')
 
 
     @classmethod
-    def blank(cls, config):
-        return cls(config)
+    def blank(cls, config, **kwargs):
+        return cls(config, **kwargs)
 
 
     @classmethod
-    def table(cls, model, columns, config=None):
+    def table(cls, model, columns, config=None, **kwargs):
         if config is None:
             config = PageConfig(
-                "admin/admin_wingo_table.html", 
+                template="admin/admin_wingo_table.html", 
+                sidebar=[],
+            )
+        if config.template is None:
+            config.template = "admin/admin_wingo_table.html"
+
+        table_data = model.query.all(columns=columns)
+        print("table_data:", table_data)
+        # Add Actions column to the table
+        with_actions = kwargs.get('with_actions', False)
+        if with_actions:
+            columns, table_data = cls._add_actions_column(columns, table_data)
+            
+        edit_url = kwargs.get('edit_url')
+        return cls(
+            config, model, columns=columns, 
+            table_data=table_data,
+            with_actions=with_actions,
+            edit_url=edit_url
+        )
+
+        
+    @classmethod
+    def edit(cls, model, oid, form=None, config=None):
+        if config is None:
+            config = PageConfig(
+                template="admin/admin_wingo_edit.html",
                 sidebar=[]
             )
+        if config.template is None:
+            config.template = "admin/admin_wingo_edit.html"
 
-        table_data = model.query.all()
-        return cls(config, model, columns=columns, table_data=table_data)
+        obj = model.query.retrieve(oid)
+        form.set_form_data(obj)
+        return cls(config, model, form=form, obj=obj)
+
+    
+    @staticmethod
+    def _add_actions_column(columns, table_data):
+        columns.append('Actions')
+        for row in table_data:
+            row.append('')
+        return columns, table_data
 
 
-    @classmethod
-    def dashboard(cls, config=None):
-        if config is None:
-            sidebar = Sidebar(
-                items=[
-                    SidebarItem(
-                        name='Apps',
-                        link='bp_admin.apps',
-                        type='dropdown',
-                        sub_items=[
-                            SidebarItem(
-                                name='Blog',
-                                link='bp_admin.dashboard'
-                            ),
-                            SidebarItem(
-                                name='Inventory',
-                                link='bp_admin.dashboard'
-                            ),
-                            SidebarItem(
-                                name='Social',
-                                link='bp_admin.dashboard'
-                            )
-                        ]
-                    ),
-                    SidebarItem(
-                        name='Dashboard',
-                        link='bp_admin.dashboard'
-                    )
-                ]
-            )
-            config = PageConfig(
-                "admin/admin_wingo_dashboard.html", sidebar=sidebar)
-        return cls(config)
-
-    def display(self):
+    def display(self, **kwargs):
         context = {}
         if hasattr(self, 'columns'):
             context['columns'] = self.columns
         if hasattr(self, 'table_data'):
             context['table_data'] = self.table_data
-
+        if hasattr(self, 'breadcrumb'):
+            context['breadcrumb'] = self.breadcrumb
+        if hasattr(self, 'with_actions'):
+            context['with_actions'] = self.with_actions
+        if hasattr(self, 'edit_url'):
+            context['edit_url'] = self.edit_url
+        if hasattr(self, 'form'):
+            context['form'] = self.form
+        
+        context['title'] = self.title
+        context.update(kwargs)
         return render_template(self.config.template, sidebar=self.config.sidebar, **context)
 
 

@@ -4,10 +4,10 @@ import click
 import csv
 from shutil import copyfile
 from config import basedir
-from ez2erp.core.models import CoreModel, CoreModule
-from ez2erp import db, MODULES
-from . import bp_core
-from .models import CoreCity,CoreProvince
+from ez2erp import APPS
+from ez2erp.core import bp_core
+from ez2erp.core.models import App, Model
+from ez2erp.auth.models import User, Role
 
 
 
@@ -22,124 +22,108 @@ def core_install():
     """
 
     print("Installing...")
+    # if platform.system() == "Windows":
+    #     provinces_path = basedir + "\\app" + "\\core" + "\\csv" + "\\provinces.csv"
+    #     cities_path = basedir + "\\app" + "\\core" + "\\csv" + "\\cities.csv"
+    # elif platform.system() == "Linux":
+    #     provinces_path = basedir + "/app/core/csv/provinces.csv"
+    #     cities_path = basedir + "/app/core/csv/cities.csv"
+    # else:
+    #     raise Exception("Platform not supported yet.")
 
-    try:
+    # module_count = 0
+    print(APPS)
+    app: App
+    for app in APPS:
+        # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
+        # homebest_module = CoreModule.objects(name=app.name).first()
+        print("app.name:", app.name)
+        check_app = App.query.find_one({'name': app.name})
+        print(app.__dict__)
+        # last_id = 0
+        if not check_app:
+            new_app = App.query.insert_one({
+                'name': app.name,
+                'short_description': app.short_description,
+                'long_description': app.long_description,
+                'version': app.version,
+                'status': 'installed'
+            })
+            check_app = new_app
+            print("APP - {}: SUCCESS".format(app.name))
+            # last_id = new_module.id
+        model_count = 0
 
-        if platform.system() == "Windows":
-            provinces_path = basedir + "\\app" + "\\core" + "\\csv" + "\\provinces.csv"
-            cities_path = basedir + "\\app" + "\\core" + "\\csv" + "\\cities.csv"
-        elif platform.system() == "Linux":
-            provinces_path = basedir + "/app/core/csv/provinces.csv"
-            cities_path = basedir + "/app/core/csv/cities.csv"
-        else:
-            raise Exception("Platform not supported yet.")
-        
-        module_count = 0
+        for model in app.models:
+            check_model = Model.query.find_one({'name': model.ez2name})
 
-        homebest_module = None
+            if not check_model:
+                print("check_app.id:", check_app.id)
+                print("name:", model.ez2name)
+                new_model = Model.query.insert_one({
+                    'name': model.ez2name,
+                    'app': check_app.id,
+                })
+                print("MODEL - {}: SUCCESS".format(new_model.ez2name))
+            model_count = model_count + 1
 
-        for module in MODULES:
-            # TODO: Iimprove to kasi kapag nag error ang isa damay lahat dahil sa last_id
-            homebest_module = CoreModule.objects(name=module.module_name).first()
-            # last_id = 0
-            if not homebest_module:
-                new_module = CoreModule(
-                    name=module.module_name,
-                    short_description=module.module_short_description,
-                    long_description=module.module_long_description,
-                    status='installed',
-                    version=module.version
-                    ).save()
+        # if len(module.no_admin_models) > 0 :
+        #     for xmodel in module.no_admin_models:
+        #         homebestmodel = CoreModel.objects(name=xmodel.__amname__).first()
+                
+        #         if not homebestmodel:
+        #             new_model = CoreModel(
+        #                 name=xmodel.__amname__, 
+        #                 module=homebest_module,
+        #                 description=xmodel.__amdescription__,
+        #                 admin_included=False
+        #             ).save()
+        #             print("MODEL - {}: SUCCESS".format(new_model.name))
+        # module_count = module_count + 1
 
-                homebest_module = new_module
+    # print("Inserting provinces to database...")
+    # if CoreProvince.objects.count() < 88:
+    #     with open(provinces_path) as f:
+    #         csv_file = csv.reader(f)
+
+    #         for id, row in enumerate(csv_file):
+    #             if not id == 0:
+    #                 CoreProvince(
+    #                     name=row[2]
+    #                 ).save()
+
+    #     print("Provinces done!")
+    # else:
+    #     print("Provinces exists!")
+    # print("")
+    # print("Inserting cities to database...")
+    
+    # if CoreCity.objects.count() < 1647:
+    #     with open(cities_path) as f:
+    #         csv_file = csv.reader(f)
+
+    #         for id,row in enumerate(csv_file):
+    #             if not id == 0:
                     
-                print("MODULE - {}: SUCCESS".format(new_module.name))
-                # last_id = new_module.id
+    #                 CoreCity(
+    #                     name=row[2]
+    #                 ).save()
 
-            model_count = 0
+    #     print("Cities done!")
+    # else:
+    #     print("Cities exists!")
 
-            for model in module.models:
-                homebestmodel = CoreModel.objects(name=model.__amname__).first()
+    print("Inserting system roles...")
+    if not Role.query.count() > 0:
+        Role.query.insert_one({
+            'name': 'Admin',
+            'description': 'Administrator',
+        })
+        print("Admin role inserted!")
 
-                if not homebestmodel:
-                    new_model = CoreModel(
-                        name=model.__amname__,
-                        module=homebest_module,
-                        description=model.__amdescription__,
-                        ).save()
-
-                    print("MODEL - {}: SUCCESS".format(new_model.name))
-
-                model_count = model_count + 1
-
-            if len(module.no_admin_models) > 0 :
-
-                for xmodel in module.no_admin_models:
-                    homebestmodel = CoreModel.objects(name=xmodel.__amname__).first()
-                    
-                    if not homebestmodel:
-                        new_model = CoreModel(
-                            name=xmodel.__amname__, 
-                            module=homebest_module,
-                            description=xmodel.__amdescription__,
-                            admin_included=False
-                        ).save()
-
-                        print("MODEL - {}: SUCCESS".format(new_model.name))
-
-            module_count = module_count + 1
-
-        print("Inserting provinces to database...")
-        if CoreProvince.objects.count() < 88:
-            with open(provinces_path) as f:
-                csv_file = csv.reader(f)
-
-                for id, row in enumerate(csv_file):
-                    if not id == 0:
-                        CoreProvince(
-                            name=row[2]
-                        ).save()
-
-            print("Provinces done!")
-
-        else:
-            print("Provinces exists!")
-        print("")
-        print("Inserting cities to database...")
-        
-        if CoreCity.objects.count() < 1647:
-            with open(cities_path) as f:
-                csv_file = csv.reader(f)
-
-                for id,row in enumerate(csv_file):
-                    if not id == 0:
-                        
-                        CoreCity(
-                            name=row[2]
-                        ).save()
-
-            print("Cities done!")
-        else:
-            print("Cities exists!")
-
-        print("Inserting system roles...")
-        if Role.objects.count() > 0:
-            print("Role already inserted!")
-        else:
-            Role(
-                name="Individual",
-            ).save()
-            
-            print("Individual role inserted!")
-
-        if not User.objects.count() > 0:
-            print("Creating a SuperUser/owner...")
-            _create_superuser()
-
-    except Exception as exc:
-        print(str(exc))
-        return False
-
+    if not User.query.count() > 0:
+        print("Creating a SuperUser/owner...")
+        _create_superuser()
     return True
 
 
@@ -197,20 +181,16 @@ def install():
 
 
 def _create_superuser():
-    try:
-        role = Role.objects(name="Individual").first()
+    role = Role.query.find_one({'name': 'Admin'})
 
-        user = User(
-            fname="Administrator",
-            lname="Administrator",
-            username = input("Enter Username: "),
-            email = None,
-            is_superuser = 1,
-            role=role,
-            created_by = "System",
-        )
-        user.set_password(input("Enter password: "))
-        user.save()
-        print("SuperUser Created!")
-    except Exception as exc:
-        print(str(exc))
+    user = User({
+        'fname': "Administrator",
+        'lname': "Administrator",
+        'username': input("Enter Username: "),
+        'email': None,
+        'is_superuser': True,
+        'role': role.id
+    })
+    user.set_password(input("Enter password: "))
+    user.create()
+    print("SuperUser Created!")

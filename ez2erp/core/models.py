@@ -1,38 +1,51 @@
 """ CORE MODELS """
-from mongoengine.document import Document
-from ez2erp.admin.models import Admin
-from datetime import datetime
-
-from ez2erp import db
 import enum
+from datetime import datetime
+from ez2erp.db.models import BaseModel
+from ez2erp.db.fields import TextField
 
 
 
-class Base(db.Document):
-    meta = {
-        'abstract': True
-    }
+# class Base(db.Document):
+#     meta = {
+#         'abstract': True
+#     }
 
-    active = db.BooleanField(default=True)
-    created_at = db.DateTimeField(default=datetime.utcnow)
-    # TODO: updated_at = db.DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
-    updated_at = db.DateTimeField(default=datetime.utcnow)
+#     active = db.BooleanField(default=True)
+#     created_at = db.DateTimeField(default=datetime.utcnow)
+#     # TODO: updated_at = db.DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
+#     updated_at = db.DateTimeField(default=datetime.utcnow)
 
-    # TODO: I relate na to sa users table 
-    # Sa ngayon i store nalang muna yung names kasi andaming error kapag foreign key
-    created_by = db.StringField()
-    updated_by = db.StringField()
+#     # TODO: I relate na to sa users table 
+#     # Sa ngayon i store nalang muna yung names kasi andaming error kapag foreign key
+#     created_by = db.StringField()
+#     updated_by = db.StringField()
 
 
-class CoreModel(Base):
-    meta = {
-        'collection': 'core_models'
-    }
+class App(BaseModel):
+    ez2collection = 'core_apps'
+    ez2name = 'app'
+    
+    name = TextField()
+    short_description = TextField()
+    long_description = TextField()
+    status = TextField()
+    version = TextField()
+    models = []
+    
+    # def __repr__(self):
+    #     return self.name
 
-    name = db.StringField()
-    module = db.ReferenceField('CoreModule', required=True)
-    description = db.StringField()
-    admin_included = db.BooleanField(default=True)
+
+class Model(BaseModel):
+    ez2collection = 'core_models'
+    ez2name = 'model'
+    
+    name = TextField()
+    description = TextField()
+    # name = db.StringField()
+    # module = db.ReferenceField('CoreModule', required=True)
+    # admin_included = db.BooleanField(default=True)
 
 
 class ModuleStatus(enum.Enum):
@@ -40,54 +53,41 @@ class ModuleStatus(enum.Enum):
     uninstalled = "Not Installed"
 
 
-class CoreModule(Base):
-    meta = {
-        'collection': 'core_modules'
-    }
+# class CoreCustomer(Base):
+#     meta = {
+#         'collection': 'core_customers'
+#     }
 
-    name = db.StringField()
-    short_description = db.StringField()
-    long_description = db.StringField()
-    status = db.StringField()
-    version = db.StringField()
-    models = db.ListField(db.ReferenceField('CoreModel'))
-
-
-class CoreCustomer(Base):
-    meta = {
-        'collection': 'core_customers'
-    }
-
-    fname = db.StringField()
-    lname = db.StringField()
-    phone = db.StringField()
-    email = db.EmailField()
-    zip = db.IntField()
-    street = db.StringField()
+#     fname = db.StringField()
+#     lname = db.StringField()
+#     phone = db.StringField()
+#     email = db.EmailField()
+#     zip = db.IntField()
+#     street = db.StringField()
 
 
-class CoreCity(Base):
-    meta = {
-        'collection': 'core_cities'
-    }
+# class CoreCity(Base):
+#     meta = {
+#         'collection': 'core_cities'
+#     }
 
-    name = db.StringField()
-    province = db.ReferenceField('CoreProvince')
-
-
-class CoreProvince(Base):
-    meta = {
-        'collection': 'core_provinces'
-    }
-
-    name = db.StringField()
+#     name = db.StringField()
+#     province = db.ReferenceField('CoreProvince')
 
 
-class CoreLog(db.Document):
-    meta = {
-        'abstract': True
-    }
+# class CoreProvince(Base):
+#     meta = {
+#         'collection': 'core_provinces'
+#     }
 
-    date = db.DateTimeField(default=datetime.utcnow)
-    description = db.StringField()
-    data = db.StringField()
+#     name = db.StringField()
+
+
+# class CoreLog(db.Document):
+#     meta = {
+#         'abstract': True
+#     }
+
+#     date = db.DateTimeField(default=datetime.utcnow)
+#     description = db.StringField()
+#     data = db.StringField()

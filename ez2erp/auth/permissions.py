@@ -1,7 +1,7 @@
 from flask import session
 from flask_login import current_user
 from ez2erp import CONTEXT
-from ez2erp.core.models import CoreModel
+from ez2erp.core.models import Model
 
 
 
@@ -20,8 +20,8 @@ def load_permissions(user_id):
     print(user.role)
 
     if user.is_superuser:
-        all_permissions = CoreModel.objects
-
+        all_permissions = Model.query.all()
+        print("all_permissions:", all_permissions)
         for permission in all_permissions:
             session['permissions'][permission.name] = {"read": True, "create": True, \
                 "write": True, "delete": True}  

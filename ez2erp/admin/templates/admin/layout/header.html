@@ -3,17 +3,14 @@
   <div class="main-header-right row m-0">
     <div class="main-header-left">
       <div class="logo-wrapper"><a href="/dashboard_default"><img class="img-fluid"
-            src="{{ url_for('bp_admin.static', filename='images/logo/logo.png') }}" alt="img"></a></div>
+            src="{{ url_for('bp_admin.static', filename='images/logo/ez2erp_logo.png') }}" alt="img"></a></div>
     </div>
     <div class="toggle-sidebar"><i class="status_toggle middle" data-feather="align-center" id="sidebar-toggle"></i>
     </div>
-    <div class="left-menu-header col">
-      <ul>
+    <div class="nav-left col pull-left left-menu">
+      <ul class="nav-menus">
         <li>
-          <form class="form-inline search-form">
-            <div class="search-bg"><i class="fa fa-search"></i></div>
-            <input class="form-control-plaintext" placeholder="Search here.....">
-          </form><span class="d-sm-none mobile-search search-bg"><i class="fa fa-search"></i></span>
+          <a class="text-dark" href="{{url_for('bp_admin.apps')}}">Apps</a>
         </li>
       </ul>
     </div>
@@ -191,11 +188,8 @@
               src="{{ url_for('bp_admin.static', filename='images/avtar/emoji/9.png') }}" alt="">
           </div>
           <ul class="profile-dropdown onhover-show-div">
-            <li><a href="/users_users_profile"><i data-feather="user"></i><span>Account </span></a></li>
-            <li><a href="/basic_email"><i data-feather="mail"></i><span>Inbox</span></a>
-            </li>
-            <li><a href="/kanban_board"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
-            <li><a href="{{ url_for('bp_admin.settings') }}"><i data-feather="settings"></i><span>Settings</span></a></li>
+            <li><a href="{{url_for('bp_admin.profile', user_id=current_user.id)}}"><i data-feather="user"></i><span>Account </span></a></li>
+            <li><a href="{{ url_for('bp_admin.general_settings') }}"><i data-feather="settings"></i><span>Settings</span></a></li>
             <li><a class="btn btn-light w-100" href="{{ url_for('bp_auth.logout') }}">Log out</a></li>
           </ul>
         </li>

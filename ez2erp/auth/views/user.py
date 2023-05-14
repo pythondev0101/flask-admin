@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
 from flask_cors import cross_origin
 from ez2erp import db
-from ez2erp.core.models import CoreModel
+from ez2erp.core.models import Model
 from ez2erp.core.logging import create_log
 from ez2erp.auth import bp_auth
 from ez2erp.auth.models import User, UserPermission, Role
@@ -159,7 +159,6 @@ def edit_user(oid,**kwargs):
 
     except Exception as e:
         flash(str(e),'error')
-    
     return redirect(url_for(auth_urls['users']))
 
 

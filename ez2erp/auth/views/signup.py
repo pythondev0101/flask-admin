@@ -1,5 +1,6 @@
 from flask import request, redirect, flash, url_for, render_template
 from ez2erp.auth import bp_auth
+from ez2erp.auth.models import User
 
 
 

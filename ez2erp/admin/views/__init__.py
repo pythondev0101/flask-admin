@@ -1,3 +1,6 @@
 from . import (
-    dashboard, app, settings
+    apps,
+    dashboard,
+    settings,
+    profile
 )

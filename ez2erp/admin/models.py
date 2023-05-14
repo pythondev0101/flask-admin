@@ -1,6 +1,5 @@
 """ ADMIN MODELS"""
 from ez2erp import db
-from mongoengine.document import Document
 
 
 
@@ -13,9 +12,7 @@ class Admin(object):
     Refer sa dashboardpack.com sa mga available icons
     """
     __amicon__ = ""
-    
     __view_url__ = 'bp_admin.no_view_url'
-
     __parent_model__ = None
 
     @property
@@ -33,14 +30,14 @@ class Admin(object):
         raise NotImplementedError('Must implement admin-model description')
 
 
-class AdminUserOptions(db.Document):
-    meta = {
-        'collection': 'admin_user_options'
-    }
+# class AdminUserOptions(db.Document):
+#     meta = {
+#         'collection': 'admin_user_options'
+#     }
 
-    user = db.ReferenceField('User')
-    header_color = db.StringField()
-    sidebar_color = db.StringField()
+#     user = db.ReferenceField('User')
+#     header_color = db.StringField()
+#     sidebar_color = db.StringField()
 
 
 class AdminDashboard(Admin):

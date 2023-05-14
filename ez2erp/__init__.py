@@ -15,16 +15,11 @@ from config import APP_CONFIG
 
 #                  -END-
 
-db = MongoEngine()
 MONGO = PyMongo()
 CSRF = CSRFProtect()
 APP_CORS = CORS()
 LOGIN_MANAGER = LoginManager()
-
-# DEVELOPERS-NOTE: -INITIATE YOUR IMPORTS HERE-
-#                   -END-
-
-MODULES = []
+APPS = []
 CONTEXT = {
     'system_modules': []
 }
@@ -50,8 +45,6 @@ def create_app(config_name):
     LOGIN_MANAGER.init_app(app)
     APP_CORS.init_app(app)
     CSRF.init_app(app)
-    db.init_app(app)
-    print(MONGO)
     # DEVELOPERS-NOTE: -INITIALIZE YOUR IMPORTS HERE-
 
     #                    -END-
@@ -61,28 +54,28 @@ def create_app(config_name):
 
 
     # DEVELOPERS-NOTE: -IMPORT HERE THE SYSTEM MODULES-
+    from ez2erp.core import bp_core
     from ez2erp.auth import bp_auth
     from ez2erp.admin import bp_admin
     from ez2erp.home import bp_home
     #                   -END-
 
     # DEVELOPERS-NOTE: -REGISTER HERE THE MODULE BLUEPRINTS-
+    app.register_blueprint(bp_core, url_prefix='/core')
     app.register_blueprint(bp_admin, url_prefix='/admin')
     app.register_blueprint(bp_auth, url_prefix='/auth')
     app.register_blueprint(bp_home, url_prefix='/')
     #               -END-
+    
     with app.app_context():
         # DEVELOPERS-NOTE: -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
-        # from ez2erp.admin.admin import AdminModule
+        from apps.inventory.app import Inventory
+        from apps.social.app import Social
         #                  -END-
 
         # DEVELOPERS-NOTE: -APPEND YOUR MODULE HERE-
-        # MODULES.append(AdminModule)
-        # -Add here-
+        APPS.append(Inventory)
+        APPS.append(Social)
         #                  -END-
-
-        # Load CONTEXT data
-        CONTEXT['header_color'] = 'header_color15' # Default color
-        CONTEXT['sidebar_color'] = "sidebar_color15" # Default color
 
     return app

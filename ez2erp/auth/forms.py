@@ -81,7 +81,7 @@ class RoleCreateForm(AdminTableForm):
 class RoleEditForm(AdminEditForm):
     __heading__ = "Edit Role"
 
-    name = AdminField(label="Name",validators=[DataRequired()])
+    name = AdminField(label="Name", validators=[DataRequired()])
 
     permission_inline = PermissionInlineForm()
     permission_inline.__html__ = "auth/role_permission_inline.html"

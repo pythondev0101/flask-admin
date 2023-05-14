@@ -4,7 +4,7 @@ import pymongo
 from pymongo.collection import Collection
 from ez2erp.core.mongo_repository import MongoRepository
 from ez2erp.db.query import Query
-from ez2erp.db.fields import TextField, IdField
+from ez2erp.db.fields import TextField, IdField, DateTimeField
 from ez2erp import MONGO
 
 
@@ -21,12 +21,13 @@ class ModelMeta(type):
         return Query(cls)
 
 
-class BaseModel(metaclass=ModelMeta):
+class BaseModel(object, metaclass=ModelMeta):
     id = IdField('ID')
+    created_by = TextField('Created By')
+    updated_by = TextField('Updated By')
+    created_at = DateTimeField('Created At')
+    updated_at = DateTimeField('Updated At')
     
-    _id: ObjectId
-    _code: str
-
     _filter: dict = {}
     _data = {}
     date_created: datetime = None
@@ -39,17 +40,22 @@ class BaseModel(metaclass=ModelMeta):
         if data:
             self.__dict__.update(data)
             self._id = data.get('_id', ObjectId())
-            self.date_created = data.get('date_created')
-            self._code = data.get('_code', None)
             
+            for key in data:
+                setattr(self, key, data[key])
+        
         if 'filter' in params:
             self._filter = params['filter']
  
  
     @property
-    def collection(self):
-        raise NotImplementedError('Must implement collection')
+    def ez2collection(self):
+        raise NotImplementedError('Must implement ez2collection')
 
+
+    @property
+    def ez2name(self):
+        raise NotImplementedError('{} must implement ez2name'.format(self.__dict__))
 
     # @property
     # def id(self):
@@ -77,8 +83,8 @@ class BaseModel(metaclass=ModelMeta):
         return self._id
 
 
-    def __repr__(self):
-        return str(self.__dict__)
+    # def __repr__(self):
+    #     return str(self._id)
 
 
     def count(self, filter=None):

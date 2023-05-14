@@ -1,6 +1,6 @@
 <!-- page sidebar starts -->
 <header class="main-nav">
-  <div class="logo-wrapper"><a href="/"><img class="img-fluid" src="{{ url_for('bp_admin.static', filename='images/logo/logo.png')}}"
+  <div class="logo-wrapper"><a href="/"><img class="img-fluid" src="{{ url_for('bp_admin.static', filename='images/logo/ez2erp_logo.png')}}"
         alt=""></a>
   </div>
   <div class="logo-icon-wrapper"><a href="/"><img class="img-fluid"
@@ -19,7 +19,12 @@
           {% for item in sidebar.items %}
             {% if item.type == 'single' %}  
               <li class="dropdown">
-                <a class="nav-link menu-title link-nav" href="{{ url_for(item.link) }}"><i data-feather="{{item.icon}}">
+                {% if item.link %}
+                <a class="nav-link menu-title link-nav" href="{{ url_for(item.link) }}">
+                {% else %}
+                <a class="nav-link menu-title link-nav" href="#">
+                {% endif %}
+                <i data-feather="{{item.icon}}">
                   </i><span>{{item.name}}</span>
                 </a>
               </li>
@@ -28,7 +33,15 @@
                   data-feather="home"></i><span>{{item.name}}</span></a>
               <ul class="nav-submenu menu-content">
                 {% for sub_item in item.sub_items %}
-                <li><a href="{{ url_for(sub_item.link) }}">{{sub_item.name}}</a></li>
+                <li>
+                  {% if sub_item.link %}
+                  <a href="{{ url_for(sub_item.link) }}">
+                  {% else %}
+                  <a href="#">
+                  {% endif %}
+                  {{sub_item.name}}
+                  </a>
+                </li>
                 {% endfor %}
               </ul>
             </li>

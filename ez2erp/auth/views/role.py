@@ -5,36 +5,39 @@ from flask_login import current_user, login_required
 from ez2erp.auth import bp_auth
 from ez2erp import db
 from ez2erp.auth.models import Role, RolePermission
-from ez2erp.auth.forms import RoleCreateForm, RoleEditForm
-from ez2erp.core.models import CoreModel
-from ez2erp.admin.templating import admin_table, admin_edit
+from ez2erp.auth.forms import RoleCreateForm
+from ez2erp.core.models import Model
 from ez2erp.auth.permissions import load_permissions
+from ez2erp.admin.templating import admin_edit, Page, PageConfig
+from ez2erp.admin.forms import Form, Input
+from ez2erp.db.query import Query
+from bson import ObjectId
 
 
 
-@bp_auth.route('/roles')
-@login_required
-def roles(**options):
-    fields = ['id', 'name', 'created_at', 'updated_at']
-    form = RoleCreateForm()
-    form.inline.data = CoreModel.objects
+# @bp_auth.route('/roles')
+# @login_required
+# def roles(**options):
+#     fields = ['id', 'name', 'created_at', 'updated_at']
+#     form = RoleCreateForm()
+#     form.inline.data = CoreModel.objects
 
-    _roles = Role.objects
+#     _roles = Role.objects
 
-    _table_data = []
+#     _table_data = []
 
-    for role in _roles:
-        _table_data.append((
-            role.id,
-            role.name,
-            role.created_at,
-            role.updated_at
-        ))
+#     for role in _roles:
+#         _table_data.append((
+#             role.id,
+#             role.name,
+#             role.created_at,
+#             role.updated_at
+#         ))
 
-    return admin_table(Role, fields=fields, form=form, create_modal_template="auth/role_create_modal.html", \
-        create_url='bp_auth.create_role',edit_url='bp_auth.edit_role', \
-            view_modal_template="auth/role_view_modal.html", table_data=_table_data,\
-                view_modal_url='/auth/get-view-role-data' ,**options)
+#     return admin_table(Role, fields=fields, form=form, create_modal_template="auth/role_create_modal.html", \
+#         create_url='bp_auth.create_role',edit_url='bp_auth.edit_role', \
+#             view_modal_template="auth/role_view_modal.html", table_data=_table_data,\
+#                 view_modal_url='/auth/get-view-role-data' ,**options)
 
 
 @bp_auth.route('/get-view-role-data', methods=['GET'])
@@ -83,40 +86,6 @@ def create_role():
         db.session.commit()
         flash('Role added successfully!','success')
         return redirect(url_for('bp_auth.roles'))
-
-
-@bp_auth.route('/roles/<string:oid>/edit',methods=['GET','POST'])
-@login_required
-def edit_role(oid,**options):
-    role = Role.query.get_or_404(oid)
-    form = RoleEditForm(obj=role)
-
-    if request.method == "GET":
-        role_permissions = RolePermission.query.filter_by(role_id=oid).all()
-        form.permission_inline.data = role_permissions
-        
-        _scripts = [
-            {'bp_auth.static': 'js/role.js'},
-            {'bp_admin.static': 'js/admin_edit.js'}
-        ]
-
-        return admin_edit(Role, form, "bp_auth.edit_role", oid, 'bp_auth.roles', scripts=_scripts, \
-            **options)
-
-    if not form.validate_on_submit():
-        for key, value in form.errors.items():
-            flash(str(key) + str(value), 'error')
-        return redirect(url_for('bp_auth.roles'))
-
-    try:
-        role.name = form.name.data
-        role.updated_at = datetime.now()
-        db.session.commit()
-        flash('Role update Successfully!','success')
-    except Exception as e:
-        flash(str(e),'error')
-
-    return redirect(url_for('bp_auth.roles'))
 
 
 @bp_auth.route('/roles/<int:oid1>/permissions/<int:oid2>/edit', methods=['POST'])
