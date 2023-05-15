@@ -12,12 +12,6 @@ def dashboard():
     if AdminDashboard.__view_url__ == 'bp_admin.no_view_url':
         return redirect(url_for('bp_admin.no_view_url'))
     
-    # options = {
-    #     'box1': DashboardBox("Total Modules","Installed", 0),
-    #     'box2': DashboardBox("System Models","Total models", 0),
-    #     'box3': DashboardBox("Users","Total users", 0)
-    # }
-    
     sidebar = Sidebar(
         items=[
             SidebarItem(
@@ -33,5 +27,5 @@ def dashboard():
         parent='Admin',
         child='Dashboard'
     )
-    page = Page.blank(page_config, breadcrumb=breadcrumb)
+    page = Page.blank(page_config, breadcrumb=breadcrumb, is_main=True)
     return page.display()

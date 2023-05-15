@@ -33,7 +33,7 @@
                       {% for app in apps %}
                         <div class="col-xxl-4 box-col-6 col-lg-6">
                           <div class="project-box"><span class="badge badge-success">Installed</span>
-                            <h6>{{app.short_description}}</h6>
+                            <h6><a href="{{url_for(app.link)}}">{{app.short_description}}</a></h6>
                             <div class="media"><img class="img-20 me-2 rounded-circle"
                                 src="" alt="" data-original-title="" title="">
                               <div class="media-body">

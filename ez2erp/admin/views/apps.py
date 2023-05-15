@@ -1,4 +1,4 @@
-from ez2erp import CONTEXT
+from ez2erp import CONTEXT, APPS
 from ez2erp.core.models import App
 from ez2erp.admin import bp_admin
 from ez2erp.admin.templating import Page, PageConfig, Sidebar, SidebarItem, Breadcrumb
@@ -22,5 +22,5 @@ def apps():
         child='Apps'
     )
     page = Page(config=page_config, breadcrumb=breadcrumb)
-    _apps = App.query.all()
+    _apps = APPS
     return page.display(apps=_apps)

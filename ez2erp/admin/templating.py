@@ -1,7 +1,6 @@
-from flask import render_template
+from flask import render_template, current_app
 from flask_login import current_user
-from ez2erp import CONTEXT, db
-# from ez2erp.core.models import CoreModel, CoreModule
+from ez2erp import CONTEXT, db, APPS
 from ez2erp.auth.permissions import check_read
 from ez2erp.core.errors import PageError
 
@@ -48,6 +47,7 @@ class Page:
         self.with_actions = kwargs.get('with_actions', False)
         self.edit_url = kwargs.get('edit_url')
         self.title = kwargs.get('title', 'ez2ERP')
+        self.is_main = kwargs.get('is_main', False)
 
         if 'breadcrumb' in kwargs:
             self.breadcrumb = kwargs['breadcrumb']
@@ -138,9 +138,22 @@ class Page:
         if hasattr(self, 'form'):
             context['form'] = self.form
         
+        if self.is_main:
+            self._add_main_app_sidebar()
+        
         context['title'] = self.title
         context.update(kwargs)
         return render_template(self.config.template, sidebar=self.config.sidebar, **context)
+
+    def _add_main_app_sidebar(self):
+        for app in APPS:
+            if current_app.config['ADMIN']['MAIN_APP'] == app.name:
+                main_app = app
+                break
+        else:
+            raise Exception("Please check the MAIN_APP in config.py")
+            
+        self.config.sidebar.items = self.config.sidebar.items + main_app.sidebar.items
 
 
 # def display_normal_page(page):
