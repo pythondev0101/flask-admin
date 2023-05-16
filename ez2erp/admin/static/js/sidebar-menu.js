@@ -185,24 +185,25 @@ $("#left-arrow").click(function(){
 });
 
 // page active
-    $( ".main-navbar" ).find( "a" ).removeClass("active");
-    $( ".main-navbar" ).find( "li" ).removeClass("active");
+    // $( ".main-navbar" ).find( "a" ).removeClass("active");
+    // $( ".main-navbar" ).find( "li" ).removeClass("active");
 
-    var current = window.location.pathname
-    $(".main-navbar ul>li a").filter(function() {
+    // var current = window.location.pathname
+    // $(".main-navbar ul>li a").filter(function() {
 
-        var link = $(this).attr("href");
-        if(link){
-            if (current.indexOf(link) != -1) {
-                $(this).parents().children('a').addClass('active');
-                $(this).parents().parents().children('ul').css('display', 'block');
-                $(this).addClass('active');
-                $(this).parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-caret-down"></i></div>');
-                $(this).parent().parent().parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-caret-down"></i></div>');
-                return false;
-            }
-        }
-    });
-    $('.custom-scrollbar').animate({
-        scrollTop: $('a.nav-link.menu-title.active').offset().top - 500
-    }, 1000);
+    //     var link = $(this).attr("href");
+    //     if(link){
+    //         if (current.indexOf(link) != -1) {
+    //             $(this).parents().children('a').addClass('active');
+    //             $(this).parents().parents().children('ul').css('display', 'block');
+    //             $(this).addClass('active');
+    //             $(this).parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-caret-down"></i></div>');
+    //             $(this).parent().parent().parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-caret-down"></i></div>');
+    //             return false;
+    //         }
+    //     }
+    // });
+
+$('.custom-scrollbar').animate({
+    scrollTop: $('a.nav-link.menu-title.active').offset().top - 500
+}, 1000);
