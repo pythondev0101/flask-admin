@@ -19,11 +19,10 @@
           {% for item in sidebar.items %}
             {% if item.type == 'single' %}  
               <li class="dropdown">
-                {% if item.link %}
-                <a class="nav-link menu-title link-nav" href="{{ url_for(item.link) }}">
-                {% else %}
-                <a class="nav-link menu-title link-nav" href="#">
-                {% endif %}
+                <a
+                  class="nav-link menu-title link-nav"
+                  href="{% if item.link %}{{url_for(item.link)}}{% else %}#{% endif %}"
+                >
                 <i data-feather="{{item.icon}}">
                   </i><span>{{item.name}}</span>
                 </a>

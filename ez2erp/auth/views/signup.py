@@ -27,7 +27,7 @@ def signup():
             'lname': lname
         })
         new_user.set_password(password)
-        new_user.create()
+        new_user.save()
         
         flash('User created successfully!', 'success')
         return redirect(url_for('auth.login'))

@@ -192,5 +192,5 @@ def _create_superuser():
         'role': role.id
     })
     user.set_password(input("Enter password: "))
-    user.create()
+    user.save()
     print("SuperUser Created!")

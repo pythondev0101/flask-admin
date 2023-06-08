@@ -66,3 +66,4 @@ target/
 migrations/
 instance/
 .env
+upec/

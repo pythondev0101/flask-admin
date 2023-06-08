@@ -8,7 +8,7 @@ from ez2erp.auth.models import Role, RolePermission
 from ez2erp.auth.forms import RoleCreateForm
 from ez2erp.core.models import Model
 from ez2erp.auth.permissions import load_permissions
-from ez2erp.admin.templating import admin_edit, Page, PageConfig
+from ez2erp.admin.templating import Page, PageConfig
 from ez2erp.admin.forms import Form, Input
 from ez2erp.db.query import Query
 from bson import ObjectId

@@ -53,7 +53,7 @@
   </div>
   <!-- Loader ends-->
   <!-- page-wrapper Start-->
-  <div class="page-wrapper compact-wrapper" id="pageWrapper">
+  <div class="page-wrapper compact-wrapper compact-sidebar" id="pageWrapper">
     <!-- Page Header Start-->
     {% include 'admin/layout/header.html' %}
     <!-- Page Header Ends                              -->
@@ -86,9 +86,47 @@
   <!-- Theme js-->
   <script src="{{ url_for('bp_admin.static', filename='js/theme-customizer/customizer.js') }}"></script>
   <script src="{{ url_for('bp_admin.static', filename='js/script.js') }}"></script>
+  <!-- bootstrap notify js -->
+  <script src="{{ url_for('bp_admin.static', filename='js/notify/bootstrap-notify.min.js')}}"></script>
+  <script src="{{ url_for('bp_admin.static', filename='js/notify/notify-script.js')}}" ></script>
   <!-- ez2erp js -->
   <script src="{{ url_for('bp_admin.static', filename='js/ez2erp/admin_sidebar.js') }}"></script>
-  <!-- Plugin used-->
-</body>
+  <script>
+    $(document).ready(function(){
+        let notifs = {{get_flashed_messages(with_categories=true) | tojson}};
 
+        for(let i=0; i < notifs.length; i++){
+          let type = notifs[i][0];
+          let message = notifs[i][1];
+          
+          $.notify({
+            message: message
+          },
+          {
+            type: type,
+            allow_dismiss:true,
+            newest_on_top:true ,
+            mouse_over:true,
+            showProgressbar:false,
+            spacing:10,
+            timer:2000,
+            placement:{
+              from:'top',
+              align:'center'
+            },
+            offset:{
+              x:30,
+              y:30
+            },
+            delay:1000 ,
+            z_index:10000,
+            animate:{
+              enter:'animated swing',
+              exit:'animated shake'
+            }
+          });
+        }
+    });
+  </script>
+</body>
 </html>

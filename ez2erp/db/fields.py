@@ -1,4 +1,26 @@
+import sys
+import inspect
+
+
+
 class BaseField(object):
+    def __new__(cls, *_args, **_kwargs):
+        # Background: http://eli.thegreenplace.net/2012/04/16/python-object-creation-sequence
+        obj = super().__new__(cls)
+        obj.module = obj._get_init_module()  # pylint: disable=protected-access
+        return obj
+
+
+    @staticmethod
+    def _get_init_module():
+        # Background: https://stackoverflow.com/a/42653524/
+        frame = inspect.currentframe()
+        while frame:
+            if frame.f_code.co_name == '<module>':
+                # return {'module': frame.f_globals['__name__'], 'line': frame.f_lineno}
+                return frame.f_globals['__name__']
+            frame = frame.f_back
+
     def __init__(self, label=None):
         self._label = label
         self._value = None
@@ -7,7 +29,6 @@ class BaseField(object):
     def __get__(self, instance, value):
         if instance is None:
             return self
-        print('value:', value)
         # print("instance:", instance)
         return self._value
         # return getattr(instance, self.field_name)
@@ -56,3 +77,14 @@ class DateField(BaseField):
 
 class DateTimeField(BaseField):
     pass
+
+
+class ReferenceField(BaseField):
+    def __init__(self, model_name):
+        super(ReferenceField, self).__init__(model_name)
+        self.model_name = model_name
+        self.model = None
+
+
+    def get_model(self):
+        return getattr(sys.modules[self.module], self.model_name)

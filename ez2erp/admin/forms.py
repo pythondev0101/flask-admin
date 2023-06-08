@@ -6,8 +6,10 @@ from wtforms import widgets
 
 
 class Form:
-    def __init__(self, inputs):
+    def __init__(self, inputs, inlines=None, **kwargs):
         self.inputs = inputs
+        self.inlines = inlines
+        self.cards_html = kwargs.get('cards_html')
         self.sizes = None
         self._compute_sizes()
     
@@ -20,12 +22,20 @@ class Form:
                 except AttributeError:
                     value = None
                 input.set_value(value)                
-    
-    
+
+
     @classmethod
-    def edit(cls, inputs):
+    def create(cls, inputs):
         return cls(
             inputs
+        )
+
+    
+    @classmethod
+    def edit(cls, inputs, cards_html=None):
+        return cls(
+            inputs,
+            cards_html=cards_html
         )
         
     
@@ -36,38 +46,86 @@ class Form:
         for row in self.inputs:
             count = len(row)
             if count == 1:
-                sizes.append("md-12")
+                sizes.append("mb-3")
             elif count == 2:
-                sizes.append("md-6")
+                sizes.append("mb-3")
             elif count == 3:
-                sizes.append("md-4")
+                sizes.append("mb-3")
             elif count == 4:
-                sizes.append("md-3")
+                sizes.append("mb-3")
             else:
-                sizes.append("md-2")
+                sizes.append("mb-3")
         self.sizes = sizes
 
 
 class Input:
-    def __init__(self, type, field, label, required):
+    def __init__(self, type, field, required=False, label=None, **kwargs):
         self.type = type
         self.field = field
-        self.label = label
         self.required = required
         self.value = None
+        self.options = kwargs.get('options')
 
+        if label:
+            self.label = label
+        else:
+            self.label = field.label
+
+    
     def set_value(self, value):
         self.value = value
 
 
     @classmethod
-    def text(cls, field, label=None, required=False):
+    def text(cls, field, required=False, **kwargs):
         return cls(
             'text',
             field,
-            label,
-            required
+            required,
+            **kwargs
         )
+
+    
+    @classmethod
+    def email(cls, field, required=False, **kwargs):
+        return cls(
+            'email',
+            field,
+            required,
+            **kwargs
+        )
+        
+    
+    @classmethod
+    def select(cls, field, required, **kwargs):
+        model = field.get_model()
+        options = [Option("", "Choose...")]
+        query = model.query.all()
+
+        for row in query:
+            options.append(Option(row.id, row.name))
+        
+        return cls(
+            'select',
+            field,
+            required,
+            options=options,
+            **kwargs
+        )
+        
+    
+class Option:
+    def __init__(self, value, label):
+        self.value = value
+        self.label = label
+
+
+class Table:
+    def __init__(self, columns, data=None, title=None):
+        self.columns = columns
+        self.data = data
+        self.title = title
+        self.element = 'TABLE'
 
 
 # class Input:

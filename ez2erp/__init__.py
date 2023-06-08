@@ -58,6 +58,7 @@ def create_app(config_name):
     from ez2erp.auth import bp_auth
     from ez2erp.admin import bp_admin
     from ez2erp.home import bp_home
+    from upec import bp_upec
     #                   -END-
 
     # DEVELOPERS-NOTE: -REGISTER HERE THE MODULE BLUEPRINTS-
@@ -65,17 +66,20 @@ def create_app(config_name):
     app.register_blueprint(bp_admin, url_prefix='/admin')
     app.register_blueprint(bp_auth, url_prefix='/auth')
     app.register_blueprint(bp_home, url_prefix='/')
+    app.register_blueprint(bp_upec, url_prefix='/upec')
     #               -END-
     
     with app.app_context():
         # DEVELOPERS-NOTE: -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
         from apps.inventory.app import Inventory
         from apps.social.app import Social
+        from upec.app import Upec
         #                  -END-
 
         # DEVELOPERS-NOTE: -APPEND YOUR MODULE HERE-
         APPS.append(Inventory)
         APPS.append(Social)
+        APPS.append(Upec)
         #                  -END-
 
     return app

@@ -1,11 +1,10 @@
 from flask import redirect, url_for, request, flash
 from flask_login import login_required
+from ez2erp.core.models import Model
 from ez2erp.admin import bp_admin
-from ez2erp.admin.templating import Page, PageConfig, Sidebar, SidebarItem, Breadcrumb
+from ez2erp.admin.templating import Page, PageConfig, Sidebar, SidebarItem, Breadcrumb, notify
 from ez2erp.auth.models import User, Role
-from ez2erp.auth.models import Role
-from ez2erp.admin.templating import Page, PageConfig
-from ez2erp.admin.forms import Form, Input
+from ez2erp.admin.forms import Form, Input, Table
 from ez2erp.db.query import Query
 from bson import ObjectId
 
@@ -13,6 +12,11 @@ from bson import ObjectId
 
 sidebar = Sidebar(
     items=[
+        SidebarItem(
+            name='Back to Home',
+            link='bp_admin.dashboard',
+            icon='corner-up-left'
+        ),
         SidebarItem(
             name='General Settings',
             link='bp_admin.general_settings'
@@ -27,6 +31,7 @@ sidebar = Sidebar(
         )
     ]
 )
+
 
 @bp_admin.route('/settings/general')
 def general_settings():
@@ -48,11 +53,58 @@ def users():
     page_config = PageConfig(sidebar=sidebar)
     page = Page.table(
         User,
-        columns=[User.id, User.username, User.fname, User.lname, User.email],
-        config=page_config,
+        columns=[User.id, User.username, User.fname, User.lname, User.email, User.status],
+        create_function="bp_admin.create_user",
+        config=page_config
     )
     return page.display()
 
+
+@bp_admin.route('/settings/users/create', methods=['GET', 'POST'])
+def create_user():
+    if request.method == "GET":
+        form = Form.create(
+            inputs=[
+                [
+                    Input.text(User.username, required=True),
+                    Input.email(User.email, required=True),
+                ],
+                [
+                    Input.text(User.fname, required=True),
+                    Input.text(User.lname, required=False),
+                    Input.text(User.contact_no, required=True)
+                ],
+                [
+                    Input.select(
+                        User.role,
+                        required=True
+                    )
+                ]
+            ]
+        )
+        page_config = PageConfig(sidebar=sidebar)
+        page = Page.create(User, form=form, config=page_config)
+        return page.display()
+    elif request.method == "POST":
+        username = request.form.get('username')
+        email = request.form.get('email')
+        fname = request.form.get('fname')
+        lname = request.form.get('lname')
+        contact_no = request.form.get('contact_no')
+        role = request.form.get('role')
+
+        new_user = User({
+            'username': username,
+            'email': email,
+            'fname': fname,
+            'lname': lname,
+            'contact_no': contact_no,
+            'role': ObjectId(role)
+        })
+        new_user.save()
+        flash('User created successfully!', 'success')
+        return redirect(url_for('bp_admin.users'))
+    
 
 @bp_admin.route('/settings/roles')
 def roles():
@@ -62,26 +114,67 @@ def roles():
         columns=[Role.id, Role.name, Role.created_at, Role.created_by],
         config=page_config,
         with_actions=True,
-        edit_url='bp_admin.edit_role'
+        create_function="bp_admin.create_role",
+        edit_function='bp_admin.edit_role'
     )
     return page.display()
+
+
+@bp_admin.route('/settings/roles/create')
+def create_role():
+    if request.method == "GET":
+        form = Form.create(
+            inputs=[
+                [
+                    Input.text(Role.name, required=True),
+                    Input.text(Role.description)
+                ]
+            ],
+        )
+        page_config = PageConfig(sidebar=sidebar)
+        page = Page.create(Role, form=form, config=page_config)
+        return page.display()
+    elif request.method == "POST":
+        pass
 
 
 @bp_admin.route('/settings/roles/<string:oid>/edit',methods=['GET','POST'])
 @login_required
 def edit_role(oid):    
     if request.method == "GET":
+        all_permissions = []
+        existing_permissions = Role.query.find_one({'_id': ObjectId(oid)}).document.get('permissions', [])
+        models = Model.query.all()
+        for model in models:
+            all_permissions.append({'id': str(model.id), 'name': model.name})
+
+        for permission in all_permissions:
+            for existing_permission in existing_permissions:
+                if permission['name'] == existing_permission['name']:
+                    permission['create'] = existing_permission['create']
+                    permission['read'] = existing_permission['read']
+                    permission['update'] = existing_permission['update']
+                    permission['delete'] = existing_permission['delete']
+            else:
+                permission['create'] = False
+                permission['read'] = False
+                permission['update'] = False
+                permission['delete'] = False
+
         form = Form.edit(
             inputs=[
                 [
                     Input.text('name', label='Name', required=True),
                     Input.text('description', label='Description', required=True),
                 ]
+            ],
+            cards_html=[
+                "admin/custom/role_permission_inline.html"
             ]
         )
         page_config = PageConfig(sidebar=sidebar)
         page = Page.edit(Role, oid, form=form, config=page_config)
-        return page.display()
+        return page.display(all_permissions=all_permissions)
 
     elif request.method == "POST":
         name = request.form.get('name')
@@ -93,8 +186,7 @@ def edit_role(oid):
                 'description': description
             }
         })
-
-        flash('Role updated Successfully!','success')
+        notify('Role updated Successfully!', 'success')
         return redirect(url_for('bp_admin.roles'))
 
 

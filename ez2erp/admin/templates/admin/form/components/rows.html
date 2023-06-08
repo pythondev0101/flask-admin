@@ -1,0 +1,61 @@
+{% if form.rows %}
+{% for row in form.rows %}
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Permissions</h5>
+        </div>
+        {% if row.element == "TABLE" %}
+            <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">MODEL</th>
+                    <th scope="col">CREATE</th>
+                    <th scope="col">READ</th>
+                    <th scope="col">UPDATE</th>
+                    <th scope="col">DELETE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for row in table_data %}
+                        {% for cell in row %}
+                            <td>MODEL</td>
+                        {% endfor %}
+                    {% endfor %}
+                    <td>
+                        <div class="checkbox checkbox-solid-primary">
+                            <input id="solid3" type="checkbox" checked="">
+                            <label for="solid3"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="checkbox checkbox-solid-primary">
+                            <input id="solid3" type="checkbox" checked="">
+                            <label for="solid3"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="checkbox checkbox-solid-primary">
+                            <input id="solid3" type="checkbox" checked="">
+                            <label for="solid3"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="checkbox checkbox-solid-primary">
+                            <input id="solid3" type="checkbox" checked="">
+                            <label for="solid3"></label>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endif %}

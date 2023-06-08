@@ -1,0 +1,39 @@
+{% extends 'admin/admin_wingo_base.html' %}
+
+
+{% block content %}
+<div class="page-body">
+    {% include 'admin/layout/page_header/page_header.html' %}
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <form action="" method="POST">
+          <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="form theme-form">
+                    {% include "admin/form/components/inputs.html" %}
+                    <div class="row">
+                      </br>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="text-end">
+                          <button type="submit" class="btn btn-success me-3">Save</button>
+                          <a class="btn btn-danger" onclick="history.back()">Cancel</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% include 'admin/form/components/inlines.html' %}
+        </form>
+      </div>
+    <!-- Container-fluid Ends-->
+</div>
+{% endblock content %}
+

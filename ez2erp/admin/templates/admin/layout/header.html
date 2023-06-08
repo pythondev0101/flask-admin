@@ -10,14 +10,20 @@
     <div class="nav-left col pull-left left-menu">
       <ul class="nav-menus">
         <li>
+          <a class="text-dark" href="{{url_for('bp_admin.dashboard')}}">Dashboard</a>
+        </li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li>
           <a class="text-dark" href="{{url_for('bp_admin.apps')}}">Apps</a>
         </li>
       </ul>
     </div>
     <div class="nav-right col pull-right right-menu">
       <ul class="nav-menus">
-        <!--
         <li class="onhover-dropdown">
+          <!--
           <div class="notification-box"><i data-feather="shopping-bag"></i><span
               class="badge badge-pill badge-secondary">4</span></div>
           <div class="notification-dropdown cart onhover-show-div">
@@ -180,16 +186,17 @@
         <li>
           <div class="mode"><i class="fa fa-moon-o"></i></div>
         </li>
-        <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a>
-        </li> 
         -->
+        <li><a class="text-dark" href="{{url_for('bp_admin.users')}}"><i data-feather="users"></i></a>
+        </li> 
         <li class="onhover-dropdown">
           <div class="media profile-media"><img class="rounded-circle"
               src="{{ url_for('bp_admin.static', filename='images/avtar/emoji/9.png') }}" alt="">
           </div>
           <ul class="profile-dropdown onhover-show-div">
-            <li><a href="{{url_for('bp_admin.profile', user_id=current_user.id)}}"><i data-feather="user"></i><span>Account </span></a></li>
+            <li><a href="{{url_for('bp_admin.profile', user_id=current_user.id)}}"><i data-feather="user"></i><span>Account</span></a></li>
             <li><a href="{{ url_for('bp_admin.general_settings') }}"><i data-feather="settings"></i><span>Settings</span></a></li>
+            <li><a href="#"><i data-feather="code"></i><span>Devdocs</span></a></li>
             <li><a class="btn btn-light w-100" href="{{ url_for('bp_auth.logout') }}">Log out</a></li>
           </ul>
         </li>

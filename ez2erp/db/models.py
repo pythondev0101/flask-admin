@@ -33,14 +33,15 @@ class BaseModel(object, metaclass=ModelMeta):
     date_created: datetime = None
     timezone = 'Asia/Manila'
     
-
+    
     def __init__(self, data=None, **params):
         self._data = data
         
         if data:
             self.__dict__.update(data)
             self._id = data.get('_id', ObjectId())
-            
+            self.document = data
+
             for key in data:
                 setattr(self, key, data[key])
         
@@ -52,25 +53,9 @@ class BaseModel(object, metaclass=ModelMeta):
     def ez2collection(self):
         raise NotImplementedError('Must implement ez2collection')
 
-
     @property
     def ez2name(self):
         raise NotImplementedError('{} must implement ez2name'.format(self.__dict__))
-
-    # @property
-    # def id(self):
-    #     if self._id is None:
-    #         return None
-    #     return self._id
-
-
-    @property
-    def code(self):
-        try:
-            return self._code
-        except AttributeError:
-            raise NotImplementedError("Inception Error: 'code' must be implemented")
-
 
     @property
     def str_date_created(self):
@@ -99,18 +84,14 @@ class BaseModel(object, metaclass=ModelMeta):
         return MongoRepository.update(self)
 
 
-    def create(self):
+    def save(self):
         self.date_created = datetime.utcnow()
-        return MongoRepository.create(self, self.get_data())
+        return Query(self.__class__).insert_one(self.get_data())
 
 
     def get_data(self):
-        self._code = self.get_code()
+        print(self.__dict__)
         return self.__dict__
-
-
-    def get_code(self):
-        return self.code
 
 
     @classmethod

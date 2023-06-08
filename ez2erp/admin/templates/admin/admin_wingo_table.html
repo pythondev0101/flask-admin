@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="page-body">
-  {% include 'admin/layout/breadcrumb.html' %}
+  {% include 'admin/layout/page_header/page_header.html' %}
   <!-- Container-fluid starts-->
   <div class="container-fluid">
     <div class="row">
@@ -34,8 +34,8 @@
                   {% if table_data|length > 0 %}
                     {% for row in table_data %}
                       <tr>
-                        {% if edit_url %}
-                        <param id="param_{{row[0]}}" value="{{url_for(edit_url, oid=row[0])}}">
+                        {% if edit_function %}
+                        <param id="param_{{row[0]}}" value="{{url_for(edit_function, oid=row[0])}}">
                         {% endif %}
 
                         {% for val in row %}
@@ -111,7 +111,7 @@
       console.log(editUrl);
 
       if(editUrl == "None"){
-        alert("Include edit_url with value to the Page object");
+        alert("Include edit_function with value to the Page object");
         return;
       }
       location.href = editUrl;

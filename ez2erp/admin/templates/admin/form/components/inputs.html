@@ -1,0 +1,29 @@
+{% for row in form.inputs %}
+    {% set row_counter = loop %}
+    <div class="row">
+        {% for input in row %}
+        <div class="col">
+            <div class="{{form.sizes[row_counter.index-1]}}">
+                <label>{{input.label}}</label>
+                {% if input.type in ['text', 'email'] %}
+                    <input 
+                        name="{{input.field.field_name}}" 
+                        value="{% if not input.value == None %}{{input.value}}{% endif %}" 
+                        class="form-control" type="{{input.type}}" placeholder=""
+                        {% if input.required %}required=""{% endif %}
+                    >
+                {% elif input.type == 'select' %}
+                    <select
+                        class="form-select"
+                        {% if input.required %}required=""{% endif %}
+                    >
+                        {% for option in input.options %}
+                            <option value="{{option.value}}">{{option.label}}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endfor %}

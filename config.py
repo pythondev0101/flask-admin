@@ -18,7 +18,7 @@ class Config(object):
         'HOME_URL': 'bp_admin.dashboard',
         'DASHBOARD_URL': 'bp_admin.dashboard',
         'MODELS_SIDEBAR_HEADER': 'SYSTEM MODELS',
-        'MAIN_APP': None
+        'MAIN_APP': 'upec', # IGNORE
     }
 
     # DEVELOPERS-NOTE: AUTH CONFIGURATIONS HERE

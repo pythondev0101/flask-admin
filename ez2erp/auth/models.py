@@ -10,15 +10,16 @@ from ez2erp.db import fields
 
 class User(UserMixin, BaseModel):
     ez2collection = 'auth_users'
-    username = fields.TextField()
+    username = fields.TextField("Username")
     fname = fields.TextField('First Name')
     lname = fields.TextField('Last Name')
     password_hash = fields.TextField()
     contact_no = fields.TextField('Contact No.')
-    email = fields.TextField()
-    role = fields.TextField()
+    email = fields.TextField("Email")
+    role = fields.ReferenceField('Role')
     image_path: str = 'img/user_default_image.png'
-
+    status = fields.TextField()
+    
     # def __init__(self, data=None):
     #     BaseModel.__init__(self, data=data)
         # 
@@ -64,8 +65,8 @@ class User(UserMixin, BaseModel):
 
 class Role(BaseModel):
     ez2collection = 'auth_roles'
-    name = fields.TextField() 
-    description = fields.TextField()
+    name = fields.TextField('Name') 
+    description = fields.TextField('Description')
     # permissions = db.ListField()
 
 

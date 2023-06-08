@@ -1,0 +1,81 @@
+<div class="row">
+<div class="col-sm-12">
+    <div class="card">
+    <div class="card-header">
+        <h5>Permissions</h5>
+    </div>
+        <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">MODEL</th>
+                <th scope="col">CREATE</th>
+                <th scope="col">READ</th>
+                <th scope="col">UPDATE</th>
+                <th scope="col">DELETE</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for model in all_permissions %}
+                <tr>
+                    <td>{{model['name']}}</td>
+                    <td>
+                        <div class="checkbox checkbox-solid-primary">
+                            <input
+                                id="permission_create_{{model['id']}}"
+                                type="checkbox"
+                                class="permission-create"
+                                value="{{model['id']}}" 
+                                name="permission_create_{{model['id']}}"
+                                {% if model['create'] %}checked=""{% endif %}
+                            >
+                            <label for="permission_create_{{model['id']}}"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="checkbox checkbox-solid-primary">
+                            <input
+                                id="permission_read_{{model['id']}}"
+                                type="checkbox"
+                                class="permission-read"
+                                value="{{model['id']}}" 
+                                name="permission_read_{{model['id']}}"
+                                {% if model['read'] %}checked=""{% endif %}
+                            >
+                            <label for="permission_read_{{model['id']}}"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="checkbox checkbox-solid-primary">
+                            <input
+                                id="permission_update_{{model['id']}}"
+                                type="checkbox"
+                                class="permission-update"
+                                value="{{model['id']}}" 
+                                name="permission_update_{{model['id']}}"
+                                {% if model['update'] %}checked=""{% endif %}
+                            >
+                            <label for="permission_update_{{model['id']}}"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="checkbox checkbox-solid-primary">
+                            <input
+                                id="permission_delete_{{model['id']}}"
+                                type="checkbox"
+                                class="permission-delete"
+                                value="{{model['id']}}" 
+                                name="permission_delete_{{model['id']}}"
+                                {% if model['delete'] %}checked=""{% endif %}
+                            >
+                            <label for="permission_delete_{{model['id']}}"></label>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+</div>

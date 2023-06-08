@@ -10,7 +10,6 @@ from ez2erp.auth.models import User, UserPermission, Role
 from ez2erp.auth.forms import UserForm, UserEditForm, UserPermissionForm
 from ez2erp.auth import auth_urls
 from ez2erp.auth.permissions import load_permissions, check_create
-from ez2erp.admin.templating import admin_table, admin_edit
 
 
 

@@ -12,16 +12,8 @@ def dashboard():
     if AdminDashboard.__view_url__ == 'bp_admin.no_view_url':
         return redirect(url_for('bp_admin.no_view_url'))
     
-    sidebar = Sidebar(
-        items=[
-            SidebarItem(
-                name='Dashboard',
-                link='bp_admin.dashboard'
-            )
-        ]
-    )
     page_config = PageConfig(
-        "admin/admin_wingo_dashboard.html", sidebar=sidebar)
+        "admin/admin_wingo_dashboard.html")
     breadcrumb = Breadcrumb(
         title='Dashboard',
         parent='Admin',

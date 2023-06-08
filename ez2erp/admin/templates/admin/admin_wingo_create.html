@@ -3,10 +3,10 @@
 
 {% block content %}
 <div class="page-body">
-    {% include 'admin/layout/breadcrumb.html' %}
+    {% include 'admin/layout/page_header/page_header.html' %}
     <!-- Container-fluid starts-->
     <div class="container-fluid">
-        <form action="", method="POST">
+        <form action="" method="POST">
           <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
           <div class="row">
             <div class="col-sm-12">
