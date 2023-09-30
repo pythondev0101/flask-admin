@@ -5,11 +5,20 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from ez2erp import LOGIN_MANAGER
 from ez2erp.db.models import BaseModel
 from ez2erp.db import fields
+from ez2erp.admin.templating import SidebarItem
 
 
 
 class User(UserMixin, BaseModel):
     ez2collection = 'auth_users'
+    ez2name = 'user'
+    ez2sidebar = [
+        SidebarItem(
+            name="Users",
+            link="bp_admin.users"
+        )
+    ]
+
     username = fields.TextField("Username")
     fname = fields.TextField('First Name')
     lname = fields.TextField('Last Name')
@@ -20,19 +29,6 @@ class User(UserMixin, BaseModel):
     image_path: str = 'img/user_default_image.png'
     status = fields.TextField()
     
-    # def __init__(self, data=None):
-    #     BaseModel.__init__(self, data=data)
-        # 
-        # if data:
-        #     self.username = data.get('username')
-        #     self.fname = data.get('fname')
-        #     self.lname = data.get('lname')
-        #     self.contact_no = data.get('contact_no')
-        #     self.password_hash = data.get('password_hash')
-        #     self.email = data.get('email')
-        #     self.role = data.get('role', 'member')
-        #     self.image_path = data.get('image_path', 'img/user_default_image.png')
-
 
     @property
     def full_name(self):
@@ -48,23 +44,15 @@ class User(UserMixin, BaseModel):
         return check_password_hash(self.password_hash, password)
 
 
-    # @classmethod
-    # def find_by_username(cls, username):
-    #     query = Model.find_one(cls, {'username': username})
-    #     if query is None:
-    #         return None
-    #     print(query)
-    #     return cls(data=query)
-
-
-    # @property 
-    # def code(self):
-    #     self._code = "{}-{}".format(type(self).__name__, self.username) 
-    #     return self._code
-
-
 class Role(BaseModel):
     ez2collection = 'auth_roles'
+    ez2sidebar = [
+        SidebarItem(
+            name="Roles",
+            link="bp_admin.roles"
+        )
+    ]
+
     name = fields.TextField('Name') 
     description = fields.TextField('Description')
     # permissions = db.ListField()

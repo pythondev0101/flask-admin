@@ -1,5 +1,5 @@
 from ez2erp.admin import bp_admin
-from ez2erp.admin.templating import Page, PageConfig, Sidebar, SidebarItem, Breadcrumb
+from ez2erp.admin.templating import Page, PageConfig, SidebarItem, Breadcrumb
 from ez2erp.auth.models import User
 
 

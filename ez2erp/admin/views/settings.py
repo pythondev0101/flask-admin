@@ -2,7 +2,7 @@ from flask import redirect, url_for, request, flash
 from flask_login import login_required
 from ez2erp.core.models import Model
 from ez2erp.admin import bp_admin
-from ez2erp.admin.templating import Page, PageConfig, Sidebar, SidebarItem, Breadcrumb, notify
+from ez2erp.admin.templating import Page, PageConfig, SidebarItem, Breadcrumb, notify
 from ez2erp.auth.models import User, Role
 from ez2erp.admin.forms import Form, Input, Table
 from ez2erp.db.query import Query
@@ -10,27 +10,41 @@ from bson import ObjectId
 
 
 
-sidebar = Sidebar(
-    items=[
-        SidebarItem(
-            name='Back to Home',
-            link='bp_admin.dashboard',
-            icon='corner-up-left'
-        ),
-        SidebarItem(
-            name='General Settings',
-            link='bp_admin.general_settings'
-        ),
-        SidebarItem(
-            name='Users',
-            link='bp_admin.users'
-        ),
-        SidebarItem(
-            name='Roles',
-            link='bp_admin.roles'
-        )
-    ]
-)
+# sidebar = Sidebar(
+#     items=[
+#         SidebarItem(
+#             name='Back to Home',
+#             link='bp_admin.dashboard',
+#             icon='corner-up-left'
+#         ),
+#         SidebarItem(
+#             name='General Settings',
+#             link='bp_admin.general_settings'
+#         ),
+#         SidebarItem(
+#             name='Users',
+#             link='bp_admin.users'
+#         ),
+#         SidebarItem(
+#             name='Roles',
+#             link='bp_admin.roles'
+#         )
+#     ]
+# )
+
+sidebar = [
+    SidebarItem(
+        name='Back to Home',
+        link='bp_admin.dashboard',
+        icon='corner-up-left'
+    ),
+    SidebarItem(
+        name='General Settings',
+        link='bp_admin.general_settings'
+    ),
+    User,
+    Role
+]
 
 
 @bp_admin.route('/settings/general')
@@ -51,13 +65,13 @@ def general_settings():
 @bp_admin.route('/settings/users')
 def users():
     page_config = PageConfig(sidebar=sidebar)
-    page = Page.table(
+    columns = [User.id, User.username, User.fname, User.lname, User.email, User.status]
+    return Page.table(
         User,
-        columns=[User.id, User.username, User.fname, User.lname, User.email, User.status],
+        columns=columns,
         create_function="bp_admin.create_user",
         config=page_config
     )
-    return page.display()
 
 
 @bp_admin.route('/settings/users/create', methods=['GET', 'POST'])
@@ -109,7 +123,7 @@ def create_user():
 @bp_admin.route('/settings/roles')
 def roles():
     page_config = PageConfig(sidebar=sidebar)
-    page = Page.table(
+    return Page.table(
         Role,
         columns=[Role.id, Role.name, Role.created_at, Role.created_by],
         config=page_config,
@@ -117,7 +131,6 @@ def roles():
         create_function="bp_admin.create_role",
         edit_function='bp_admin.edit_role'
     )
-    return page.display()
 
 
 @bp_admin.route('/settings/roles/create')
@@ -132,8 +145,7 @@ def create_role():
             ],
         )
         page_config = PageConfig(sidebar=sidebar)
-        page = Page.create(Role, form=form, config=page_config)
-        return page.display()
+        return Page.create(Role, form=form, config=page_config)
     elif request.method == "POST":
         pass
 
@@ -173,9 +185,8 @@ def edit_role(oid):
             ]
         )
         page_config = PageConfig(sidebar=sidebar)
-        page = Page.edit(Role, oid, form=form, config=page_config)
-        return page.display(all_permissions=all_permissions)
-
+        return Page.edit(Role, oid, form=form, config=page_config)
+        # return page.display(all_permissions=all_permissions)
     elif request.method == "POST":
         name = request.form.get('name')
         description = request.form.get('description')

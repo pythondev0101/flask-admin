@@ -33,9 +33,6 @@ class App(BaseModel):
     version = TextField()
     models = []
     
-    # def __repr__(self):
-    #     return self.name
-
 
 class Model(BaseModel):
     ez2collection = 'core_models'

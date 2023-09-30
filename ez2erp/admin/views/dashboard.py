@@ -2,7 +2,7 @@ from flask import redirect, url_for
 from flask_login import login_required
 from ez2erp.admin import bp_admin
 from ez2erp.admin.models import AdminDashboard
-from ez2erp.admin.templating import Page, PageConfig, Sidebar, SidebarItem, Breadcrumb
+from ez2erp.admin.templating import Page, PageConfig, SidebarItem, Breadcrumb
 
 
 

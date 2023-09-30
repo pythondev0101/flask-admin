@@ -71,8 +71,8 @@ def create_app(config_name):
     
     with app.app_context():
         # DEVELOPERS-NOTE: -INCLUDE HERE YOUR MODULE Admin models FOR ADMIN TEMPLATE-
-        from apps.inventory.app import Inventory
-        from apps.social.app import Social
+        from ez2erp.social.app import Social
+        from ez2erp.inventory.app import Inventory
         from upec.app import Upec
         #                  -END-
 

@@ -39,11 +39,39 @@ class SidebarItem:
 
         if 'sub_items' in kwargs:
             self.sub_items = kwargs['sub_items']
+        
 
 
-class Sidebar:
-    def __init__(self, items):
-        self.items = items
+# class Sidebar:
+#     def __init__(self, **kwargs):
+#         self.name = name
+#         self.link = link
+#         self.icon = icon
+#         self.disabled = kwargs.get('disabled', False)
+        
+#         if 'type' in kwargs:
+#             self.type = kwargs['type']
+#         else:
+#             self.type = 'single'
+
+#         if 'sub_items' in kwargs:
+#             self.sub_items = kwargs['sub_items']
+
+
+#     @classmethod
+#     def item(cls, name, link=None, icon='box', type=None, sub_items=None):
+#         return cls(
+#             name=name,
+#             link=link,
+#             icon=icon,
+#             type=type,
+#             sub_items=sub_items
+#         )
+
+
+# class Sidebar:
+#     def __init__(self, items):
+#         self.items = items
 
 
 class PageConfig:
@@ -86,6 +114,8 @@ class Page:
     #         self.bookmark = Bookmark(items=[
                 
     #         ])
+    
+    
     def  _setup_form(self):
         if 'form' in self.params:
             self.form = self.params.get('form')
@@ -148,7 +178,7 @@ class Page:
             edit_function=edit_function,
             create_function=create_function,
             bookmark=bookmark
-        )
+        ).display()
 
         
     @classmethod
@@ -162,7 +192,7 @@ class Page:
 
         obj = model.query.retrieve(oid)
         form.set_form_data(obj)
-        return cls(config, model, form=form, obj=obj)
+        return cls(config, model, form=form, obj=obj).display()
 
 
     @classmethod
@@ -174,7 +204,7 @@ class Page:
         if config.template is None:
             config.template = "admin/form/admin_create.html"
 
-        return cls(config, model, form=form)
+        return cls(config, model, form=form).display()
 
     
     @staticmethod
@@ -218,9 +248,9 @@ class Page:
             raise Exception("Please check the MAIN_APP in config.py")
         
         if self.config.sidebar:
-            self.config.sidebar.items = self.config.sidebar.items + main_app.sidebar.items
+            self.config.sidebar = self.config.sidebar + main_app.sidebar
         else:
-            self.config.sidebar = Sidebar(items=main_app.sidebar.items)
+            self.config.sidebar = main_app.sidebar
 
 
 def notify(message, category):

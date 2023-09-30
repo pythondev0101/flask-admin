@@ -16,35 +16,37 @@
             <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i>
             </div>
           </li>
-          {% for item in sidebar.items %}
-            {% if item.type == 'single' %}  
-              <li class="dropdown">
-                <a
-                  class="nav-link menu-title link-nav"
-                  href="{% if item.link %}{{url_for(item.link)}}{% else %}#{% endif %}"
-                >
-                <i data-feather="{{item.icon}}">
-                  </i><span>{{item.name}}</span>
-                </a>
-              </li>
-            {% elif item.type == 'dropdown' %}
-            <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                  data-feather="home"></i><span>{{item.name}}</span></a>
-              <ul class="nav-submenu menu-content">
-                {% for sub_item in item.sub_items %}
-                <li>
-                  {% if sub_item.link %}
-                  <a href="{{ url_for(sub_item.link) }}">
-                  {% else %}
-                  <a href="#">
-                  {% endif %}
-                  {{sub_item.name}}
+          {% for model in sidebar %}
+            {% for item in model.ez2sidebar %}
+              {% if item.type == 'single' %}  
+                <li class="dropdown">
+                  <a
+                    class="nav-link menu-title link-nav"
+                    href="{% if item.link %}{{url_for(item.link)}}{% else %}#{% endif %}"
+                  >
+                  <i data-feather="{{item.icon}}">
+                    </i><span>{{item.name}}</span>
                   </a>
                 </li>
-                {% endfor %}
-              </ul>
-            </li>
-            {% endif %}
+              {% elif item.type == 'dropdown' %}
+              <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                    data-feather="home"></i><span>{{item.name}}</span></a>
+                <ul class="nav-submenu menu-content">
+                  {% for sub_item in item.sub_items %}
+                  <li>
+                    {% if sub_item.link %}
+                    <a href="{{ url_for(sub_item.link) }}">
+                    {% else %}
+                    <a href="#">
+                    {% endif %}
+                    {{sub_item.name}}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+            {% endfor %}
           {% endfor %}
         </ul>
       </div>

@@ -1,7 +1,7 @@
 from ez2erp import CONTEXT, APPS
 from ez2erp.core.models import App
 from ez2erp.admin import bp_admin
-from ez2erp.admin.templating import Page, PageConfig, Sidebar, SidebarItem, Breadcrumb
+from ez2erp.admin.templating import Page, PageConfig, Breadcrumb
 
 
 
@@ -9,12 +9,9 @@ from ez2erp.admin.templating import Page, PageConfig, Sidebar, SidebarItem, Brea
 def apps():
     page_config = PageConfig(
         template="admin/admin_wingo_apps.html",
-        sidebar=Sidebar([
-            SidebarItem(
-                'Apps',
-                'bp_admin.apps'
-            )
-        ])
+        sidebar=[
+            App
+        ]
     )
     breadcrumb = Breadcrumb(
         title='Apps',
